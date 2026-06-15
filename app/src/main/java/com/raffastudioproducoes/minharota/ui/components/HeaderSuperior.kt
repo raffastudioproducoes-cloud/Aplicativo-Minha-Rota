@@ -50,10 +50,10 @@ fun HeaderSuperior(onDrawerClick: () -> Unit, drawerState: DrawerState? = null) 
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_minharota_logo_full),
+                        painter = painterResource(id = R.drawable.logo_minha_rota_pro),
                         contentDescription = "MinhaRota PRO Logo",
                         modifier = Modifier
-                            .width(120.dp)
+                            .width(100.dp)
                             .padding(end = 8.dp)
                     )
                 }
