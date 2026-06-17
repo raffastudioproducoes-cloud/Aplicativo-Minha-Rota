@@ -3,6 +3,7 @@ local
 color ic_launcher_background
 color ic_launcher_foreground
 drawable ic_minharota_logo_full
+drawable logo_minha_rota_pro
 mipmap ic_launcher
 mipmap ic_launcher_background
 mipmap ic_launcher_foreground

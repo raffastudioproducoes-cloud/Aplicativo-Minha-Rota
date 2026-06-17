@@ -9,30 +9,30 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:4:5-67
-11-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:4:22-64
+11-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:4:5-67
+11-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:4:22-64
 12    <uses-permission android:name="android.permission.CAMERA" />
-12-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:5:5-65
-12-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:5:22-62
+12-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:5:5-65
+12-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:5:22-62
 13    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-13-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:6:5-76
-13-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:6:22-73
+13-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:6:5-76
+13-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:6:22-73
 14    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-14-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:7:5-75
-14-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:7:22-72
+14-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:7:5-75
+14-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:7:22-72
 15    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-15-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:8:5-80
-15-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:8:22-77
+15-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:8:5-80
+15-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:8:22-77
 16    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-16-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:9:5-81
-16-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:9:22-78
+16-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:9:5-81
+16-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:9:22-78
 17
 18    <uses-feature
-18-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:10:5-85
+18-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:10:5-85
 19        android:name="android.hardware.camera"
-19-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:10:19-57
+19-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:10:19-57
 20        android:required="false" />
-20-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:10:58-82
+20-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:10:58-82
 21
 22    <permission
 22-->[androidx.core:core:1.12.0] /home/ubuntu/.gradle/caches/transforms-3/f91842984bce425d81dce9e5af0ace7a/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
@@ -50,42 +50,42 @@
 28-->[com.google.android.datatransport:transport-backend-cct:2.3.3] /home/ubuntu/.gradle/caches/transforms-3/1f53c0e020694ef81ec7adedaf58cd26/transformed/jetified-transport-backend-cct-2.3.3/AndroidManifest.xml:25:22-76
 29
 30    <application
-30-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:12:5-29:19
+30-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:12:5-29:19
 31        android:name="com.raffastudioproducoes.minharota.MinhaRotaApp"
-31-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:13:9-37
+31-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:13:9-37
 32        android:allowBackup="true"
-32-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:14:9-35
+32-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:14:9-35
 33        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 33-->[androidx.core:core:1.12.0] /home/ubuntu/.gradle/caches/transforms-3/f91842984bce425d81dce9e5af0ace7a/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
 34        android:debuggable="true"
 35        android:extractNativeLibs="false"
-36        android:icon="@mipmap/ic_launcher"
-36-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:15:9-43
+36        android:icon="@drawable/logo_minha_rota_pro"
+36-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:15:9-53
 37        android:label="@string/app_name"
-37-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:16:9-41
-38        android:roundIcon="@mipmap/ic_launcher"
-38-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:17:9-48
+37-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:16:9-41
+38        android:roundIcon="@drawable/logo_minha_rota_pro"
+38-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:17:9-58
 39        android:supportsRtl="true"
-39-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:18:9-35
+39-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:18:9-35
 40        android:theme="@android:style/Theme.Material.Light.NoActionBar" >
-40-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:19:9-72
+40-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:19:9-72
 41        <activity
-41-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:20:9-28:20
+41-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:20:9-28:20
 42            android:name="com.raffastudioproducoes.minharota.MainActivity"
-42-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:21:13-41
+42-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:21:13-41
 43            android:exported="true"
-43-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:22:13-36
+43-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:22:13-36
 44            android:theme="@android:style/Theme.Material.Light.NoActionBar" >
-44-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:23:13-76
+44-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:23:13-76
 45            <intent-filter>
-45-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:24:13-27:29
+45-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:24:13-27:29
 46                <action android:name="android.intent.action.MAIN" />
-46-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:25:17-69
-46-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:25:25-66
+46-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:25:17-69
+46-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:25:25-66
 47
 48                <category android:name="android.intent.category.LAUNCHER" />
-48-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:26:17-77
-48-->/home/ubuntu/minha-rota-repo/app/src/main/AndroidManifest.xml:26:27-74
+48-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:26:17-77
+48-->/home/ubuntu/Aplicativo-Minha-Rota/app/src/main/AndroidManifest.xml:26:27-74
 49            </intent-filter>
 50        </activity>
 51

@@ -55,7 +55,7 @@ fun SplashScreen(onFinish: () -> Unit) {
     ) {
         // Logotipo com novo branding
         Image(
-            painter = painterResource(id = R.drawable.ic_minharota_logo_full),
+            painter = painterResource(id = R.drawable.logo_minha_rota_pro),
             contentDescription = "MinhaRota PRO Logo",
             modifier = Modifier.size(200.dp)
         )
