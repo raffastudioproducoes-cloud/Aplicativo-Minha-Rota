@@ -19,8 +19,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -48,15 +50,12 @@ fun HeaderSuperior(onDrawerClick: () -> Unit, drawerState: DrawerState? = null) 
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = R.drawable.logo_minha_rota_pro),
-                        contentDescription = "MinhaRota PRO Logo",
-                        modifier = Modifier
-                            .width(100.dp)
-                            .padding(end = 8.dp)
-                    )
-                }
+                Text(
+                    text = "Minha Rota",
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     DatePill()
                     Spacer(modifier = Modifier.width(8.dp))
@@ -67,14 +66,18 @@ fun HeaderSuperior(onDrawerClick: () -> Unit, drawerState: DrawerState? = null) 
         navigationIcon = {
             IconButton(onClick = onDrawerClick) {
                 if (drawerState?.isOpen == true) {
-                    Icon(Icons.Rounded.Close, contentDescription = "Fechar Menu")
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "Fechar Menu",
+                        tint = Color.White
+                    )
                 } else {
                     MenuIconTwoLines()
                 }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.surface
+            containerColor = Color(0xFF121214)
         )
     )
 }

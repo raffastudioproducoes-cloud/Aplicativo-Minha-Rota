@@ -76,18 +76,11 @@ fun ScaffoldPrincipalPush(
         }
 
         // Conteúdo Principal (Deslocado) com Canto Arredondado Dinâmico (Cima e Baixo)
-        // Usando a assinatura posicional clássica para evitar erros de compilação
+        // Usando a assinatura posicional clássica para evitar erros de compilação conforme diretriz v1.5.0
         Box(
             modifier = Modifier
                 .offset(x = drawerOffsetPx)
-                .clip(
-                    RoundedCornerShape(
-                        cornerRadius, // topStart
-                        0.dp,        // topEnd
-                        0.dp,        // bottomEnd
-                        cornerRadius // bottomStart
-                    )
-                )
+                .clip(RoundedCornerShape(topStart = cornerRadius, topEnd = 0.dp, bottomEnd = 0.dp, bottomStart = cornerRadius))
         ) {
             Scaffold(
                 topBar = {

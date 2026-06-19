@@ -48,21 +48,8 @@ fun DrawerConteudoGradientRainbowV2(
             .background(Color(0xFF121214))
             .statusBarsPadding()
     ) {
-        // Cabeçalho com Botão Fechar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.End
-        ) {
-            IconButton(onClick = { scope.launch { drawerState.close() } }) {
-                Icon(
-                    imageVector = Icons.Rounded.Close,
-                    contentDescription = "Fechar",
-                    tint = Color.White
-                )
-            }
-        }
+        // Espaçador para o status bar
+        Spacer(modifier = Modifier.height(8.dp))
 
         Column(
             modifier = Modifier
