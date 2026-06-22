@@ -216,13 +216,17 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                             value = hoje,
                             onValueChange = {},
                             readOnly = true,
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { /* Implementar seletor de data se necessário */ },
+                            enabled = false,
                             label = { Text("Data") },
                             leadingIcon = { Icon(Icons.Rounded.CalendarToday, contentDescription = null) },
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                disabledTextColor = Color.White
+                                disabledTextColor = Color.White,
+                                disabledBorderColor = Color.White.copy(alpha = 0.12f),
+                                disabledLabelColor = Color.White.copy(alpha = 0.4f),
+                                disabledLeadingIconColor = Color.White.copy(alpha = 0.4f)
                             )
                         )
                     }
@@ -276,15 +280,16 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
 
                     // BLOCO 3: VALORES DO DIA
                     SectionCard(title = "Valores do Dia") {
-                        OutlinedTextField(
-                            value = ganhoBrutoInput,
-                            onValueChange = { 
-                                if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
-                                    ganhoBrutoInput = it
-                                    val v = it.toDoubleOrNull() ?: 0.0
-                                    viewModel.updateGanhoBruto(v)
-                                }
-                            },
+                            OutlinedTextField(
+                                value = ganhoBrutoInput,
+                                onValueChange = { input ->
+                                    if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
+                                        val normalized = input.replace(',', '.')
+                                        ganhoBrutoInput = normalized
+                                        val v = normalized.toDoubleOrNull() ?: 0.0
+                                        viewModel.updateGanhoBruto(v)
+                                    }
+                                },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text("Ganho Bruto (R$)") },
                             placeholder = { Text("Ex: 150.00") },
@@ -314,9 +319,9 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                             )
                             OutlinedTextField(
                                 value = valorCusto,
-                                onValueChange = { 
-                                    if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
-                                        valorCusto = it
+                                onValueChange = { input ->
+                                    if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
+                                        valorCusto = input.replace(',', '.')
                                     }
                                 },
                                 modifier = Modifier.weight(1f),
@@ -364,11 +369,12 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                         
                         OutlinedTextField(
                             value = metaDiariaInput,
-                            onValueChange = { 
-                                // Permite apenas números e um ponto decimal
-                                if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
-                                    metaDiariaInput = it
-                                    val v = it.toDoubleOrNull() ?: 0.0
+                            onValueChange = { input ->
+                                // Permite apenas números e um ponto decimal ou vírgula
+                                if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
+                                    val normalized = input.replace(',', '.')
+                                    metaDiariaInput = normalized
+                                    val v = normalized.toDoubleOrNull() ?: 0.0
                                     viewModel.updateMetaDiaria(v)
                                 }
                             },

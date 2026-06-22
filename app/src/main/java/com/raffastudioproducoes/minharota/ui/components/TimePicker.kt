@@ -36,12 +36,20 @@ fun TimeInput(label: String, selectedTime: String, onTimeSelected: (String) -> U
             onValueChange = { /* Read-only */ },
             label = { Text(label) },
             readOnly = true,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { showTimePicker = true },
+            enabled = false,
+            colors = androidx.compose.material3.OutlinedTextFieldDefaults.colors(
+                disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                disabledBorderColor = MaterialTheme.colorScheme.outline,
+                disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
+            ),
             trailingIcon = {
                 Icon(
                     Icons.Rounded.AccessTime,
-                    contentDescription = "Selecionar Hora",
-                    modifier = Modifier.clickable { showTimePicker = true }
+                    contentDescription = "Selecionar Hora"
                 )
             }
         )

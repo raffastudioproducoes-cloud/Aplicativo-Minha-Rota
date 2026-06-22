@@ -291,7 +291,17 @@ fun ContaDialog(
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(value = nome, onValueChange = { nome = it }, label = { Text("Nome da Conta") }, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(value = valor, onValueChange = { valor = it }, label = { Text("Valor (R$)") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(
+                    value = valor,
+                    onValueChange = { input ->
+                        if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
+                            valor = input.replace(',', '.')
+                        }
+                    },
+                    label = { Text("Valor (R$)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    modifier = Modifier.fillMaxWidth()
+                )
                 OutlinedTextField(value = vencimento, onValueChange = { vencimento = it }, label = { Text("Vencimento (Ex: 20/06)") }, modifier = Modifier.fillMaxWidth())
             }
         },
