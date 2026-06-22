@@ -7,6 +7,7 @@ import com.raffastudioproducoes.minharota.domain.model.ContaFixa
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.util.Calendar
 import java.util.UUID
 
 class ContasViewModel : ViewModel() {
@@ -32,7 +33,7 @@ class ContasViewModel : ViewModel() {
         val turnos = prefs.obterTurnos()
         val anoAtual = Calendar.getInstance().get(Calendar.YEAR).toString()
         _faturamentoAnual.value = turnos
-            .filter { it.data.endsWith(anoAtual) }
+            .filter { turno -> turno.data.endsWith(anoAtual) }
             .sumOf { it.ganhoLiquido }
             
         val lista = prefs.obterContas()

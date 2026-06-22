@@ -4,8 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import java.util.Calendar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
@@ -256,7 +258,8 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
 
     if (showPaywallModal) {
         com.raffastudioproducoes.minharota.ui.components.PaywallModal(
-            onDismiss = { showPaywallModal = false }
+            onDismiss = { showPaywallModal = false },
+            onUpgrade = { /* Implementar lógica de upgrade */ }
         )
     }
 }
