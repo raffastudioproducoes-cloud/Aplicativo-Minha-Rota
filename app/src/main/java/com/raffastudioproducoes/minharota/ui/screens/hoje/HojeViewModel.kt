@@ -21,6 +21,14 @@ class HojeViewModel : ViewModel() {
     private val _custoRua = MutableStateFlow(0.0)
     val custoRua: StateFlow<Double> = _custoRua.asStateFlow()
 
+    data class CustoItem(val id: String, val descricao: String, val valor: Double)
+
+    private val _listaCustos = MutableStateFlow<List<CustoItem>>(emptyList())
+    val listaCustos: StateFlow<List<CustoItem>> = _listaCustos.asStateFlow()
+
+    private val _metaDiaria = MutableStateFlow(0.0)
+    val metaDiaria: StateFlow<Double> = _metaDiaria.asStateFlow()
+
     private val _ganhoLiquido = MutableStateFlow(0.0)
     val ganhoLiquido: StateFlow<Double> = _ganhoLiquido.asStateFlow()
 
@@ -64,6 +72,24 @@ class HojeViewModel : ViewModel() {
     fun updateCustoRua(valor: Double) {
         _custoRua.value = valor
         calcularLiquido()
+    }
+
+    fun adicionarCusto(descricao: String, valor: Double) {
+        if (valor <= 0 || descricao.isBlank()) return
+        val novoCusto = CustoItem(UUID.randomUUID().toString(), descricao, valor)
+        _listaCustos.value = _listaCustos.value + novoCusto
+        _custoRua.value = _listaCustos.value.sumOf { it.valor }
+        calcularLiquido()
+    }
+
+    fun removerCusto(id: String) {
+        _listaCustos.value = _listaCustos.value.filter { it.id != id }
+        _custoRua.value = _listaCustos.value.sumOf { it.valor }
+        calcularLiquido()
+    }
+
+    fun updateMetaDiaria(valor: Double) {
+        _metaDiaria.value = valor
     }
 
     fun toggleRidingMode() {
@@ -123,9 +149,20 @@ class HojeViewModel : ViewModel() {
             corridas = _corridasAtuais.value
         )
 
+        // 1. Persistir o turno
         val turnosAtuais = prefs.obterTurnos().toMutableList()
         turnosAtuais.add(novoTurno)
         prefs.salvarTurnos(turnosAtuais)
+
+        // 2. Distribuir para as caixinhas
+        if (_ganhoLiquido.value > 0) {
+            val caixinhas = prefs.obterCaixinhas().toMutableList()
+            val novasCaixinhas = caixinhas.map { caixinha ->
+                val valorAdicional = (_ganhoLiquido.value * caixinha.percentual) / 100.0
+                caixinha.copy(saldoAtual = caixinha.saldoAtual + valorAdicional)
+            }
+            prefs.salvarCaixinhas(novasCaixinhas)
+        }
         
         limparCampos()
         onSuccess()
@@ -142,6 +179,8 @@ class HojeViewModel : ViewModel() {
         _horaFimPausa.value = ""
         _corridasAtuais.value = emptyList()
         _ganhosRapidos.value = emptyList()
+        _listaCustos.value = emptyList()
+        _metaDiaria.value = 0.0
     }
 
     fun updateHoraInicio(hora: String) {
