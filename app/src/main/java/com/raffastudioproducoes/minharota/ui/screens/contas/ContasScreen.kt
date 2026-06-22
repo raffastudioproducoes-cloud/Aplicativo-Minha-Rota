@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -61,19 +62,25 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                 Text(
                     text = "Meta Diária Automática",
                     style = MaterialTheme.typography.labelLarge,
-                    color = Color.Gray
+                    color = Color.Gray,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "R$ ${String.format("%.2f", metaDiaria)}",
                     fontSize = 36.sp,
                     fontWeight = FontWeight.ExtraBold,
-                    color = VerdeEntrada
+                    color = VerdeEntrada,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Text(
                     text = "Baseado em suas contas fixas pendentes",
                     style = MaterialTheme.typography.labelSmall,
-                    color = Color.Gray.copy(alpha = 0.6f)
+                    color = Color.Gray.copy(alpha = 0.6f),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }

@@ -7,6 +7,9 @@ import com.raffastudioproducoes.minharota.domain.model.ContaFixa
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Calendar
 import java.util.UUID
 
@@ -42,9 +45,34 @@ class ContasViewModel : ViewModel() {
     }
 
     private fun calcularMeta() {
-        val totalPendente = _contas.value.filter { !it.paga }.sumOf { it.valor }
-        // Simulação: divide o total pendente por 30 dias para meta diária
-        _metaDiariaAutomatica.value = totalPendente / 30.0
+        val hoje = LocalDate.now()
+        val anoAtual = hoje.year
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        
+        var metaTotal = 0.0
+        
+        _contas.value.filter { !it.paga }.forEach { conta ->
+            try {
+                // Assume o formato "dd/MM" e adiciona o ano atual para o cálculo
+                val dataVencimentoStr = "${conta.dataVencimento}/$anoAtual"
+                val dataVencimento = LocalDate.parse(dataVencimentoStr, formatter)
+                
+                val diasRestantes = ChronoUnit.DAYS.between(hoje, dataVencimento)
+                
+                if (diasRestantes > 0) {
+                    // Divide o valor da conta pelos dias que faltam
+                    metaTotal += conta.valor / diasRestantes
+                } else {
+                    // Conta vence hoje ou já venceu: soma o valor integral na meta de hoje
+                    metaTotal += conta.valor
+                }
+            } catch (e: Exception) {
+                // Fallback caso a data esteja em formato inválido
+                metaTotal += conta.valor / 30.0
+            }
+        }
+        
+        _metaDiariaAutomatica.value = metaTotal
     }
 
     fun adicionarConta(context: Context, nome: String, valor: Double, vencimento: String) {
