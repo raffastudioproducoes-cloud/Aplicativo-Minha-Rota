@@ -61,6 +61,18 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     // Estados locais para inputs de custos
     var descCusto by remember { mutableStateOf("") }
     var valorCusto by remember { mutableStateOf("") }
+    
+    // Estado local para Meta Diária (evita formatação agressiva durante a digitação)
+    var metaDiariaInput by remember { mutableStateOf(if (metaDiaria > 0) metaDiaria.toString() else "") }
+    
+    // Sincronizar metaDiariaInput quando metaDiaria mudar no ViewModel (ex: ao limpar campos)
+    LaunchedEffect(metaDiaria) {
+        if (metaDiaria == 0.0) {
+            metaDiariaInput = ""
+        } else if (metaDiariaInput.toDoubleOrNull() != metaDiaria) {
+            metaDiariaInput = metaDiaria.toString()
+        }
+    }
 
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
@@ -330,10 +342,18 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                         Spacer(modifier = Modifier.height(16.dp))
                         
                         OutlinedTextField(
-                            value = if (metaDiaria > 0) String.format("%.2f", metaDiaria) else "",
-                            onValueChange = { val v = it.toDoubleOrNull() ?: 0.0; viewModel.updateMetaDiaria(v) },
+                            value = metaDiariaInput,
+                            onValueChange = { 
+                                // Permite apenas números e um ponto decimal
+                                if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
+                                    metaDiariaInput = it
+                                    val v = it.toDoubleOrNull() ?: 0.0
+                                    viewModel.updateMetaDiaria(v)
+                                }
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text("Meta diária manual (R$)") },
+                            placeholder = { Text("Ex: 150.00") },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                         )
                         
