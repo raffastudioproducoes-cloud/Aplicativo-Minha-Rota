@@ -62,15 +62,24 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     var descCusto by remember { mutableStateOf("") }
     var valorCusto by remember { mutableStateOf("") }
     
-    // Estado local para Meta Diária (evita formatação agressiva durante a digitação)
+    // Estados locais para Meta Diária e Ganho Bruto (evita formatação agressiva durante a digitação)
     var metaDiariaInput by remember { mutableStateOf(if (metaDiaria > 0) metaDiaria.toString() else "") }
+    var ganhoBrutoInput by remember { mutableStateOf(if (ganhoBruto > 0) ganhoBruto.toString() else "") }
     
-    // Sincronizar metaDiariaInput quando metaDiaria mudar no ViewModel (ex: ao limpar campos)
+    // Sincronizar inputs quando valores mudarem no ViewModel (ex: ao limpar campos ou via OCR)
     LaunchedEffect(metaDiaria) {
         if (metaDiaria == 0.0) {
             metaDiariaInput = ""
         } else if (metaDiariaInput.toDoubleOrNull() != metaDiaria) {
-            metaDiariaInput = metaDiaria.toString()
+            metaDiariaInput = if (metaDiaria % 1.0 == 0.0) metaDiaria.toInt().toString() else metaDiaria.toString()
+        }
+    }
+
+    LaunchedEffect(ganhoBruto) {
+        if (ganhoBruto == 0.0) {
+            ganhoBrutoInput = ""
+        } else if (ganhoBrutoInput.toDoubleOrNull() != ganhoBruto) {
+            ganhoBrutoInput = if (ganhoBruto % 1.0 == 0.0) ganhoBruto.toInt().toString() else ganhoBruto.toString()
         }
     }
 
@@ -268,10 +277,17 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                     // BLOCO 3: VALORES DO DIA
                     SectionCard(title = "Valores do Dia") {
                         OutlinedTextField(
-                            value = if (ganhoBruto > 0) String.format("%.2f", ganhoBruto) else "",
-                            onValueChange = { val v = it.toDoubleOrNull() ?: 0.0; viewModel.updateGanhoBruto(v) },
+                            value = ganhoBrutoInput,
+                            onValueChange = { 
+                                if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
+                                    ganhoBrutoInput = it
+                                    val v = it.toDoubleOrNull() ?: 0.0
+                                    viewModel.updateGanhoBruto(v)
+                                }
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text("Ganho Bruto (R$)") },
+                            placeholder = { Text("Ex: 150.00") },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                             trailingIcon = {
                                 IconButton(onClick = { 
@@ -298,9 +314,14 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                             )
                             OutlinedTextField(
                                 value = valorCusto,
-                                onValueChange = { valorCusto = it },
+                                onValueChange = { 
+                                    if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
+                                        valorCusto = it
+                                    }
+                                },
                                 modifier = Modifier.weight(1f),
                                 label = { Text("R$") },
+                                placeholder = { Text("0.00") },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                             )
                             IconButton(
