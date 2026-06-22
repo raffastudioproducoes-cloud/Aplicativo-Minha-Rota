@@ -30,7 +30,8 @@ data class Caixinha(
     val percentual: Double,
     val metaValor: Double = 0.0,
     val saldoAtual: Double = 0.0,
-    val pausada: Boolean = false
+    val pausada: Boolean = false,
+    val periodo: String = "Dia" // Dia, Semana, Mês, Ano
 )
 
 @Serializable

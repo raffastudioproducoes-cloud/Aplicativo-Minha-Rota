@@ -188,6 +188,15 @@ class SharedPreferencesManager(context: Context) {
         return sharedPreferences.getBoolean(KEY_IS_PRO, false)
     }
 
+    // --- Dias de Folga ---
+    fun salvarDiasFolga(dias: Set<Int>) {
+        sharedPreferences.edit().putStringSet(KEY_DIAS_FOLGA, dias.map { it.toString() }.toSet()).apply()
+    }
+
+    fun obterDiasFolga(): Set<Int> {
+        return sharedPreferences.getStringSet(KEY_DIAS_FOLGA, emptySet())?.map { it.toInt() }?.toSet() ?: emptySet()
+    }
+
     // --- Conta Diária ---
     fun salvarContasDiarias(lista: List<ContaDiaria>) {
         val jsonString = json.encodeToString(lista)
@@ -220,5 +229,6 @@ class SharedPreferencesManager(context: Context) {
         private const val KEY_FOTO_PERFIL = "foto_perfil"
         private const val KEY_IS_PRO = "is_pro"
         private const val KEY_CONTAS_DIARIAS = "contas_diarias"
+        private const val KEY_DIAS_FOLGA = "dias_folga"
     }
 }

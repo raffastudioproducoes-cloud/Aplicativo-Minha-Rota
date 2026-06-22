@@ -41,10 +41,14 @@ class ContasViewModel : ViewModel() {
             
         val lista = prefs.obterContas()
         _contas.value = lista
-        calcularMeta()
+        calcularMeta(context)
     }
 
-    private fun calcularMeta() {
+    private fun calcularMeta(context: Context? = null) {
+        if (context == null) return
+        val prefs = SharedPreferencesManager(context)
+        val diasFolga = prefs.obterDiasFolga()
+        
         // 1. Obter data atual do sistema
         val hoje = LocalDate.now()
         val anoAtual = hoje.year
@@ -64,8 +68,26 @@ class ContasViewModel : ViewModel() {
                 
                 val dataVencimento = LocalDate.parse(vencimentoLimpo, formatter)
                 
-                // 4. Calcular diferença real de dias
-                val diasRestantes = ChronoUnit.DAYS.between(hoje, dataVencimento)
+                // 4. Calcular diferença real de dias úteis (descontando folgas fixas)
+                var diasRestantes = ChronoUnit.DAYS.between(hoje, dataVencimento)
+                
+                if (diasRestantes > 0) {
+                    var diasUteisRestantes = 0L
+                    for (i in 1..diasRestantes) {
+                        val dataFutura = hoje.plusDays(i)
+                        // LocalDate dayOfWeek: 1 (Mon) to 7 (Sun). 
+                        // Nosso SharedPreferences salva 1 (Dom) a 7 (Sáb) conforme o seletor.
+                        // Ajuste de conversão:
+                        val diaSemanaCalculado = when(dataFutura.dayOfWeek.value) {
+                            7 -> 1 // Sunday
+                            else -> dataFutura.dayOfWeek.value + 1
+                        }
+                        if (!diasFolga.contains(diaSemanaCalculado)) {
+                            diasUteisRestantes++
+                        }
+                    }
+                    diasRestantes = diasUteisRestantes
+                }
                 
                 // 5. Aplicar Regra Regressiva Estrita
                 if (diasRestantes <= 0) {
@@ -92,7 +114,7 @@ class ContasViewModel : ViewModel() {
         listaAtual.add(novaConta)
         _contas.value = listaAtual
         prefs.salvarContas(listaAtual)
-        calcularMeta()
+        calcularMeta(context)
     }
 
     fun atualizarConta(context: Context, id: String, nome: String, valor: Double, vencimento: String) {
@@ -103,7 +125,7 @@ class ContasViewModel : ViewModel() {
             listaAtual[index] = listaAtual[index].copy(nome = nome, valor = valor, dataVencimento = vencimento)
             _contas.value = listaAtual
             prefs.salvarContas(listaAtual)
-            calcularMeta()
+            calcularMeta(context)
         }
     }
 
@@ -112,7 +134,7 @@ class ContasViewModel : ViewModel() {
         val listaAtual = _contas.value.filter { it.id != id }
         _contas.value = listaAtual
         prefs.salvarContas(listaAtual)
-        calcularMeta()
+        calcularMeta(context)
     }
 
     fun pagarConta(context: Context, contaId: String) {
@@ -123,7 +145,7 @@ class ContasViewModel : ViewModel() {
             listaAtual[index] = listaAtual[index].copy(paga = !listaAtual[index].paga)
             _contas.value = listaAtual
             prefs.salvarContas(listaAtual)
-            calcularMeta()
+            calcularMeta(context)
         }
     }
 

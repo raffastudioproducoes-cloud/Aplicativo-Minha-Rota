@@ -1,29 +1,34 @@
 package com.raffastudioproducoes.minharota.ui.screens.caixas
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-
-
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.Caixinha
-import com.raffastudioproducoes.minharota.ui.components.CardCaixinha
 import com.raffastudioproducoes.minharota.ui.components.PaywallModal
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
+import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
 
 @Composable
 fun CaixasScreen(
@@ -32,112 +37,338 @@ fun CaixasScreen(
 ) {
     val context = LocalContext.current
     val caixinhas by viewModel.caixinhas.collectAsState()
-    val ganhoLiquidoHoje by hojeViewModel.ganhoLiquido.collectAsState()
     val isPro by viewModel.isPro.collectAsState()
     val showPaywallModal by viewModel.showPaywallModal.collectAsState()
+    val filtroPeriodo by viewModel.filtroPeriodo.collectAsState()
+    val diasFolga by viewModel.diasFolga.collectAsState()
+    val ganhoLiquidoHoje by hojeViewModel.ganhoLiquido.collectAsState()
+
+    var caixinhaSelecionadaId by remember { mutableStateOf<String?>(null) }
+    var valorDepositoManual by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        viewModel.carregarStatusPro(context)
-        viewModel.carregarCaixinhas(context)
+        viewModel.carregarDados(context)
+        if (caixinhas.isNotEmpty() && caixinhaSelecionadaId == null) {
+            caixinhaSelecionadaId = caixinhas.first().id
+        }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(
-            text = "Distribuição de Ganhos",
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(16.dp)
-        )
+    val caixinhaSelecionada = caixinhas.find { it.id == caixinhaSelecionadaId }
 
-        if (ganhoLiquidoHoje > 0) {
-            Text(
-                text = "Disponível hoje: R$ ${String.format("%.2f", ganhoLiquidoHoje)}",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(horizontal = 16.dp),
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
+    Column(modifier = Modifier.fillMaxSize().background(Color(0xFF0F172A))) {
+        // 1. BARRA DE FILTROS DE PERÍODO
+        PeriodoSelector(selected = filtroPeriodo, onSelect = { viewModel.setFiltroPeriodo(it) })
 
         LazyColumn(
             modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(bottom = 16.dp)
+            contentPadding = PaddingValues(bottom = 100.dp)
         ) {
-            items(caixinhas) { caixinha ->
-                val valorParaDepositar = (ganhoLiquidoHoje * (caixinha.percentual / 100.0))
-                
-                CardCaixinha(
-                    emoji = caixinha.emoji,
-                    titulo = caixinha.nome,
-                    valorGuardado = caixinha.saldoAtual,
-                    metaValor = caixinha.metaValor,
-                    corDestaque = Color(android.graphics.Color.parseColor(caixinha.cor)),
-                    percentual = caixinha.percentual.toFloat() / 100f,
-                    onDepositoClick = {
-                        if (valorParaDepositar > 0) {
-                            viewModel.confirmarDeposito(context, caixinha.id, valorParaDepositar)
+            // 2. SEÇÃO CARD "DEPÓSITO DE HOJE"
+            item {
+                SectionCard(title = "DEPÓSITO DE HOJE") {
+                    caixinhaSelecionada?.let { caixinha ->
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(caixinha.emoji, fontSize = 24.sp)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(caixinha.nome, color = Color.White, fontWeight = FontWeight.Bold)
+                            Spacer(modifier = Modifier.weight(1f))
+                            val percCalculado = (caixinha.percentual / 100.0) * ganhoLiquidoHoje
+                            Text("R$ ${String.format("%.2f", percCalculado)} - ${caixinha.percentual.toInt()}% do dia", color = Color.Gray, fontSize = 12.sp)
+                        }
+                        
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        OutlinedTextField(
+                            value = valorDepositoManual,
+                            onValueChange = { valorDepositoManual = it },
+                            modifier = Modifier.fillMaxWidth(),
+                            label = { Text("Total guardado (R$)") },
+                            placeholder = { Text("0.00") },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeEntrada)
+                        )
+                        
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        Button(
+                            onClick = {
+                                val valor = valorDepositoManual.toDoubleOrNull() ?: 0.0
+                                if (valor > 0) {
+                                    viewModel.confirmarDeposito(context, caixinha.id, valor)
+                                    valorDepositoManual = ""
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth().height(50.dp),
+                            shape = RoundedCornerShape(25.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = VerdeEntrada)
+                        ) {
+                            Icon(Icons.Rounded.Savings, contentDescription = null, tint = Color.Black)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Confirmar depósito", color = Color.Black, fontWeight = FontWeight.Bold)
                         }
                     }
+                }
+            }
+
+            // 3. SEÇÃO CARD "VISÃO GERAL"
+            item {
+                Text(
+                    text = "VISÃO GERAL",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color.Gray,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(caixinhas) { caixinha ->
+                        MiniCardProgresso(caixinha, filtroPeriodo) { caixinhaSelecionadaId = caixinha.id }
+                    }
+                }
+            }
+
+            // 4. SEÇÃO "GERENCIAR CAIXINHAS"
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+                Text(
+                    text = "GERENCIAR CAIXINHAS",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color.Gray,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
+
+            items(caixinhas) { caixinha ->
+                GerenciarCaixinhaItem(
+                    caixinha = caixinha,
+                    onUpdate = { viewModel.atualizarCaixinha(context, it) },
+                    onDelete = { viewModel.excluirCaixinha(context, caixinha.id) }
+                )
+            }
+
+            item {
+                val totalAlocado = caixinhas.sumOf { it.percentual }
+                Text(
+                    text = "Total alocado: ${totalAlocado.toInt()}%",
+                    color = if (totalAlocado > 100) Color.Red else VerdeEntrada,
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
                 
-                if (valorParaDepositar > 0) {
-                    Button(
-                        onClick = { viewModel.confirmarDeposito(context, caixinha.id, valorParaDepositar) },
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp, vertical = 4.dp)
-                            .fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(android.graphics.Color.parseColor(caixinha.cor))
-                        )
-                    ) {
-                        Text("Depositar R$ ${String.format("%.2f", valorParaDepositar)}")
-                    }
-                }
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                OutlinedButton(
-                    onClick = {
-                        viewModel.adicionarCaixinha(context, Caixinha(id = "", nome = "Nova Caixinha", percentual = 0.0)) {
-                            // Sucesso ao adicionar, se necessário
-                        }
-                    },
+                Surface(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .height(56.dp),
-                    shape = MaterialTheme.shapes.medium
+                        .padding(16.dp)
+                        .clickable { viewModel.adicionarCaixinha(context) },
+                    shape = RoundedCornerShape(16.dp),
+                    color = Color.Transparent,
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.1f))
                 ) {
-                    Icon(Icons.Rounded.Add, contentDescription = null)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Nova Caixinha")
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.Gray)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("+ Nova caixinha", color = Color.Gray)
+                        if (!isPro && caixinhas.size >= 3) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Icon(Icons.Rounded.Lock, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(14.dp))
+                        }
+                    }
                 }
             }
 
+            // 5. SEÇÃO PREMIUM "DIAS DE FOLGA FIXOS"
             item {
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(
-                    onClick = { /* Implementar simulação de rendimento */ },
-                    modifier = Modifier.fillMaxWidth().height(56.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.05f))
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("Simular Rendimento", color = Color.White)
-                        if (!isPro) {
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Icon(imageVector = Icons.Rounded.Lock, contentDescription = "Recurso Pro", tint = Color.White.copy(alpha = 0.7f))
+                Spacer(modifier = Modifier.height(32.dp))
+                SectionCard(title = "DIAS DE FOLGA FIXOS") {
+                    val diasSemana = listOf("Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb")
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        diasSemana.forEachIndexed { index, dia ->
+                            val isSelected = diasFolga.contains(index + 1)
+                            Box(
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .clip(CircleShape)
+                                    .background(if (isSelected) VerdeEntrada else Color.White.copy(alpha = 0.05f))
+                                    .clickable { viewModel.toggleDiaFolga(context, index + 1) },
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(dia, color = if (isSelected) Color.Black else Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                            }
                         }
                     }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = "Dias marcados são excluídos do cálculo da meta automática.",
+                        color = Color.Gray,
+                        fontSize = 11.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                 }
             }
         }
     }
 
     if (showPaywallModal) {
-        PaywallModal(
-            onDismiss = { viewModel.dismissPaywallModal() },
-            onUpgrade = { viewModel.upgradeToPro(context) }
-        )
+        PaywallModal(onDismiss = { viewModel.dismissPaywallModal() }, onUpgrade = { viewModel.upgradeToPro(context) })
     }
+}
+
+@Composable
+fun PeriodoSelector(selected: String, onSelect: (String) -> Unit) {
+    val periodos = listOf("Hoje", "Semana", "Mês", "Ano")
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        periodos.forEach { periodo ->
+            val isSelected = selected == periodo
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(40.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(if (isSelected) VerdeEntrada else Color.White.copy(alpha = 0.05f))
+                    .clickable { onSelect(periodo) },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(periodo, color = if (isSelected) Color.Black else Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+            }
+        }
+    }
+}
+
+@Composable
+fun SectionCard(title: String, content: @Composable () -> Unit) {
+    Column(modifier = Modifier.padding(16.dp)) {
+        Text(title, style = MaterialTheme.typography.labelMedium, color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF121214)),
+            shape = RoundedCornerShape(24.dp)
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) { content() }
+        }
+    }
+}
+
+@Composable
+fun MiniCardProgresso(caixinha: Caixinha, periodo: String, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier.width(160.dp).clickable { onClick() },
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF121214)),
+        shape = RoundedCornerShape(20.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(caixinha.emoji, fontSize = 18.sp)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(caixinha.nome, color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+            }
+            Spacer(modifier = Modifier.height(12.dp))
+            Text("R$ ${String.format("%.0f", caixinha.saldoAtual)} / $periodo", color = VerdeEntrada, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(8.dp))
+            val progresso = if (caixinha.metaValor > 0) (caixinha.saldoAtual / caixinha.metaValor).toFloat().coerceIn(0f, 1f) else 0f
+            LinearProgressIndicator(
+                progress = { progresso },
+                modifier = Modifier.fillMaxWidth().height(4.dp).clip(CircleShape),
+                color = VerdeEntrada,
+                trackColor = Color.White.copy(alpha = 0.05f)
+            )
+            Text("${(progresso * 100).toInt()}% · R$ ${String.format("%.0f", caixinha.saldoAtual)}", color = Color.Gray, fontSize = 10.sp, modifier = Modifier.padding(top = 4.dp))
+        }
+    }
+}
+
+@Composable
+fun GerenciarCaixinhaItem(caixinha: Caixinha, onUpdate: (Caixinha) -> Unit, onDelete: () -> Unit) {
+    var expandido by remember { mutableStateOf(false) }
+    
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF121214)),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(caixinha.emoji, modifier = Modifier.clickable { /* Mudar emoji */ })
+                Spacer(modifier = Modifier.width(8.dp))
+                BasicTextField(
+                    value = caixinha.nome,
+                    onValueChange = { onUpdate(caixinha.copy(nome = it)) },
+                    textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontWeight = FontWeight.Bold)
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                IconButton(onClick = onDelete) { Icon(Icons.Rounded.Delete, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(20.dp)) }
+                IconButton(onClick = { expandido = !expandido }) { Icon(if (expandido) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore, contentDescription = null, tint = Color.Gray) }
+            }
+            
+            if (expandido) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    OutlinedTextField(
+                        value = caixinha.percentual.toString(),
+                        onValueChange = { onUpdate(caixinha.copy(percentual = it.toDoubleOrNull() ?: 0.0)) },
+                        modifier = Modifier.weight(1f),
+                        label = { Text("%:") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    )
+                    
+                    var menuPeriodo by remember { mutableStateOf(false) }
+                    Box(modifier = Modifier.weight(1f)) {
+                        OutlinedTextField(
+                            value = caixinha.periodo,
+                            onValueChange = {},
+                            readOnly = true,
+                            label = { Text("Período") },
+                            trailingIcon = { IconButton(onClick = { menuPeriodo = true }) { Icon(Icons.Rounded.ArrowDropDown, null) } }
+                        )
+                        DropdownMenu(expanded = menuPeriodo, onDismissRequest = { menuPeriodo = false }) {
+                            listOf("Dia", "Semana", "Mês", "Ano").forEach { p ->
+                                DropdownMenuItem(text = { Text(p) }, onClick = { onUpdate(caixinha.copy(periodo = p)); menuPeriodo = false })
+                            }
+                        }
+                    }
+                }
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Switch(
+                        checked = !caixinha.pausada,
+                        onCheckedChange = { onUpdate(caixinha.copy(pausada = !it)) },
+                        colors = SwitchDefaults.colors(checkedThumbColor = VerdeEntrada)
+                    )
+                    Text(if (caixinha.pausada) "Pausada" else "Ativa", color = Color.Gray, fontSize = 12.sp, modifier = Modifier.padding(start = 8.dp))
+                    Spacer(modifier = Modifier.weight(1f))
+                    OutlinedTextField(
+                        value = if (caixinha.metaValor > 0) caixinha.metaValor.toString() else "",
+                        onValueChange = { onUpdate(caixinha.copy(metaValor = it.toDoubleOrNull() ?: 0.0)) },
+                        modifier = Modifier.width(140.dp),
+                        label = { Text("🎯 Meta (R$):") },
+                        placeholder = { Text("Sem meta") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BasicTextField(value: String, onValueChange: (String) -> Unit, textStyle: androidx.compose.ui.text.TextStyle) {
+    androidx.compose.foundation.text.BasicTextField(
+        value = value,
+        onValueChange = onValueChange,
+        textStyle = textStyle,
+        cursorBrush = androidx.compose.ui.graphics.SolidColor(VerdeEntrada)
+    )
 }

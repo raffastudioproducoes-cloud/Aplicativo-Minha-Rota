@@ -19,14 +19,29 @@ class CaixasViewModel : ViewModel() {
     private val _showPaywallModal = MutableStateFlow(false)
     val showPaywallModal: StateFlow<Boolean> = _showPaywallModal.asStateFlow()
 
-    fun carregarStatusPro(context: Context) {
+    private val _filtroPeriodo = MutableStateFlow("Hoje")
+    val filtroPeriodo: StateFlow<String> = _filtroPeriodo.asStateFlow()
+
+    private val _diasFolga = MutableStateFlow<Set<Int>>(emptySet())
+    val diasFolga: StateFlow<Set<Int>> = _diasFolga.asStateFlow()
+
+    fun carregarDados(context: Context) {
         val prefs = SharedPreferencesManager(context)
         _isPro.value = prefs.obterIsPro()
+        _caixinhas.value = prefs.obterCaixinhas()
+        _diasFolga.value = prefs.obterDiasFolga()
     }
 
-    fun carregarCaixinhas(context: Context) {
+    fun setFiltroPeriodo(periodo: String) {
+        _filtroPeriodo.value = periodo
+    }
+
+    fun toggleDiaFolga(context: Context, dia: Int) {
         val prefs = SharedPreferencesManager(context)
-        _caixinhas.value = prefs.obterCaixinhas()
+        val novosDias = _diasFolga.value.toMutableSet()
+        if (novosDias.contains(dia)) novosDias.remove(dia) else novosDias.add(dia)
+        _diasFolga.value = novosDias
+        prefs.salvarDiasFolga(novosDias)
     }
 
     fun confirmarDeposito(context: Context, caixinhaId: String, valor: Double) {
@@ -42,8 +57,7 @@ class CaixasViewModel : ViewModel() {
         }
     }
 
-    fun adicionarCaixinha(context: Context, caixinha: Caixinha, onSuccess: () -> Unit) {
-        // Trava PRO: Máximo de 3 caixinhas para usuários FREE
+    fun adicionarCaixinha(context: Context) {
         if (!_isPro.value && _caixinhas.value.size >= 3) {
             _showPaywallModal.value = true
             return
@@ -51,10 +65,30 @@ class CaixasViewModel : ViewModel() {
         
         val prefs = SharedPreferencesManager(context)
         val listaAtual = _caixinhas.value.toMutableList()
-        listaAtual.add(caixinha.copy(id = UUID.randomUUID().toString()))
+        val nova = Caixinha(
+            id = UUID.randomUUID().toString(),
+            nome = "Nova Caixinha",
+            percentual = 0.0,
+            emoji = "💰",
+            cor = "#10B981"
+        )
+        listaAtual.add(nova)
         prefs.salvarCaixinhas(listaAtual)
         _caixinhas.value = listaAtual
-        onSuccess()
+    }
+
+    fun atualizarCaixinha(context: Context, caixinha: Caixinha) {
+        val prefs = SharedPreferencesManager(context)
+        val listaAtual = _caixinhas.value.map { if (it.id == caixinha.id) caixinha else it }
+        _caixinhas.value = listaAtual
+        prefs.salvarCaixinhas(listaAtual)
+    }
+
+    fun excluirCaixinha(context: Context, id: String) {
+        val prefs = SharedPreferencesManager(context)
+        val listaAtual = _caixinhas.value.filter { it.id != id }
+        _caixinhas.value = listaAtual
+        prefs.salvarCaixinhas(listaAtual)
     }
 
     fun dismissPaywallModal() {
