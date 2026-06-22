@@ -56,8 +56,9 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
             shape = RoundedCornerShape(24.dp)
         ) {
             Column(
-                modifier = Modifier.padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.fillMaxWidth().padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "Meta Diária Automática",
@@ -69,12 +70,13 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "R$ ${String.format("%.2f", metaDiaria)}",
-                    fontSize = 36.sp,
+                    fontSize = 42.sp,
                     fontWeight = FontWeight.ExtraBold,
                     color = VerdeEntrada,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Baseado em suas contas fixas pendentes",
                     style = MaterialTheme.typography.labelSmall,
@@ -95,7 +97,8 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
                 )
             }
 
