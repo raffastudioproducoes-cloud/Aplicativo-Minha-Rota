@@ -1,76 +1,77 @@
 package com.raffastudioproducoes.minharota.ui.screens.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.BarChart
-import androidx.compose.material.icons.outlined.DirectionsCar
-import androidx.compose.material.icons.outlined.Inventory2
-import androidx.compose.material.icons.outlined.Map
-import androidx.compose.material.icons.outlined.Receipt
-import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.TrendingUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.R
 import kotlinx.coroutines.launch
+import kotlin.math.cos
+import kotlin.math.sin
 
 data class OnboardingPage(
     val title: String,
     val description: String,
-    val icon: ImageVector
+    val imageRes: Int
 )
 
 val onboardingPages = listOf(
     OnboardingPage(
         title = "Bem-vindo ao MinhaRota",
         description = "Gerencie seus ganhos e despesas de forma inteligente",
-        icon = Icons.Outlined.DirectionsCar
+        imageRes = R.drawable.onb_carro
     ),
     OnboardingPage(
         title = "Registre seus Turnos",
         description = "Acompanhe cada turno de trabalho com detalhes de ganhos e custos",
-        icon = Icons.Outlined.Receipt
+        imageRes = R.drawable.onb_calendario
     ),
     OnboardingPage(
         title = "Organize com Caixinhas",
         description = "Separe seus ganhos em categorias personalizadas",
-        icon = Icons.Outlined.Inventory2
-    ),
-    OnboardingPage(
-        title = "Visualize Mapa de Calor",
-        description = "Descubra os melhores horários e dias para trabalhar",
-        icon = Icons.Outlined.BarChart
+        imageRes = R.drawable.onb_caixas
     ),
     OnboardingPage(
         title = "Controle sua Garagem",
         description = "Acompanhe manutenções e custos do seu veículo",
-        icon = Icons.Outlined.Settings
+        imageRes = R.drawable.onb_engrenagens
+    ),
+    OnboardingPage(
+        title = "Visualize Mapa de Calor",
+        description = "Descubra os melhores horários e dias para trabalhar",
+        imageRes = R.drawable.onb_mapa
     ),
     OnboardingPage(
         title = "Analise Tendências",
         description = "Veja gráficos e estatísticas de desempenho",
-        icon = Icons.Outlined.TrendingUp
+        imageRes = R.drawable.onb_analise
     ),
     OnboardingPage(
         title = "Comece Agora",
         description = "Você está pronto para otimizar seus ganhos!",
-        icon = Icons.Outlined.Map
+        imageRes = R.drawable.onb_mapafinal
     )
 )
 
@@ -79,12 +80,23 @@ val onboardingPages = listOf(
 fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
     val pagerState = rememberPagerState(pageCount = { onboardingPages.size })
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    
+    // As per the instructions, SharedPreferences is not directly accessible here with "is_first_open" since it's not defined in the Manager. 
+    // We will just do the navigation as requested. The navigation target requested was "auth", but looking at App.kt, the route is "login".
+    // I will call onNavigateToLogin() which handles the navigation to the auth screen.
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(FundoDark)
+        modifier = Modifier.fillMaxSize()
     ) {
+        // Fundo Mestre
+        Image(
+            painter = painterResource(id = R.drawable.fundo_onboarding),
+            contentDescription = "Fundo Onboarding",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
@@ -92,26 +104,19 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
             OnboardingPageContent(onboardingPages[page])
         }
 
-        // Indicadores de página
+        // Indicadores de página Hexagonais
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 120.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             repeat(onboardingPages.size) { index ->
-                Box(
-                    modifier = Modifier
-                        .size(if (index == pagerState.currentPage) 10.dp else 6.dp)
-                        .background(
-                            color = if (index == pagerState.currentPage) VerdeEntrada else Color.White.copy(alpha = 0.2f),
-                            shape = CircleShape
-                        )
-                )
+                HexagonIndicator(isSelected = index == pagerState.currentPage)
             }
         }
 
-        // Botões de Navegação
+        // Botões de Navegação Pílula
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -129,17 +134,23 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
                     modifier = Modifier
                         .weight(1f)
                         .height(56.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.1f)),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White)
+                    shape = RoundedCornerShape(50.dp),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.2f)),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Color.White,
+                        containerColor = Color.Transparent
+                    )
                 ) {
-                    Text("Voltar")
+                    Text("Voltar", fontWeight = FontWeight.SemiBold)
                 }
             }
 
             Button(
                 onClick = {
                     if (pagerState.currentPage == onboardingPages.size - 1) {
+                        // Mark as not first open in preferences
+                        val prefs = context.getSharedPreferences("minha_rota_prefs", android.content.Context.MODE_PRIVATE)
+                        prefs.edit().putBoolean("is_first_open", false).apply()
                         onNavigateToLogin()
                     } else {
                         scope.launch {
@@ -149,16 +160,28 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
                 },
                 modifier = Modifier
                     .weight(1f)
-                    .height(56.dp),
-                shape = RoundedCornerShape(16.dp),
+                    .height(56.dp)
+                    .clip(RoundedCornerShape(50.dp))
+                    .background(
+                        if (pagerState.currentPage == onboardingPages.size - 1) {
+                            Brush.linearGradient(listOf(Color(0xFF10B981), Color(0xFF10B981)))
+                        } else {
+                            Brush.horizontalGradient(
+                                colors = listOf(Color(0xFF06B6D4), Color(0xFF10B981))
+                            )
+                        }
+                    ),
+                shape = RoundedCornerShape(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = VerdeEntrada,
-                    contentColor = Color.Black
-                )
+                    containerColor = Color.Transparent,
+                    contentColor = Color.White
+                ),
+                contentPadding = PaddingValues()
             ) {
                 Text(
                     text = if (pagerState.currentPage == onboardingPages.size - 1) "Começar" else "Próximo",
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
                 )
             }
         }
@@ -166,28 +189,72 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
 }
 
 @Composable
+fun HexagonIndicator(isSelected: Boolean) {
+    val size = if (isSelected) 14.dp else 10.dp
+    val color = if (isSelected) Color(0xFF10B981) else Color.White.copy(alpha = 0.3f)
+    
+    Box(
+        modifier = Modifier
+            .size(size)
+            .drawBehind {
+                val radius = this.size.width / 2f
+                val center = Offset(this.size.width / 2f, this.size.height / 2f)
+                val path = Path()
+                
+                for (i in 0..5) {
+                    val angle = Math.toRadians((60 * i - 30).toDouble())
+                    val x = center.x + radius * cos(angle).toFloat()
+                    val y = center.y + radius * sin(angle).toFloat()
+                    
+                    if (i == 0) {
+                        path.moveTo(x, y)
+                    } else {
+                        path.lineTo(x, y)
+                    }
+                }
+                path.close()
+                
+                if (isSelected) {
+                    // Preenchido e com glow
+                    drawPath(
+                        path = path,
+                        color = color.copy(alpha = 0.3f),
+                        style = Stroke(width = 8f) // Simulando glow
+                    )
+                    drawPath(
+                        path = path,
+                        color = color
+                    )
+                } else {
+                    // Vazado
+                    drawPath(
+                        path = path,
+                        color = color,
+                        style = Stroke(width = 2f)
+                    )
+                }
+            }
+    )
+}
+
+@Composable
 fun OnboardingPageContent(page: OnboardingPage) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp),
+            .padding(32.dp)
+            .padding(bottom = 80.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Surface(
-            modifier = Modifier.size(160.dp),
-            color = VerdeEntrada.copy(alpha = 0.05f),
-            shape = CircleShape
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Icon(
-                    imageVector = page.icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(80.dp),
-                    tint = VerdeEntrada
-                )
-            }
-        }
+        Image(
+            painter = painterResource(id = page.imageRes),
+            contentDescription = page.title,
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f),
+            contentScale = ContentScale.Fit
+        )
 
         Spacer(modifier = Modifier.height(48.dp))
 
@@ -204,7 +271,7 @@ fun OnboardingPageContent(page: OnboardingPage) {
         Text(
             text = page.description,
             style = MaterialTheme.typography.bodyLarge,
-            color = Color.Gray,
+            color = Color(0xFFE5E5EA),
             textAlign = TextAlign.Center,
             lineHeight = 24.sp
         )
