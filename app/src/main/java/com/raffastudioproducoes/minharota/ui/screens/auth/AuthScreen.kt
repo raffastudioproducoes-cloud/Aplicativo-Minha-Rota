@@ -33,12 +33,12 @@ fun AuthScreen(onAuthSuccess: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Logo MinhaRota PRO
+            // Logo Master (Ecossistema MinhaRota PRO)
             Image(
-                painter = painterResource(id = R.drawable.logo_minha_rota_pro),
-                contentDescription = "MinhaRota PRO Logo",
+                painter = painterResource(id = R.drawable.app_icon_master),
+                contentDescription = "MinhaRota PRO Logo Master",
                 modifier = Modifier
-                    .size(240.dp)
+                    .size(200.dp)
                     .padding(bottom = 32.dp)
             )
 

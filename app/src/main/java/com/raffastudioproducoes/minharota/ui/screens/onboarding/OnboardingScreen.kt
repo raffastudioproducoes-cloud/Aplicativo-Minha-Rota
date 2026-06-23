@@ -81,10 +81,6 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
     val pagerState = rememberPagerState(pageCount = { onboardingPages.size })
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    
-    // As per the instructions, SharedPreferences is not directly accessible here with "is_first_open" since it's not defined in the Manager. 
-    // We will just do the navigation as requested. The navigation target requested was "auth", but looking at App.kt, the route is "login".
-    // I will call onNavigateToLogin() which handles the navigation to the auth screen.
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -148,7 +144,6 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
             Button(
                 onClick = {
                     if (pagerState.currentPage == onboardingPages.size - 1) {
-                        // Mark as not first open in preferences
                         val prefs = context.getSharedPreferences("minha_rota_prefs", android.content.Context.MODE_PRIVATE)
                         prefs.edit().putBoolean("is_first_open", false).apply()
                         onNavigateToLogin()
@@ -215,18 +210,16 @@ fun HexagonIndicator(isSelected: Boolean) {
                 path.close()
                 
                 if (isSelected) {
-                    // Preenchido e com glow
                     drawPath(
                         path = path,
                         color = color.copy(alpha = 0.3f),
-                        style = Stroke(width = 8f) // Simulando glow
+                        style = Stroke(width = 8f)
                     )
                     drawPath(
                         path = path,
                         color = color
                     )
                 } else {
-                    // Vazado
                     drawPath(
                         path = path,
                         color = color,
@@ -242,38 +235,44 @@ fun OnboardingPageContent(page: OnboardingPage) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(32.dp)
             .padding(bottom = 80.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        // Imagem com FillWidth para tocar as bordas laterais (Edge-to-Edge)
         Image(
             painter = painterResource(id = page.imageRes),
             contentDescription = page.title,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f),
-            contentScale = ContentScale.Fit
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.FillWidth
         )
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        Text(
-            text = page.title,
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            textAlign = TextAlign.Center
-        )
+        // Textos com padding lateral para não tocar as bordas
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = page.title,
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                textAlign = TextAlign.Center
+            )
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            text = page.description,
-            style = MaterialTheme.typography.bodyLarge,
-            color = Color(0xFFE5E5EA),
-            textAlign = TextAlign.Center,
-            lineHeight = 24.sp
-        )
+            Text(
+                text = page.description,
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color(0xFFE5E5EA),
+                textAlign = TextAlign.Center,
+                lineHeight = 24.sp
+            )
+        }
     }
 }

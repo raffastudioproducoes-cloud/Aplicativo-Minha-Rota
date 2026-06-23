@@ -53,10 +53,10 @@ fun SplashScreen(onFinish: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Logotipo com novo branding
+        // Logotipo Master (Ecossistema MinhaRota PRO)
         Image(
-            painter = painterResource(id = R.drawable.logo_minha_rota_pro),
-            contentDescription = "MinhaRota PRO Logo",
+            painter = painterResource(id = R.drawable.app_icon_master),
+            contentDescription = "MinhaRota PRO Logo Master",
             modifier = Modifier.size(200.dp)
         )
 
