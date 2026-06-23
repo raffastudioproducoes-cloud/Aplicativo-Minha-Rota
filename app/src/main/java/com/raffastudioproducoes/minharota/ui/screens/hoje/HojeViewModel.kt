@@ -15,6 +15,9 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 
 class HojeViewModel : ViewModel() {
+    private val _dataRegistro = MutableStateFlow(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
+    val dataRegistro: StateFlow<String> = _dataRegistro.asStateFlow()
+
     private val _ganhoBruto = MutableStateFlow(0.0)
     val ganhoBruto: StateFlow<Double> = _ganhoBruto.asStateFlow()
 
@@ -133,11 +136,10 @@ class HojeViewModel : ViewModel() {
 
     fun salvarTurno(context: Context, onSuccess: () -> Unit) {
         val prefs = SharedPreferencesManager(context)
-        val hoje = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
         
         val novoTurno = Turno(
             id = UUID.randomUUID().toString(),
-            data = hoje,
+            data = _dataRegistro.value,
             horaInicio = _horaInicio.value,
             horaFim = _horaFim.value,
             houvePausa = _houvePausa.value,
@@ -169,6 +171,7 @@ class HojeViewModel : ViewModel() {
     }
 
     private fun limparCampos() {
+        _dataRegistro.value = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
         _ganhoBruto.value = 0.0
         _custoRua.value = 0.0
         _ganhoLiquido.value = 0.0
@@ -212,7 +215,9 @@ class HojeViewModel : ViewModel() {
         calcularHorasTrabalhadas()
     }
 
-
+    fun alterarDataRegistro(novaData: String) {
+        _dataRegistro.value = novaData
+    }
 
     private fun calcularHorasTrabalhadas() {
         val formatter = DateTimeFormatter.ofPattern("HH:mm")

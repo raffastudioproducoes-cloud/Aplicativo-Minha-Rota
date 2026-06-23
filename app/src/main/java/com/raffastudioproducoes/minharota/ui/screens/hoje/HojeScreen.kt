@@ -35,10 +35,12 @@ import com.raffastudioproducoes.minharota.util.TextRecognitionHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     val context = LocalContext.current
     
+    val dataRegistro by viewModel.dataRegistro.collectAsState()
     val ganhoBruto by viewModel.ganhoBruto.collectAsState()
     val custoRua by viewModel.custoRua.collectAsState()
     val ganhoLiquido by viewModel.ganhoLiquido.collectAsState()
@@ -61,6 +63,9 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     // Estados locais para inputs de custos
     var descCusto by remember { mutableStateOf("") }
     var valorCusto by remember { mutableStateOf("") }
+    
+    var showDatePicker by remember { mutableStateOf(false) }
+    val datePickerState = rememberDatePickerState()
     
     // Estados locais para Meta Diária e Ganho Bruto (evita formatação agressiva durante a digitação)
     var metaDiariaInput by remember { mutableStateOf(if (metaDiaria > 0) metaDiaria.toString() else "") }
@@ -211,14 +216,13 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
 
                     // BLOCO 1: DATA DO REGISTRO
                     SectionCard(title = "Data do Registro") {
-                        val hoje = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
                         OutlinedTextField(
-                            value = hoje,
+                            value = dataRegistro,
                             onValueChange = {},
                             readOnly = true,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { /* Implementar seletor de data se necessário */ },
+                                .clickable { showDatePicker = true },
                             enabled = false,
                             label = { Text("Data") },
                             leadingIcon = { Icon(Icons.Rounded.CalendarToday, contentDescription = null) },
@@ -434,6 +438,33 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                     valorPreenchidoOcr = null
                 }
             )
+        }
+
+        if (showDatePicker) {
+            DatePickerDialog(
+                onDismissRequest = { showDatePicker = false },
+                confirmButton = {
+                    TextButton(onClick = {
+                        datePickerState.selectedDateMillis?.let { millis ->
+                            val calendar = Calendar.getInstance().apply { timeInMillis = millis }
+                            // Compensar fuso horário do DatePicker que retorna UTC
+                            calendar.add(Calendar.DAY_OF_MONTH, 1)
+                            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                            viewModel.alterarDataRegistro(format.format(calendar.time))
+                        }
+                        showDatePicker = false
+                    }) {
+                        Text("Confirmar", color = VerdeEntrada)
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDatePicker = false }) {
+                        Text("Cancelar", color = Color.White.copy(alpha = 0.7f))
+                    }
+                }
+            ) {
+                DatePicker(state = datePickerState)
+            }
         }
     }
 }
