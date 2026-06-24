@@ -1,25 +1,36 @@
 package com.raffastudioproducoes.minharota.ui.screens.auth
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.foundation.Image
-import androidx.compose.ui.res.painterResource
 import com.raffastudioproducoes.minharota.R
 import com.raffastudioproducoes.minharota.ui.theme.FundoDark
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
-fun AuthScreen(onAuthSuccess: () -> Unit) {
+fun AuthScreen(
+    onAuthSuccess: () -> Unit,
+    onNavigateToRegister: () -> Unit,
+    onNavigateToEmailLogin: () -> Unit
+) {
+    // Cores Neon v1.9.0
+    val cianoNeon = Color(0xFF22D3EE)
+    val verdeEsmeralda = Color(0xFF10B981)
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -38,22 +49,31 @@ fun AuthScreen(onAuthSuccess: () -> Unit) {
                 painter = painterResource(id = R.drawable.app_icon_master),
                 contentDescription = "MinhaRota PRO Logo Master",
                 modifier = Modifier
-                    .size(200.dp)
-                    .padding(bottom = 32.dp)
+                    .size(180.dp)
+                    .padding(bottom = 24.dp)
+            )
+
+            // Título de Boas-vindas
+            Text(
+                text = "Bem-vindo ao Futuro",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
             // Subtítulo
             Text(
                 text = "Sua jornada, seu controle financeiro.\nFaça login para continuar.",
                 fontSize = 14.sp,
-                color = Color.Gray,
+                color = Color.White.copy(alpha = 0.5f),
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(bottom = 48.dp)
+                modifier = Modifier.padding(bottom = 40.dp)
             )
 
-            // Botão Google (Estilizado sem ícone vetorial problemático)
+            // Botão Google (Real com ícone)
             Button(
-                onClick = { /* Implementar OAuth Google */ },
+                onClick = { /* TODO: Firebase Auth via Google Sign-In Credential Manager */ },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -63,18 +83,27 @@ fun AuthScreen(onAuthSuccess: () -> Unit) {
                     contentColor = Color.Black
                 )
             ) {
-                Text(
-                    text = "Continuar com Google",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        painter = painterResource(id = android.R.drawable.ic_menu_search), // Placeholder para G (substituir por asset G real se disponível)
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp),
+                        tint = Color.Unspecified
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text(
+                        text = "Continuar com Google",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botão Apple
+            // Botão Apple (Real com ícone)
             Button(
-                onClick = { /* Implementar OAuth Apple */ },
+                onClick = { /* TODO: Firebase Auth via Apple Sign-In */ },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -84,60 +113,83 @@ fun AuthScreen(onAuthSuccess: () -> Unit) {
                     contentColor = Color.White
                 )
             ) {
-                Text(
-                    text = " Continuar com Apple",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "", // Glifo oficial da Apple
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text(
+                        text = "Continuar com Apple",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Divisor Visual
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Divider(modifier = Modifier.weight(1f), color = Color.White.copy(alpha = 0.1f))
-                Text(
-                    text = "ou",
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    color = Color.Gray,
-                    fontSize = 12.sp
-                )
-                Divider(modifier = Modifier.weight(1f), color = Color.White.copy(alpha = 0.1f))
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Botão de Demonstração (Visitante)
+            // Botão de Visitante (Pílula com Gradiente Neon v1.9.0)
             Button(
                 onClick = onAuthSuccess,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
-                shape = RoundedCornerShape(16.dp),
+                    .height(56.dp)
+                    .background(
+                        brush = Brush.horizontalGradient(colors = listOf(cianoNeon, verdeEsmeralda)),
+                        shape = RoundedCornerShape(50.dp)
+                    ),
+                shape = RoundedCornerShape(50.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = VerdeEntrada.copy(alpha = 0.1f),
-                    contentColor = VerdeEntrada
+                    containerColor = Color.Transparent,
+                    contentColor = Color.Black
                 )
             ) {
                 Text(
                     text = "Entrar como Visitante",
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.ExtraBold
                 )
             }
 
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Texto de Termos
+            // Link: Entrar com e-mail
             Text(
-                text = "Ao continuar, você concorda com nossos\nTermos de Serviço e Política de Privacidade",
-                fontSize = 11.sp,
-                color = Color.Gray.copy(alpha = 0.6f),
-                textAlign = TextAlign.Center,
-                lineHeight = 16.sp
+                text = "Entrar com o e-mail",
+                color = Color.White.copy(alpha = 0.7f),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.clickable { onNavigateToEmailLogin() }
+            )
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            // Rodapé de Navegação
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "Não tem uma conta? ",
+                    color = Color.White.copy(alpha = 0.4f),
+                    fontSize = 14.sp
+                )
+                Text(
+                    text = "Cadastrar",
+                    color = VerdeNeon,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.clickable { onNavigateToRegister() }
+                )
+            }
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            Text(
+                text = "Já tem conta? Entrar",
+                color = Color.White.copy(alpha = 0.4f),
+                fontSize = 12.sp,
+                modifier = Modifier.clickable { /* Mantém na tela ou recarrega */ }
             )
         }
     }

@@ -27,6 +27,7 @@ import com.raffastudioproducoes.minharota.ui.screens.config.ConfigScreen
 import com.raffastudioproducoes.minharota.ui.screens.splash.SplashScreen
 import com.raffastudioproducoes.minharota.ui.screens.onboarding.OnboardingScreen
 import com.raffastudioproducoes.minharota.ui.screens.auth.AuthScreen
+import com.raffastudioproducoes.minharota.ui.screens.auth.RegisterScreen
 import com.raffastudioproducoes.minharota.ui.screens.contadiaria.ContaDiariaScreen
 import com.raffastudioproducoes.minharota.ui.screens.plans.PlansScreen
 
@@ -54,10 +55,23 @@ fun MainAppContent() {
             })
         }
         composable("login") {
-            AuthScreen(onAuthSuccess = {
-                navController.navigate(Rota.Hoje.route) {
-                    popUpTo("login") { inclusive = true }
+            AuthScreen(
+                onAuthSuccess = {
+                    navController.navigate(Rota.Hoje.route) {
+                        popUpTo("login") { inclusive = true }
+                    }
+                },
+                onNavigateToRegister = {
+                    navController.navigate("register")
+                },
+                onNavigateToEmailLogin = {
+                    navController.navigate("register") // Placeholder para fluxo de e-mail
                 }
+            )
+        }
+        composable("register") {
+            RegisterScreen(onNavigateBack = {
+                navController.popBackStack()
             })
         }
         composable(Rota.Hoje.route) {
