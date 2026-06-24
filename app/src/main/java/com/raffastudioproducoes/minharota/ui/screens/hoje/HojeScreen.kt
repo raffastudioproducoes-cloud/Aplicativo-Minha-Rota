@@ -30,7 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.ui.components.TimeInput
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
+import com.raffastudioproducoes.minharota.ui.theme.FundoDark
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import com.raffastudioproducoes.minharota.util.TextRecognitionHelper
 import java.text.SimpleDateFormat
 import java.util.*
@@ -60,18 +62,15 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     var mostrarModalRapido by remember { mutableStateOf(false) }
     var valorPreenchidoOcr by remember { mutableStateOf<Double?>(null) }
     
-    // Estados locais para inputs de custos
     var descCusto by remember { mutableStateOf("") }
     var valorCusto by remember { mutableStateOf("") }
     
     var showDatePicker by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
     
-    // Estados locais para Meta Diária e Ganho Bruto (evita formatação agressiva durante a digitação)
     var metaDiariaInput by remember { mutableStateOf(if (metaDiaria > 0) metaDiaria.toString() else "") }
     var ganhoBrutoInput by remember { mutableStateOf(if (ganhoBruto > 0) ganhoBruto.toString() else "") }
     
-    // Sincronizar inputs quando valores mudarem no ViewModel (ex: ao limpar campos ou via OCR)
     LaunchedEffect(metaDiaria) {
         if (metaDiaria == 0.0) {
             metaDiariaInput = ""
@@ -111,12 +110,12 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
         }
     )
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().background(FundoDark)) {
         if (isRidingMode) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF0F172A)),
+                    .background(FundoDark),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -124,7 +123,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                         text = "R$ ${String.format("%.2f", ganhoLiquido)}",
                         fontSize = 72.sp,
                         fontWeight = FontWeight.Bold,
-                        color = VerdeEntrada
+                        color = VerdeNeon
                     )
                     Spacer(modifier = Modifier.height(32.dp))
                     Button(
@@ -135,8 +134,8 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                         modifier = Modifier
                             .fillMaxWidth(0.9f)
                             .height(64.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = VerdeEntrada)
+                        shape = RoundedCornerShape(50.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
                     ) {
                         Text("Ganho Rápido", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.Black)
                     }
@@ -155,36 +154,24 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                 contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
             ) {
                 item {
-                    // 1. DASHBOARD CORE (PRESERVADO)
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(180.dp)
-                            .clip(RoundedCornerShape(24.dp))
-                            .background(
-                                Brush.verticalGradient(
-                                    colors = listOf(
-                                        Color.White.copy(alpha = 0.12f),
-                                        Color.White.copy(alpha = 0.04f)
-                                    )
-                                )
-                            )
-                    ) {
+                    // 1. DASHBOARD CORE PREMIUM
+                    PremiumGlassCard {
                         Column(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
                             Text(
                                 text = "Ganho Acumulado do Dia",
                                 style = MaterialTheme.typography.labelLarge,
-                                color = Color.White.copy(alpha = 0.6f)
+                                color = Color.White.copy(alpha = 0.9f),
+                                fontWeight = FontWeight.Medium
                             )
                             Text(
                                 text = "R$ ${String.format("%.2f", ganhoLiquido)}",
                                 fontSize = 42.sp,
                                 fontWeight = FontWeight.ExtraBold,
-                                color = VerdeEntrada
+                                color = VerdeNeon
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Row(
@@ -192,7 +179,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                                 horizontalArrangement = Arrangement.spacedBy(16.dp)
                             ) {
                                 MiniInfo(label = "Horas", value = horasTrabalhadas)
-                                VerticalDivider(modifier = Modifier.height(24.dp), color = Color.White.copy(alpha = 0.1f))
+                                Divider(modifier = Modifier.height(24.dp).width(1.dp), color = Color.White.copy(alpha = 0.1f))
                                 MiniInfo(label = "R$/Hora", value = "R$ ${String.format("%.2f", valorPorHora)}")
                             }
                         }
@@ -200,11 +187,11 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                     
                     Spacer(modifier = Modifier.height(24.dp))
                     
-                    // BOTÃO MODO RIDING
+                    // BOTÃO MODO RIDING PREMIUM
                     Button(
                         onClick = { viewModel.toggleRidingMode() },
                         modifier = Modifier.fillMaxWidth().height(56.dp),
-                        shape = RoundedCornerShape(16.dp),
+                        shape = RoundedCornerShape(50.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.05f))
                     ) {
                         Icon(Icons.Rounded.TwoWheeler, contentDescription = null, modifier = Modifier.size(20.dp))
@@ -231,7 +218,8 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                                 disabledBorderColor = Color.White.copy(alpha = 0.12f),
                                 disabledLabelColor = Color.White.copy(alpha = 0.4f),
                                 disabledLeadingIconColor = Color.White.copy(alpha = 0.4f)
-                            )
+                            ),
+                            shape = RoundedCornerShape(16.dp)
                         )
                     }
 
@@ -255,7 +243,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                             Checkbox(
                                 checked = houvePausa,
                                 onCheckedChange = { viewModel.updateHouvePausa(it) },
-                                colors = CheckboxDefaults.colors(checkedColor = VerdeEntrada)
+                                colors = CheckboxDefaults.colors(checkedColor = VerdeNeon)
                             )
                             Text("Houve intervalo / pausa?", color = Color.White.copy(alpha = 0.7f), fontSize = 14.sp)
                         }
@@ -274,7 +262,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = "Total trabalhado: $horasTrabalhadas",
-                            color = VerdeEntrada,
+                            color = VerdeNeon,
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp
                         )
@@ -284,97 +272,35 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
 
                     // BLOCO 3: VALORES DO DIA
                     SectionCard(title = "Valores do Dia") {
-                            OutlinedTextField(
-                                value = ganhoBrutoInput,
-                                onValueChange = { input ->
-                                    if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
-                                        val normalized = input.replace(',', '.')
-                                        ganhoBrutoInput = normalized
-                                        val v = normalized.toDoubleOrNull() ?: 0.0
-                                        viewModel.updateGanhoBruto(v)
-                                    }
-                                },
+                        OutlinedTextField(
+                            value = ganhoBrutoInput,
+                            onValueChange = { input ->
+                                if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
+                                    val normalized = input.replace(',', '.')
+                                    ganhoBrutoInput = normalized
+                                    val v = normalized.toDoubleOrNull() ?: 0.0
+                                    viewModel.updateGanhoBruto(v)
+                                }
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             label = { Text("Ganho Bruto (R$)") },
                             placeholder = { Text("Ex: 150.00") },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                            trailingIcon = {
-                                IconButton(onClick = { 
-                                    photoPickerLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                                }) {
-                                    BadgedBox(badge = { Badge(containerColor = Color(0xFFF59E0B)) { Text("IA", color = Color.Black, fontWeight = FontWeight.Bold) } }) {
-                                        Icon(Icons.Rounded.PhotoCamera, contentDescription = "OCR IA", tint = Color.White)
-                                    }
-                                }
-                            }
+                            shape = RoundedCornerShape(16.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = VerdeNeon,
+                                focusedLabelColor = VerdeNeon
+                            )
                         )
-
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text("Custos de rua / pessoal", style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.5f))
-                        Spacer(modifier = Modifier.height(8.dp))
-                        
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            OutlinedTextField(
-                                value = descCusto,
-                                onValueChange = { descCusto = it },
-                                modifier = Modifier.weight(1.5f),
-                                label = { Text("Descrição") },
-                                placeholder = { Text("Ex: Almoço") }
-                            )
-                            OutlinedTextField(
-                                value = valorCusto,
-                                onValueChange = { input ->
-                                    if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
-                                        valorCusto = input.replace(',', '.')
-                                    }
-                                },
-                                modifier = Modifier.weight(1f),
-                                label = { Text("R$") },
-                                placeholder = { Text("0.00") },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
-                            )
-                            IconButton(
-                                onClick = { 
-                                    val v = valorCusto.toDoubleOrNull() ?: 0.0
-                                    if (v > 0 && descCusto.isNotBlank()) {
-                                        viewModel.adicionarCusto(descCusto, v)
-                                        descCusto = ""
-                                        valorCusto = ""
-                                    }
-                                },
-                                modifier = Modifier.align(Alignment.CenterVertically).background(VerdeEntrada, CircleShape)
-                            ) {
-                                Icon(Icons.Rounded.Add, contentDescription = "Adicionar", tint = Color.Black)
-                            }
-                        }
                     }
-                }
 
-                // LISTA DINÂMICA DE CUSTOS
-                items(listaCustos) { custo ->
-                    CustoRow(custo = custo, onRemove = { viewModel.removerCusto(custo.id) })
-                }
-
-                item {
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // PAINEL DE RESUMO E PROGRESSO DA META
-                    SectionCard(title = "Resumo e Meta") {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            ResumoItem(label = "Líquido", value = "R$ ${String.format("%.2f", ganhoLiquido)}", color = if (ganhoLiquido >= 0) Color(0xFF10B981) else Color(0xFFEF4444))
-                            ResumoItem(label = "Por hora", value = "R$ ${String.format("%.2f", valorPorHora)}", color = Color.White)
-                            ResumoItem(label = "Meta", value = "R$ ${String.format("%.2f", metaDiaria)}", color = Color.White)
-                        }
-                        
-                        Spacer(modifier = Modifier.height(16.dp))
-                        
+                    // BLOCO 4: META DIÁRIA
+                    SectionCard(title = "Meta Diária") {
                         OutlinedTextField(
                             value = metaDiariaInput,
                             onValueChange = { input ->
-                                // Permite apenas números e um ponto decimal ou vírgula
                                 if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
                                     val normalized = input.replace(',', '.')
                                     metaDiariaInput = normalized
@@ -383,87 +309,16 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                                 }
                             },
                             modifier = Modifier.fillMaxWidth(),
-                            label = { Text("Meta diária manual (R$)") },
-                            placeholder = { Text("Ex: 150.00") },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
-                        )
-                        
-                        val progresso = if (metaDiaria > 0) (ganhoLiquido / metaDiaria).coerceIn(0.0, 1.0).toFloat() else 0f
-                        Spacer(modifier = Modifier.height(12.dp))
-                        LinearProgressIndicator(
-                            progress = { progresso },
-                            modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
-                            color = VerdeEntrada,
-                            trackColor = Color.White.copy(alpha = 0.1f)
-                        )
-                        Text(
-                            text = "${(progresso * 100).toInt()}% da meta atingida",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = Color.White.copy(alpha = 0.5f),
-                            modifier = Modifier.padding(top = 4.dp)
+                            label = { Text("Definir Meta (R$)") },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = VerdeNeon,
+                                focusedLabelColor = VerdeNeon
+                            )
                         )
                     }
-
-                    Spacer(modifier = Modifier.height(32.dp))
-
-                    // BOTÃO DE SALVAMENTO
-                    Button(
-                        onClick = { 
-                            viewModel.salvarTurno(context) {
-                                Toast.makeText(context, "Dia salvo e distribuído com sucesso!", Toast.LENGTH_LONG).show()
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth().height(64.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF10B981))
-                    ) {
-                        Icon(Icons.Rounded.Save, contentDescription = null, tint = Color.Black)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Salvar dia e distribuir nas caixinhas", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.Black)
-                    }
                 }
-            }
-        }
-
-        if (mostrarModalRapido) {
-            com.raffastudioproducoes.minharota.ui.components.ModalRegistroRapido(
-                valorInicial = valorPreenchidoOcr ?: 0.0,
-                onDismiss = { 
-                    mostrarModalRapido = false
-                    valorPreenchidoOcr = null
-                },
-                onSave = { valor ->
-                    viewModel.registrarGanhoRapido(valor)
-                    mostrarModalRapido = false
-                    valorPreenchidoOcr = null
-                }
-            )
-        }
-
-        if (showDatePicker) {
-            DatePickerDialog(
-                onDismissRequest = { showDatePicker = false },
-                confirmButton = {
-                    TextButton(onClick = {
-                        datePickerState.selectedDateMillis?.let { millis ->
-                            val calendar = Calendar.getInstance().apply { timeInMillis = millis }
-                            // Compensar fuso horário do DatePicker que retorna UTC
-                            calendar.add(Calendar.DAY_OF_MONTH, 1)
-                            val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                            viewModel.alterarDataRegistro(format.format(calendar.time))
-                        }
-                        showDatePicker = false
-                    }) {
-                        Text("Confirmar", color = VerdeEntrada)
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showDatePicker = false }) {
-                        Text("Cancelar", color = Color.White.copy(alpha = 0.7f))
-                    }
-                }
-            ) {
-                DatePicker(state = datePickerState)
             }
         }
     }
@@ -471,61 +326,26 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
 
 @Composable
 fun SectionCard(title: String, content: @Composable ColumnScope.() -> Unit) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    PremiumGlassCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+    ) {
         Text(
             text = title,
             style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.Bold,
-            color = Color.White.copy(alpha = 0.7f),
-            modifier = Modifier.padding(bottom = 8.dp)
+            color = Color.White.copy(alpha = 0.9f),
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier.padding(bottom = 12.dp)
         )
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp),
-            color = Color.White.copy(alpha = 0.03f)
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                content()
-            }
-        }
-    }
-}
-
-@Composable
-fun CustoRow(custo: HojeViewModel.CustoItem, onRemove: () -> Unit) {
-    Surface(
-        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-        shape = RoundedCornerShape(12.dp),
-        color = Color.White.copy(alpha = 0.02f)
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column {
-                Text(text = custo.descricao, color = Color.White, fontWeight = FontWeight.Medium)
-                Text(text = "R$ ${String.format("%.2f", custo.valor)}", color = Color(0xFFEF4444), fontSize = 12.sp)
-            }
-            IconButton(onClick = onRemove) {
-                Icon(Icons.Rounded.Delete, contentDescription = "Remover", tint = Color.White.copy(alpha = 0.3f), modifier = Modifier.size(20.dp))
-            }
-        }
-    }
-}
-
-@Composable
-fun ResumoItem(label: String, value: String, color: Color) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = label, style = MaterialTheme.typography.labelSmall, color = Color.White.copy(alpha = 0.4f))
-        Text(text = value, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, color = color)
+        content()
     }
 }
 
 @Composable
 fun MiniInfo(label: String, value: String) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = label, style = MaterialTheme.typography.labelSmall, color = Color.White.copy(alpha = 0.4f))
+        Text(text = label, style = MaterialTheme.typography.labelSmall, color = Color.White.copy(alpha = 0.5f))
         Text(text = value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = Color.White)
     }
 }

@@ -14,15 +14,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
+import com.raffastudioproducoes.minharota.ui.theme.FundoDark
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
@@ -33,7 +34,7 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF121214))
+            .background(FundoDark)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -45,22 +46,12 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
-        // Card Mestre de Desempenho (Glassmorphism)
-        Box(
+        // Card Mestre de Desempenho Premium
+        PremiumGlassCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .clip(RoundedCornerShape(24.dp))
-                .background(Color.White.copy(alpha = 0.05f))
-                .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(24.dp))
         ) {
-            // Efeito de Blur no fundo do card
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .blur(16.dp)
-            )
-
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -68,14 +59,15 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
             ) {
                 Text(
                     text = "Média Atual",
-                    color = Color.White.copy(alpha = 0.6f),
+                    color = Color.White.copy(alpha = 0.9f),
+                    fontWeight = FontWeight.Medium,
                     fontSize = 14.sp
                 )
                 Text(
                     text = "${String.format("%.1f", mediaKmL)} Km/L",
                     fontSize = 48.sp,
                     fontWeight = FontWeight.ExtraBold,
-                    color = if (mediaKmL > 0) Color(0xFF10B981) else Color(0xFF3B82F6)
+                    color = VerdeNeon
                 )
             }
         }
@@ -115,20 +107,20 @@ fun EfficiencyInput(
         value = value,
         onValueChange = onValueChange,
         modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(50.dp)),
-        label = { Text(label, color = Color.Gray) },
-        leadingIcon = { Icon(icon, contentDescription = null, tint = Color.Gray) },
-        suffix = { Text(suffix, color = Color.Gray) },
+            .fillMaxWidth(),
+        label = { Text(label, color = Color.White.copy(alpha = 0.5f)) },
+        leadingIcon = { Icon(icon, contentDescription = null, tint = Color.White.copy(alpha = 0.5f)) },
+        suffix = { Text(suffix, color = Color.White.copy(alpha = 0.5f)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         singleLine = true,
         shape = RoundedCornerShape(50.dp),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Color(0xFF3B82F6),
+            focusedBorderColor = VerdeNeon,
             unfocusedBorderColor = Color.White.copy(alpha = 0.1f),
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
-            cursorColor = Color(0xFF3B82F6)
+            cursorColor = VerdeNeon,
+            focusedLabelColor = VerdeNeon
         )
     )
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun CardConta(
@@ -23,26 +24,20 @@ fun CardConta(
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
-    Card(
+    PremiumGlassCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp, horizontal = 16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF1E1E20)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
+            .padding(vertical = 4.dp, horizontal = 16.dp)
     ) {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = nome,
                 style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = if (pago) Color.Gray else Color.White,
+                fontWeight = FontWeight.Medium,
+                color = if (pago) Color.White.copy(alpha = 0.5f) else Color.White.copy(alpha = 0.9f),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -50,7 +45,7 @@ fun CardConta(
             Text(
                 text = "Vence em: $dataVencimento",
                 style = MaterialTheme.typography.labelMedium,
-                color = Color.Gray,
+                color = Color.White.copy(alpha = 0.5f),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -59,9 +54,9 @@ fun CardConta(
 
             Text(
                 text = "R$ ${String.format("%.2f", valor)}",
-                fontSize = 20.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.ExtraBold,
-                color = if (pago) Color.Gray else Color(0xFFEF4444),
+                color = if (pago) Color.White.copy(alpha = 0.5f) else VerdeNeon,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -74,13 +69,13 @@ fun CardConta(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onEdit) {
-                    Icon(Icons.Rounded.Edit, contentDescription = "Editar", tint = Color.Gray, modifier = Modifier.size(20.dp))
+                    Icon(Icons.Rounded.Edit, contentDescription = "Editar", tint = Color.White.copy(alpha = 0.5f), modifier = Modifier.size(20.dp))
                 }
                 
                 Spacer(modifier = Modifier.width(16.dp))
                 
                 IconButton(onClick = onDelete) {
-                    Icon(Icons.Rounded.Delete, contentDescription = "Excluir", tint = Color.Gray.copy(alpha = 0.5f), modifier = Modifier.size(20.dp))
+                    Icon(Icons.Rounded.Delete, contentDescription = "Excluir", tint = Color.White.copy(alpha = 0.3f), modifier = Modifier.size(20.dp))
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -89,7 +84,7 @@ fun CardConta(
                     Icon(
                         imageVector = if (pago) Icons.Rounded.CheckCircle else Icons.Rounded.RadioButtonUnchecked,
                         contentDescription = if (pago) "Paga" else "Pendente",
-                        tint = if (pago) Color(0xFF10B981) else Color.Gray.copy(alpha = 0.3f),
+                        tint = if (pago) VerdeNeon else Color.White.copy(alpha = 0.3f),
                         modifier = Modifier.size(24.dp)
                     )
                 }

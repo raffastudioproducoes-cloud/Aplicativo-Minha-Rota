@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.ContaFixa
 import com.raffastudioproducoes.minharota.ui.components.CardConta
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
+import com.raffastudioproducoes.minharota.ui.theme.FundoDark
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
@@ -44,26 +46,23 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
         viewModel.carregarContas(context)
     }
 
-    Column(modifier = Modifier.fillMaxSize().background(Color(0xFF0F172A))) {
-        // Card de Destaque: Meta Diária
-        Card(
+    Column(modifier = Modifier.fillMaxSize().background(FundoDark)) {
+        // Card de Destaque: Meta Diária Premium
+        PremiumGlassCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color(0xFF1E1E20)
-            ),
-            shape = RoundedCornerShape(24.dp)
+                .padding(16.dp)
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(24.dp),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "Meta Diária Automática",
                     style = MaterialTheme.typography.labelLarge,
-                    color = Color.Gray,
+                    color = Color.White.copy(alpha = 0.9f),
+                    fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -72,7 +71,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                     text = "R$ ${String.format("%.2f", metaDiaria)}",
                     fontSize = 42.sp,
                     fontWeight = FontWeight.ExtraBold,
-                    color = VerdeEntrada,
+                    color = VerdeNeon,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -80,7 +79,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                 Text(
                     text = "Baseado em suas contas fixas pendentes",
                     style = MaterialTheme.typography.labelSmall,
-                    color = Color.Gray.copy(alpha = 0.6f),
+                    color = Color.White.copy(alpha = 0.5f),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -125,7 +124,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                         .height(56.dp),
-                    shape = RoundedCornerShape(16.dp),
+                    shape = RoundedCornerShape(50.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.05f))
                 ) {
                     Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.White)
@@ -139,7 +138,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                     Text(
                         text = "Contas Pagas",
                         style = MaterialTheme.typography.titleSmall,
-                        color = Color.Gray,
+                        color = Color.White.copy(alpha = 0.5f),
                         modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp)
                     )
                 }
@@ -156,32 +155,29 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                 }
             }
 
-            // SEÇÃO GESTÃO MEI
+            // SEÇÃO GESTÃO MEI PREMIUM
             item {
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
                     text = "GESTÃO MEI",
                     style = MaterialTheme.typography.labelMedium,
-                    color = Color.Gray,
+                    color = Color.White.copy(alpha = 0.5f),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
                 
-                Card(
+                PremiumGlassCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
-                        .clip(RoundedCornerShape(24.dp)),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF121214)),
-                    onClick = { if (!isPro) showPaywallModal = true }
                 ) {
-                    Column(modifier = Modifier.padding(20.dp)) {
+                    Column(modifier = Modifier.fillMaxWidth()) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Icon(Icons.Rounded.BarChart, contentDescription = null, tint = VerdeEntrada)
+                                Icon(Icons.Rounded.BarChart, contentDescription = null, tint = VerdeNeon)
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Text("FATURAMENTO ANUAL MEI", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, color = Color.White)
                             }
@@ -190,10 +186,10 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                             Box(
                                 modifier = Modifier
                                     .clip(CircleShape)
-                                    .background(VerdeEntrada.copy(alpha = 0.1f))
+                                    .background(VerdeNeon.copy(alpha = 0.1f))
                                     .padding(horizontal = 8.dp, vertical = 4.dp)
                             ) {
-                                Text("${String.format("%.1f", percentual)}%", color = VerdeEntrada, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                                Text("${String.format("%.1f", percentual)}%", color = VerdeNeon, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                             }
                         }
 
@@ -201,12 +197,12 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
 
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Faturado em 2026", color = Color.Gray, fontSize = 12.sp)
-                                Text("R$ ${String.format("%.0f", faturamentoAnual)}", color = VerdeEntrada, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                                Text("Faturado em 2026", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                                Text("R$ ${String.format("%.0f", faturamentoAnual)}", color = VerdeNeon, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                             }
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Margem restante", color = Color.Gray, fontSize = 12.sp)
-                                Text("R$ ${String.format("%.0f", limiteMei - faturamentoAnual)}", color = VerdeEntrada, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                                Text("Margem restante", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                                Text("R$ ${String.format("%.0f", limiteMei - faturamentoAnual)}", color = VerdeNeon, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                             }
                         }
 
@@ -216,16 +212,16 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                         LinearProgressIndicator(
                             progress = { progresso },
                             modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
-                            color = VerdeEntrada,
-                            trackColor = Color.White.copy(alpha = 0.05f)
+                            color = VerdeNeon,
+                            trackColor = Color.White.copy(alpha = 0.1f)
                         )
                         
                         Row(
                             modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("${String.format("%.1f", progresso * 100)}% do limite", color = Color.Gray, fontSize = 10.sp)
-                            Text("Teto: R$ ${String.format("%.0f", limiteMei)}", color = Color.Gray, fontSize = 10.sp)
+                            Text("${String.format("%.1f", progresso * 100)}% do limite", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                            Text("Teto: R$ ${String.format("%.0f", limiteMei)}", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -233,7 +229,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                         val projecao = if (faturamentoAnual > 0) (faturamentoAnual / Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) * 365 else 0.0
                         Text(
                             text = "📈 Com a média atual, a projeção anual é R$ ${String.format("%.0f", projecao)} — ${if (projecao <= limiteMei) "dentro do limite MEI. ✅" else "atenção ao limite! ⚠️"}",
-                            color = Color.Gray,
+                            color = Color.White.copy(alpha = 0.5f),
                             fontSize = 11.sp
                         )
                     }
@@ -290,7 +286,7 @@ fun ContaDialog(
         title = { Text(titulo, fontWeight = FontWeight.Bold) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                OutlinedTextField(value = nome, onValueChange = { nome = it }, label = { Text("Nome da Conta") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = nome, onValueChange = { nome = it }, label = { Text("Nome da Conta") }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp))
                 OutlinedTextField(
                     value = valor,
                     onValueChange = { input ->
@@ -300,9 +296,10 @@ fun ContaDialog(
                     },
                     label = { Text("Valor (R$)") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
                 )
-                OutlinedTextField(value = vencimento, onValueChange = { vencimento = it }, label = { Text("Vencimento (Ex: 20/06)") }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(value = vencimento, onValueChange = { vencimento = it }, label = { Text("Vencimento (Ex: 20/06)") }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp))
             }
         },
         confirmButton = {
@@ -313,7 +310,7 @@ fun ContaDialog(
                         onConfirm(nome, v, vencimento)
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = VerdeEntrada)
+                colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
             ) {
                 Text("Salvar", color = Color.Black)
             }

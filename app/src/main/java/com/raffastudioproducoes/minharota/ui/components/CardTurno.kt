@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun CardTurno(
@@ -19,23 +19,20 @@ fun CardTurno(
     ganhoLiquido: Double,
     valorPorHora: Double = 0.0
 ) {
-    Card(
+    PremiumGlassCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            .padding(16.dp)
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "Resumo do Turno",
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                fontWeight = FontWeight.Medium,
+                color = Color.White.copy(alpha = 0.9f)
             )
             
             Spacer(modifier = Modifier.height(8.dp))
@@ -43,14 +40,14 @@ fun CardTurno(
             Text(
                 text = "R$ ${String.format("%.2f", ganhoLiquido)}",
                 style = MaterialTheme.typography.headlineLarge,
-                fontWeight = FontWeight.Bold,
-                color = VerdeEntrada
+                fontWeight = FontWeight.ExtraBold,
+                color = VerdeNeon
             )
             
             Text(
                 text = "$horasTrabalhadas trabalhadas",
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                color = Color.White.copy(alpha = 0.5f)
             )
             
             Spacer(modifier = Modifier.height(16.dp))
@@ -62,23 +59,33 @@ fun CardTurno(
                 ResumoItem(
                     label = "Bruto",
                     valor = "R$ ${String.format("%.2f", ganhoBruto)}",
-                    cor = MaterialTheme.colorScheme.onSurface
+                    cor = Color.White.copy(alpha = 0.9f)
                 )
                 
-                VerticalDivider(modifier = Modifier.height(40.dp))
+                Divider(
+                    modifier = Modifier
+                        .height(40.dp)
+                        .width(1.dp),
+                    color = Color.White.copy(alpha = 0.1f)
+                )
                 
                 ResumoItem(
                     label = "Custos",
                     valor = "R$ ${String.format("%.2f", custoRua)}",
-                    cor = Color(0xFFE57373) // Vermelho para custos
+                    cor = Color(0xFFE57373)
                 )
 
-                VerticalDivider(modifier = Modifier.height(40.dp))
+                Divider(
+                    modifier = Modifier
+                        .height(40.dp)
+                        .width(1.dp),
+                    color = Color.White.copy(alpha = 0.1f)
+                )
 
                 ResumoItem(
                     label = "R$ / Hora",
                     valor = "R$ ${String.format("%.2f", valorPorHora)}",
-                    cor = MaterialTheme.colorScheme.primary
+                    cor = Color.White.copy(alpha = 0.9f)
                 )
             }
         }
@@ -91,7 +98,7 @@ fun ResumoItem(label: String, valor: String, cor: Color) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+            color = Color.White.copy(alpha = 0.5f)
         )
         Text(
             text = valor,

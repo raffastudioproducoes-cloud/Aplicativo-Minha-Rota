@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -27,8 +28,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.Caixinha
 import com.raffastudioproducoes.minharota.ui.components.PaywallModal
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.theme.FundoDark
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun CaixasScreen(
@@ -55,7 +58,7 @@ fun CaixasScreen(
 
     val caixinhaSelecionada = caixinhas.find { it.id == caixinhaSelecionadaId }
 
-    Column(modifier = Modifier.fillMaxSize().background(Color(0xFF0F172A))) {
+    Column(modifier = Modifier.fillMaxSize().background(FundoDark)) {
         // 1. BARRA DE FILTROS DE PERÍODO
         PeriodoSelector(selected = filtroPeriodo, onSelect = { viewModel.setFiltroPeriodo(it) })
 
@@ -70,10 +73,10 @@ fun CaixasScreen(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(caixinha.emoji, fontSize = 24.sp)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(caixinha.nome, color = Color.White, fontWeight = FontWeight.Bold)
+                            Text(caixinha.nome, color = Color.White.copy(alpha = 0.9f), fontWeight = FontWeight.Medium)
                             Spacer(modifier = Modifier.weight(1f))
                             val percCalculado = (caixinha.percentual / 100.0) * ganhoLiquidoHoje
-                            Text("R$ ${String.format("%.2f", percCalculado)} - ${caixinha.percentual.toInt()}% do dia", color = Color.Gray, fontSize = 12.sp)
+                            Text("R$ ${String.format("%.2f", percCalculado)} - ${caixinha.percentual.toInt()}% do dia", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
                         }
                         
                         Spacer(modifier = Modifier.height(16.dp))
@@ -85,7 +88,11 @@ fun CaixasScreen(
                             label = { Text("Total guardado (R$)") },
                             placeholder = { Text("0.00") },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeEntrada)
+                            shape = RoundedCornerShape(16.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = VerdeNeon,
+                                focusedLabelColor = VerdeNeon
+                            )
                         )
                         
                         Spacer(modifier = Modifier.height(16.dp))
@@ -98,9 +105,9 @@ fun CaixasScreen(
                                     valorDepositoManual = ""
                                 }
                             },
-                            modifier = Modifier.fillMaxWidth().height(50.dp),
-                            shape = RoundedCornerShape(25.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = VerdeEntrada)
+                            modifier = Modifier.fillMaxWidth().height(56.dp),
+                            shape = RoundedCornerShape(50.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
                         ) {
                             Icon(Icons.Rounded.Savings, contentDescription = null, tint = Color.Black)
                             Spacer(modifier = Modifier.width(8.dp))
@@ -115,7 +122,7 @@ fun CaixasScreen(
                 Text(
                     text = "VISÃO GERAL",
                     style = MaterialTheme.typography.labelMedium,
-                    color = Color.Gray,
+                    color = Color.White.copy(alpha = 0.5f),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
                 LazyRow(
@@ -134,7 +141,7 @@ fun CaixasScreen(
                 Text(
                     text = "GERENCIAR CAIXINHAS",
                     style = MaterialTheme.typography.labelMedium,
-                    color = Color.Gray,
+                    color = Color.White.copy(alpha = 0.5f),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
             }
@@ -151,7 +158,7 @@ fun CaixasScreen(
                 val totalAlocado = caixinhas.sumOf { it.percentual }
                 Text(
                     text = "Total alocado: ${totalAlocado.toInt()}%",
-                    color = if (totalAlocado > 100) Color.Red else VerdeEntrada,
+                    color = if (totalAlocado > 100) Color.Red else VerdeNeon,
                     fontSize = 12.sp,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
@@ -170,12 +177,12 @@ fun CaixasScreen(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.Gray)
+                        Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.White.copy(alpha = 0.5f))
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("+ Nova caixinha", color = Color.Gray)
+                        Text("+ Nova caixinha", color = Color.White.copy(alpha = 0.5f))
                         if (!isPro && caixinhas.size >= 3) {
                             Spacer(modifier = Modifier.width(8.dp))
-                            Icon(Icons.Rounded.Lock, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(14.dp))
+                            Icon(Icons.Rounded.Lock, contentDescription = null, tint = Color.White.copy(alpha = 0.5f), modifier = Modifier.size(14.dp))
                         }
                     }
                 }
@@ -196,7 +203,7 @@ fun CaixasScreen(
                                 modifier = Modifier
                                     .size(40.dp)
                                     .clip(CircleShape)
-                                    .background(if (isSelected) VerdeEntrada else Color.White.copy(alpha = 0.05f))
+                                    .background(if (isSelected) VerdeNeon else Color.White.copy(alpha = 0.05f))
                                     .clickable { viewModel.toggleDiaFolga(context, index + 1) },
                                 contentAlignment = Alignment.Center
                             ) {
@@ -207,7 +214,7 @@ fun CaixasScreen(
                     Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         text = "Dias marcados são excluídos do cálculo da meta automática.",
-                        color = Color.Gray,
+                        color = Color.White.copy(alpha = 0.5f),
                         fontSize = 11.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
@@ -236,7 +243,7 @@ fun PeriodoSelector(selected: String, onSelect: (String) -> Unit) {
                     .weight(1f)
                     .height(40.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(if (isSelected) VerdeEntrada else Color.White.copy(alpha = 0.05f))
+                    .background(if (isSelected) VerdeNeon else Color.White.copy(alpha = 0.05f))
                     .clickable { onSelect(periodo) },
                 contentAlignment = Alignment.Center
             ) {
@@ -247,44 +254,34 @@ fun PeriodoSelector(selected: String, onSelect: (String) -> Unit) {
 }
 
 @Composable
-fun SectionCard(title: String, content: @Composable () -> Unit) {
+fun SectionCard(title: String, content: @Composable ColumnScope.() -> Unit) {
     Column(modifier = Modifier.padding(16.dp)) {
-        Text(title, style = MaterialTheme.typography.labelMedium, color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF121214)),
-            shape = RoundedCornerShape(24.dp)
-        ) {
-            Column(modifier = Modifier.padding(20.dp)) { content() }
-        }
+        Text(title, style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.5f), modifier = Modifier.padding(bottom = 8.dp))
+        PremiumGlassCard(modifier = Modifier.fillMaxWidth(), content = content)
     }
 }
 
 @Composable
 fun MiniCardProgresso(caixinha: Caixinha, periodo: String, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier.width(160.dp).clickable { onClick() },
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF121214)),
-        shape = RoundedCornerShape(20.dp)
+    PremiumGlassCard(
+        modifier = Modifier.width(160.dp).clickable { onClick() }
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(caixinha.emoji, fontSize = 18.sp)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(caixinha.nome, color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 1)
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            Text("R$ ${String.format("%.0f", caixinha.saldoAtual)} / $periodo", color = VerdeEntrada, fontSize = 14.sp, fontWeight = FontWeight.Bold)
-            Spacer(modifier = Modifier.height(8.dp))
-            val progresso = if (caixinha.metaValor > 0) (caixinha.saldoAtual / caixinha.metaValor).toFloat().coerceIn(0f, 1f) else 0f
-            LinearProgressIndicator(
-                progress = { progresso },
-                modifier = Modifier.fillMaxWidth().height(4.dp).clip(CircleShape),
-                color = VerdeEntrada,
-                trackColor = Color.White.copy(alpha = 0.05f)
-            )
-            Text("${(progresso * 100).toInt()}% · R$ ${String.format("%.0f", caixinha.saldoAtual)}", color = Color.Gray, fontSize = 10.sp, modifier = Modifier.padding(top = 4.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(caixinha.emoji, fontSize = 18.sp)
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(caixinha.nome, color = Color.White.copy(alpha = 0.9f), fontSize = 12.sp, fontWeight = FontWeight.Medium, maxLines = 1)
         }
+        Spacer(modifier = Modifier.height(12.dp))
+        Text("R$ ${String.format("%.0f", caixinha.saldoAtual)} / $periodo", color = VerdeNeon, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(8.dp))
+        val progresso = if (caixinha.metaValor > 0) (caixinha.saldoAtual / caixinha.metaValor).toFloat().coerceIn(0f, 1f) else 0f
+        LinearProgressIndicator(
+            progress = { progresso },
+            modifier = Modifier.fillMaxWidth().height(4.dp).clip(CircleShape),
+            color = VerdeNeon,
+            trackColor = Color.White.copy(alpha = 0.1f)
+        )
+        Text("${(progresso * 100).toInt()}% · R$ ${String.format("%.0f", caixinha.saldoAtual)}", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp, modifier = Modifier.padding(top = 4.dp))
     }
 }
 
@@ -292,83 +289,42 @@ fun MiniCardProgresso(caixinha: Caixinha, periodo: String, onClick: () -> Unit) 
 fun GerenciarCaixinhaItem(caixinha: Caixinha, onUpdate: (Caixinha) -> Unit, onDelete: () -> Unit) {
     var expandido by remember { mutableStateOf(false) }
     
-    Card(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF121214)),
-        shape = RoundedCornerShape(16.dp)
+    PremiumGlassCard(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(caixinha.emoji, modifier = Modifier.clickable { /* Mudar emoji */ })
-                Spacer(modifier = Modifier.width(8.dp))
-                BasicTextField(
-                    value = caixinha.nome,
-                    onValueChange = { onUpdate(caixinha.copy(nome = it)) },
-                    textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontWeight = FontWeight.Bold)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(caixinha.emoji, modifier = Modifier.clickable { /* Mudar emoji */ })
+            Spacer(modifier = Modifier.width(8.dp))
+            BasicTextField(
+                value = caixinha.nome,
+                onValueChange = { onUpdate(caixinha.copy(nome = it)) },
+                textStyle = androidx.compose.ui.text.TextStyle(color = Color.White.copy(alpha = 0.9f), fontWeight = FontWeight.Medium)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            IconButton(onClick = onDelete) { Icon(Icons.Rounded.Delete, contentDescription = null, tint = Color.White.copy(alpha = 0.3f), modifier = Modifier.size(20.dp)) }
+            IconButton(onClick = { expandido = !expandido }) { Icon(if (expandido) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore, contentDescription = null, tint = Color.White.copy(alpha = 0.5f)) }
+        }
+        
+        if (expandido) {
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                OutlinedTextField(
+                    value = caixinha.percentual.toString(),
+                    onValueChange = { onUpdate(caixinha.copy(percentual = it.toFloatOrNull() ?: 0f)) },
+                    modifier = Modifier.weight(1f),
+                    label = { Text("% do Ganho") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    shape = RoundedCornerShape(12.dp)
                 )
-                Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = onDelete) { Icon(Icons.Rounded.Delete, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(20.dp)) }
-                IconButton(onClick = { expandido = !expandido }) { Icon(if (expandido) Icons.Rounded.ExpandLess else Icons.Rounded.ExpandMore, contentDescription = null, tint = Color.Gray) }
-            }
-            
-            if (expandido) {
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    OutlinedTextField(
-                        value = caixinha.percentual.toString(),
-                        onValueChange = { onUpdate(caixinha.copy(percentual = it.toDoubleOrNull() ?: 0.0)) },
-                        modifier = Modifier.weight(1f),
-                        label = { Text("%:") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                    )
-                    
-                    var menuPeriodo by remember { mutableStateOf(false) }
-                    Box(modifier = Modifier.weight(1f)) {
-                        OutlinedTextField(
-                            value = caixinha.periodo,
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text("Período") },
-                            trailingIcon = { IconButton(onClick = { menuPeriodo = true }) { Icon(Icons.Rounded.ArrowDropDown, null) } }
-                        )
-                        DropdownMenu(expanded = menuPeriodo, onDismissRequest = { menuPeriodo = false }) {
-                            listOf("Dia", "Semana", "Mês", "Ano").forEach { p ->
-                                DropdownMenuItem(text = { Text(p) }, onClick = { onUpdate(caixinha.copy(periodo = p)); menuPeriodo = false })
-                            }
-                        }
-                    }
-                }
-                
-                Spacer(modifier = Modifier.height(12.dp))
-                
-                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    Switch(
-                        checked = !caixinha.pausada,
-                        onCheckedChange = { onUpdate(caixinha.copy(pausada = !it)) },
-                        colors = SwitchDefaults.colors(checkedThumbColor = VerdeEntrada)
-                    )
-                    Text(if (caixinha.pausada) "Pausada" else "Ativa", color = Color.Gray, fontSize = 12.sp, modifier = Modifier.padding(start = 8.dp))
-                    Spacer(modifier = Modifier.weight(1f))
-                    OutlinedTextField(
-                        value = if (caixinha.metaValor > 0) caixinha.metaValor.toString() else "",
-                        onValueChange = { onUpdate(caixinha.copy(metaValor = it.toDoubleOrNull() ?: 0.0)) },
-                        modifier = Modifier.width(140.dp),
-                        label = { Text("🎯 Meta (R$):") },
-                        placeholder = { Text("Sem meta") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
-                    )
-                }
+                OutlinedTextField(
+                    value = caixinha.metaValor.toString(),
+                    onValueChange = { onUpdate(caixinha.copy(metaValor = it.toDoubleOrNull() ?: 0.0)) },
+                    modifier = Modifier.weight(1f),
+                    label = { Text("Meta (R$)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    shape = RoundedCornerShape(12.dp)
+                )
             }
         }
     }
-}
-
-@Composable
-fun BasicTextField(value: String, onValueChange: (String) -> Unit, textStyle: androidx.compose.ui.text.TextStyle) {
-    androidx.compose.foundation.text.BasicTextField(
-        value = value,
-        onValueChange = onValueChange,
-        textStyle = textStyle,
-        cursorBrush = androidx.compose.ui.graphics.SolidColor(VerdeEntrada)
-    )
 }
