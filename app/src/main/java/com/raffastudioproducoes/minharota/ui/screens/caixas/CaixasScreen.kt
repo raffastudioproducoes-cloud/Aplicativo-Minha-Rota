@@ -310,7 +310,7 @@ fun GerenciarCaixinhaItem(caixinha: Caixinha, onUpdate: (Caixinha) -> Unit, onDe
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 OutlinedTextField(
                     value = caixinha.percentual.toString(),
-                    onValueChange = { onUpdate(caixinha.copy(percentual = it.toFloatOrNull() ?: 0f)) },
+                    onValueChange = { onUpdate(caixinha.copy(percentual = it.toDoubleOrNull() ?: 0.0)) },
                     modifier = Modifier.weight(1f),
                     label = { Text("% do Ganho") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
