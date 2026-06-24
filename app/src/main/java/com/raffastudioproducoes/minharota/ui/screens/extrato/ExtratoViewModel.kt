@@ -35,8 +35,53 @@ class ExtratoViewModel : ViewModel() {
     fun carregarMovimentacoes(context: Context) {
         viewModelScope.launch {
             val prefs = SharedPreferencesManager(context)
-            val todasMovimentacoes = prefs.obterMovimentacoes()
-            _todasMovimentacoes.value = todasMovimentacoes.sortedByDescending { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(it.data) }
+            val listaFinal = mutableListOf<Movimentacao>()
+            
+            // 1. Turnos (Ganhos e Custos Diários)
+            prefs.obterTurnos().forEach { turno ->
+                listaFinal.add(Movimentacao(
+                    id = "turno_${turno.id}",
+                    descricao = "Turno: ${turno.data}",
+                    valor = turno.ganhoBruto,
+                    data = turno.data,
+                    tipo = "ENTRADA"
+                ))
+                if (turno.custoRua > 0) {
+                    listaFinal.add(Movimentacao(
+                        id = "custo_${turno.id}",
+                        descricao = "Custos do Turno",
+                        valor = turno.custoRua,
+                        data = turno.data,
+                        tipo = "SAÍDA"
+                    ))
+                }
+            }
+            
+            // 2. Contas Fixas (Pagas)
+            prefs.obterContas().filter { it.paga }.forEach { conta ->
+                listaFinal.add(Movimentacao(
+                    id = "conta_${conta.id}",
+                    descricao = "Conta: ${conta.nome}",
+                    valor = conta.valor,
+                    data = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()), // Ideal seria ter dataPagamento no model
+                    tipo = "SAÍDA"
+                ))
+            }
+            
+            // 3. Dívidas (Valor Pago)
+            prefs.obterDividas().filter { it.valorPago > 0 }.forEach { divida ->
+                listaFinal.add(Movimentacao(
+                    id = "divida_${divida.id}",
+                    descricao = "Dívida: ${divida.credor}",
+                    valor = divida.valorPago,
+                    data = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
+                    tipo = "SAÍDA"
+                ))
+            }
+
+            _todasMovimentacoes.value = listaFinal.sortedByDescending { 
+                try { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(it.data) } catch(e: Exception) { Date(0) }
+            }
             atualizarMovimentacoesFiltradas()
             calcularTotais()
         }
@@ -50,8 +95,8 @@ class ExtratoViewModel : ViewModel() {
     private fun atualizarMovimentacoesFiltradas() {
         val filtro = _filtroSelecionado.value
         val movimentacoesFiltradas = when (filtro) {
-            "Entrada" -> _todasMovimentacoes.value.filter { it.tipo == "Entrada" }
-            "Saída" -> _todasMovimentacoes.value.filter { it.tipo == "Saída" }
+            "Entrada" -> _todasMovimentacoes.value.filter { it.tipo == "ENTRADA" }
+            "Saída" -> _todasMovimentacoes.value.filter { it.tipo == "SAÍDA" }
             else -> _todasMovimentacoes.value
         }
         _movimentacoes.value = movimentacoesFiltradas
@@ -63,8 +108,8 @@ class ExtratoViewModel : ViewModel() {
 
         for (mov in _todasMovimentacoes.value) {
             when (mov.tipo) {
-                "Entrada" -> entradas += mov.valor
-                "Saída" -> saidas += mov.valor
+                "ENTRADA" -> entradas += mov.valor
+                "SAÍDA" -> saidas += mov.valor
             }
         }
 

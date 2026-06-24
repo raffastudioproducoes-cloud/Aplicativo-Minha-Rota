@@ -13,6 +13,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +38,6 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     
     val dataRegistro by viewModel.dataRegistro.collectAsState()
     val ganhoBruto by viewModel.ganhoBruto.collectAsState()
-    val custoRua by viewModel.custoRua.collectAsState()
     val ganhoLiquido by viewModel.ganhoLiquido.collectAsState()
     val valorPorHora by viewModel.valorPorHora.collectAsState()
     val horasTrabalhadas by viewModel.horasTrabalhadas.collectAsState()
@@ -43,6 +45,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     val listaCustos by viewModel.listaCustos.collectAsState()
     val exibirAlertaMei by viewModel.exibirAlertaMei.collectAsState()
     val faturamentoAcumulado by viewModel.faturamentoBrutoAcumulado.collectAsState()
+    val isFolga by viewModel.isFolga.collectAsState()
     
     val horaInicio by viewModel.horaInicio.collectAsState()
     val horaFim by viewModel.horaFim.collectAsState()
@@ -53,11 +56,11 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     var descCusto by remember { mutableStateOf("") }
     var valorCusto by remember { mutableStateOf("") }
     var showDatePicker by remember { mutableStateOf(false) }
+    val datePickerState = rememberDatePickerState()
     
     var metaDiariaInput by remember { mutableStateOf(if (metaDiaria > 0) metaDiaria.toString() else "") }
     var ganhoBrutoInput by remember { mutableStateOf(if (ganhoBruto > 0) ganhoBruto.toString() else "") }
 
-    // Fundo Carbono Profundo Absoluto
     val fundoCarbono = Color(0xFF0C0C0E)
     val verdeEsmeralda = Color(0xFF10B981)
 
@@ -96,12 +99,11 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
         ) {
-            // ALERTA MEI CRÍTICO
             if (exibirAlertaMei) {
                 item {
                     Card(
                         modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF991B1B)), // Vermelho escuro/atenção
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFF991B1B)),
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Row(
@@ -113,7 +115,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                             Column {
                                 Text("LIMITE MEI ATINGIDO!", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                                 Text(
-                                    "Seu faturamento bruto (R$ ${String.format("%.2f", faturamentoAcumulado)}) está próximo ou acima do teto anual do MEI. Regularize sua situação fiscal.",
+                                    "Seu faturamento bruto (R$ ${String.format("%.2f", faturamentoAcumulado)}) está próximo ou acima do teto anual do MEI.",
                                     color = Color.White.copy(alpha = 0.9f),
                                     fontSize = 12.sp
                                 )
@@ -123,30 +125,43 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                 }
             }
 
-            // 1. Card DATA DO REGISTRO
             item {
                 HojeSectionCard(
                     title = "DATA DO REGISTRO",
                     subtitle = "Data (padrão: hoje)",
                     icon = Icons.Rounded.CalendarToday
                 ) {
-                    OutlinedTextField(
-                        value = dataRegistro,
-                        onValueChange = {},
-                        readOnly = true,
-                        modifier = Modifier.fillMaxWidth().clickable { showDatePicker = true },
-                        enabled = false,
-                        shape = RoundedCornerShape(16.dp),
-                        colors = OutlinedTextFieldDefaults.colors(
-                            disabledTextColor = Color.White,
-                            disabledBorderColor = Color.White.copy(alpha = 0.1f)
-                        )
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Surface(
+                            onClick = { showDatePicker = true },
+                            color = Color.Transparent,
+                            shape = RoundedCornerShape(16.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.1f)),
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(text = dataRegistro, color = Color.White)
+                                Icon(Icons.Rounded.CalendarMonth, contentDescription = null, tint = VerdeNeon)
+                            }
+                        }
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text("FOLGA", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = if (isFolga) VerdeNeon else Color.White.copy(alpha = 0.3f))
+                            Switch(
+                                checked = isFolga,
+                                onCheckedChange = { viewModel.toggleFolga() },
+                                colors = SwitchDefaults.colors(checkedThumbColor = VerdeNeon, checkedTrackColor = VerdeNeon.copy(alpha = 0.3f))
+                            )
+                        }
+                    }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            // 2. Card HORÁRIOS DE TRABALHO
             item {
                 HojeSectionCard(
                     title = "HORÁRIOS DE TRABALHO",
@@ -160,7 +175,6 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                             TimeInput(label = "Término", selectedTime = horaFim, onTimeSelected = { viewModel.updateHoraFim(it) })
                         }
                     }
-                    
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
@@ -172,7 +186,6 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                         )
                         Text("Houve intervalo / pausa?", color = Color.White.copy(alpha = 0.7f), fontSize = 14.sp)
                     }
-
                     if (houvePausa) {
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Box(modifier = Modifier.weight(1f)) {
@@ -183,29 +196,21 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                             }
                         }
                     }
-                    
                     Spacer(modifier = Modifier.height(8.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Rounded.Timer, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "Horas trabalhadas: $horasTrabalhadas",
-                            color = VerdeNeon,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 14.sp
-                        )
+                        Text(text = "Horas trabalhadas: $horasTrabalhadas", color = VerdeNeon, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            // 3. Card VALORES DO DIA E CUSTOS
             item {
                 HojeSectionCard(
                     title = "VALORES DO DIA E CUSTOS",
                     icon = Icons.Rounded.AttachMoney
                 ) {
-                    // Ganho Bruto com Botão Câmera IA
                     OutlinedTextField(
                         value = ganhoBrutoInput,
                         onValueChange = { input ->
@@ -235,12 +240,8 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                         shape = RoundedCornerShape(16.dp),
                         colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = verdeEsmeralda)
                     )
-
                     Spacer(modifier = Modifier.height(16.dp))
-                    
-                    // Seção de Custos
                     Text("Custos de rua / pessoal", color = Color.White.copy(alpha = 0.6f), fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                    
                     if (listaCustos.isEmpty()) {
                         Text("Nenhum custo adicionado.", color = Color.White.copy(alpha = 0.3f), fontSize = 14.sp, modifier = Modifier.padding(vertical = 8.dp))
                     } else {
@@ -254,34 +255,16 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                             }
                         }
                     }
-
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                        OutlinedTextField(
-                            value = descCusto,
-                            onValueChange = { descCusto = it },
-                            modifier = Modifier.weight(1.5f),
-                            placeholder = { Text("Gasolina, lanche...", fontSize = 12.sp) },
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        OutlinedTextField(
-                            value = valorCusto,
-                            onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) valorCusto = it },
-                            modifier = Modifier.weight(1f),
-                            placeholder = { Text("Valor", fontSize = 12.sp) },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        IconButton(
-                            onClick = {
-                                val v = valorCusto.replace(',', '.').toDoubleOrNull() ?: 0.0
-                                if (v > 0 && descCusto.isNotBlank()) {
-                                    viewModel.adicionarCusto(descCusto, v)
-                                    descCusto = ""
-                                    valorCusto = ""
-                                }
-                            },
-                            modifier = Modifier.size(48.dp).background(verdeEsmeralda, RoundedCornerShape(12.dp))
-                        ) {
+                        OutlinedTextField(value = descCusto, onValueChange = { descCusto = it }, modifier = Modifier.weight(1.5f), placeholder = { Text("Gasolina...", fontSize = 12.sp) }, shape = RoundedCornerShape(12.dp))
+                        OutlinedTextField(value = valorCusto, onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) valorCusto = it }, modifier = Modifier.weight(1f), placeholder = { Text("Valor", fontSize = 12.sp) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), shape = RoundedCornerShape(12.dp))
+                        IconButton(onClick = {
+                            val v = valorCusto.replace(',', '.').toDoubleOrNull() ?: 0.0
+                            if (v > 0 && descCusto.isNotBlank()) {
+                                viewModel.adicionarCusto(descCusto, v)
+                                descCusto = ""; valorCusto = ""
+                            }
+                        }, modifier = Modifier.size(48.dp).background(verdeEsmeralda, RoundedCornerShape(12.dp))) {
                             Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.Black)
                         }
                     }
@@ -289,7 +272,6 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            // 4. Linha de Indicadores Rápidos
             item {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     IndicadorBloco(label = "Líquido", value = "R$ ${String.format("%.2f", ganhoLiquido)}", color = verdeEsmeralda, modifier = Modifier.weight(1f))
@@ -299,53 +281,58 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            // 5. Card PROGRESSO DA META
             item {
-                HojeSectionCard(
-                    title = "PROGRESSO DA META",
-                    subtitle = "Meta diária manual (R$) — vazio = usa a automática das contas",
-                    icon = Icons.Rounded.TrendingUp
-                ) {
-                    OutlinedTextField(
-                        value = metaDiariaInput,
-                        onValueChange = { input ->
-                            if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
-                                val normalized = input.replace(',', '.')
-                                metaDiariaInput = normalized
-                                viewModel.updateMetaDiaria(normalized.toDoubleOrNull() ?: 0.0)
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text("Ex: 250.00") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                        shape = RoundedCornerShape(16.dp)
-                    )
-                    
-                    Spacer(modifier = Modifier.height(16.dp))
-                    
-                    val progresso = if (metaDiaria > 0) (ganhoLiquido / metaDiaria).coerceIn(0.0, 1.0).toFloat() else 0f
-                    LinearProgressIndicator(
-                        progress = progresso,
-                        modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
-                        color = verdeEsmeralda,
-                        trackColor = Color.White.copy(alpha = 0.1f)
-                    )
-                    Row(modifier = Modifier.fillMaxWidth().padding(top = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text("${(progresso * 100).toInt()}%", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
-                        Text("R$ ${ganhoLiquido.toInt()} / R$ ${metaDiaria.toInt()}", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                if (!isFolga) {
+                    HojeSectionCard(
+                        title = "PROGRESSO DA META",
+                        subtitle = "Meta diária manual (R$)",
+                        icon = Icons.Rounded.TrendingUp
+                    ) {
+                        OutlinedTextField(
+                            value = metaDiariaInput,
+                            onValueChange = { input ->
+                                if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
+                                    val normalized = input.replace(',', '.')
+                                    metaDiariaInput = normalized
+                                    viewModel.updateMetaDiaria(normalized.toDoubleOrNull() ?: 0.0)
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            placeholder = { Text("Ex: 250.00") },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                            shape = RoundedCornerShape(16.dp)
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        val progresso = if (metaDiaria > 0) (ganhoLiquido / metaDiaria).coerceIn(0.0, 1.0).toFloat() else 0f
+                        LinearProgressIndicator(
+                            progress = { progresso },
+                            modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
+                            color = verdeEsmeralda,
+                            trackColor = Color.White.copy(alpha = 0.1f)
+                        )
+                        Row(modifier = Modifier.fillMaxWidth().padding(top = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Text("${(progresso * 100).toInt()}%", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                            Text("R$ ${ganhoLiquido.toInt()} / R$ ${metaDiaria.toInt()}", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                        }
+                    }
+                } else {
+                    PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                            Icon(Icons.Rounded.Info, contentDescription = null, tint = VerdeNeon)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Dia de Folga: Meta diária desativada.", color = Color.White.copy(alpha = 0.7f), fontSize = 14.sp)
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(24.dp))
             }
 
-            // 6. Botão de Ação do Rodapé
             item {
                 Button(
                     onClick = { 
                         viewModel.salvarTurno(context) {
-                            Toast.makeText(context, "Dia salvo e distribuído com sucesso!", Toast.LENGTH_SHORT).show()
-                            ganhoBrutoInput = ""
-                            metaDiariaInput = ""
+                            Toast.makeText(context, "Dia salvo com sucesso!", Toast.LENGTH_SHORT).show()
+                            ganhoBrutoInput = ""; metaDiariaInput = ""
                         }
                     },
                     modifier = Modifier.fillMaxWidth().height(56.dp),
@@ -358,25 +345,35 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                 }
             }
         }
+
+        if (showDatePicker) {
+            DatePickerDialog(
+                onDismissRequest = { showDatePicker = false },
+                confirmButton = {
+                    TextButton(onClick = {
+                        datePickerState.selectedDateMillis?.let { millis ->
+                            val date = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
+                            val formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                            viewModel.alterarDataRegistro(formattedDate)
+                        }
+                        showDatePicker = false
+                    }) { Text("Confirmar", color = VerdeNeon) }
+                },
+                dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("Cancelar") } }
+            ) { DatePicker(state = datePickerState) }
+        }
     }
 }
 
 @Composable
-fun HojeSectionCard(
-    title: String,
-    subtitle: String? = null,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    content: @Composable ColumnScope.() -> Unit
-) {
+fun HojeSectionCard(title: String, subtitle: String? = null, icon: androidx.compose.ui.graphics.vector.ImageVector, content: @Composable ColumnScope.() -> Unit) {
     PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 12.dp)) {
             Icon(icon, contentDescription = null, tint = Color.White.copy(alpha = 0.6f), modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(8.dp))
             Column {
                 Text(text = title, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.9f))
-                if (subtitle != null) {
-                    Text(text = subtitle, fontSize = 10.sp, color = Color.White.copy(alpha = 0.4f))
-                }
+                if (subtitle != null) Text(text = subtitle, fontSize = 10.sp, color = Color.White.copy(alpha = 0.4f))
             }
         }
         content()

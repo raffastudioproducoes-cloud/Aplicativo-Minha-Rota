@@ -32,6 +32,9 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
     val context = LocalContext.current
     val movimentacoes by viewModel.movimentacoes.collectAsState()
     val filtroSelecionado by viewModel.filtroSelecionado.collectAsState()
+    val totalEntradas by viewModel.totalEntradas.collectAsState()
+    val totalSaidas by viewModel.totalSaidas.collectAsState()
+    val saldoTotal by viewModel.saldoTotal.collectAsState()
 
     // Cores Fintech Premium v1.7.0
     val corEntradas = Color(0xFF34D399) // Verde Menta
@@ -95,7 +98,7 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text("Entradas", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text("R$ 335,00", color = corEntradas, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    Text("R$ ${String.format("%.0f", totalEntradas)}", color = corEntradas, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 }
             }
 
@@ -104,7 +107,7 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text("Saídas", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text("R$ 120,00", color = corSaidas, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    Text("R$ ${String.format("%.0f", totalSaidas)}", color = corSaidas, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 }
             }
 
@@ -113,7 +116,7 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text("Saldo", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text("R$ 215,00", color = corSaldo, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    Text("R$ ${String.format("%.0f", saldoTotal)}", color = corSaldo, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 }
             }
         }

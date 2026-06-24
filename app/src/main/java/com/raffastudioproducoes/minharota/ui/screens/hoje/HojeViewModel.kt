@@ -59,6 +59,9 @@ class HojeViewModel : ViewModel() {
     private val _horaFimPausa = MutableStateFlow("")
     val horaFimPausa: StateFlow<String> = _horaFimPausa.asStateFlow()
 
+    private val _isFolga = MutableStateFlow(false)
+    val isFolga: StateFlow<Boolean> = _isFolga.asStateFlow()
+
     data class GanhoRapido(val horario: String, val valor: Double)
 
     private val _ganhosRapidos = MutableStateFlow<List<GanhoRapido>>(emptyList())
@@ -239,6 +242,13 @@ class HojeViewModel : ViewModel() {
     fun updateHoraFimPausa(hora: String) {
         _horaFimPausa.value = hora
         calcularHorasTrabalhadas()
+    }
+
+    fun toggleFolga() {
+        _isFolga.value = !_isFolga.value
+        if (_isFolga.value) {
+            _metaDiaria.value = 0.0
+        }
     }
 
     fun alterarDataRegistro(novaData: String) {

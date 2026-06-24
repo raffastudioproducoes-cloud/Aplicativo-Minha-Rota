@@ -49,4 +49,29 @@ class DividasViewModel : ViewModel() {
             }
         }
     }
+
+    fun adicionarDivida(context: Context, credor: String, valorTotal: Double) {
+        viewModelScope.launch {
+            val prefs = SharedPreferencesManager(context)
+            val dividasAtuais = prefs.obterDividas().toMutableList()
+            val novaDivida = Divida(
+                id = java.util.UUID.randomUUID().toString(),
+                credor = credor,
+                valorTotal = valorTotal,
+                valorPago = 0.0
+            )
+            dividasAtuais.add(novaDivida)
+            prefs.salvarDividas(dividasAtuais)
+            _dividas.value = dividasAtuais
+        }
+    }
+
+    fun excluirDivida(context: Context, dividaId: String) {
+        viewModelScope.launch {
+            val prefs = SharedPreferencesManager(context)
+            val dividasAtuais = prefs.obterDividas().filter { it.id != dividaId }
+            prefs.salvarDividas(dividasAtuais)
+            _dividas.value = dividasAtuais
+        }
+    }
 }

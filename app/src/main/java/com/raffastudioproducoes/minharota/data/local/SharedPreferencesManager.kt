@@ -225,7 +225,36 @@ class SharedPreferencesManager(context: Context) {
         return sharedPreferences.getFloat(KEY_FATURAMENTO_MEI, 0.0f).toDouble()
     }
 
+    // --- Garagem ---
+    fun salvarKmAtual(km: Int) {
+        sharedPreferences.edit().putInt(KEY_KM_ATUAL, km).apply()
+    }
+
+    fun obterKmAtual(): Int {
+        return sharedPreferences.getInt(KEY_KM_ATUAL, 0)
+    }
+
+    fun salvarManutencoes(lista: List<com.raffastudioproducoes.minharota.ui.screens.garagem.Manutencao>) {
+        val jsonString = json.encodeToString(lista)
+        sharedPreferences.edit().putString(KEY_MANUTENCOES, jsonString).apply()
+    }
+
+    fun obterManutencoes(): List<com.raffastudioproducoes.minharota.ui.screens.garagem.Manutencao> {
+        val jsonString = sharedPreferences.getString(KEY_MANUTENCOES, null)
+        return if (jsonString != null) {
+            try {
+                json.decodeFromString(jsonString)
+            } catch (e: Exception) {
+                emptyList()
+            }
+        } else {
+            emptyList()
+        }
+    }
+
     companion object {
+        private const val KEY_KM_ATUAL = "km_atual"
+        private const val KEY_MANUTENCOES = "manutencoes"
         private const val KEY_FATURAMENTO_MEI = "faturamento_mei_acumulado"
         private const val KEY_CAIXINHAS = "caixinhas"
         private const val KEY_TURNOS = "turnos"
