@@ -17,8 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.raffastudioproducoes.minharota.ui.theme.RoxoPrimary
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
+import com.raffastudioproducoes.minharota.ui.theme.FundoDark
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
@@ -34,30 +35,32 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(FundoDark)
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
         Text(
             text = "Análise de Performance",
             style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Color.White
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Cards de Destaque
+        // Cards de Destaque Glassmorphic
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             HighlightCard(
                 title = "Melhor Dia",
                 value = melhorDia,
                 modifier = Modifier.weight(1f),
-                color = RoxoPrimary
+                color = VerdeNeon
             )
             HighlightCard(
                 title = "Melhor Hora",
                 value = melhorHora,
                 modifier = Modifier.weight(1f),
-                color = VerdeEntrada
+                color = Color(0xFF34D399) // Verde Menta
             )
         }
 
@@ -66,43 +69,50 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
         Text(
             text = "⭐ Horários de Ouro",
             style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Color.White
         )
         Text(
             text = "Mapa de calor baseado nos seus ganhos reais",
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+            color = Color.White.copy(alpha = 0.5f)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Heatmap Table
-        HeatmapTable(heatmapData)
+        // Heatmap Table envolto em Glass
+        PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+            HeatmapTable(heatmapData)
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Placeholder para o outro gráfico
-        Card(
+        // Placeholder para o outro gráfico em Glass
+        PremiumGlassCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f))
+                .height(200.dp)
         ) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "Gráfico Ganhos vs Despesas\n(Próxima Fase)", style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = "Gráfico Ganhos vs Despesas\n(Próxima Fase)", 
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.5f),
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                )
             }
         }
+        
+        Spacer(modifier = Modifier.height(100.dp))
     }
 }
 
 @Composable
 fun HighlightCard(title: String, value: String, modifier: Modifier, color: Color) {
-    Card(
-        modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = title, style = MaterialTheme.typography.labelSmall)
+    PremiumGlassCard(modifier = modifier) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            Text(text = title, style = MaterialTheme.typography.labelSmall, color = Color.White.copy(alpha = 0.5f))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(text = value, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = color)
         }
     }
@@ -120,9 +130,6 @@ fun HeatmapTable(data: Array<DoubleArray>) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.surface)
-            .padding(8.dp)
             .horizontalScroll(scrollState)
     ) {
         Column {
@@ -131,7 +138,7 @@ fun HeatmapTable(data: Array<DoubleArray>) {
                 Spacer(modifier = Modifier.width(30.dp))
                 dias.forEach { dia ->
                     Box(modifier = Modifier.size(36.dp), contentAlignment = Alignment.Center) {
-                        Text(text = dia, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+                        Text(text = dia, style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.7f))
                     }
                 }
             }
@@ -143,17 +150,18 @@ fun HeatmapTable(data: Array<DoubleArray>) {
                         text = "${hora}h",
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.width(30.dp),
-                        fontSize = 10.sp
+                        fontSize = 10.sp,
+                        color = Color.White.copy(alpha = 0.5f)
                     )
                     for (dia in 0..6) {
                         val valor = data[dia][hora]
                         val intensidade = (valor / safeMaxVal).toFloat()
                         
-                        // Lógica de cores: Tons de verde/roxo baseados na intensidade
+                        // Lógica de cores Fintech Premium
                         val cellColor = if (valor > 0) {
-                            VerdeEntrada.copy(alpha = (0.2f + (intensidade * 0.8f)).coerceAtMost(1f))
+                            VerdeNeon.copy(alpha = (0.2f + (intensidade * 0.8f)).coerceAtMost(1f))
                         } else {
-                            MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f)
+                            Color.White.copy(alpha = 0.05f)
                         }
 
                         Box(

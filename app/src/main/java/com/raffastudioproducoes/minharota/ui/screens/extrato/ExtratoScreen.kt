@@ -1,5 +1,6 @@
 package com.raffastudioproducoes.minharota.ui.screens.extrato
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,9 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.Movimentacao
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
+import com.raffastudioproducoes.minharota.ui.theme.FundoDark
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
@@ -28,51 +32,91 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
     val movimentacoes by viewModel.movimentacoes.collectAsState()
     val filtroSelecionado by viewModel.filtroSelecionado.collectAsState()
 
+    // Cores específicas do Extrato v1.7.0
+    val corEntradas = Color(0xFF34D399) // Verde Menta Neon
+    val corSaidas = Color(0xFFF87171)   // Coral Suave Premium
+    val corSaldo = Color(0xFF10B981)    // Verde Esmeralda Vibrante
+
     LaunchedEffect(Unit) {
         viewModel.carregarMovimentacoes(context)
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(FundoDark)) {
         Text(
             text = "Meu Extrato",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
+            color = Color.White,
             modifier = Modifier.padding(16.dp)
         )
 
-        // Filtros em pílula
+        // Filtros em pílula Premium
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            FilterChip(selected = filtroSelecionado == "7 dias", onClick = { viewModel.aplicarFiltro("7 dias") }, label = { Text("7 dias") })
-            FilterChip(selected = filtroSelecionado == "15 dias", onClick = { viewModel.aplicarFiltro("15 dias") }, label = { Text("15 dias") })
-            FilterChip(selected = filtroSelecionado == "Este mês", onClick = { viewModel.aplicarFiltro("Este mês") }, label = { Text("Este mês") })
-            FilterChip(selected = filtroSelecionado == "Todos", onClick = { viewModel.aplicarFiltro("Todos") }, label = { Text("Todos") })
+            val filtros = listOf("7 dias", "15 dias", "Este mês", "Todos")
+            filtros.forEach { filtro ->
+                val isSelected = filtroSelecionado == filtro
+                FilterChip(
+                    selected = isSelected,
+                    onClick = { viewModel.aplicarFiltro(filtro) },
+                    label = { Text(filtro) },
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = Color.White.copy(alpha = 0.05f),
+                        selectedContainerColor = VerdeNeon,
+                        labelColor = Color.White.copy(alpha = 0.7f),
+                        selectedLabelColor = Color.Black
+                    ),
+                    border = FilterChipDefaults.filterChipBorder(
+                        borderColor = Color.White.copy(alpha = 0.1f),
+                        selectedBorderColor = Color.Transparent,
+                        borderWidth = 1.dp
+                    )
+                )
+            }
         }
 
-        // Card de Resumo
-        Card(
+        // Seção de Cards de Saldo Independentes (Refatoração v1.7.0)
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Row(
-                modifier = Modifier.padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                ResumoColuna("Entradas", "R$ 335,00", VerdeEntrada)
-                ResumoColuna("Saídas", "R$ 67,00", Color(0xFFE57373))
-                ResumoColuna("Saldo", "R$ 268,00", MaterialTheme.colorScheme.primary)
+            // Card 1: Entradas
+            PremiumGlassCard(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text("Entradas", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text("R$ 335,00", color = corEntradas, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                }
+            }
+
+            // Card 2: Saídas
+            PremiumGlassCard(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text("Saídas", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text("R$ 67,00", color = corSaidas, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                }
+            }
+
+            // Card 3: Saldo Total
+            PremiumGlassCard(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text("Saldo", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text("R$ 268,00", color = corSaldo, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                }
             }
         }
 
         LazyColumn(
             modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(bottom = 16.dp)
+            contentPadding = PaddingValues(bottom = 100.dp)
         ) {
             items(movimentacoes) { mov ->
                 CardMovimentacao(mov)
@@ -82,40 +126,44 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
 }
 
 @Composable
-fun ResumoColuna(label: String, valor: String, cor: Color) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = label, style = MaterialTheme.typography.labelSmall)
-        Text(text = valor, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = cor)
-    }
-}
-
-@Composable
 fun CardMovimentacao(mov: Movimentacao) {
-    ListItem(
-        headlineContent = { Text(mov.descricao, fontWeight = FontWeight.Bold) },
-        supportingContent = { Text(mov.data) },
-        leadingContent = {
+    val cor = if (mov.tipo == "ENTRADA") Color(0xFF34D399) else Color(0xFFF87171)
+    
+    PremiumGlassCard(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Surface(
                 shape = CircleShape,
-                color = if (mov.tipo == "ENTRADA") VerdeEntrada.copy(alpha = 0.1f) else Color.Red.copy(alpha = 0.1f),
+                color = cor.copy(alpha = 0.1f),
                 modifier = Modifier.size(40.dp)
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Icon(
                         imageVector = if (mov.tipo == "ENTRADA") Icons.Rounded.ArrowUpward else Icons.Rounded.ArrowDownward,
                         contentDescription = null,
-                        tint = if (mov.tipo == "ENTRADA") VerdeEntrada else Color.Red,
+                        tint = cor,
                         modifier = Modifier.size(20.dp)
                     )
                 }
             }
-        },
-        trailingContent = {
+            
+            Spacer(modifier = Modifier.width(12.dp))
+            
+            Column(modifier = Modifier.weight(1f)) {
+                Text(mov.descricao, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.9f), fontSize = 14.sp)
+                Text(mov.data, color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+            }
+            
             Text(
                 text = "${if (mov.tipo == "ENTRADA") "+" else "-"} R$ ${String.format("%.2f", mov.valor)}",
                 fontWeight = FontWeight.Bold,
-                color = if (mov.tipo == "ENTRADA") VerdeEntrada else Color.Red
+                color = cor,
+                fontSize = 14.sp
             )
         }
-    )
+    }
 }

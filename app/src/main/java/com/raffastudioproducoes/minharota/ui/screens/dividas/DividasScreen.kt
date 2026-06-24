@@ -1,5 +1,6 @@
 package com.raffastudioproducoes.minharota.ui.screens.dividas
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,9 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.Divida
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
+import com.raffastudioproducoes.minharota.ui.theme.FundoDark
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
@@ -33,59 +37,62 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
     var dividaSelecionada by remember { mutableStateOf<Divida?>(null) }
     var valorPagamento by remember { mutableStateOf("") }
 
+    // Cores específicas de Dívidas v1.7.0
+    val corEmAberto = Color(0xFFFB7185) // Coral/Alerta
+    val corTotalPago = Color(0xFF34D399) // Verde Conquistado
+
     LaunchedEffect(Unit) {
         viewModel.carregarDividas(context)
     }
 
-    val totalEmAberto = dividas.sumOf { it.valorTotal - it.valorPago }
-    val totalPago = dividas.sumOf { it.valorPago }
+    Column(modifier = Modifier.fillMaxSize().background(FundoDark)) {
+        Text(
+            text = "Minhas Dívidas",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            modifier = Modifier.padding(16.dp)
+        )
 
-    Column(modifier = Modifier.fillMaxSize()) {
-            Text(
-                text = "Minhas Dívidas",
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(16.dp)
-            )
-            // TODO: Adicionar botão para adicionar nova dívida aqui, se necessário
-
-        // Card de Totalizadores
-        Card(
+        // Seção de Totalizadores Independentes (Refatoração v1.7.0)
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Row(
-                modifier = Modifier.padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "Em aberto", style = MaterialTheme.typography.labelSmall)
-                Text(
-                    text = "R$ ${String.format("%.2f", dividas.sumOf { it.valorTotal - it.valorPago })}",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFFE57373)
-                )
+            // Card 1: Em aberto
+            PremiumGlassCard(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text("Em aberto", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "R$ ${String.format("%.2f", dividas.sumOf { it.valorTotal - it.valorPago })}",
+                        color = corEmAberto,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
                 }
-                VerticalDivider(modifier = Modifier.height(40.dp))
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "Total Pago", style = MaterialTheme.typography.labelSmall)
-                Text(
-                    text = "R$ ${String.format("%.2f", dividas.sumOf { it.valorPago })}",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = VerdeEntrada
-                )
+            }
+
+            // Card 2: Total Pago
+            PremiumGlassCard(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text("Total Pago", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "R$ ${String.format("%.2f", dividas.sumOf { it.valorPago })}",
+                        color = corTotalPago,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
                 }
             }
         }
 
         LazyColumn(
             modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(bottom = 16.dp)
+            contentPadding = PaddingValues(bottom = 100.dp)
         ) {
             items(dividas) { divida ->
                 CardDivida(
@@ -101,37 +108,43 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
 
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                OutlinedButton(
+                Button(
                     onClick = { /* TODO: Implementar adicionar dívida */ },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                         .height(56.dp),
-                    shape = MaterialTheme.shapes.medium
+                    shape = RoundedCornerShape(50.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.05f))
                 ) {
-                    Icon(Icons.Rounded.Add, contentDescription = null)
+                    Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.White)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Adicionar Dívida")
+                    Text("Adicionar Dívida", color = Color.White)
                 }
             }
         }
     }
 
-    // AlertDialog para Pagamento Parcial (fora do CardDivida)
+    // AlertDialog para Pagamento Parcial
     if (mostrarDialogoPagamento && dividaSelecionada != null) {
         AlertDialog(
             onDismissRequest = { mostrarDialogoPagamento = false },
-            title = { Text("Pagar Parcela") },
+            title = { Text("Pagar Parcela", fontWeight = FontWeight.Bold) },
             text = {
                 Column {
-                    Text("Credor: ${dividaSelecionada?.credor ?: ""}", style = MaterialTheme.typography.bodySmall)
-                    Text("Saldo devedor: R$ ${String.format("%.2f", dividaSelecionada?.let { it.valorTotal - it.valorPago } ?: 0.0)}", style = MaterialTheme.typography.bodySmall)
+                    Text("Credor: ${dividaSelecionada?.credor ?: ""}", color = Color.White.copy(alpha = 0.7f))
+                    Text("Saldo devedor: R$ ${String.format("%.2f", dividaSelecionada?.let { it.valorTotal - it.valorPago } ?: 0.0)}", color = Color.White.copy(alpha = 0.5f))
                     Spacer(modifier = Modifier.height(12.dp))
                     OutlinedTextField(
                         value = valorPagamento,
                         onValueChange = { valorPagamento = it },
                         label = { Text("Valor a Pagar") },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = VerdeNeon,
+                            focusedLabelColor = VerdeNeon
+                        )
                     )
                 }
             },
@@ -145,13 +158,14 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
                             dividaSelecionada = null
                             valorPagamento = ""
                         }
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
                 ) {
-                    Text("Confirmar")
+                    Text("Confirmar", color = Color.Black)
                 }
             },
             dismissButton = {
-                Button(onClick = { mostrarDialogoPagamento = false }) {
+                TextButton(onClick = { mostrarDialogoPagamento = false }) {
                     Text("Cancelar")
                 }
             }
@@ -162,33 +176,34 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
 @Composable
 fun CardDivida(divida: Divida, onAbrirDialogoPagamento: () -> Unit, onQuitarDivida: (String) -> Unit) {
     val progresso = (divida.valorPago / divida.valorTotal).toFloat()
+    val corTotalPago = Color(0xFF34D399)
 
-    Card(
+    PremiumGlassCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp, horizontal = 16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f))
+            .padding(vertical = 4.dp, horizontal = 16.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = divida.credor, fontWeight = FontWeight.Bold)
+                Text(text = divida.credor, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.9f))
                 Text(
                     text = "R$ ${String.format("%.2f", divida.valorTotal)}",
-                    style = MaterialTheme.typography.bodyMedium
+                    color = Color.White.copy(alpha = 0.7f),
+                    fontSize = 14.sp
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             LinearProgressIndicator(
-                progress = progresso,
+                progress = { progresso },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
                     .clip(RoundedCornerShape(4.dp)),
-                color = VerdeEntrada,
-                trackColor = VerdeEntrada.copy(alpha = 0.2f)
+                color = corTotalPago,
+                trackColor = Color.White.copy(alpha = 0.1f)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Row(
@@ -197,32 +212,38 @@ fun CardDivida(divida: Divida, onAbrirDialogoPagamento: () -> Unit, onQuitarDivi
             ) {
                 Text(
                     text = "Pago: R$ ${String.format("%.2f", divida.valorPago)}",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = VerdeEntrada
+                    color = corTotalPago,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium
                 )
                 Text(
                     text = "${(progresso * 100).toInt()}%",
-                    style = MaterialTheme.typography.labelSmall
+                    color = Color.White.copy(alpha = 0.5f),
+                    fontSize = 12.sp
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Button(
                     onClick = onAbrirDialogoPagamento,
                     enabled = divida.valorPago < divida.valorTotal,
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(50.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.1f))
                 ) {
-                    Text("Pagar Parcela")
+                    Text("Parcela", fontSize = 12.sp)
                 }
                 Button(
                     onClick = { onQuitarDivida(divida.id) },
                     enabled = divida.valorPago < divida.valorTotal,
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(50.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
                 ) {
-                    Text("Quitar")
+                    Text("Quitar", color = Color.Black, fontSize = 12.sp)
                 }
             }
         }

@@ -25,8 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.FundoDark
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun PerfilScreen(
@@ -49,22 +50,13 @@ fun PerfilScreen(
         viewModel.carregarDadosPerfil(context)
     }
 
-    // Launcher para Galeria
-    val galeriaLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.PickVisualMedia()
-    ) { uri ->
-        uri?.let {
-            viewModel.atualizarFotoPerfilUrl(it.toString(), context)
-        }
+    // Launchers
+    val galeriaLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        uri?.let { viewModel.atualizarFotoPerfilUrl(it.toString(), context) }
     }
 
-    // Launcher para Câmera
-    val camaraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture()
-    ) { success ->
-        if (success) {
-            // URI já foi salvo no ViewModel
-        }
+    val camaraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) { /* URI já no ViewModel */ }
     }
 
     Column(
@@ -86,127 +78,139 @@ fun PerfilScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Foto de Perfil com Botão de Câmera
-        Box(
-            modifier = Modifier
-                .size(120.dp)
-                .background(color = VerdeEntrada.copy(alpha = 0.1f), shape = CircleShape)
-                .clickable { mostrarMenuFoto = !mostrarMenuFoto },
-            contentAlignment = Alignment.Center
-        ) {
-            if (fotoPerfilUrl.isEmpty()) {
-                Icon(
-                    imageVector = Icons.Outlined.AccountCircle,
-                    contentDescription = "Foto de Perfil",
-                    modifier = Modifier.size(100.dp),
-                    tint = VerdeEntrada
+        // Card Mestre Glassmorphic para Foto e Dados Básicos
+        PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(color = VerdeNeon.copy(alpha = 0.1f), shape = CircleShape)
+                        .clickable { mostrarMenuFoto = !mostrarMenuFoto },
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (fotoPerfilUrl.isEmpty()) {
+                        Icon(
+                            imageVector = Icons.Outlined.AccountCircle,
+                            contentDescription = "Foto de Perfil",
+                            modifier = Modifier.size(80.dp),
+                            tint = VerdeNeon
+                        )
+                    }
+                    
+                    Icon(
+                        imageVector = Icons.Outlined.PhotoCamera,
+                        contentDescription = "Alterar Foto",
+                        modifier = Modifier
+                            .size(28.dp)
+                            .align(Alignment.BottomEnd)
+                            .background(VerdeNeon, shape = CircleShape)
+                            .padding(4.dp),
+                        tint = Color.Black
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                Text(
+                    text = nomeUsuario,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+                Text(
+                    text = email,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.5f)
                 )
             }
-            
-            // Ícone de câmera sobreposto
-            Icon(
-                imageVector = Icons.Outlined.PhotoCamera,
-                contentDescription = "Alterar Foto",
-                modifier = Modifier
-                    .size(32.dp)
-                    .align(Alignment.BottomEnd)
-                    .background(VerdeEntrada, shape = CircleShape)
-                    .padding(4.dp),
-                tint = FundoDark
-            )
         }
 
-        // Menu de Foto
+        // Menu de Foto Glassmorphic
         if (mostrarMenuFoto) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(0xFF1E1E1E), shape = RoundedCornerShape(12.dp))
-                    .padding(12.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                TextButton(
-                    onClick = {
-                        galeriaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                        mostrarMenuFoto = false
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Escolher da Galeria", color = VerdeEntrada)
-                }
-                Divider(color = Color.White.copy(alpha = 0.1f))
-                TextButton(
-                    onClick = {
-                        val photoUri = Uri.fromFile(
-                            java.io.File(context.cacheDir, "temp_photo.jpg")
-                        )
-                        camaraLauncher.launch(photoUri)
-                        mostrarMenuFoto = false
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text("Tirar Foto", color = VerdeEntrada)
+            PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TextButton(
+                        onClick = {
+                            galeriaLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                            mostrarMenuFoto = false
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Escolher da Galeria", color = VerdeNeon)
+                    }
+                    Divider(color = Color.White.copy(alpha = 0.05f))
+                    TextButton(
+                        onClick = {
+                            val photoUri = Uri.fromFile(java.io.File(context.cacheDir, "temp_photo.jpg"))
+                            camaraLauncher.launch(photoUri)
+                            mostrarMenuFoto = false
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Tirar Foto", color = VerdeNeon)
+                    }
                 }
             }
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        // Campo Nome
-        PerfilInputField(
-            label = "Nome",
-            value = nomeUsuario,
-            isEditing = nomeEditavel,
-            onEditClick = { nomeEditavel = !nomeEditavel },
-            onValueChange = { viewModel.atualizarNomeUsuario(it, context) }
-        )
+        // Seção de Dados Detalhados
+        PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+            Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
+                PerfilInputField(
+                    label = "Nome Completo",
+                    value = nomeUsuario,
+                    isEditing = nomeEditavel,
+                    onEditClick = { nomeEditavel = !nomeEditavel },
+                    onValueChange = { viewModel.atualizarNomeUsuario(it, context) }
+                )
 
-        // Campo E-mail
-        PerfilInputField(
-            label = "E-mail",
-            value = email,
-            isEditing = emailEditavel,
-            onEditClick = { emailEditavel = !emailEditavel },
-            onValueChange = { viewModel.atualizarEmail(it, context) }
-        )
+                PerfilInputField(
+                    label = "E-mail de Acesso",
+                    value = email,
+                    isEditing = emailEditavel,
+                    onEditClick = { emailEditavel = !emailEditavel },
+                    onValueChange = { viewModel.atualizarEmail(it, context) }
+                )
 
-        // Campo Data de Aniversário
-        PerfilInputField(
-            label = "Data de Aniversário",
-            value = if (dataAniversario.isEmpty()) "Não informado" else dataAniversario,
-            isEditing = dataEditavel,
-            onEditClick = { dataEditavel = !dataEditavel },
-            onValueChange = { viewModel.atualizarDataAniversario(it, context) },
-            placeholder = "DD/MM/YYYY"
-        )
+                PerfilInputField(
+                    label = "Data de Nascimento",
+                    value = if (dataAniversario.isEmpty()) "Não informado" else dataAniversario,
+                    isEditing = dataEditavel,
+                    onEditClick = { dataEditavel = !dataEditavel },
+                    onValueChange = { viewModel.atualizarDataAniversario(it, context) },
+                    placeholder = "DD/MM/YYYY"
+                )
+            }
+        }
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-        // Botão Planos Premium
+        // Botão Planos Premium Pílula
         Button(
             onClick = onNavigatePlans,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary
-            )
+            shape = RoundedCornerShape(50.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
         ) {
-            Text("Ver Planos Premium", fontWeight = FontWeight.Bold, color = Color.White)
+            Text("Ver Planos Premium", fontWeight = FontWeight.Bold, color = Color.Black)
         }
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         // Botão Sair
         TextButton(
             onClick = onLogout,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Sair da Conta", color = Color(0xFFE57373), fontWeight = FontWeight.Medium)
+            Text("Sair da Conta", color = Color(0xFFF87171), fontWeight = FontWeight.Medium)
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(100.dp))
     }
 }
 
@@ -228,7 +232,7 @@ fun PerfilInputField(
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelMedium,
-                color = Color.Gray,
+                color = Color.White.copy(alpha = 0.5f),
                 fontWeight = FontWeight.Bold
             )
             IconButton(onClick = onEditClick, modifier = Modifier.size(24.dp)) {
@@ -236,7 +240,7 @@ fun PerfilInputField(
                     imageVector = Icons.Outlined.Edit,
                     contentDescription = "Editar $label",
                     modifier = Modifier.size(18.dp),
-                    tint = VerdeEntrada
+                    tint = VerdeNeon
                 )
             }
         }
@@ -249,10 +253,10 @@ fun PerfilInputField(
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 shape = RoundedCornerShape(12.dp),
-                placeholder = { Text(placeholder, color = Color.Gray) },
+                placeholder = { Text(placeholder, color = Color.White.copy(alpha = 0.3f)) },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = VerdeEntrada,
+                    focusedBorderColor = VerdeNeon,
                     unfocusedBorderColor = Color.White.copy(alpha = 0.1f),
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White
@@ -263,9 +267,9 @@ fun PerfilInputField(
                 text = value,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp),
+                    .padding(vertical = 8.dp),
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (value == "Não informado") Color.Gray else Color.White,
+                color = if (value == "Não informado") Color.White.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.9f),
                 fontWeight = FontWeight.Medium
             )
             Divider(color = Color.White.copy(alpha = 0.05f))
