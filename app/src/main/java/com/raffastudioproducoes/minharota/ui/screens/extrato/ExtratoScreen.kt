@@ -64,6 +64,7 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
                     selected = isSelected,
                     onClick = { viewModel.aplicarFiltro(filtro) },
                     label = { Text(filtro) },
+                    enabled = true,
                     colors = FilterChipDefaults.filterChipColors(
                         containerColor = Color.White.copy(alpha = 0.05f),
                         selectedContainerColor = VerdeNeon,
