@@ -66,6 +66,26 @@ class HojeViewModel : ViewModel() {
 
     private val _corridasAtuais = MutableStateFlow<List<Corrida>>(emptyList())
 
+    // Lógica MEI
+    private val _faturamentoBrutoAcumulado = MutableStateFlow(0.0)
+    val faturamentoBrutoAcumulado: StateFlow<Double> = _faturamentoBrutoAcumulado.asStateFlow()
+    
+    private val TETO_MEI_ANUAL = 81000.0
+    private val ALERTA_MEI_THRESHOLD = 0.9 // 90% do teto
+
+    private val _exibirAlertaMei = MutableStateFlow(false)
+    val exibirAlertaMei: StateFlow<Boolean> = _exibirAlertaMei.asStateFlow()
+
+    fun carregarDadosMei(context: Context) {
+        val prefs = SharedPreferencesManager(context)
+        _faturamentoBrutoAcumulado.value = prefs.obterFaturamentoBrutoAcumulado()
+        verificarAlertaMei()
+    }
+
+    private fun verificarAlertaMei() {
+        _exibirAlertaMei.value = _faturamentoBrutoAcumulado.value >= (TETO_MEI_ANUAL * ALERTA_MEI_THRESHOLD)
+    }
+
     fun updateGanhoBruto(valor: Double) {
         _ganhoBruto.value = valor
         calcularLiquido()
@@ -156,7 +176,13 @@ class HojeViewModel : ViewModel() {
         turnosAtuais.add(novoTurno)
         prefs.salvarTurnos(turnosAtuais)
 
-        // 2. Distribuir para as caixinhas
+        // 2. Lógica MEI: Somar ganho bruto ao acumulado
+        val novoAcumulado = _faturamentoBrutoAcumulado.value + _ganhoBruto.value
+        _faturamentoBrutoAcumulado.value = novoAcumulado
+        prefs.salvarFaturamentoBrutoAcumulado(novoAcumulado)
+        verificarAlertaMei()
+
+        // 3. Distribuir para as caixinhas
         if (_ganhoLiquido.value > 0) {
             val caixinhas = prefs.obterCaixinhas().toMutableList()
             val novasCaixinhas = caixinhas.map { caixinha ->

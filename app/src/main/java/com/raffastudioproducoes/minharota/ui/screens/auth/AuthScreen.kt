@@ -71,9 +71,9 @@ fun AuthScreen(
                 modifier = Modifier.padding(bottom = 40.dp)
             )
 
-            // Botão Google (Real com ícone)
+            // Botão Google (Real com ícone oficial)
             Button(
-                onClick = { /* TODO: Firebase Auth via Google Sign-In Credential Manager */ },
+                onClick = { /* TODO: Firebase Auth via Credential Manager (Google Sign-In) */ },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -85,7 +85,7 @@ fun AuthScreen(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        painter = painterResource(id = android.R.drawable.ic_menu_search), // Placeholder para G (substituir por asset G real se disponível)
+                        painter = painterResource(id = R.drawable.ic_google_logo),
                         contentDescription = null,
                         modifier = Modifier.size(20.dp),
                         tint = Color.Unspecified
@@ -101,9 +101,9 @@ fun AuthScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botão Apple (Real com ícone)
+            // Botão Apple (Real com ícone oficial)
             Button(
-                onClick = { /* TODO: Firebase Auth via Apple Sign-In */ },
+                onClick = { /* TODO: Firebase Auth via Apple OAuth Nativo */ },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -114,10 +114,11 @@ fun AuthScreen(
                 )
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "", // Glifo oficial da Apple
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_apple_logo),
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp),
+                        tint = Color.White
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(

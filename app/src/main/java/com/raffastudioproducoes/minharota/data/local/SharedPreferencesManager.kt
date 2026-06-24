@@ -216,7 +216,17 @@ class SharedPreferencesManager(context: Context) {
         }
     }
 
+    // --- Faturamento MEI ---
+    fun salvarFaturamentoBrutoAcumulado(valor: Double) {
+        sharedPreferences.edit().putFloat(KEY_FATURAMENTO_MEI, valor.toFloat()).apply()
+    }
+
+    fun obterFaturamentoBrutoAcumulado(): Double {
+        return sharedPreferences.getFloat(KEY_FATURAMENTO_MEI, 0.0f).toDouble()
+    }
+
     companion object {
+        private const val KEY_FATURAMENTO_MEI = "faturamento_mei_acumulado"
         private const val KEY_CAIXINHAS = "caixinhas"
         private const val KEY_TURNOS = "turnos"
         private const val KEY_MOVIMENTACOES = "movimentacoes"

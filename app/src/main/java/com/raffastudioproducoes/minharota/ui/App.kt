@@ -65,7 +65,7 @@ fun MainAppContent() {
                     navController.navigate("register")
                 },
                 onNavigateToEmailLogin = {
-                    navController.navigate("register") // Placeholder para fluxo de e-mail
+                    navController.navigate("register")
                 }
             )
         }

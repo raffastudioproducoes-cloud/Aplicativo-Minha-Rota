@@ -55,6 +55,10 @@ attr ttcIndex
 attr uri
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color browser_actions_bg_grey
+color browser_actions_divider_color
+color browser_actions_text_color
+color browser_actions_title_color
 color call_notification_answer_color
 color call_notification_decline_color
 color common_google_signin_btn_text_dark
@@ -74,6 +78,8 @@ color notification_action_color_filter
 color notification_icon_bg_color
 color vector_tint_color
 color vector_tint_theme_color
+dimen browser_actions_context_menu_max_width
+dimen browser_actions_context_menu_min_padding
 dimen compat_button_inset_horizontal_material
 dimen compat_button_inset_vertical_material
 dimen compat_button_padding_horizontal_material
@@ -96,6 +102,14 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+drawable app_icon_master
+drawable bg_onb_analise
+drawable bg_onb_caixas
+drawable bg_onb_calendario
+drawable bg_onb_carro
+drawable bg_onb_engrenagens
+drawable bg_onb_mapa
+drawable bg_onb_mapafinal
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -115,14 +129,17 @@ drawable common_google_signin_btn_text_light
 drawable common_google_signin_btn_text_light_focused
 drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
+drawable fundo_onboarding
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
+drawable ic_apple_logo
 drawable ic_call_answer
 drawable ic_call_answer_low
 drawable ic_call_answer_video
 drawable ic_call_answer_video_low
 drawable ic_call_decline
 drawable ic_call_decline_low
+drawable ic_google_logo
 drawable ic_minharota_logo_full
 drawable logo_minha_rota_pro
 drawable notification_action_background
@@ -138,6 +155,13 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable onb_analise
+drawable onb_caixas
+drawable onb_calendario
+drawable onb_carro
+drawable onb_engrenagens
+drawable onb_mapa
+drawable onb_mapafinal
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -184,6 +208,11 @@ id async
 id auto
 id blocking
 id bottom
+id browser_actions_header_text
+id browser_actions_menu_item_icon
+id browser_actions_menu_item_text
+id browser_actions_menu_items
+id browser_actions_menu_view
 id center
 id center_horizontal
 id center_vertical
@@ -252,6 +281,8 @@ id wide
 id wrapped_composition_tag
 integer google_play_services_version
 integer status_bar_notification_info_maxnum
+layout browser_actions_context_menu_page
+layout browser_actions_context_menu_row
 layout custom_dialog
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
@@ -265,6 +296,7 @@ mipmap ic_launcher
 mipmap ic_launcher_background
 mipmap ic_launcher_foreground
 mipmap ic_launcher_round
+raw firebase_common_keep
 string androidx_startup
 string app_name
 string call_notification_answer_action
@@ -294,9 +326,19 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
+string copy_toast_msg
 string default_error_message
 string default_popup_window_title
+string default_web_client_id
 string dropdown_menu
+string fallback_menu_item_copy_link
+string fallback_menu_item_open_in_browser
+string fallback_menu_item_share_link
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
 string in_progress
 string indeterminate
 string m3c_bottom_sheet_collapse_description
@@ -359,6 +401,7 @@ string navigation_menu
 string not_selected
 string off
 string on
+string project_id
 string range_end
 string range_start
 string selected
@@ -397,3 +440,4 @@ styleable NavHost navGraph
 styleable NavInclude graph
 styleable Navigator android_label android_id route
 styleable SignInButton buttonSize colorScheme scopeUris
+xml image_share_filepaths

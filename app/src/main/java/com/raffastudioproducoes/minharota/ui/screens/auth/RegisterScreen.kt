@@ -8,22 +8,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
+import androidx.compose.material3.Surface
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun RegisterScreen(onNavigateBack: () -> Unit) {
-    // Tela em branco conforme solicitado v1.9.0
-    // Fundo Carbono Profundo Absoluto
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(FundoDark),
-        contentAlignment = Alignment.Center
+    // Fundo Carbono Profundo Absoluto (Color(0xFF0C0C0E))
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = Color(0xFF0C0C0E)
     ) {
-        Text(
-            text = "Tela de Cadastro\n(Em Construção)",
-            color = Color.White.copy(alpha = 0.3f),
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center
-        )
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Tela de Cadastro\n(Em Construção)",
+                color = Color.White.copy(alpha = 0.3f),
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }
