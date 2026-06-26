@@ -6,6 +6,7 @@ import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.text.SimpleDateFormat
 import java.util.*
 
 class GraficosViewModel : ViewModel() {
@@ -19,19 +20,21 @@ class GraficosViewModel : ViewModel() {
     private val _melhorHora = MutableStateFlow("--h")
     val melhorHora: StateFlow<String> = _melhorHora.asStateFlow()
 
+    private val _tendenciaGanhos = MutableStateFlow<List<Pair<String, Double>>>(emptyList())
+    val tendenciaGanhos: StateFlow<List<Pair<String, Double>>> = _tendenciaGanhos.asStateFlow()
+
     private val diasSemana = listOf("Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb")
 
     fun carregarDados(context: Context) {
         val prefs = SharedPreferencesManager(context)
+        val turnos = prefs.obterTurnos()
         val corridas = prefs.obterTodasCorridas()
-        val novaMatriz = Array(7) { DoubleArray(24) { 0.0 } }
         
-        var maxGanhoDia = 0.0
+        // 1. Heatmap e Melhores horários
+        val novaMatriz = Array(7) { DoubleArray(24) { 0.0 } }
         var maxGanhoHora = 0.0
-        var indexMelhorDia = -1
         var melhorHoraValor = -1
-
-        val ganhosPorDia = DoubleArray(7) { 0.0 }
+        val ganhosPorDiaSemana = DoubleArray(7) { 0.0 }
 
         corridas.forEach { corrida ->
             val cal = Calendar.getInstance()
@@ -40,7 +43,7 @@ class GraficosViewModel : ViewModel() {
             val hora = cal.get(Calendar.HOUR_OF_DAY)
 
             novaMatriz[dia][hora] += corrida.valor
-            ganhosPorDia[dia] += corrida.valor
+            ganhosPorDiaSemana[dia] += corrida.valor
 
             if (novaMatriz[dia][hora] > maxGanhoHora) {
                 maxGanhoHora = novaMatriz[dia][hora]
@@ -48,9 +51,11 @@ class GraficosViewModel : ViewModel() {
             }
         }
 
+        var maxGanhoDiaSemana = 0.0
+        var indexMelhorDia = -1
         for (i in 0..6) {
-            if (ganhosPorDia[i] > maxGanhoDia) {
-                maxGanhoDia = ganhosPorDia[i]
+            if (ganhosPorDiaSemana[i] > maxGanhoDiaSemana) {
+                maxGanhoDiaSemana = ganhosPorDiaSemana[i]
                 indexMelhorDia = i
             }
         }
@@ -58,5 +63,17 @@ class GraficosViewModel : ViewModel() {
         _heatmapData.value = novaMatriz
         if (indexMelhorDia != -1) _melhorDia.value = diasSemana[indexMelhorDia]
         if (melhorHoraValor != -1) _melhorHora.value = "${melhorHoraValor}h"
+
+        // 2. Tendência de Ganhos (Últimos 7 turnos)
+        val tendencia = turnos.takeLast(7).map { turno ->
+            val dataSimplificada = try {
+                val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(turno.data)
+                SimpleDateFormat("dd/MM", Locale.getDefault()).format(date!!)
+            } catch (e: Exception) {
+                turno.data
+            }
+            Pair(dataSimplificada, turno.ganhoLiquido)
+        }
+        _tendenciaGanhos.value = tendencia
     }
 }

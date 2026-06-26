@@ -60,7 +60,7 @@ fun ScaffoldPrincipal(
             ModalRegistroRapido(
                 onDismiss = { mostrarModalRapido = false },
                 onSave = { valor ->
-                    hojeViewModel.adicionarGanhoRapido(valor)
+                    hojeViewModel.registrarGanhoRapido(valor)
                     mostrarModalRapido = false
                 }
             )

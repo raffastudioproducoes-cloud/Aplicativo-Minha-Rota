@@ -27,6 +27,7 @@ import com.raffastudioproducoes.minharota.ui.screens.config.ConfigScreen
 import com.raffastudioproducoes.minharota.ui.screens.splash.SplashScreen
 import com.raffastudioproducoes.minharota.ui.screens.onboarding.OnboardingScreen
 import com.raffastudioproducoes.minharota.ui.screens.auth.AuthScreen
+import com.raffastudioproducoes.minharota.ui.screens.auth.LoginScreen
 import com.raffastudioproducoes.minharota.ui.screens.auth.RegisterScreen
 import com.raffastudioproducoes.minharota.ui.screens.contadiaria.ContaDiariaScreen
 import com.raffastudioproducoes.minharota.ui.screens.plans.PlansScreen
@@ -49,30 +50,45 @@ fun MainAppContent() {
         }
         composable("onboarding") {
             OnboardingScreen(onNavigateToLogin = {
-                navController.navigate("login") {
+                navController.navigate("login_main") {
                     popUpTo("onboarding") { inclusive = true }
                 }
             })
         }
-        composable("login") {
+        composable("login_main") {
             AuthScreen(
                 onAuthSuccess = {
                     navController.navigate(Rota.Hoje.route) {
-                        popUpTo("login") { inclusive = true }
+                        popUpTo("login_main") { inclusive = true }
                     }
                 },
                 onNavigateToRegister = {
                     navController.navigate("register")
                 },
                 onNavigateToEmailLogin = {
-                    navController.navigate("register")
+                    navController.navigate("login_email")
+                }
+            )
+        }
+        composable("login_email") {
+            LoginScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onLoginSuccess = {
+                    navController.navigate(Rota.Hoje.route) {
+                        popUpTo("login_main") { inclusive = true }
+                    }
                 }
             )
         }
         composable("register") {
-            RegisterScreen(onNavigateBack = {
-                navController.popBackStack()
-            })
+            RegisterScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onRegisterSuccess = {
+                    navController.navigate(Rota.Hoje.route) {
+                        popUpTo("login_main") { inclusive = true }
+                    }
+                }
+            )
         }
         composable(Rota.Hoje.route) {
             ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
@@ -122,7 +138,7 @@ fun MainAppContent() {
                             navController.navigate(Rota.Plans.route)
                         },
                         onLogout = {
-                            navController.navigate("login") {
+                            navController.navigate("login_main") {
                                 popUpTo(Rota.Hoje.route) { inclusive = true }
                             }
                         }
@@ -140,19 +156,5 @@ fun MainAppContent() {
                 Box(modifier = Modifier.padding(padding)) { ConfigScreen() }
             }
         }
-    }
-}
-
-@Composable
-fun ScreenPlaceholder(name: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = name,
-            style = MaterialTheme.typography.headlineLarge,
-            color = MaterialTheme.colorScheme.onBackground
-        )
     }
 }

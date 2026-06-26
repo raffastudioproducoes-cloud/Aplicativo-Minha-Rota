@@ -32,6 +32,7 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
     val heatmapData by viewModel.heatmapData.collectAsState()
     val melhorDia by viewModel.melhorDia.collectAsState()
     val melhorHora by viewModel.melhorHora.collectAsState()
+    val tendenciaGanhos by viewModel.tendenciaGanhos.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.carregarDados(context)
@@ -85,39 +86,44 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Heatmap Table com Heat Levels v1.8.0
+        // Heatmap Table
         PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
             HeatmapTable(heatmapData)
         }
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        // Legenda de Cores v1.8.0
         HeatmapLegend()
 
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = "📈 Tendência de Performance",
+            text = "📈 Tendência de Ganhos",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = Color.White
         )
         Text(
-            text = "Fluxo de ganhos ao longo dos horários de pico",
+            text = "Fluxo de lucro líquido dos últimos turnos",
             style = MaterialTheme.typography.labelSmall,
             color = Color.White.copy(alpha = 0.5f)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Gráfico de Ondas (Cubic Spline Chart) v1.8.0
+        // Gráfico de Ondas Real
         PremiumGlassCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(220.dp)
         ) {
-            WavePerformanceChart()
+            if (tendenciaGanhos.size < 2) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text("Dados insuficientes para gerar gráfico (mín. 2 turnos)", color = Color.White.copy(alpha = 0.3f), fontSize = 12.sp)
+                }
+            } else {
+                WavePerformanceChart(tendenciaGanhos)
+            }
         }
         
         Spacer(modifier = Modifier.height(100.dp))
@@ -140,7 +146,6 @@ fun HeatmapTable(data: Array<DoubleArray>) {
     val dias = listOf("D", "S", "T", "Q", "Q", "S", "S")
     val scrollState = rememberScrollState()
 
-    // Encontrar o valor máximo para normalizar as cores
     val maxVal = data.flatMap { it.toList() }.maxOrNull() ?: 1.0
     val safeMaxVal = if (maxVal == 0.0) 1.0 else maxVal
 
@@ -150,7 +155,6 @@ fun HeatmapTable(data: Array<DoubleArray>) {
             .horizontalScroll(scrollState)
     ) {
         Column {
-            // Header Dias
             Row {
                 Spacer(modifier = Modifier.width(35.dp))
                 dias.forEach { dia ->
@@ -160,7 +164,6 @@ fun HeatmapTable(data: Array<DoubleArray>) {
                 }
             }
 
-            // Horas e Células (00h às 23h)
             for (hora in 0..23) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
@@ -172,16 +175,13 @@ fun HeatmapTable(data: Array<DoubleArray>) {
                     )
                     for (dia in 0..6) {
                         val valor = data[dia][hora]
-                        
-                        // Mapeamento de Cores v1.8.0 (Heat Levels)
                         val cellColor = when {
                             valor == 0.0 -> Color.White.copy(alpha = 0.03f)
-                            valor < (safeMaxVal * 0.3) -> Color(0xFF5B21B6) // Roxo Fintech (Baixo)
-                            valor < (safeMaxVal * 0.6) -> Color(0xFF0284C7) // Azul/Ciano (Médio)
-                            valor < (safeMaxVal * 0.9) -> Color(0xFF059669) // Verde Esmeralda (Alto)
-                            else -> Color(0xFFFBBF24) // Amarelo Ouro/Neon (Pico)
+                            valor < (safeMaxVal * 0.3) -> Color(0xFF5B21B6)
+                            valor < (safeMaxVal * 0.6) -> Color(0xFF0284C7)
+                            valor < (safeMaxVal * 0.9) -> Color(0xFF059669)
+                            else -> Color(0xFFFBBF24)
                         }
-
                         val textColor = if (cellColor == Color(0xFFFBBF24)) Color.Black else Color.White
 
                         Box(
@@ -215,10 +215,10 @@ fun HeatmapLegend() {
             modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)).background(
                 Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFF5B21B6), // Roxo
-                        Color(0xFF0284C7), // Azul
-                        Color(0xFF059669), // Verde
-                        Color(0xFFFBBF24)  // Ouro
+                        Color(0xFF5B21B6),
+                        Color(0xFF0284C7),
+                        Color(0xFF059669),
+                        Color(0xFFFBBF24)
                     )
                 )
             )
@@ -236,9 +236,11 @@ fun HeatmapLegend() {
 }
 
 @Composable
-fun WavePerformanceChart() {
-    val points = listOf(0.2f, 0.4f, 0.35f, 0.7f, 0.5f, 0.9f, 0.6f, 0.8f, 0.4f, 0.3f)
-    val labels = listOf("06h", "09h", "12h", "15h", "18h", "21h", "00h")
+fun WavePerformanceChart(data: List<Pair<String, Double>>) {
+    val points = data.map { it.second.toFloat() }
+    val labels = data.map { it.first }
+    val maxVal = points.maxOrNull() ?: 1f
+    val safeMaxVal = if (maxVal == 0f) 1f else maxVal
     
     Box(modifier = Modifier.fillMaxSize().padding(top = 16.dp)) {
         Canvas(modifier = Modifier.fillMaxSize()) {
@@ -246,7 +248,6 @@ fun WavePerformanceChart() {
             val height = size.height
             val spacing = width / (points.size - 1)
             
-            // Desenhar Linhas de Grade
             for (i in 1..4) {
                 val y = height - (height / 5 * i)
                 drawLine(
@@ -257,13 +258,13 @@ fun WavePerformanceChart() {
                 )
             }
 
-            // Criar Path para a Curva (Cubic Spline)
             val path = Path()
             val fillPath = Path()
             
             points.forEachIndexed { index, value ->
                 val x = index * spacing
-                val y = height - (value * height * 0.8f) - (height * 0.1f)
+                val normalizedY = (value / safeMaxVal)
+                val y = height - (normalizedY * height * 0.7f) - (height * 0.15f)
                 
                 if (index == 0) {
                     path.moveTo(x, y)
@@ -271,9 +272,9 @@ fun WavePerformanceChart() {
                     fillPath.lineTo(x, y)
                 } else {
                     val prevX = (index - 1) * spacing
-                    val prevY = height - (points[index - 1] * height * 0.8f) - (height * 0.1f)
+                    val prevNormalizedY = (points[index - 1] / safeMaxVal)
+                    val prevY = height - (prevNormalizedY * height * 0.7f) - (height * 0.15f)
                     
-                    // Curva de Bezier para suavizar
                     path.cubicTo(
                         prevX + spacing / 2, prevY,
                         x - spacing / 2, y,
@@ -292,7 +293,6 @@ fun WavePerformanceChart() {
                 }
             }
 
-            // Desenhar Preenchimento de Área
             drawPath(
                 path = fillPath,
                 brush = Brush.verticalGradient(
@@ -303,33 +303,29 @@ fun WavePerformanceChart() {
                 )
             )
 
-            // Desenhar Linha de Performance
             drawPath(
                 path = path,
                 color = Color(0xFF34D399),
                 style = Stroke(width = 3.dp.toPx())
             )
 
-            // Desenhar Marcadores nos Picos
             points.forEachIndexed { index, value ->
-                if (value > 0.7f) {
-                    val x = index * spacing
-                    val y = height - (value * height * 0.8f) - (height * 0.1f)
-                    drawCircle(
-                        color = Color(0xFF34D399),
-                        radius = 4.dp.toPx(),
-                        center = Offset(x, y)
-                    )
-                    drawCircle(
-                        color = Color.White.copy(alpha = 0.5f),
-                        radius = 2.dp.toPx(),
-                        center = Offset(x, y)
-                    )
-                }
+                val x = index * spacing
+                val normalizedY = (value / safeMaxVal)
+                val y = height - (normalizedY * height * 0.7f) - (height * 0.15f)
+                drawCircle(
+                    color = Color(0xFF34D399),
+                    radius = 4.dp.toPx(),
+                    center = Offset(x, y)
+                )
+                drawCircle(
+                    color = Color.White,
+                    radius = 2.dp.toPx(),
+                    center = Offset(x, y)
+                )
             }
         }
         
-        // Eixo X Labels
         Row(
             modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).padding(bottom = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween

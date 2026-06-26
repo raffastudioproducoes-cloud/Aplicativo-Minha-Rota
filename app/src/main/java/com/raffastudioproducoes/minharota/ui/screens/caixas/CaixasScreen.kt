@@ -44,6 +44,7 @@ fun CaixasScreen(
     val showPaywallModal by viewModel.showPaywallModal.collectAsState()
     val filtroPeriodo by viewModel.filtroPeriodo.collectAsState()
     val diasFolga by viewModel.diasFolga.collectAsState()
+    val erroPercentual by viewModel.erroPercentual.collectAsState()
     val ganhoLiquidoHoje by hojeViewModel.ganhoLiquido.collectAsState()
 
     var caixinhaSelecionadaId by remember { mutableStateOf<String?>(null) }
@@ -51,6 +52,9 @@ fun CaixasScreen(
 
     LaunchedEffect(Unit) {
         viewModel.carregarDados(context)
+    }
+
+    LaunchedEffect(caixinhas) {
         if (caixinhas.isNotEmpty() && caixinhaSelecionadaId == null) {
             caixinhaSelecionadaId = caixinhas.first().id
         }
@@ -66,6 +70,23 @@ fun CaixasScreen(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(bottom = 100.dp)
         ) {
+            // ALERTA DE PERCENTUAL
+            erroPercentual?.let { erro ->
+                item {
+                    Card(
+                        modifier = Modifier.fillMaxWidth().padding(16.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFF991B1B).copy(alpha = 0.2f)),
+                        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF991B1B))
+                    ) {
+                        Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Rounded.Warning, contentDescription = null, tint = Color(0xFFEF4444), modifier = Modifier.size(20.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(erro, color = Color.White, fontSize = 12.sp)
+                        }
+                    }
+                }
+            }
+
             // 2. SEÇÃO CARD "DEPÓSITO DE HOJE"
             item {
                 SectionCard(title = "DEPÓSITO DE HOJE") {
@@ -307,22 +328,25 @@ fun GerenciarCaixinhaItem(caixinha: Caixinha, onUpdate: (Caixinha) -> Unit, onDe
         
         if (expandido) {
             Spacer(modifier = Modifier.height(16.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-                OutlinedTextField(
-                    value = caixinha.percentual.toString(),
-                    onValueChange = { onUpdate(caixinha.copy(percentual = it.toDoubleOrNull() ?: 0.0)) },
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text("Percentual:", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp, modifier = Modifier.width(80.dp))
+                Slider(
+                    value = caixinha.percentual.toFloat(),
+                    onValueChange = { onUpdate(caixinha.copy(percentual = it.toDouble())) },
+                    valueRange = 0f..100f,
                     modifier = Modifier.weight(1f),
-                    label = { Text("% do Ganho") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    shape = RoundedCornerShape(12.dp)
+                    colors = SliderDefaults.colors(thumbColor = VerdeNeon, activeTrackColor = VerdeNeon)
                 )
-                OutlinedTextField(
+                Text("${caixinha.percentual.toInt()}%", color = VerdeNeon, fontWeight = FontWeight.Bold, fontSize = 12.sp, modifier = Modifier.width(40.dp), textAlign = TextAlign.End)
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text("Meta (R$):", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp, modifier = Modifier.width(80.dp))
+                BasicTextField(
                     value = caixinha.metaValor.toString(),
                     onValueChange = { onUpdate(caixinha.copy(metaValor = it.toDoubleOrNull() ?: 0.0)) },
-                    modifier = Modifier.weight(1f),
-                    label = { Text("Meta (R$)") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    shape = RoundedCornerShape(12.dp)
+                    textStyle = androidx.compose.ui.text.TextStyle(color = Color.White, fontWeight = FontWeight.Bold),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
                 )
             }
         }

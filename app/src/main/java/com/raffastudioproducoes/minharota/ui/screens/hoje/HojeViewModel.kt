@@ -1,13 +1,18 @@
 package com.raffastudioproducoes.minharota.ui.screens.hoje
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import com.raffastudioproducoes.minharota.domain.model.Corrida
 import com.raffastudioproducoes.minharota.domain.model.Turno
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -69,15 +74,17 @@ class HojeViewModel : ViewModel() {
 
     private val _corridasAtuais = MutableStateFlow<List<Corrida>>(emptyList())
 
-    // Lógica MEI
     private val _faturamentoBrutoAcumulado = MutableStateFlow(0.0)
     val faturamentoBrutoAcumulado: StateFlow<Double> = _faturamentoBrutoAcumulado.asStateFlow()
     
     private val TETO_MEI_ANUAL = 81000.0
-    private val ALERTA_MEI_THRESHOLD = 0.9 // 90% do teto
+    private val ALERTA_MEI_THRESHOLD = 0.9
 
     private val _exibirAlertaMei = MutableStateFlow(false)
     val exibirAlertaMei: StateFlow<Boolean> = _exibirAlertaMei.asStateFlow()
+
+    private val firestore = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     fun carregarDadosMei(context: Context) {
         val prefs = SharedPreferencesManager(context)
@@ -93,11 +100,6 @@ class HojeViewModel : ViewModel() {
         _ganhoBruto.value = valor
         calcularLiquido()
         calcularHorasTrabalhadas()
-    }
-
-    fun updateCustoRua(valor: Double) {
-        _custoRua.value = valor
-        calcularLiquido()
     }
 
     fun adicionarCusto(descricao: String, valor: Double) {
@@ -126,40 +128,22 @@ class HojeViewModel : ViewModel() {
         _ganhoLiquido.value = _ganhoBruto.value - _custoRua.value
     }
 
-    private fun calcularGanhoLiquido() {
-        calcularLiquido()
-    }
-
-    fun adicionarGanhoRapido(valor: Double) {
+    fun registrarGanhoRapido(valor: Double) {
         if (valor <= 0) return
-
-        // Registrar na lista visual da tela Hoje
         val agora = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
         val ganho = GanhoRapido(horario = agora, valor = valor)
         _ganhosRapidos.value = _ganhosRapidos.value + ganho
 
-        // Registrar na lista de persistência do Turno (Corrida)
-        val novaCorrida = Corrida(
-            id = UUID.randomUUID().toString(),
-            valor = valor,
-            timestamp = System.currentTimeMillis()
-        )
+        val novaCorrida = Corrida(id = UUID.randomUUID().toString(), valor = valor, timestamp = System.currentTimeMillis())
         _corridasAtuais.value = _corridasAtuais.value + novaCorrida
         
-        // Atualizar valores totais acumulados
         _ganhoBruto.value += valor
         calcularLiquido()
         calcularHorasTrabalhadas()
     }
 
-    // Função unificada para registrar ganho vindo do modal ou riding mode
-    fun registrarGanhoRapido(valor: Double) {
-        adicionarGanhoRapido(valor)
-    }
-
     fun salvarTurno(context: Context, onSuccess: () -> Unit) {
         val prefs = SharedPreferencesManager(context)
-        
         val novoTurno = Turno(
             id = UUID.randomUUID().toString(),
             data = _dataRegistro.value,
@@ -174,18 +158,16 @@ class HojeViewModel : ViewModel() {
             corridas = _corridasAtuais.value
         )
 
-        // 1. Persistir o turno
+        // 1. Persistência Local
         val turnosAtuais = prefs.obterTurnos().toMutableList()
         turnosAtuais.add(novoTurno)
         prefs.salvarTurnos(turnosAtuais)
 
-        // 2. Lógica MEI: Somar ganho bruto ao acumulado
         val novoAcumulado = _faturamentoBrutoAcumulado.value + _ganhoBruto.value
         _faturamentoBrutoAcumulado.value = novoAcumulado
         prefs.salvarFaturamentoBrutoAcumulado(novoAcumulado)
         verificarAlertaMei()
 
-        // 3. Distribuir para as caixinhas
         if (_ganhoLiquido.value > 0) {
             val caixinhas = prefs.obterCaixinhas().toMutableList()
             val novasCaixinhas = caixinhas.map { caixinha ->
@@ -193,6 +175,20 @@ class HojeViewModel : ViewModel() {
                 caixinha.copy(saldoAtual = caixinha.saldoAtual + valorAdicional)
             }
             prefs.salvarCaixinhas(novasCaixinhas)
+        }
+
+        // 2. Sincronização Firebase (Firestore)
+        val user = auth.currentUser
+        if (user != null) {
+            viewModelScope.launch {
+                firestore.collection("usuarios")
+                    .document(user.uid)
+                    .collection("turnos")
+                    .document(novoTurno.id)
+                    .set(novoTurno)
+                    .addOnSuccessListener { Log.d("Firebase", "Turno sincronizado!") }
+                    .addOnFailureListener { e -> Log.e("Firebase", "Erro ao sincronizar", e) }
+            }
         }
         
         limparCampos()
@@ -258,30 +254,22 @@ class HojeViewModel : ViewModel() {
     private fun calcularHorasTrabalhadas() {
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
         var totalMinutes = 0L
-
         try {
             if (_horaInicio.value.isNotBlank() && _horaFim.value.isNotBlank()) {
                 val inicio = LocalTime.parse(_horaInicio.value, formatter)
                 val fim = LocalTime.parse(_horaFim.value, formatter)
                 totalMinutes = ChronoUnit.MINUTES.between(inicio, fim)
-
                 if (_houvePausa.value && _horaInicioPausa.value.isNotBlank() && _horaFimPausa.value.isNotBlank()) {
                     val inicioPausa = LocalTime.parse(_horaInicioPausa.value, formatter)
                     val fimPausa = LocalTime.parse(_horaFimPausa.value, formatter)
-                    val minutosPausa = ChronoUnit.MINUTES.between(inicioPausa, fimPausa)
-                    totalMinutes -= minutosPausa
+                    totalMinutes -= ChronoUnit.MINUTES.between(inicioPausa, fimPausa)
                 }
             }
-        } catch (e: Exception) {
-            totalMinutes = 0L
-        }
-
+        } catch (e: Exception) { totalMinutes = 0L }
         if (totalMinutes < 0) totalMinutes = 0
-
         val hours = totalMinutes / 60
         val minutes = totalMinutes % 60
         _horasTrabalhadas.value = String.format("%02d:%02d", hours, minutes)
-        
         _valorPorHora.value = if (totalMinutes > 0) _ganhoBruto.value / (totalMinutes / 60.0) else 0.0
     }
 }

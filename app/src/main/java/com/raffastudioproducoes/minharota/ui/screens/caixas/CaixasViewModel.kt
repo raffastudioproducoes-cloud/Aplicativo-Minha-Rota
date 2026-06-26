@@ -25,11 +25,24 @@ class CaixasViewModel : ViewModel() {
     private val _diasFolga = MutableStateFlow<Set<Int>>(emptySet())
     val diasFolga: StateFlow<Set<Int>> = _diasFolga.asStateFlow()
 
+    private val _erroPercentual = MutableStateFlow<String?>(null)
+    val erroPercentual: StateFlow<String?> = _erroPercentual.asStateFlow()
+
     fun carregarDados(context: Context) {
         val prefs = SharedPreferencesManager(context)
         _isPro.value = prefs.obterIsPro()
         _caixinhas.value = prefs.obterCaixinhas()
         _diasFolga.value = prefs.obterDiasFolga()
+        validarPercentuais()
+    }
+
+    private fun validarPercentuais() {
+        val total = _caixinhas.value.sumOf { it.percentual }
+        _erroPercentual.value = when {
+            total > 100.0 -> "Atenção: A soma dos percentuais ultrapassa 100% (${total}%). O excedente não será distribuído corretamente."
+            total < 100.0 -> "Atenção: A soma dos percentuais é inferior a 100% (${total}%). Parte do ganho ficará sem destino."
+            else -> null
+        }
     }
 
     fun setFiltroPeriodo(periodo: String) {
@@ -75,6 +88,7 @@ class CaixasViewModel : ViewModel() {
         listaAtual.add(nova)
         prefs.salvarCaixinhas(listaAtual)
         _caixinhas.value = listaAtual
+        validarPercentuais()
     }
 
     fun atualizarCaixinha(context: Context, caixinha: Caixinha) {
@@ -82,6 +96,7 @@ class CaixasViewModel : ViewModel() {
         val listaAtual = _caixinhas.value.map { if (it.id == caixinha.id) caixinha else it }
         _caixinhas.value = listaAtual
         prefs.salvarCaixinhas(listaAtual)
+        validarPercentuais()
     }
 
     fun excluirCaixinha(context: Context, id: String) {
@@ -89,6 +104,7 @@ class CaixasViewModel : ViewModel() {
         val listaAtual = _caixinhas.value.filter { it.id != id }
         _caixinhas.value = listaAtual
         prefs.salvarCaixinhas(listaAtual)
+        validarPercentuais()
     }
 
     fun dismissPaywallModal() {
