@@ -17,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.PhotoCamera
+import androidx.compose.material.icons.rounded.Image
+import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -173,7 +175,7 @@ fun PerfilScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Icon(Icons.Rounded.PhotoLibrary, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Rounded.Image, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(12.dp))
                         Text("Escolher da Galeria", color = VerdeNeon)
                     }
@@ -190,7 +192,7 @@ fun PerfilScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Icon(Icons.Rounded.CameraAlt, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Rounded.PhotoCamera, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(12.dp))
                         Text("Tirar Foto", color = VerdeNeon)
                     }
