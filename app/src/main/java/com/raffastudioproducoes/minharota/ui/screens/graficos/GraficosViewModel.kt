@@ -32,7 +32,17 @@ class GraficosViewModel : ViewModel() {
 
     fun carregarDados(context: Context) {
         val prefs = SharedPreferencesManager(context)
+        // Unificação de Fontes: Turnos + Histórico de Lançamentos Rápidos (já inclusos no Turno.corridas se salvos)
         val turnos = prefs.obterTurnos()
+            .distinctBy { it.id } // Eliminar duplicatas por ID
+            .sortedBy { 
+                try {
+                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(it.data)?.time ?: 0L
+                } catch (e: Exception) {
+                    0L
+                }
+            }
+        
         processarDados(turnos)
     }
 
@@ -45,21 +55,28 @@ class GraficosViewModel : ViewModel() {
         val novaMatriz = Array(7) { DoubleArray(24) { 0.0 } }
         val novosGanhosSemanais = MutableList(7) { 0.0 }
         
-        val cal = Calendar.getInstance()
-        val currentWeek = cal.get(Calendar.WEEK_OF_YEAR)
-        val currentYear = cal.get(Calendar.YEAR)
+        val calRef = Calendar.getInstance()
+        calRef.add(Calendar.WEEK_OF_YEAR, -_semanaSelecionadaOffset.value)
         
-        // Ajustar para a semana selecionada
-        cal.add(Calendar.WEEK_OF_YEAR, -_semanaSelecionadaOffset.value)
-        val targetWeek = cal.get(Calendar.WEEK_OF_YEAR)
-        val targetYear = cal.get(Calendar.YEAR)
+        // Definir início e fim da semana selecionada
+        calRef.set(Calendar.DAY_OF_WEEK, calRef.firstDayOfWeek)
+        calRef.set(Calendar.HOUR_OF_DAY, 0)
+        calRef.set(Calendar.MINUTE, 0)
+        calRef.set(Calendar.SECOND, 0)
+        calRef.set(Calendar.MILLISECOND, 0)
+        val startOfWeek = calRef.timeInMillis
+        
+        calRef.add(Calendar.DAY_OF_WEEK, 6)
+        calRef.set(Calendar.HOUR_OF_DAY, 23)
+        calRef.set(Calendar.MINUTE, 59)
+        calRef.set(Calendar.SECOND, 59)
+        val endOfWeek = calRef.timeInMillis
 
         var maxGanhoHora = 0.0
         var melhorHoraValor = -1
         val ganhosPorDiaSemana = DoubleArray(7) { 0.0 }
 
         turnos.forEach { turno ->
-            val turnoCal = Calendar.getInstance()
             val date = try {
                 SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(turno.data)
             } catch (e: Exception) {
@@ -67,19 +84,19 @@ class GraficosViewModel : ViewModel() {
             }
             
             if (date != null) {
-                turnoCal.time = date
-                val week = turnoCal.get(Calendar.WEEK_OF_YEAR)
-                val year = turnoCal.get(Calendar.YEAR)
-
-                // Filtrar pela semana selecionada
-                if (week == targetWeek && year == targetYear) {
+                val turnoTime = date.time
+                
+                // Filtrar rigorosamente pela semana selecionada usando timestamps
+                if (turnoTime in startOfWeek..endOfWeek) {
+                    val turnoCal = Calendar.getInstance()
+                    turnoCal.time = date
                     val diaIndex = turnoCal.get(Calendar.DAY_OF_WEEK) - 1 // 0=Dom
                     
                     // 1. Processar para o Gráfico de Barras (Ganho Bruto por Dia)
                     novosGanhosSemanais[diaIndex] += turno.ganhoBruto
                     ganhosPorDiaSemana[diaIndex] += turno.ganhoBruto
 
-                    // 2. Processar para o Heatmap (Baseado nas corridas do turno)
+                    // 2. Processar para o Heatmap (Unificação de Fontes: Todas as corridas do turno)
                     turno.corridas.forEach { corrida ->
                         val corridaCal = Calendar.getInstance()
                         corridaCal.timeInMillis = corrida.timestamp

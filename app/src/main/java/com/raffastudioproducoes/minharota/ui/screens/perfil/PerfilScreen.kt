@@ -1,5 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.perfil
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,10 +26,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
+import java.io.File
 
 @Composable
 fun PerfilScreen(
@@ -45,18 +50,39 @@ fun PerfilScreen(
     var emailEditavel by remember { mutableStateOf(false) }
     var dataEditavel by remember { mutableStateOf(false) }
     var mostrarMenuFoto by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        viewModel.carregarDadosPerfil(context)
+    
+    // URI temporária para a foto da câmera
+    val tempPhotoFile = remember { File(context.cacheDir, "temp_photo_${System.currentTimeMillis()}.jpg") }
+    val tempPhotoUri = remember { 
+        FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.fileprovider",
+            tempPhotoFile
+        )
     }
 
-    // Launchers
-    val galeriaLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+    // Launchers v1.9.1 (Contratos de Resultado Seguros)
+    val galeriaLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
         uri?.let { viewModel.atualizarFotoPerfilUrl(it.toString(), context) }
     }
 
-    val camaraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
-        if (success) { /* URI já no ViewModel */ }
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
+            viewModel.atualizarFotoPerfilUrl(Uri.fromFile(tempPhotoFile).toString(), context)
+        }
+    }
+
+    // Launcher de Permissão
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            cameraLauncher.launch(tempPhotoUri)
+        }
     }
 
     Column(
@@ -98,6 +124,14 @@ fun PerfilScreen(
                             modifier = Modifier.size(80.dp),
                             tint = VerdeNeon
                         )
+                    } else {
+                        // Aqui entraria um AsyncImage (Coil), usando placeholder por enquanto
+                        Icon(
+                            imageVector = Icons.Outlined.AccountCircle,
+                            contentDescription = "Foto de Perfil",
+                            modifier = Modifier.size(80.dp),
+                            tint = VerdeNeon
+                        )
                     }
                     
                     Icon(
@@ -128,7 +162,7 @@ fun PerfilScreen(
             }
         }
 
-        // Menu de Foto Glassmorphic
+        // Menu de Foto Glassmorphic v1.9.1
         if (mostrarMenuFoto) {
             PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -139,17 +173,25 @@ fun PerfilScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
+                        Icon(Icons.Rounded.PhotoLibrary, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(18.dp))
+                        Spacer(modifier = Modifier.width(12.dp))
                         Text("Escolher da Galeria", color = VerdeNeon)
                     }
                     Divider(color = Color.White.copy(alpha = 0.05f))
                     TextButton(
                         onClick = {
-                            val photoUri = Uri.fromFile(java.io.File(context.cacheDir, "temp_photo.jpg"))
-                            camaraLauncher.launch(photoUri)
+                            val permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                            if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                                cameraLauncher.launch(tempPhotoUri)
+                            } else {
+                                permissionLauncher.launch(Manifest.permission.CAMERA)
+                            }
                             mostrarMenuFoto = false
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
+                        Icon(Icons.Rounded.CameraAlt, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(18.dp))
+                        Spacer(modifier = Modifier.width(12.dp))
                         Text("Tirar Foto", color = VerdeNeon)
                     }
                 }

@@ -87,7 +87,7 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // NOVO CARD: GANHOS BRUTOS SEMANAIS
+        // CARD: GANHOS BRUTOS SEMANAIS (Refatoração v1.9.1)
         Text(
             text = "📊 Ganhos Brutos da Semana",
             style = MaterialTheme.typography.titleMedium,
@@ -181,11 +181,11 @@ fun WeeklyBarChart(ganhos: List<Double>) {
         val spacing = (width / 7)
         
         ganhos.forEachIndexed { index, valor ->
-            val barHeight = (valor / maxGanho).toFloat() * height * 0.8f
+            val barHeight = (valor / maxGanho).toFloat() * height * 0.7f
             val x = (index * spacing) + (spacing - barWidth) / 2
-            val y = height - barHeight
+            val y = height - barHeight - 20.dp.toPx() // Espaço para o label inferior
 
-            // Desenhar Barra com Gradiente
+            // Desenhar Barra com Gradiente Verde Esmeralda
             drawRoundRect(
                 brush = Brush.verticalGradient(
                     colors = listOf(Color(0xFF10B981), Color(0xFF10B981).copy(alpha = 0.3f))
@@ -195,7 +195,7 @@ fun WeeklyBarChart(ganhos: List<Double>) {
                 cornerRadius = androidx.compose.ui.geometry.CornerRadius(6.dp.toPx(), 6.dp.toPx())
             )
 
-            // Valor no topo
+            // Valor no topo (R$)
             drawContext.canvas.nativeCanvas.apply {
                 val text = "R$ ${valor.toInt()}"
                 val paint = android.graphics.Paint().apply {
@@ -206,12 +206,12 @@ fun WeeklyBarChart(ganhos: List<Double>) {
                 }
                 drawText(text, x + barWidth / 2, y - 8.dp.toPx(), paint)
                 
-                // Label do dia
+                // Label do dia (Dom, Seg...)
                 paint.apply {
                     color = android.graphics.Color.argb(128, 255, 255, 255)
                     textSize = 9.dp.toPx()
                 }
-                drawText(labels[index], x + barWidth / 2, height + 16.dp.toPx(), paint)
+                drawText(labels[index], x + barWidth / 2, height, paint)
             }
         }
     }
