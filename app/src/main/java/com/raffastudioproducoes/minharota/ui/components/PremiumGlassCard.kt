@@ -3,16 +3,16 @@ package com.raffastudioproducoes.minharota.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.raffastudioproducoes.minharota.ui.theme.GlassBorder
-import com.raffastudioproducoes.minharota.ui.theme.GlassDark
-import com.raffastudioproducoes.minharota.ui.theme.VerdeMenta
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun PremiumGlassCard(
@@ -21,27 +21,23 @@ fun PremiumGlassCard(
 ) {
     Box(
         modifier = modifier
-            .fillMaxWidth()
             .clip(RoundedCornerShape(24.dp))
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        VerdeMenta.copy(alpha = 0.35f),
-                        GlassDark
-                    )
-                )
-            )
+            .background(Color.White.copy(alpha = 0.05f))
             .border(
                 width = 1.dp,
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        Color.White.copy(alpha = 0.15f),
-                        Color.Transparent
-                    )
-                ),
+                color = Color.White.copy(alpha = 0.15f),
                 shape = RoundedCornerShape(24.dp)
             )
     ) {
+        // Ponto de luz Esmeralda Neon no canto superior esquerdo
+        Box(
+            modifier = Modifier
+                .padding(8.dp)
+                .size(4.dp)
+                .align(Alignment.TopStart)
+                .background(VerdeNeon, CircleShape)
+        )
+
         Column(
             modifier = Modifier.padding(16.dp),
             content = content

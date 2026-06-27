@@ -2,21 +2,27 @@ package com.raffastudioproducoes.minharota.ui.screens.graficos
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ChevronLeft
+import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -32,7 +38,8 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
     val heatmapData by viewModel.heatmapData.collectAsState()
     val melhorDia by viewModel.melhorDia.collectAsState()
     val melhorHora by viewModel.melhorHora.collectAsState()
-    val tendenciaGanhos by viewModel.tendenciaGanhos.collectAsState()
+    val ganhosSemanais by viewModel.ganhosSemanais.collectAsState()
+    val semanaOffset by viewModel.semanaSelecionadaOffset.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.carregarDados(context)
@@ -41,12 +48,12 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(FundoDark)
+            .background(Color(0xFF0C0C0E))
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
         Text(
-            text = "Análise de Performance",
+            text = "Performance Operacional",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = Color.White
@@ -54,7 +61,15 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Cards de Destaque Glassmorphic
+        // Seletor de Semana Mestre
+        WeekSelector(
+            offset = semanaOffset,
+            onOffsetChange = { viewModel.setSemanaOffset(it, context) }
+        )
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Cards de Destaque
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             HighlightCard(
                 title = "Melhor Dia",
@@ -66,11 +81,26 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
                 title = "Melhor Hora",
                 value = melhorHora,
                 modifier = Modifier.weight(1f),
-                color = Color(0xFF34D399) // Verde Menta
+                color = Color(0xFF34D399)
             )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+
+        // NOVO CARD: GANHOS BRUTOS SEMANAIS
+        Text(
+            text = "📊 Ganhos Brutos da Semana",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = Color.White
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        
+        PremiumGlassCard(modifier = Modifier.fillMaxWidth().height(250.dp)) {
+            WeeklyBarChart(ganhosSemanais)
+        }
+
+        Spacer(modifier = Modifier.height(32.dp))
 
         Text(
             text = "⭐ Horários de Ouro",
@@ -79,7 +109,7 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
             color = Color.White
         )
         Text(
-            text = "Mapa de calor baseado nos seus ganhos reais",
+            text = "Faturamento real por hora e dia",
             style = MaterialTheme.typography.labelSmall,
             color = Color.White.copy(alpha = 0.5f)
         )
@@ -92,47 +122,118 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
         }
 
         Spacer(modifier = Modifier.height(12.dp))
-
         HeatmapLegend()
 
-        Spacer(modifier = Modifier.height(32.dp))
-
-        Text(
-            text = "📈 Tendência de Ganhos",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
-        Text(
-            text = "Fluxo de lucro líquido dos últimos turnos",
-            style = MaterialTheme.typography.labelSmall,
-            color = Color.White.copy(alpha = 0.5f)
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Gráfico de Ondas Real
-        PremiumGlassCard(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(220.dp)
-        ) {
-            if (tendenciaGanhos.size < 2) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("Dados insuficientes para gerar gráfico (mín. 2 turnos)", color = Color.White.copy(alpha = 0.3f), fontSize = 12.sp)
-                }
-            } else {
-                WavePerformanceChart(tendenciaGanhos)
-            }
-        }
-        
         Spacer(modifier = Modifier.height(100.dp))
     }
 }
 
 @Composable
+fun WeekSelector(offset: Int, onOffsetChange: (Int) -> Unit) {
+    val label = when (offset) {
+        0 -> "Esta Semana"
+        1 -> "Semana Passada"
+        else -> "$offset Semanas Atrás"
+    }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(Color.White.copy(alpha = 0.05f))
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        IconButton(onClick = { onOffsetChange(offset + 1) }) {
+            Icon(Icons.Rounded.ChevronLeft, contentDescription = null, tint = Color.White)
+        }
+        
+        Text(
+            text = label,
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            fontSize = 14.sp
+        )
+
+        IconButton(
+            onClick = { if (offset > 0) onOffsetChange(offset - 1) },
+            enabled = offset > 0
+        ) {
+            Icon(
+                Icons.Rounded.ChevronRight, 
+                contentDescription = null, 
+                tint = if (offset > 0) Color.White else Color.White.copy(alpha = 0.2f)
+            )
+        }
+    }
+}
+
+@Composable
+fun WeeklyBarChart(ganhos: List<Double>) {
+    val labels = listOf("Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb")
+    val maxGanho = ganhos.maxOrNull()?.coerceAtLeast(1.0) ?: 1.0
+
+    Canvas(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp, vertical = 24.dp)) {
+        val width = size.width
+        val height = size.height
+        val barWidth = (width / 7) * 0.6f
+        val spacing = (width / 7)
+        
+        ganhos.forEachIndexed { index, valor ->
+            val barHeight = (valor / maxGanho).toFloat() * height * 0.8f
+            val x = (index * spacing) + (spacing - barWidth) / 2
+            val y = height - barHeight
+
+            // Desenhar Barra com Gradiente
+            drawRoundRect(
+                brush = Brush.verticalGradient(
+                    colors = listOf(Color(0xFF10B981), Color(0xFF10B981).copy(alpha = 0.3f))
+                ),
+                topLeft = Offset(x, y),
+                size = Size(barWidth, barHeight),
+                cornerRadius = androidx.compose.ui.geometry.CornerRadius(6.dp.toPx(), 6.dp.toPx())
+            )
+
+            // Valor no topo
+            drawContext.canvas.nativeCanvas.apply {
+                val text = "R$ ${valor.toInt()}"
+                val paint = android.graphics.Paint().apply {
+                    color = android.graphics.Color.WHITE
+                    textSize = 10.dp.toPx()
+                    textAlign = android.graphics.Paint.Align.CENTER
+                    typeface = android.graphics.Typeface.DEFAULT_BOLD
+                }
+                drawText(text, x + barWidth / 2, y - 8.dp.toPx(), paint)
+                
+                // Label do dia
+                paint.apply {
+                    color = android.graphics.Color.argb(128, 255, 255, 255)
+                    textSize = 9.dp.toPx()
+                }
+                drawText(labels[index], x + barWidth / 2, height + 16.dp.toPx(), paint)
+            }
+        }
+    }
+}
+
+@Composable
 fun HighlightCard(title: String, value: String, modifier: Modifier, color: Color) {
-    PremiumGlassCard(modifier = modifier) {
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(24.dp))
+            .background(Color.White.copy(alpha = 0.05f))
+            .border(1.dp, Color.White.copy(alpha = 0.15f), RoundedCornerShape(24.dp))
+            .padding(16.dp)
+    ) {
+        // Ponto de luz Neon
+        Box(
+            modifier = Modifier
+                .size(4.dp)
+                .align(Alignment.TopStart)
+                .background(VerdeNeon, CircleShape)
+        )
+
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(text = title, style = MaterialTheme.typography.labelSmall, color = Color.White.copy(alpha = 0.5f))
             Spacer(modifier = Modifier.height(4.dp))
@@ -231,108 +332,6 @@ fun HeatmapLegend() {
             Text("Baixos", fontSize = 9.sp, color = Color.White.copy(alpha = 0.4f))
             Text("Médios", fontSize = 9.sp, color = Color.White.copy(alpha = 0.4f))
             Text("Ouro / Altos", fontSize = 9.sp, color = Color.White.copy(alpha = 0.4f))
-        }
-    }
-}
-
-@Composable
-fun WavePerformanceChart(data: List<Pair<String, Double>>) {
-    val points = data.map { it.second.toFloat() }
-    val labels = data.map { it.first }
-    val maxVal = points.maxOrNull() ?: 1f
-    val safeMaxVal = if (maxVal == 0f) 1f else maxVal
-    
-    Box(modifier = Modifier.fillMaxSize().padding(top = 16.dp)) {
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            val width = size.width
-            val height = size.height
-            val spacing = width / (points.size - 1)
-            
-            for (i in 1..4) {
-                val y = height - (height / 5 * i)
-                drawLine(
-                    color = Color.White.copy(alpha = 0.05f),
-                    start = Offset(0f, y),
-                    end = Offset(width, y),
-                    strokeWidth = 1.dp.toPx()
-                )
-            }
-
-            val path = Path()
-            val fillPath = Path()
-            
-            points.forEachIndexed { index, value ->
-                val x = index * spacing
-                val normalizedY = (value / safeMaxVal)
-                val y = height - (normalizedY * height * 0.7f) - (height * 0.15f)
-                
-                if (index == 0) {
-                    path.moveTo(x, y)
-                    fillPath.moveTo(x, height)
-                    fillPath.lineTo(x, y)
-                } else {
-                    val prevX = (index - 1) * spacing
-                    val prevNormalizedY = (points[index - 1] / safeMaxVal)
-                    val prevY = height - (prevNormalizedY * height * 0.7f) - (height * 0.15f)
-                    
-                    path.cubicTo(
-                        prevX + spacing / 2, prevY,
-                        x - spacing / 2, y,
-                        x, y
-                    )
-                    fillPath.cubicTo(
-                        prevX + spacing / 2, prevY,
-                        x - spacing / 2, y,
-                        x, y
-                    )
-                }
-                
-                if (index == points.size - 1) {
-                    fillPath.lineTo(x, height)
-                    fillPath.close()
-                }
-            }
-
-            drawPath(
-                path = fillPath,
-                brush = Brush.verticalGradient(
-                    colors = listOf(
-                        Color(0xFF10B981).copy(alpha = 0.25f),
-                        Color.Transparent
-                    )
-                )
-            )
-
-            drawPath(
-                path = path,
-                color = Color(0xFF34D399),
-                style = Stroke(width = 3.dp.toPx())
-            )
-
-            points.forEachIndexed { index, value ->
-                val x = index * spacing
-                val normalizedY = (value / safeMaxVal)
-                val y = height - (normalizedY * height * 0.7f) - (height * 0.15f)
-                drawCircle(
-                    color = Color(0xFF34D399),
-                    radius = 4.dp.toPx(),
-                    center = Offset(x, y)
-                )
-                drawCircle(
-                    color = Color.White,
-                    radius = 2.dp.toPx(),
-                    center = Offset(x, y)
-                )
-            }
-        }
-        
-        Row(
-            modifier = Modifier.fillMaxWidth().align(Alignment.BottomCenter).padding(bottom = 4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            labels.forEach { label ->
-                Text(label, fontSize = 9.sp, color = Color.White.copy(alpha = 0.3f))
-            }
         }
     }
 }

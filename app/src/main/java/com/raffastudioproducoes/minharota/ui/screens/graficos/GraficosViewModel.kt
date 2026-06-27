@@ -3,6 +3,7 @@ package com.raffastudioproducoes.minharota.ui.screens.graficos
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
+import com.raffastudioproducoes.minharota.domain.model.Turno
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,7 +11,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class GraficosViewModel : ViewModel() {
-    // Matriz 7x24: Dias (0-6) por Horas (0-23)
+    // Mapa de Calor (Horários de Ouro)
     private val _heatmapData = MutableStateFlow(Array(7) { DoubleArray(24) { 0.0 } })
     val heatmapData: StateFlow<Array<DoubleArray>> = _heatmapData.asStateFlow()
 
@@ -20,37 +21,82 @@ class GraficosViewModel : ViewModel() {
     private val _melhorHora = MutableStateFlow("--h")
     val melhorHora: StateFlow<String> = _melhorHora.asStateFlow()
 
-    private val _tendenciaGanhos = MutableStateFlow<List<Pair<String, Double>>>(emptyList())
-    val tendenciaGanhos: StateFlow<List<Pair<String, Double>>> = _tendenciaGanhos.asStateFlow()
+    // Ganhos Brutos Semanais (Gráfico de Barras)
+    private val _ganhosSemanais = MutableStateFlow<List<Double>>(List(7) { 0.0 })
+    val ganhosSemanais: StateFlow<List<Double>> = _ganhosSemanais.asStateFlow()
+
+    private val _semanaSelecionadaOffset = MutableStateFlow(0) // 0 = Esta Semana, 1 = Semana Passada, etc.
+    val semanaSelecionadaOffset: StateFlow<Int> = _semanaSelecionadaOffset.asStateFlow()
 
     private val diasSemana = listOf("Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb")
 
     fun carregarDados(context: Context) {
         val prefs = SharedPreferencesManager(context)
         val turnos = prefs.obterTurnos()
-        val corridas = prefs.obterTodasCorridas()
-        
-        // 1. Heatmap e Melhores horários
+        processarDados(turnos)
+    }
+
+    fun setSemanaOffset(offset: Int, context: Context) {
+        _semanaSelecionadaOffset.value = offset
+        carregarDados(context)
+    }
+
+    private fun processarDados(turnos: List<Turno>) {
         val novaMatriz = Array(7) { DoubleArray(24) { 0.0 } }
+        val novosGanhosSemanais = MutableList(7) { 0.0 }
+        
+        val cal = Calendar.getInstance()
+        val currentWeek = cal.get(Calendar.WEEK_OF_YEAR)
+        val currentYear = cal.get(Calendar.YEAR)
+        
+        // Ajustar para a semana selecionada
+        cal.add(Calendar.WEEK_OF_YEAR, -_semanaSelecionadaOffset.value)
+        val targetWeek = cal.get(Calendar.WEEK_OF_YEAR)
+        val targetYear = cal.get(Calendar.YEAR)
+
         var maxGanhoHora = 0.0
         var melhorHoraValor = -1
         val ganhosPorDiaSemana = DoubleArray(7) { 0.0 }
 
-        corridas.forEach { corrida ->
-            val cal = Calendar.getInstance()
-            cal.timeInMillis = corrida.timestamp
-            val dia = cal.get(Calendar.DAY_OF_WEEK) - 1 // 0-indexed (Dom=0)
-            val hora = cal.get(Calendar.HOUR_OF_DAY)
+        turnos.forEach { turno ->
+            val turnoCal = Calendar.getInstance()
+            val date = try {
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(turno.data)
+            } catch (e: Exception) {
+                null
+            }
+            
+            if (date != null) {
+                turnoCal.time = date
+                val week = turnoCal.get(Calendar.WEEK_OF_YEAR)
+                val year = turnoCal.get(Calendar.YEAR)
 
-            novaMatriz[dia][hora] += corrida.valor
-            ganhosPorDiaSemana[dia] += corrida.valor
+                // Filtrar pela semana selecionada
+                if (week == targetWeek && year == targetYear) {
+                    val diaIndex = turnoCal.get(Calendar.DAY_OF_WEEK) - 1 // 0=Dom
+                    
+                    // 1. Processar para o Gráfico de Barras (Ganho Bruto por Dia)
+                    novosGanhosSemanais[diaIndex] += turno.ganhoBruto
+                    ganhosPorDiaSemana[diaIndex] += turno.ganhoBruto
 
-            if (novaMatriz[dia][hora] > maxGanhoHora) {
-                maxGanhoHora = novaMatriz[dia][hora]
-                melhorHoraValor = hora
+                    // 2. Processar para o Heatmap (Baseado nas corridas do turno)
+                    turno.corridas.forEach { corrida ->
+                        val corridaCal = Calendar.getInstance()
+                        corridaCal.timeInMillis = corrida.timestamp
+                        val hora = corridaCal.get(Calendar.HOUR_OF_DAY)
+                        
+                        novaMatriz[diaIndex][hora] += corrida.valor
+                        
+                        if (novaMatriz[diaIndex][hora] > maxGanhoHora) {
+                            maxGanhoHora = novaMatriz[diaIndex][hora]
+                            melhorHoraValor = hora
+                        }
+                    }
+                }
             }
         }
 
+        // Encontrar melhor dia da semana selecionada
         var maxGanhoDiaSemana = 0.0
         var indexMelhorDia = -1
         for (i in 0..6) {
@@ -61,19 +107,8 @@ class GraficosViewModel : ViewModel() {
         }
 
         _heatmapData.value = novaMatriz
-        if (indexMelhorDia != -1) _melhorDia.value = diasSemana[indexMelhorDia]
-        if (melhorHoraValor != -1) _melhorHora.value = "${melhorHoraValor}h"
-
-        // 2. Tendência de Ganhos (Últimos 7 turnos)
-        val tendencia = turnos.takeLast(7).map { turno ->
-            val dataSimplificada = try {
-                val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(turno.data)
-                SimpleDateFormat("dd/MM", Locale.getDefault()).format(date!!)
-            } catch (e: Exception) {
-                turno.data
-            }
-            Pair(dataSimplificada, turno.ganhoLiquido)
-        }
-        _tendenciaGanhos.value = tendencia
+        _ganhosSemanais.value = novosGanhosSemanais
+        _melhorDia.value = if (indexMelhorDia != -1) diasSemana[indexMelhorDia] else "---"
+        _melhorHora.value = if (melhorHoraValor != -1) "${melhorHoraValor}h" else "--h"
     }
 }
