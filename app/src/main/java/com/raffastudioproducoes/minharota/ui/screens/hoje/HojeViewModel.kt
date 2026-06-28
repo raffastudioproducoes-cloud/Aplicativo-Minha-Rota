@@ -89,6 +89,9 @@ class HojeViewModel : ViewModel() {
     fun carregarDadosMei(context: Context) {
         val prefs = SharedPreferencesManager(context)
         _faturamentoBrutoAcumulado.value = prefs.obterFaturamentoBrutoAcumulado()
+        // Carrega meta diária persistida (não é zerada ao salvar turno)
+        val metaSalva = prefs.obterMetaDiaria()
+        if (metaSalva > 0) _metaDiaria.value = metaSalva
         verificarAlertaMei()
     }
 
@@ -116,8 +119,14 @@ class HojeViewModel : ViewModel() {
         calcularLiquido()
     }
 
-    fun updateMetaDiaria(valor: Double) {
+    fun updateMetaDiaria(valor: Double, context: Context? = null) {
         _metaDiaria.value = valor
+        context?.let { SharedPreferencesManager(it).salvarMetaDiaria(valor) }
+    }
+
+    fun limparMetaDiaria(context: Context) {
+        _metaDiaria.value = 0.0
+        SharedPreferencesManager(context).salvarMetaDiaria(0.0)
     }
 
     fun toggleRidingMode() {
@@ -208,7 +217,7 @@ class HojeViewModel : ViewModel() {
         _corridasAtuais.value = emptyList()
         _ganhosRapidos.value = emptyList()
         _listaCustos.value = emptyList()
-        _metaDiaria.value = 0.0
+        // Meta diária NÃO é zerada ao salvar turno — persiste até o usuário limpar manualmente
     }
 
     fun updateHoraInicio(hora: String) {

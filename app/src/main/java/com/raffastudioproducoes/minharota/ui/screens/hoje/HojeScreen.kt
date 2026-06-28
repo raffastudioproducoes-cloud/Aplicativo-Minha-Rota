@@ -63,6 +63,8 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     val datePickerState = rememberDatePickerState()
     
     var metaDiariaInput by remember { mutableStateOf(if (metaDiaria > 0) metaDiaria.toString() else "") }
+    var showMetaDialog by remember { mutableStateOf(false) }
+    var metaInputDialog by remember { mutableStateOf("") }
     var ganhoBrutoInput by remember { mutableStateOf(if (ganhoBruto > 0) ganhoBruto.toString() else "") }
 
     var showAccessibilityDialog by remember { mutableStateOf(false) }
@@ -313,10 +315,36 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                             Text("R$ ${String.format("%.2f", valorPorHora)}", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                         }
                     }
-                    
+
                     Spacer(modifier = Modifier.height(16.dp))
-                    
-                    Text("META DIÁRIA", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp, fontWeight = FontWeight.Bold)
+
+                    // META DIÁRIA com botões de Editar e Limpar
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text("META DIÁRIA", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                        Row {
+                            IconButton(
+                                onClick = {
+                                    metaInputDialog = if (metaDiaria > 0) metaDiaria.toInt().toString() else ""
+                                    showMetaDialog = true
+                                },
+                                modifier = Modifier.size(28.dp)
+                            ) {
+                                Icon(Icons.Rounded.Edit, contentDescription = "Editar Meta", tint = VerdeNeon, modifier = Modifier.size(16.dp))
+                            }
+                            if (metaDiaria > 0) {
+                                IconButton(
+                                    onClick = { viewModel.limparMetaDiaria(context) },
+                                    modifier = Modifier.size(28.dp)
+                                ) {
+                                    Icon(Icons.Rounded.Close, contentDescription = "Limpar Meta", tint = Color.Red.copy(alpha = 0.6f), modifier = Modifier.size(16.dp))
+                                }
+                            }
+                        }
+                    }
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         LinearProgressIndicator(
                             progress = { if (metaDiaria > 0) (ganhoBruto / metaDiaria).toFloat().coerceIn(0f, 1f) else 0f },
@@ -327,7 +355,44 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                         Spacer(modifier = Modifier.width(12.dp))
                         Text("${if (metaDiaria > 0) (ganhoBruto / metaDiaria * 100).toInt() else 0}%", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                     }
-                    Text("R$ ${String.format("%.2f", ganhoBruto)} de R$ ${String.format("%.2f", metaDiaria)}", color = Color.White.copy(alpha = 0.5f), fontSize = 11.sp)
+                    if (metaDiaria > 0) {
+                        Text("R$ ${String.format("%.2f", ganhoBruto)} de R$ ${String.format("%.2f", metaDiaria)}", color = Color.White.copy(alpha = 0.5f), fontSize = 11.sp)
+                    } else {
+                        Text("Toque em \u270f para definir sua meta diária", color = Color.White.copy(alpha = 0.3f), fontSize = 11.sp)
+                    }
+                }
+            }
+
+            // Diálogo para definir/editar meta diária
+            item {
+                if (showMetaDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showMetaDialog = false },
+                        title = { Text("Meta Diária", color = Color.White, fontWeight = FontWeight.Bold) },
+                        text = {
+                            OutlinedTextField(
+                                value = metaInputDialog,
+                                onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) metaInputDialog = it },
+                                label = { Text("Valor da meta (R$)") },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = verdeEsmeralda),
+                                singleLine = true
+                            )
+                        },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                val valor = metaInputDialog.replace(',', '.').toDoubleOrNull() ?: 0.0
+                                viewModel.updateMetaDiaria(valor, context)
+                                metaDiariaInput = if (valor > 0) valor.toString() else ""
+                                showMetaDialog = false
+                            }) { Text("SALVAR", color = VerdeNeon, fontWeight = FontWeight.Bold) }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showMetaDialog = false }) { Text("CANCELAR", color = Color.White.copy(alpha = 0.5f)) }
+                        },
+                        containerColor = Color(0xFF1E293B)
+                    )
                 }
             }
         }

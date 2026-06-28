@@ -40,6 +40,7 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
     val melhorHora by viewModel.melhorHora.collectAsState()
     val ganhosSemanais by viewModel.ganhosSemanais.collectAsState()
     val semanaOffset by viewModel.semanaSelecionadaOffset.collectAsState()
+    val tendenciaGanhos by viewModel.tendenciaGanhos.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.carregarDados(context)
@@ -116,15 +117,108 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Heatmap Table
-        PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
-            HeatmapTable(heatmapData)
+        // Heatmap Table (card compacto com scroll vertical interno)
+        PremiumGlassCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = 320.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 320.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                HeatmapTable(heatmapData)
+            }
         }
 
         Spacer(modifier = Modifier.height(12.dp))
         HeatmapLegend()
 
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // TENDÊNCIA DE GANHOS (Gráfico de Linha Contínua)
+        if (tendenciaGanhos.isNotEmpty()) {
+            Text(
+                text = "📈 Tendência de Ganhos (30 dias)",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            Text(
+                text = "Ganho bruto diário agregado, em ordem cronológica",
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.White.copy(alpha = 0.5f)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            PremiumGlassCard(modifier = Modifier.fillMaxWidth().height(220.dp)) {
+                TrendLineChart(tendenciaGanhos)
+            }
+        }
+
         Spacer(modifier = Modifier.height(100.dp))
+    }
+}
+
+@Composable
+fun TrendLineChart(pontos: List<GraficosViewModel.PontoTendencia>) {
+    if (pontos.size < 2) return
+    val maxVal = pontos.maxOf { it.valor }.coerceAtLeast(1.0)
+
+    Canvas(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 20.dp)) {
+        val w = size.width
+        val h = size.height
+        val stepX = w / (pontos.size - 1).toFloat()
+
+        val pontosPx = pontos.mapIndexed { i, p ->
+            Offset(
+                x = i * stepX,
+                y = h - (p.valor / maxVal * h * 0.85f).toFloat()
+            )
+        }
+
+        // Área de preenchimento sob a linha
+        val fillPath = androidx.compose.ui.graphics.Path()
+        fillPath.moveTo(pontosPx.first().x, h)
+        pontosPx.forEach { fillPath.lineTo(it.x, it.y) }
+        fillPath.lineTo(pontosPx.last().x, h)
+        fillPath.close()
+        drawPath(
+            path = fillPath,
+            brush = Brush.verticalGradient(
+                colors = listOf(Color(0xFF10B981).copy(alpha = 0.35f), Color.Transparent)
+            )
+        )
+
+        // Linha contínua
+        for (i in 0 until pontosPx.size - 1) {
+            drawLine(
+                color = Color(0xFF10B981),
+                start = pontosPx[i],
+                end = pontosPx[i + 1],
+                strokeWidth = 2.5.dp.toPx(),
+                cap = androidx.compose.ui.graphics.StrokeCap.Round
+            )
+        }
+
+        // Pontos e labels
+        pontosPx.forEachIndexed { i, pt ->
+            drawCircle(color = Color(0xFF10B981), radius = 4.dp.toPx(), center = pt)
+            drawCircle(color = Color(0xFF0C0C0E), radius = 2.dp.toPx(), center = pt)
+
+            // Label de data a cada 5 pontos para não poluir
+            if (i % 5 == 0 || i == pontos.size - 1) {
+                drawContext.canvas.nativeCanvas.apply {
+                    val paint = android.graphics.Paint().apply {
+                        color = android.graphics.Color.argb(128, 255, 255, 255)
+                        textSize = 8.dp.toPx()
+                        textAlign = android.graphics.Paint.Align.CENTER
+                    }
+                    drawText(pontos[i].label, pt.x, h + 14.dp.toPx(), paint)
+                }
+            }
+        }
     }
 }
 

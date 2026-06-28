@@ -34,7 +34,7 @@ import kotlin.math.sin
 data class OnboardingPage(
     val title: String,
     val description: String,
-    val bgRes: Int
+    val bgRes: Int? // null = usar gradiente programático
 )
 
 val onboardingPages = listOf(
@@ -46,7 +46,7 @@ val onboardingPages = listOf(
     OnboardingPage(
         title = "Registre seus Turnos",
         description = "Acompanhe cada turno de trabalho com detalhes de ganhos e custos",
-        bgRes = R.drawable.bg_onb_calendario
+        bgRes = null // Slide usa gradiente programático (bg_onb_calendario removido para evitar crash AAPT2)
     ),
     OnboardingPage(
         title = "Organize com Caixinhas",
@@ -279,12 +279,29 @@ fun HexagonIndicator(isSelected: Boolean) {
 fun OnboardingPageContent(page: OnboardingPage) {
     Box(modifier = Modifier.fillMaxSize()) {
         // Background Individual por Slide (Imersão Total Edge-to-Edge)
-        Image(
-            painter = painterResource(id = page.bgRes),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        if (page.bgRes != null) {
+            Image(
+                painter = painterResource(id = page.bgRes),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            // Gradiente programático (substitui bg_onb_calendario.png corrompido)
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colors = listOf(
+                                Color(0xFF0C0C0E),
+                                Color(0xFF0D2137),
+                                Color(0xFF064E3B)
+                            )
+                        )
+                    )
+            )
+        }
 
         // Camada de Conteúdo (Tipografia)
         Column(

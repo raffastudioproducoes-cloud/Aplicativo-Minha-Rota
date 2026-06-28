@@ -1,5 +1,8 @@
 package com.raffastudioproducoes.minharota.ui.screens.plans
 
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,20 +11,58 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.border
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
+// ViewModel local para gerenciar status de assinatura de forma reativa
+class PlansViewModel : ViewModel() {
+    private val _planoAtual = MutableStateFlow("free") // "free", "premium", "pro"
+    val planoAtual: StateFlow<String> = _planoAtual.asStateFlow()
+
+    fun carregarPlano(context: Context) {
+        val prefs = SharedPreferencesManager(context)
+        _planoAtual.value = if (prefs.obterIsPro()) "premium" else "free"
+    }
+
+    // Mock de retorno positivo do Google Play Billing
+    fun escolherPlano(plano: String, context: Context) {
+        val prefs = SharedPreferencesManager(context)
+        _planoAtual.value = plano
+        // Persiste localmente — simula confirmação do billing
+        prefs.salvarIsPro(plano != "free")
+    }
+
+    fun cancelarPlano(context: Context) {
+        val prefs = SharedPreferencesManager(context)
+        _planoAtual.value = "free"
+        prefs.salvarIsPro(false)
+    }
+}
 
 @Composable
-fun PlansScreen() {
+fun PlansScreen(plansViewModel: PlansViewModel = viewModel()) {
+    val context = LocalContext.current
+    val planoAtual by plansViewModel.planoAtual.collectAsState()
+
+    LaunchedEffect(Unit) {
+        plansViewModel.carregarPlano(context)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -34,8 +75,26 @@ fun PlansScreen() {
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White,
-            modifier = Modifier.padding(bottom = 32.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         )
+
+        if (planoAtual != "free") {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 24.dp)
+            ) {
+                Icon(Icons.Rounded.Star, contentDescription = null, tint = Color(0xFFFBBF24), modifier = Modifier.size(16.dp))
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = "Plano ${planoAtual.replaceFirstChar { it.uppercase() }} ativo — recursos premium liberados!",
+                    fontSize = 13.sp,
+                    color = VerdeEntrada,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+        } else {
+            Spacer(modifier = Modifier.height(24.dp))
+        }
 
         // Plano Free
         PlanCard(
@@ -48,7 +107,9 @@ fun PlansScreen() {
                 "Histórico de 30 dias",
                 "Suporte por Email"
             ),
-            ehAtual = true
+            ehAtual = planoAtual == "free",
+            destaque = false,
+            onEscolher = { plansViewModel.escolherPlano("free", context) }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -66,8 +127,9 @@ fun PlansScreen() {
                 "Suporte Prioritário",
                 "OCR de Documentos"
             ),
-            ehAtual = false,
-            destaque = true
+            ehAtual = planoAtual == "premium",
+            destaque = true,
+            onEscolher = { plansViewModel.escolherPlano("premium", context) }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -85,7 +147,9 @@ fun PlansScreen() {
                 "Suporte 24/7",
                 "Backup Automático"
             ),
-            ehAtual = false
+            ehAtual = planoAtual == "pro",
+            destaque = false,
+            onEscolher = { plansViewModel.escolherPlano("pro", context) }
         )
 
         Spacer(modifier = Modifier.height(40.dp))
@@ -99,19 +163,19 @@ fun PlanCard(
     descricao: String,
     recursos: List<String>,
     ehAtual: Boolean = false,
-    destaque: Boolean = false
+    destaque: Boolean = false,
+    onEscolher: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .then(
                 if (destaque) {
-                    Modifier
-                        .border(
-                            width = 2.dp,
-                            color = VerdeEntrada,
-                            shape = RoundedCornerShape(16.dp)
-                        )
+                    Modifier.border(
+                        width = 2.dp,
+                        color = VerdeEntrada,
+                        shape = RoundedCornerShape(16.dp)
+                    )
                 } else {
                     Modifier
                 }
@@ -195,9 +259,9 @@ fun PlanCard(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Botão de Ação
+            // Botão de Ação — reativo ao status atual
             Button(
-                onClick = { /* Implementar upgrade */ },
+                onClick = onEscolher,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp),

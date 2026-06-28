@@ -78,4 +78,7 @@ dependencies {
 
     // ML Kit Text Recognition
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
+
+    // Coil — carregamento de imagens (foto de perfil)
+    implementation("io.coil-kt:coil-compose:2.6.0")
 }

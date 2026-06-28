@@ -25,6 +25,11 @@ class GraficosViewModel : ViewModel() {
     private val _ganhosSemanais = MutableStateFlow<List<Double>>(List(7) { 0.0 })
     val ganhosSemanais: StateFlow<List<Double>> = _ganhosSemanais.asStateFlow()
 
+    // Tendência de Ganhos (Gráfico de Linha — últimos 30 dias, agregado por data única)
+    data class PontoTendencia(val label: String, val valor: Double)
+    private val _tendenciaGanhos = MutableStateFlow<List<PontoTendencia>>(emptyList())
+    val tendenciaGanhos: StateFlow<List<PontoTendencia>> = _tendenciaGanhos.asStateFlow()
+
     private val _semanaSelecionadaOffset = MutableStateFlow(0) // 0 = Esta Semana, 1 = Semana Passada, etc.
     val semanaSelecionadaOffset: StateFlow<Int> = _semanaSelecionadaOffset.asStateFlow()
 
@@ -144,5 +149,32 @@ class GraficosViewModel : ViewModel() {
         _ganhosSemanais.value = novosGanhosSemanais
         _melhorDia.value = if (indexMelhorDia != -1) diasSemana[indexMelhorDia] else "---"
         _melhorHora.value = if (melhorHoraValor != -1) "${melhorHoraValor}h" else "--h"
+
+        // Calcular tendência: todos os turnos, agregados por data única, ordenados cronologicamente
+        calcularTendencia(turnos)
+    }
+
+    private fun calcularTendencia(turnos: List<Turno>) {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        // Agregar ganho bruto por data única (evita duplicação do mesmo dia)
+        val agrupado = LinkedHashMap<String, Double>()
+        turnos.forEach { turno ->
+            val dataKey = turno.data
+            agrupado[dataKey] = (agrupado[dataKey] ?: 0.0) + turno.ganhoBruto
+        }
+        // Ordenar cronologicamente e pegar os últimos 30 pontos
+        val pontos = agrupado.entries
+            .sortedBy { entry ->
+                try { sdf.parse(entry.key)?.time ?: 0L } catch (e: Exception) { 0L }
+            }
+            .takeLast(30)
+            .map { entry ->
+                val labelCurto = try {
+                    val d = sdf.parse(entry.key)
+                    SimpleDateFormat("dd/MM", Locale.getDefault()).format(d!!)
+                } catch (e: Exception) { entry.key }
+                PontoTendencia(label = labelCurto, valor = entry.value)
+            }
+        _tendenciaGanhos.value = pontos
     }
 }

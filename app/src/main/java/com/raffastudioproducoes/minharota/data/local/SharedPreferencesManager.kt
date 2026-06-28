@@ -216,6 +216,15 @@ class SharedPreferencesManager(context: Context) {
         }
     }
 
+    // --- Meta Diária ---
+    fun salvarMetaDiaria(valor: Double) {
+        sharedPreferences.edit().putFloat(KEY_META_DIARIA, valor.toFloat()).apply()
+    }
+
+    fun obterMetaDiaria(): Double {
+        return sharedPreferences.getFloat(KEY_META_DIARIA, 0.0f).toDouble()
+    }
+
     // --- Faturamento MEI ---
     fun salvarFaturamentoBrutoAcumulado(valor: Double) {
         sharedPreferences.edit().putFloat(KEY_FATURAMENTO_MEI, valor.toFloat()).apply()
@@ -269,5 +278,6 @@ class SharedPreferencesManager(context: Context) {
         private const val KEY_IS_PRO = "is_pro"
         private const val KEY_CONTAS_DIARIAS = "contas_diarias"
         private const val KEY_DIAS_FOLGA = "dias_folga"
+        private const val KEY_META_DIARIA = "meta_diaria_persistente"
     }
 }

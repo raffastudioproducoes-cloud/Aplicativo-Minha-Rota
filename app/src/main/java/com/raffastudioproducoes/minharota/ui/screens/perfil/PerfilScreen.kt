@@ -23,7 +23,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -31,11 +33,17 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import java.io.File
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PerfilScreen(
     viewModel: PerfilViewModel = viewModel(),
@@ -48,14 +56,22 @@ fun PerfilScreen(
     val dataAniversario by viewModel.dataAniversario.collectAsState()
     val fotoPerfilUrl by viewModel.fotoPerfilUrl.collectAsState()
 
+    // Carregar dados persistidos ao abrir a tela
+    LaunchedEffect(Unit) {
+        viewModel.carregarDadosPerfil(context)
+    }
+
     var nomeEditavel by remember { mutableStateOf(false) }
     var emailEditavel by remember { mutableStateOf(false) }
-    var dataEditavel by remember { mutableStateOf(false) }
     var mostrarMenuFoto by remember { mutableStateOf(false) }
-    
+
+    // DatePickerDialog nativo para aniversário
+    var showDatePicker by remember { mutableStateOf(false) }
+    val datePickerState = rememberDatePickerState()
+
     // URI temporária para a foto da câmera
     val tempPhotoFile = remember { File(context.cacheDir, "temp_photo_${System.currentTimeMillis()}.jpg") }
-    val tempPhotoUri = remember { 
+    val tempPhotoUri = remember {
         FileProvider.getUriForFile(
             context,
             "${context.packageName}.fileprovider",
@@ -63,7 +79,7 @@ fun PerfilScreen(
         )
     }
 
-    // Launchers v1.9.1 (Contratos de Resultado Seguros)
+    // Launchers
     val galeriaLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri ->
@@ -78,7 +94,6 @@ fun PerfilScreen(
         }
     }
 
-    // Launcher de Permissão
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -119,15 +134,20 @@ fun PerfilScreen(
                         .clickable { mostrarMenuFoto = !mostrarMenuFoto },
                     contentAlignment = Alignment.Center
                 ) {
-                    if (fotoPerfilUrl.isEmpty()) {
-                        Icon(
-                            imageVector = Icons.Outlined.AccountCircle,
+                    if (fotoPerfilUrl.isNotEmpty()) {
+                        // Exibir foto real persistida via Coil AsyncImage
+                        AsyncImage(
+                            model = ImageRequest.Builder(context)
+                                .data(Uri.parse(fotoPerfilUrl))
+                                .crossfade(true)
+                                .build(),
                             contentDescription = "Foto de Perfil",
-                            modifier = Modifier.size(80.dp),
-                            tint = VerdeNeon
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clip(CircleShape),
+                            contentScale = ContentScale.Crop
                         )
                     } else {
-                        // Aqui entraria um AsyncImage (Coil), usando placeholder por enquanto
                         Icon(
                             imageVector = Icons.Outlined.AccountCircle,
                             contentDescription = "Foto de Perfil",
@@ -135,7 +155,7 @@ fun PerfilScreen(
                             tint = VerdeNeon
                         )
                     }
-                    
+
                     Icon(
                         imageVector = Icons.Outlined.PhotoCamera,
                         contentDescription = "Alterar Foto",
@@ -147,11 +167,11 @@ fun PerfilScreen(
                         tint = Color.Black
                     )
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Text(
-                    text = nomeUsuario,
+                    text = nomeUsuario.ifBlank { "Motorista" },
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -164,7 +184,7 @@ fun PerfilScreen(
             }
         }
 
-        // Menu de Foto Glassmorphic v1.9.1
+        // Menu de Foto Glassmorphic
         if (mostrarMenuFoto) {
             PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -205,6 +225,7 @@ fun PerfilScreen(
         // Seção de Dados Detalhados
         PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
             Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
+                // Nome — pré-populado do ViewModel
                 PerfilInputField(
                     label = "Nome Completo",
                     value = nomeUsuario,
@@ -213,6 +234,7 @@ fun PerfilScreen(
                     onValueChange = { viewModel.atualizarNomeUsuario(it, context) }
                 )
 
+                // E-mail
                 PerfilInputField(
                     label = "E-mail de Acesso",
                     value = email,
@@ -221,14 +243,42 @@ fun PerfilScreen(
                     onValueChange = { viewModel.atualizarEmail(it, context) }
                 )
 
-                PerfilInputField(
-                    label = "Data de Nascimento",
-                    value = if (dataAniversario.isEmpty()) "Não informado" else dataAniversario,
-                    isEditing = dataEditavel,
-                    onEditClick = { dataEditavel = !dataEditavel },
-                    onValueChange = { viewModel.atualizarDataAniversario(it, context) },
-                    placeholder = "DD/MM/YYYY"
-                )
+                // Data de Nascimento — abre DatePickerDialog nativo ao clicar em editar
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Data de Nascimento",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = Color.White.copy(alpha = 0.5f),
+                            fontWeight = FontWeight.Bold
+                        )
+                        IconButton(
+                            onClick = { showDatePicker = true },
+                            modifier = Modifier.size(24.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Edit,
+                                contentDescription = "Selecionar Data",
+                                modifier = Modifier.size(18.dp),
+                                tint = VerdeNeon
+                            )
+                        }
+                    }
+                    Text(
+                        text = if (dataAniversario.isEmpty()) "Não informado" else dataAniversario,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = if (dataAniversario.isEmpty()) Color.White.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.9f),
+                        fontWeight = FontWeight.Medium
+                    )
+                    Divider(color = Color.White.copy(alpha = 0.05f))
+                }
             }
         }
 
@@ -255,6 +305,34 @@ fun PerfilScreen(
         }
 
         Spacer(modifier = Modifier.height(100.dp))
+    }
+
+    // DatePickerDialog nativo do Material 3 para aniversário
+    if (showDatePicker) {
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let { millis ->
+                        val date = Instant.ofEpochMilli(millis)
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate()
+                        val formatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                        viewModel.atualizarDataAniversario(formatted, context)
+                    }
+                    showDatePicker = false
+                }) {
+                    Text("OK", color = VerdeNeon, fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePicker = false }) {
+                    Text("CANCELAR", color = Color.White.copy(alpha = 0.5f))
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
     }
 }
 
@@ -288,7 +366,7 @@ fun PerfilInputField(
                 )
             }
         }
-        
+
         if (isEditing) {
             OutlinedTextField(
                 value = if (value == "Não informado") "" else value,
@@ -308,12 +386,12 @@ fun PerfilInputField(
             )
         } else {
             Text(
-                text = value,
+                text = value.ifBlank { "Não informado" },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (value == "Não informado") Color.White.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.9f),
+                color = if (value.isBlank()) Color.White.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.9f),
                 fontWeight = FontWeight.Medium
             )
             Divider(color = Color.White.copy(alpha = 0.05f))
