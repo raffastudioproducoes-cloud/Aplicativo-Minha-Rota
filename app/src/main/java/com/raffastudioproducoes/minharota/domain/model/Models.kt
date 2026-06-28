@@ -3,7 +3,16 @@ package com.raffastudioproducoes.minharota.domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Corrida(val id: String, val valor: Double, val timestamp: Long)
+data class Corrida(val id: String, val valor: Double, val timestamp: Long, val km: Double = 0.0, val app: String = "Manual")
+
+@Serializable
+data class TemporaryRide(
+    val packageName: String,
+    val estimatedValue: Double,
+    val estimatedKm: Double,
+    val pingTime: Long,
+    val isAccepted: Boolean = false
+)
 
 @Serializable
 data class Turno(

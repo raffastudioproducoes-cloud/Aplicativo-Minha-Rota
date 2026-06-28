@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MinhaRota PRO</string>
+    <string name="ride_assistant_description">O Assistente de Corrida captura automaticamente os ganhos e quilometragens dos aplicativos de entrega e transporte para facilitar seu controle financeiro.</string>
 </resources>
