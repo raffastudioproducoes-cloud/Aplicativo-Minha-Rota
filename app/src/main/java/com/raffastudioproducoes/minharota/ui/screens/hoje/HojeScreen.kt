@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -104,7 +105,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
         ) {
-            // ALERTA MEI (Existente)
+            // ALERTA MEI
             if (exibirAlertaMei) {
                 item {
                     Card(
@@ -131,7 +132,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                 }
             }
 
-            // GATILHO ACESSIBILIDADE (v1.9.2)
+            // GATILHO ACESSIBILIDADE
             item {
                 PremiumGlassCard(
                     modifier = Modifier
@@ -333,7 +334,9 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
 
         // Botão Salvar Turno (Pílula)
         Button(
-            onClick = { viewModel.salvarTurno(context) },
+            onClick = { viewModel.salvarTurno(context, onSuccess = {
+                Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show()
+            }) },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(bottom = 32.dp, start = 24.dp, end = 24.dp)
@@ -405,7 +408,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                     TextButton(onClick = {
                         datePickerState.selectedDateMillis?.let {
                             val date = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
-                            viewModel.updateDataRegistro(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                            viewModel.alterarDataRegistro(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                         }
                         showDatePicker = false
                     }) { Text("OK", color = VerdeNeon) }
