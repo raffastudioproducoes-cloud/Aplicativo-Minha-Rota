@@ -96,19 +96,36 @@ class GraficosViewModel : ViewModel() {
                     novosGanhosSemanais[diaIndex] += turno.ganhoBruto
                     ganhosPorDiaSemana[diaIndex] += turno.ganhoBruto
 
-                    // 2. Processar para o Heatmap (Unificação de Fontes: Todas as corridas do turno)
-                    turno.corridas.forEach { corrida ->
-                        val corridaCal = Calendar.getInstance()
-                        corridaCal.timeInMillis = corrida.timestamp
-                        val hora = corridaCal.get(Calendar.HOUR_OF_DAY)
-                        
-                        novaMatriz[diaIndex][hora] += corrida.valor
-                        
-                        if (novaMatriz[diaIndex][hora] > maxGanhoHora) {
-                            maxGanhoHora = novaMatriz[diaIndex][hora]
-                            melhorHoraValor = hora
+                    // 2. Processar para o Heatmap (Unificação de Fontes)
+                    // Se o turno tem corridas individuais (FAB), usamos os horários delas
+                    if (turno.corridas.isNotEmpty()) {
+                        turno.corridas.forEach { corrida ->
+                            val corridaCal = Calendar.getInstance()
+                            corridaCal.timeInMillis = corrida.timestamp
+                            val hora = corridaCal.get(Calendar.HOUR_OF_DAY)
+                            
+                            novaMatriz[diaIndex][hora] += corrida.valor
                         }
+                    } else {
+                        // Se o turno foi fechado manualmente sem lançamentos individuais (OCR/Manual),
+                        // distribuímos o ganho bruto no horário de início do turno
+                        val horaInicio = try {
+                            turno.horaInicio.split(":")[0].toInt()
+                        } catch (e: Exception) {
+                            12 // Fallback para meio-dia
+                        }
+                        novaMatriz[diaIndex][horaInicio] += turno.ganhoBruto
                     }
+                }
+            }
+        }
+
+        // Atualizar Melhor Hora após processar todos os ganhos unificados
+        for (d in 0..6) {
+            for (h in 0..23) {
+                if (novaMatriz[d][h] > maxGanhoHora) {
+                    maxGanhoHora = novaMatriz[d][h]
+                    melhorHoraValor = h
                 }
             }
         }
