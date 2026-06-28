@@ -9,13 +9,21 @@ android {
     namespace = "com.raffastudioproducoes.minharota"
     compileSdk = 34
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("ANDROID_KEYSTORE_PATH") ?: "release.keystore")
+            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: "MinhaRota@2025Prod!"
+            keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "minharota_alias"
+            keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: "MinhaRota@2025Prod!"
+        }
+    }
 
     defaultConfig {
         applicationId = "com.raffastudioproducoes.minharota"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0-fase1"
+        versionCode = 2
+        versionName = "1.1.0-release"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -25,11 +33,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = false // Mantido false para garantir testes reativos iniciais
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

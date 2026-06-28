@@ -13,3 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Keystore de producao - NUNCA commitar no repositorio
+*.keystore
+*.jks
+*.keystore.b64
