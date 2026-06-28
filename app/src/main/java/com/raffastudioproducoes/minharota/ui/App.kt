@@ -1,11 +1,16 @@
 package com.raffastudioproducoes.minharota.ui
 
+import android.Manifest
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -37,6 +42,13 @@ fun MainAppContent() {
     val navController = rememberNavController()
     val hojeViewModel: HojeViewModel = viewModel()
 
+    // Sistema Global de Permissões v1.9.2
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        // Lógica de feedback pode ser implementada aqui se necessário
+    }
+
     NavHost(
         navController = navController,
         startDestination = "splash"
@@ -58,6 +70,20 @@ fun MainAppContent() {
         composable("login_main") {
             AuthScreen(
                 onAuthSuccess = {
+                    // Disparar permissões ao entrar na Main Screen v1.9.2
+                    val permissions = mutableListOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+                        permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
+                    } else {
+                        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    }
+                    permissionLauncher.launch(permissions.toTypedArray())
+
                     navController.navigate(Rota.Hoje.route) {
                         popUpTo("login_main") { inclusive = true }
                     }
@@ -74,6 +100,20 @@ fun MainAppContent() {
             LoginScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onLoginSuccess = {
+                    // Disparar permissões ao entrar na Main Screen v1.9.2
+                    val permissions = mutableListOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+                        permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
+                    } else {
+                        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    }
+                    permissionLauncher.launch(permissions.toTypedArray())
+
                     navController.navigate(Rota.Hoje.route) {
                         popUpTo("login_main") { inclusive = true }
                     }
@@ -84,6 +124,20 @@ fun MainAppContent() {
             RegisterScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onRegisterSuccess = {
+                    // Disparar permissões ao entrar na Main Screen v1.9.2
+                    val permissions = mutableListOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+                        permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
+                    } else {
+                        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    }
+                    permissionLauncher.launch(permissions.toTypedArray())
+
                     navController.navigate(Rota.Hoje.route) {
                         popUpTo("login_main") { inclusive = true }
                     }

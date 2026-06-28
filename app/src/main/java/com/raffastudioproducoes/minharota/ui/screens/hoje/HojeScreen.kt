@@ -1,5 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.hoje
 
+import android.content.Intent
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -60,6 +63,8 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
     
     var metaDiariaInput by remember { mutableStateOf(if (metaDiaria > 0) metaDiaria.toString() else "") }
     var ganhoBrutoInput by remember { mutableStateOf(if (ganhoBruto > 0) ganhoBruto.toString() else "") }
+
+    var showAccessibilityDialog by remember { mutableStateOf(false) }
 
     val fundoCarbono = Color(0xFF0C0C0E)
     val verdeEsmeralda = Color(0xFF10B981)
@@ -99,6 +104,7 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
         ) {
+            // ALERTA MEI (Existente)
             if (exibirAlertaMei) {
                 item {
                     Card(
@@ -120,6 +126,25 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                                     fontSize = 12.sp
                                 )
                             }
+                        }
+                    }
+                }
+            }
+
+            // GATILHO ACESSIBILIDADE (v1.9.2)
+            item {
+                PremiumGlassCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                        .clickable { showAccessibilityDialog = true }
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(Icons.Rounded.Bolt, contentDescription = null, tint = Color(0xFFFACC15))
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Column {
+                            Text("Assistente de Corrida", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                            Text("Ative para capturar Uber, 99 e iFood automaticamente.", color = Color.White.copy(alpha = 0.5f), fontSize = 11.sp)
                         }
                     }
                 }
@@ -273,75 +298,102 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
             }
 
             item {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    IndicadorBloco(label = "Líquido", value = "R$ ${String.format("%.2f", ganhoLiquido)}", color = verdeEsmeralda, modifier = Modifier.weight(1f))
-                    IndicadorBloco(label = "Por hora", value = "R$ ${String.format("%.2f", valorPorHora)}", color = Color(0xFFF97316), modifier = Modifier.weight(1f))
-                    IndicadorBloco(label = "Meta", value = "R$ ${String.format("%.2f", metaDiaria)}", color = Color.White.copy(alpha = 0.6f), modifier = Modifier.weight(1f))
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-
-            item {
-                if (!isFolga) {
-                    HojeSectionCard(
-                        title = "PROGRESSO DA META",
-                        subtitle = "Meta diária manual (R$)",
-                        icon = Icons.Rounded.TrendingUp
-                    ) {
-                        OutlinedTextField(
-                            value = metaDiariaInput,
-                            onValueChange = { input ->
-                                if (input.isEmpty() || input.matches(Regex("^\\d*[.,]?\\d*$"))) {
-                                    val normalized = input.replace(',', '.')
-                                    metaDiariaInput = normalized
-                                    viewModel.updateMetaDiaria(normalized.toDoubleOrNull() ?: 0.0)
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            placeholder = { Text("Ex: 250.00") },
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                            shape = RoundedCornerShape(16.dp)
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        val progresso = if (metaDiaria > 0) (ganhoLiquido / metaDiaria).coerceIn(0.0, 1.0).toFloat() else 0f
+                HojeSectionCard(
+                    title = "RESUMO DE GANHOS",
+                    icon = Icons.Rounded.PieChart
+                ) {
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        Column {
+                            Text("GANHO LÍQUIDO", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                            Text("R$ ${String.format("%.2f", ganhoLiquido)}", color = VerdeNeon, fontSize = 24.sp, fontWeight = FontWeight.ExtraBold)
+                        }
+                        Column(horizontalAlignment = Alignment.End) {
+                            Text("VALOR / HORA", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                            Text("R$ ${String.format("%.2f", valorPorHora)}", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                    
+                    Spacer(modifier = Modifier.height(16.dp))
+                    
+                    Text("META DIÁRIA", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         LinearProgressIndicator(
-                            progress = { progresso },
-                            modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
-                            color = verdeEsmeralda,
+                            progress = { if (metaDiaria > 0) (ganhoBruto / metaDiaria).toFloat().coerceIn(0f, 1f) else 0f },
+                            modifier = Modifier.weight(1f).height(8.dp).clip(RoundedCornerShape(4.dp)),
+                            color = VerdeNeon,
                             trackColor = Color.White.copy(alpha = 0.1f)
                         )
-                        Row(modifier = Modifier.fillMaxWidth().padding(top = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text("${(progresso * 100).toInt()}%", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
-                            Text("R$ ${ganhoLiquido.toInt()} / R$ ${metaDiaria.toInt()}", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
-                        }
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text("${if (metaDiaria > 0) (ganhoBruto / metaDiaria * 100).toInt() else 0}%", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                     }
-                } else {
-                    PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                            Icon(Icons.Rounded.Info, contentDescription = null, tint = VerdeNeon)
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text("Dia de Folga: Meta diária desativada.", color = Color.White.copy(alpha = 0.7f), fontSize = 14.sp)
-                        }
-                    }
+                    Text("R$ ${String.format("%.2f", ganhoBruto)} de R$ ${String.format("%.2f", metaDiaria)}", color = Color.White.copy(alpha = 0.5f), fontSize = 11.sp)
                 }
-                Spacer(modifier = Modifier.height(24.dp))
             }
+        }
 
-            item {
-                Button(
-                    onClick = { 
-                        viewModel.salvarTurno(context) {
-                            Toast.makeText(context, "Dia salvo com sucesso!", Toast.LENGTH_SHORT).show()
-                            ganhoBrutoInput = ""; metaDiariaInput = ""
+        // Botão Salvar Turno (Pílula)
+        Button(
+            onClick = { viewModel.salvarTurno(context) },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 32.dp, start = 24.dp, end = 24.dp)
+                .fillMaxWidth()
+                .height(56.dp),
+            shape = RoundedCornerShape(50.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = verdeEsmeralda)
+        ) {
+            Icon(Icons.Rounded.Save, contentDescription = null, tint = Color.Black)
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("SALVAR TURNO DE HOJE", color = Color.Black, fontWeight = FontWeight.Bold)
+        }
+
+        // Diálogo de Acessibilidade Glassmorphic v1.9.2
+        if (showAccessibilityDialog) {
+            AlertDialog(
+                onDismissRequest = { showAccessibilityDialog = false },
+                modifier = Modifier
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(Color(0xFF1E293B).copy(alpha = 0.9f))
+                    .border(1.dp, Color.White.copy(alpha = 0.1f), RoundedCornerShape(24.dp)),
+                properties = androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth = false)
+            ) {
+                PremiumGlassCard(modifier = Modifier.fillMaxWidth(0.9f)) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(Icons.Rounded.AccessibilityNew, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(48.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            "Ativar Monitoramento",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            "Para capturar suas corridas automaticamente, você precisa ativar o 'Assistente de Corrida MinhaRota' nas configurações de Acessibilidade do Android.",
+                            color = Color.White.copy(alpha = 0.7f),
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Button(
+                            onClick = {
+                                showAccessibilityDialog = false
+                                val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+                                context.startActivity(intent)
+                            },
+                            modifier = Modifier.fillMaxWidth().height(50.dp),
+                            shape = RoundedCornerShape(50.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
+                        ) {
+                            Text("IR PARA CONFIGURAÇÕES", color = Color.Black, fontWeight = FontWeight.Bold)
                         }
-                    },
-                    modifier = Modifier.fillMaxWidth().height(56.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = verdeEsmeralda)
-                ) {
-                    Icon(Icons.Rounded.Save, contentDescription = null, tint = Color.Black)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Salvar dia e distribuir nas caixinhas", color = Color.Black, fontWeight = FontWeight.Bold)
+                        TextButton(onClick = { showAccessibilityDialog = false }) {
+                            Text("AGORA NÃO", color = Color.White.copy(alpha = 0.5f))
+                        }
+                    }
                 }
             }
         }
@@ -351,41 +403,41 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
                 onDismissRequest = { showDatePicker = false },
                 confirmButton = {
                     TextButton(onClick = {
-                        datePickerState.selectedDateMillis?.let { millis ->
-                            val date = Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate()
-                            val formattedDate = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-                            viewModel.alterarDataRegistro(formattedDate)
+                        datePickerState.selectedDateMillis?.let {
+                            val date = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
+                            viewModel.updateDataRegistro(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                         }
                         showDatePicker = false
-                    }) { Text("Confirmar", color = VerdeNeon) }
+                    }) { Text("OK", color = VerdeNeon) }
                 },
-                dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("Cancelar") } }
-            ) { DatePicker(state = datePickerState) }
-        }
-    }
-}
-
-@Composable
-fun HojeSectionCard(title: String, subtitle: String? = null, icon: androidx.compose.ui.graphics.vector.ImageVector, content: @Composable ColumnScope.() -> Unit) {
-    PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 12.dp)) {
-            Icon(icon, contentDescription = null, tint = Color.White.copy(alpha = 0.6f), modifier = Modifier.size(18.dp))
-            Spacer(modifier = Modifier.width(8.dp))
-            Column {
-                Text(text = title, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.9f))
-                if (subtitle != null) Text(text = subtitle, fontSize = 10.sp, color = Color.White.copy(alpha = 0.4f))
+                dismissButton = {
+                    TextButton(onClick = { showDatePicker = false }) { Text("CANCELAR", color = Color.White.copy(alpha = 0.5f)) }
+                }
+            ) {
+                DatePicker(state = datePickerState)
             }
         }
-        content()
     }
 }
 
 @Composable
-fun IndicadorBloco(label: String, value: String, color: Color, modifier: Modifier = Modifier) {
-    PremiumGlassCard(modifier = modifier) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-            Text(text = label, fontSize = 10.sp, color = Color.White.copy(alpha = 0.5f))
-            Text(text = value, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = color)
+fun HojeSectionCard(
+    title: String,
+    subtitle: String? = null,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 8.dp)) {
+            Icon(icon, contentDescription = null, tint = Color.White.copy(alpha = 0.5f), modifier = Modifier.size(14.dp))
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(text = title, style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.5f), fontWeight = FontWeight.Bold)
+        }
+        PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+            if (subtitle != null) {
+                Text(text = subtitle, color = Color.White.copy(alpha = 0.4f), fontSize = 11.sp, modifier = Modifier.padding(bottom = 12.dp))
+            }
+            content()
         }
     }
 }
