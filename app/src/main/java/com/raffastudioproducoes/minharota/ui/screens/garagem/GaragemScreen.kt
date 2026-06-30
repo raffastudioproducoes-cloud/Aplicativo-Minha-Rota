@@ -31,11 +31,13 @@ import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
     val context = LocalContext.current
     val kmAtual by viewModel.kmAtual.collectAsState()
+    val kmTotal by viewModel.kmTotalAcumulado.collectAsState()
     val manutencoes by viewModel.manutencoes.collectAsState()
     val mediaKmL by viewModel.mediaResult.collectAsState()
 
     var showBottomSheet by remember { mutableStateOf(false) }
-    var kmInput by remember { mutableStateOf(if (kmAtual > 0) kmAtual.toString() else "") }
+    var manutencaoParaEditar by remember { mutableStateOf<Manutencao?>(null) }
+    var kmInput by remember { mutableStateOf("") }
     
     val sheetState = rememberModalBottomSheetState()
 
@@ -49,12 +51,27 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
             contentPadding = PaddingValues(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // 1. CARD QUILOMETRAGEM ATUAL
+            // 1. CARDS DE QUILOMETRAGEM (Total e Atual)
             item {
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    // KM TOTAL ACUMULADO
+                    PremiumGlassCard(modifier = Modifier.weight(1f)) {
+                        Text("KM TOTAL", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.5f))
+                        Text("${kmTotal} km", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = VerdeNeon)
+                    }
+                    // MÉDIA EFICIÊNCIA
+                    PremiumGlassCard(modifier = Modifier.weight(1f)) {
+                        Text("EFICIÊNCIA", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.5f))
+                        Text("${String.format("%.1f", mediaKmL)} km/L", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = Color.White)
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // ATUALIZAÇÃO DO HODÔMETRO
                 PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        text = "QUILOMETRAGEM ATUAL",
-                        fontSize = 12.sp,
+                        text = "ATUALIZAR HODÔMETRO (ATUAL: $kmAtual km)",
+                        fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White.copy(alpha = 0.6f)
                     )
@@ -64,14 +81,21 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
                             value = kmInput,
                             onValueChange = { if (it.isEmpty() || it.all { char -> char.isDigit() }) kmInput = it },
                             modifier = Modifier.weight(1f),
-                            placeholder = { Text("Ex: 15400", color = Color.White.copy(alpha = 0.3f)) },
+                            placeholder = { Text("Novo KM...", color = Color.White.copy(alpha = 0.3f)) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             shape = RoundedCornerShape(12.dp),
-                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon)
+                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon),
+                            singleLine = true
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Button(
-                            onClick = { viewModel.atualizarKmAtual(context, kmInput.toIntOrNull() ?: 0) },
+                            onClick = { 
+                                val novo = kmInput.toIntOrNull() ?: 0
+                                if (novo > 0) {
+                                    viewModel.atualizarKmAtual(context, novo)
+                                    kmInput = ""
+                                }
+                            },
                             colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon),
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier.height(56.dp)
@@ -80,37 +104,21 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-
-            // 2. CARD MÉDIA DE CONSUMO
-            item {
-                PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Rounded.LocalGasStation, contentDescription = null, tint = VerdeNeon)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("EFICIÊNCIA", fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.6f))
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "${String.format("%.1f", mediaKmL)} Km/L",
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Black,
-                        color = Color.White
-                    )
-                }
                 Spacer(modifier = Modifier.height(24.dp))
             }
 
-            // 3. TÍTULO MANUTENÇÕES E BOTÃO ADICIONAR
+            // 2. TÍTULO MANUTENÇÕES E BOTÃO ADICIONAR
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("MANUTENÇÕES", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                    TextButton(onClick = { showBottomSheet = true }) {
+                    Text("MANUTENÇÕES AGENDADAS", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    TextButton(onClick = { 
+                        manutencaoParaEditar = null
+                        showBottomSheet = true 
+                    }) {
                         Icon(Icons.Rounded.Add, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(4.dp))
                         Text("Adicionar", color = VerdeNeon)
@@ -119,7 +127,7 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            // 4. LISTA DE MANUTENÇÕES
+            // 3. LISTA DE MANUTENÇÕES
             if (manutencoes.isEmpty()) {
                 item {
                     Text(
@@ -132,17 +140,23 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
             } else {
                 items(manutencoes) { manutencao ->
                     val kmRestante = (manutencao.ultimoServicoKm + manutencao.intervaloKm) - kmAtual
-                    val isCritico = kmRestante <= 0
+                    val isCritico = kmRestante <= 0 && !manutencao.concluida
                     
                     ManutencaoCard(
                         manutencao = manutencao,
                         kmRestante = kmRestante,
                         isCritico = isCritico,
-                        onDelete = { viewModel.excluirManutencao(context, manutencao.id) }
+                        onDelete = { viewModel.excluirManutencao(context, manutencao.id) },
+                        onEdit = { 
+                            manutencaoParaEditar = manutencao
+                            showBottomSheet = true
+                        },
+                        onConcluir = { viewModel.concluirManutencao(context, manutencao.id) }
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                 }
             }
+            item { Spacer(modifier = Modifier.height(100.dp)) }
         }
     }
 
@@ -152,9 +166,16 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
             sheetState = sheetState,
             containerColor = Color(0xFF1A1A1C)
         ) {
-            NewManutencaoForm(
+            ManutencaoForm(
+                manutencaoExistente = manutencaoParaEditar,
                 onSave = { nome, intervalo, ultimo, icone ->
-                    viewModel.adicionarManutencao(context, nome, intervalo, ultimo, icone)
+                    if (manutencaoParaEditar != null) {
+                        viewModel.editarManutencao(context, manutencaoParaEditar!!.copy(
+                            nome = nome, intervaloKm = intervalo, ultimoServicoKm = ultimo, icone = icone
+                        ))
+                    } else {
+                        viewModel.adicionarManutencao(context, nome, intervalo, ultimo, icone)
+                    }
                     showBottomSheet = false
                 },
                 onCancel = { showBottomSheet = false }
@@ -164,11 +185,22 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
 }
 
 @Composable
-fun ManutencaoCard(manutencao: Manutencao, kmRestante: Int, isCritico: Boolean, onDelete: () -> Unit) {
+fun ManutencaoCard(
+    manutencao: Manutencao, 
+    kmRestante: Int, 
+    isCritico: Boolean, 
+    onDelete: () -> Unit,
+    onEdit: () -> Unit,
+    onConcluir: () -> Unit
+) {
     PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
-                modifier = Modifier.size(48.dp).clip(CircleShape).background(if (isCritico) Color.Red.copy(alpha = 0.2f) else Color.White.copy(alpha = 0.05f)),
+                modifier = Modifier.size(48.dp).clip(CircleShape).background(
+                    if (manutencao.concluida) Color(0xFF10B981).copy(alpha = 0.1f)
+                    else if (isCritico) Color.Red.copy(alpha = 0.2f) 
+                    else Color.White.copy(alpha = 0.05f)
+                ),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -178,48 +210,62 @@ fun ManutencaoCard(manutencao: Manutencao, kmRestante: Int, isCritico: Boolean, 
                         else -> Icons.Rounded.Build
                     },
                     contentDescription = null,
-                    tint = if (isCritico) Color.Red else Color.White.copy(alpha = 0.6f)
+                    tint = if (manutencao.concluida) Color(0xFF10B981) else if (isCritico) Color.Red else Color.White.copy(alpha = 0.6f)
                 )
             }
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(manutencao.nome, fontWeight = FontWeight.Bold, color = Color.White)
+                Text(manutencao.nome, fontWeight = FontWeight.Bold, color = if (manutencao.concluida) Color.White.copy(alpha = 0.6f) else Color.White)
                 Text(
-                    text = if (isCritico) "REVISÃO CRÍTICA!" else "Próxima em $kmRestante km",
-                    color = if (isCritico) Color.Red else Color.White.copy(alpha = 0.5f),
+                    text = if (manutencao.concluida) "Concluída em ${manutencao.dataConclusao}" 
+                           else if (isCritico) "REVISÃO CRÍTICA!" 
+                           else "Próxima em $kmRestante km",
+                    color = if (manutencao.concluida) Color(0xFF10B981) else if (isCritico) Color.Red else Color.White.copy(alpha = 0.5f),
                     fontSize = 12.sp
                 )
             }
-            IconButton(onClick = onDelete) {
-                Icon(Icons.Rounded.Delete, contentDescription = null, tint = Color.White.copy(alpha = 0.2f), modifier = Modifier.size(20.dp))
+            
+            Row {
+                if (!manutencao.concluida) {
+                    IconButton(onClick = onConcluir) {
+                        Icon(Icons.Rounded.CheckCircle, contentDescription = "Concluir", tint = VerdeNeon.copy(alpha = 0.8f), modifier = Modifier.size(22.dp))
+                    }
+                    IconButton(onClick = onEdit) {
+                        Icon(Icons.Rounded.Edit, contentDescription = "Editar", tint = Color.White.copy(alpha = 0.4f), modifier = Modifier.size(20.dp))
+                    }
+                }
+                IconButton(onClick = onDelete) {
+                    Icon(Icons.Rounded.Delete, contentDescription = "Excluir", tint = Color.Red.copy(alpha = 0.3f), modifier = Modifier.size(20.dp))
+                }
             }
         }
         
-        Spacer(modifier = Modifier.height(12.dp))
-        
-        val progresso = if (manutencao.intervaloKm > 0) {
-            val rodado = kmRestante.coerceIn(0, manutencao.intervaloKm)
-            (rodado.toFloat() / manutencao.intervaloKm.toFloat())
-        } else 0f
-        
-        LinearProgressIndicator(
-            progress = { progresso },
-            modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
-            color = if (isCritico) Color.Red else VerdeNeon,
-            trackColor = Color.White.copy(alpha = 0.1f)
-        )
+        if (!manutencao.concluida) {
+            Spacer(modifier = Modifier.height(12.dp))
+            val progresso = if (manutencao.intervaloKm > 0) {
+                val rodado = kmRestante.coerceIn(0, manutencao.intervaloKm)
+                (rodado.toFloat() / manutencao.intervaloKm.toFloat())
+            } else 0f
+            
+            LinearProgressIndicator(
+                progress = { progresso },
+                modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
+                color = if (isCritico) Color.Red else VerdeNeon,
+                trackColor = Color.White.copy(alpha = 0.1f)
+            )
+        }
     }
 }
 
 @Composable
-fun NewManutencaoForm(onSave: (String, Int, Int, String) -> Unit, onCancel: () -> Unit) {
-    var nome by remember { mutableStateOf("") }
-    var intervalo by remember { mutableStateOf("") }
-    var ultimo by remember { mutableStateOf("") }
-    var iconeSelecionado by remember { mutableStateOf("build") }
+fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, String) -> Unit, onCancel: () -> Unit) {
+    var nome by remember { mutableStateOf(manutencaoExistente?.nome ?: "") }
+    var intervalo by remember { mutableStateOf(manutencaoExistente?.intervaloKm?.toString() ?: "") }
+    var ultimo by remember { mutableStateOf(manutencaoExistente?.ultimoServicoKm?.toString() ?: "") }
+    var iconeSelecionado by remember { mutableStateOf(manutencaoExistente?.icone ?: "build") }
 
     Column(modifier = Modifier.padding(24.dp).fillMaxWidth()) {
-        Text("Nova Manutenção", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text(if (manutencaoExistente != null) "Editar Manutenção" else "Nova Manutenção", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
         Spacer(modifier = Modifier.height(24.dp))
         
         OutlinedTextField(
@@ -227,7 +273,8 @@ fun NewManutencaoForm(onSave: (String, Int, Int, String) -> Unit, onCancel: () -
             onValueChange = { nome = it },
             modifier = Modifier.fillMaxWidth(),
             label = { Text("Nome (Ex: Troca de óleo)") },
-            shape = RoundedCornerShape(12.dp)
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon)
         )
         
         Spacer(modifier = Modifier.height(16.dp))
@@ -239,7 +286,8 @@ fun NewManutencaoForm(onSave: (String, Int, Int, String) -> Unit, onCancel: () -
                 modifier = Modifier.weight(1f),
                 label = { Text("Intervalo (km)") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon)
             )
             OutlinedTextField(
                 value = ultimo,
@@ -247,7 +295,8 @@ fun NewManutencaoForm(onSave: (String, Int, Int, String) -> Unit, onCancel: () -
                 modifier = Modifier.weight(1f),
                 label = { Text("Último serviço (km)") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon)
             )
         }
         

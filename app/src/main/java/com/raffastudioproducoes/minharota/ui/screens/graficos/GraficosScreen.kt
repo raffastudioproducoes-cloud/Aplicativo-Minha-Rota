@@ -121,12 +121,12 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
         PremiumGlassCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(max = 320.dp)
+                .heightIn(max = 350.dp)
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(max = 320.dp)
+                    .heightIn(max = 350.dp)
                     .verticalScroll(rememberScrollState())
             ) {
                 HeatmapTable(heatmapData)
@@ -163,59 +163,77 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
 
 @Composable
 fun TrendLineChart(pontos: List<GraficosViewModel.PontoTendencia>) {
-    if (pontos.size < 2) return
-    val maxVal = pontos.maxOf { it.valor }.coerceAtLeast(1.0)
+    if (pontos.isEmpty()) return
+    
+    // Se tiver apenas 1 ponto, desenhamos uma linha horizontal ou apenas o ponto
+    val exibicaoPontos = if (pontos.size == 1) listOf(pontos[0], pontos[0]) else pontos
+    val maxVal = exibicaoPontos.maxOf { it.valor }.coerceAtLeast(1.0)
 
-    Canvas(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 20.dp)) {
+    Canvas(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 24.dp)) {
         val w = size.width
         val h = size.height
-        val stepX = w / (pontos.size - 1).toFloat()
+        val stepX = w / (exibicaoPontos.size - 1).coerceAtLeast(1).toFloat()
 
-        val pontosPx = pontos.mapIndexed { i, p ->
+        val pontosPx = exibicaoPontos.mapIndexed { i, p ->
             Offset(
                 x = i * stepX,
-                y = h - (p.valor / maxVal * h * 0.85f).toFloat()
+                y = h - (p.valor / maxVal * h * 0.75f).toFloat().coerceIn(0f, h)
             )
         }
 
-        // Área de preenchimento sob a linha
+        // 1. Área de preenchimento (Sombra Verde)
         val fillPath = androidx.compose.ui.graphics.Path()
-        fillPath.moveTo(pontosPx.first().x, h)
+        fillPath.moveTo(0f, h)
         pontosPx.forEach { fillPath.lineTo(it.x, it.y) }
-        fillPath.lineTo(pontosPx.last().x, h)
+        fillPath.lineTo(w, h)
         fillPath.close()
+        
         drawPath(
             path = fillPath,
             brush = Brush.verticalGradient(
-                colors = listOf(Color(0xFF10B981).copy(alpha = 0.35f), Color.Transparent)
+                colors = listOf(VerdeNeon.copy(alpha = 0.2f), Color.Transparent)
             )
         )
 
-        // Linha contínua
+        // 2. Linha de Conexão
         for (i in 0 until pontosPx.size - 1) {
             drawLine(
-                color = Color(0xFF10B981),
+                color = VerdeNeon,
                 start = pontosPx[i],
                 end = pontosPx[i + 1],
-                strokeWidth = 2.5.dp.toPx(),
+                strokeWidth = 3.dp.toPx(),
                 cap = androidx.compose.ui.graphics.StrokeCap.Round
             )
         }
 
-        // Pontos e labels
+        // 3. Pontos e Labels de Data
         pontosPx.forEachIndexed { i, pt ->
-            drawCircle(color = Color(0xFF10B981), radius = 4.dp.toPx(), center = pt)
-            drawCircle(color = Color(0xFF0C0C0E), radius = 2.dp.toPx(), center = pt)
+            // Desenhar apenas pontos reais (evitar duplicata do fallback de 1 ponto)
+            if (pontos.size > 1 || i == 0) {
+                drawCircle(
+                    color = VerdeNeon,
+                    radius = 5.dp.toPx(),
+                    center = pt
+                )
+                drawCircle(
+                    color = Color(0xFF0C0C0E),
+                    radius = 2.5.dp.toPx(),
+                    center = pt
+                )
 
-            // Label de data a cada 5 pontos para não poluir
-            if (i % 5 == 0 || i == pontos.size - 1) {
-                drawContext.canvas.nativeCanvas.apply {
-                    val paint = android.graphics.Paint().apply {
-                        color = android.graphics.Color.argb(128, 255, 255, 255)
-                        textSize = 8.dp.toPx()
-                        textAlign = android.graphics.Paint.Align.CENTER
+                // Label de data (dd/MM)
+                val label = exibicaoPontos[i].label
+                // Mostrar label se for o primeiro, o último, ou a cada 4 pontos
+                if (i == 0 || i == exibicaoPontos.size - 1 || i % 4 == 0) {
+                    drawContext.canvas.nativeCanvas.apply {
+                        val paint = android.graphics.Paint().apply {
+                            color = android.graphics.Color.WHITE
+                            alpha = 100
+                            textSize = 9.dp.toPx()
+                            textAlign = android.graphics.Paint.Align.CENTER
+                        }
+                        drawText(label, pt.x, h + 18.dp.toPx(), paint)
                     }
-                    drawText(pontos[i].label, pt.x, h + 14.dp.toPx(), paint)
                 }
             }
         }

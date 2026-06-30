@@ -39,7 +39,16 @@ fun DrawerConteudoGradientRainbowV2(
     val context = LocalContext.current
     val isPro = sharedPreferencesManager.obterIsPro()
     val nomeUsuario = sharedPreferencesManager.obterNomeUsuario()
+    val fotoPerfilUrl = sharedPreferencesManager.obterFotoPerfilUrl()
     val scrollState = rememberScrollState()
+
+    // Obter versão dinamicamente do PackageInfo
+    val versionName = remember {
+        try {
+            val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            pInfo.versionName
+        } catch (e: Exception) { "1.1.0-release" }
+    }
 
     Column(
         modifier = Modifier
@@ -75,15 +84,26 @@ fun DrawerConteudoGradientRainbowV2(
                             onNavigate("perfil")
                         }
                 ) {
-                    // Usando ícone nativo para evitar erro de drawable inexistente
-                    Icon(
-                        imageVector = Icons.Rounded.Person,
-                        contentDescription = "Avatar",
-                        tint = Color(0xFF3B82F6),
-                        modifier = Modifier
-                            .size(48.dp)
-                            .align(Alignment.Center)
-                    )
+                    if (fotoPerfilUrl.isNotEmpty()) {
+                        coil.compose.AsyncImage(
+                            model = coil.request.ImageRequest.Builder(context)
+                                .data(android.net.Uri.parse(fotoPerfilUrl))
+                                .crossfade(true)
+                                .build(),
+                            contentDescription = "Avatar",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                        )
+                    } else {
+                        Icon(
+                            imageVector = Icons.Rounded.Person,
+                            contentDescription = "Avatar",
+                            tint = Color(0xFF3B82F6),
+                            modifier = Modifier
+                                .size(48.dp)
+                                .align(Alignment.Center)
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -228,7 +248,7 @@ fun DrawerConteudoGradientRainbowV2(
             // 5. SOBRE
             CategoryHeader("SOBRE")
             DrawerItemPill(
-                label = "Versão 1.5.0-beta",
+                label = "Versão $versionName",
                 icon = Icons.Rounded.Info,
                 isSelected = false,
                 gradientColors = listOf(Color(0x1AFFFFFF), Color.Transparent),

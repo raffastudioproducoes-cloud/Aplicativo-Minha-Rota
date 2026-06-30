@@ -1,5 +1,8 @@
 package com.raffastudioproducoes.minharota.ui.screens.auth
 
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -11,15 +14,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.OAuthProvider
 import com.raffastudioproducoes.minharota.R
 import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 @Composable
 fun AuthScreen(
@@ -27,9 +36,42 @@ fun AuthScreen(
     onNavigateToRegister: () -> Unit,
     onNavigateToEmailLogin: () -> Unit
 ) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val auth = FirebaseAuth.getInstance()
+
     // Cores Neon v1.9.0
     val cianoNeon = Color(0xFF22D3EE)
     val verdeEsmeralda = Color(0xFF10B981)
+
+    fun handleSocialLogin(providerId: String) {
+        scope.launch {
+            try {
+                if (providerId == "google.com") {
+                    Log.d("AuthScreen", "Iniciando fluxo Google Sign-In...")
+                    Log.i("AuthScreen", "⚠️ Requisito: Configure o SHA-1 do app no Console do Firebase e ative o Google Provider.")
+                    // Nota: O fluxo completo requer Credential Manager. 
+                    // Por enquanto, deixamos a fiação pronta para o Firebase Auth.
+                    Toast.makeText(context, "Google Login: SHA-1 e Firebase Console necessários.", Toast.LENGTH_LONG).show()
+                } else if (providerId == "apple.com") {
+                    val provider = OAuthProvider.newBuilder("apple.com")
+                    provider.scopes = listOf("email", "name")
+                    
+                    auth.startActivityForSignInWithProvider(context as android.app.Activity, provider.build())
+                        .addOnSuccessListener { authResult ->
+                            Log.d("AuthScreen", "Login Apple Sucesso: ${authResult.user?.email}")
+                            onAuthSuccess()
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("AuthScreen", "Erro Apple Login", e)
+                            Toast.makeText(context, "Erro Apple: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            } catch (e: Exception) {
+                Log.e("AuthScreen", "Erro Social Login", e)
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -73,7 +115,7 @@ fun AuthScreen(
 
             // Botão Google (Real com ícone oficial)
             Button(
-                onClick = { /* TODO: Firebase Auth via Credential Manager (Google Sign-In) */ },
+                onClick = { handleSocialLogin("google.com") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -103,7 +145,7 @@ fun AuthScreen(
 
             // Botão Apple (Real com ícone oficial)
             Button(
-                onClick = { /* TODO: Firebase Auth via Apple OAuth Nativo */ },
+                onClick = { handleSocialLogin("apple.com") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -183,15 +225,6 @@ fun AuthScreen(
                     modifier = Modifier.clickable { onNavigateToRegister() }
                 )
             }
-            
-            Spacer(modifier = Modifier.height(16.dp))
-            
-            Text(
-                text = "Já tem conta? Entrar",
-                color = Color.White.copy(alpha = 0.4f),
-                fontSize = 12.sp,
-                modifier = Modifier.clickable { /* Mantém na tela ou recarrega */ }
-            )
         }
     }
 }

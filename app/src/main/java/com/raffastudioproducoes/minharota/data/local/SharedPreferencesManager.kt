@@ -243,6 +243,14 @@ class SharedPreferencesManager(context: Context) {
         return sharedPreferences.getInt(KEY_KM_ATUAL, 0)
     }
 
+    fun salvarKmTotal(km: Int) {
+        sharedPreferences.edit().putInt(KEY_KM_TOTAL, km).apply()
+    }
+
+    fun obterKmTotal(): Int {
+        return sharedPreferences.getInt(KEY_KM_TOTAL, 0)
+    }
+
     fun salvarManutencoes(lista: List<com.raffastudioproducoes.minharota.ui.screens.garagem.Manutencao>) {
         val jsonString = json.encodeToString(lista)
         sharedPreferences.edit().putString(KEY_MANUTENCOES, jsonString).apply()
@@ -263,6 +271,7 @@ class SharedPreferencesManager(context: Context) {
 
     companion object {
         private const val KEY_KM_ATUAL = "km_atual"
+        private const val KEY_KM_TOTAL = "km_total_acumulado"
         private const val KEY_MANUTENCOES = "manutencoes"
         private const val KEY_FATURAMENTO_MEI = "faturamento_mei_acumulado"
         private const val KEY_CAIXINHAS = "caixinhas"

@@ -62,6 +62,12 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    
+    // Google Sign-In & Credential Manager (Login Social v1.1.0)
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
+    implementation("androidx.credentials:credentials:1.2.1")
+    implementation("androidx.credentials:credentials-play-services-auth:1.2.1")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.0")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

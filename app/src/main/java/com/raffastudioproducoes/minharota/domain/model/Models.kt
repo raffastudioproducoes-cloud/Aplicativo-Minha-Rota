@@ -66,7 +66,10 @@ data class Divida(
     val id: String,
     val credor: String,
     val valorTotal: Double,
-    val valorPago: Double = 0.0
+    val valorPago: Double = 0.0,
+    val totalParcelas: Int = 1,
+    val parcelasPagas: Int = 0,
+    val recorrencia: String = "Mês" // Semana, Quinzena, Mês, Ano
 )
 
 @Serializable

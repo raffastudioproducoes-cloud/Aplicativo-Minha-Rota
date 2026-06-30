@@ -34,7 +34,7 @@ import kotlin.math.sin
 data class OnboardingPage(
     val title: String,
     val description: String,
-    val bgRes: Int? // null = usar gradiente programático
+    val bgRes: Int? // null = usar visual programático
 )
 
 val onboardingPages = listOf(
@@ -46,7 +46,7 @@ val onboardingPages = listOf(
     OnboardingPage(
         title = "Registre seus Turnos",
         description = "Acompanhe cada turno de trabalho com detalhes de ganhos e custos",
-        bgRes = null // Slide usa gradiente programático (bg_onb_calendario removido para evitar crash AAPT2)
+        bgRes = null // Renderizado via OnboardingCalendarVisual
     ),
     OnboardingPage(
         title = "Organize com Caixinhas",
@@ -85,7 +85,6 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // HorizontalPager com backgrounds individuais por slide
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
@@ -93,7 +92,6 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
             OnboardingPageContent(onboardingPages[page])
         }
 
-        // Indicadores de página Hexagonais (Sobrepostos ao Pager)
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -105,7 +103,6 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
             }
         }
 
-        // Botões de Navegação Pílula
         Row(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -113,98 +110,42 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
                 .padding(24.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Lógica de botões conforme solicitado
             if (pagerState.currentPage == 0) {
-                // Slide 1: Apenas botão "Próximo" centralizado de ponta a ponta
                 Button(
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(1)
-                        }
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp)
-                        .clip(RoundedCornerShape(50.dp))
-                        .background(
-                            Brush.horizontalGradient(
-                                colors = listOf(Color(0xFF06B6D4), Color(0xFF10B981))
-                            )
-                        ),
+                    onClick = { scope.launch { pagerState.animateScrollToPage(1) } },
+                    modifier = Modifier.fillMaxWidth().height(56.dp).clip(RoundedCornerShape(50.dp))
+                        .background(Brush.horizontalGradient(colors = listOf(Color(0xFF06B6D4), Color(0xFF10B981)))),
                     shape = RoundedCornerShape(50.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color.White
-                    ),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Color.White),
                     contentPadding = PaddingValues()
                 ) {
                     Text("Próximo", fontWeight = FontWeight.Bold, fontSize = 16.sp)
                 }
             } else if (pagerState.currentPage < onboardingPages.size - 1) {
-                // Slides 2 ao 6: Voltar + Próximo
                 OutlinedButton(
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                        }
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(56.dp),
+                    onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
+                    modifier = Modifier.weight(1f).height(56.dp),
                     shape = RoundedCornerShape(50.dp),
                     border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.2f)),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = Color.White,
-                        containerColor = Color.Transparent
-                    )
-                ) {
-                    Text("Voltar", fontWeight = FontWeight.SemiBold)
-                }
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, containerColor = Color.Transparent)
+                ) { Text("Voltar", fontWeight = FontWeight.SemiBold) }
 
                 Button(
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
-                        }
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(56.dp)
-                        .clip(RoundedCornerShape(50.dp))
-                        .background(
-                            Brush.horizontalGradient(
-                                colors = listOf(Color(0xFF06B6D4), Color(0xFF10B981))
-                            )
-                        ),
+                    onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) } },
+                    modifier = Modifier.weight(1f).height(56.dp).clip(RoundedCornerShape(50.dp))
+                        .background(Brush.horizontalGradient(colors = listOf(Color(0xFF06B6D4), Color(0xFF10B981)))),
                     shape = RoundedCornerShape(50.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Transparent,
-                        contentColor = Color.White
-                    ),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Color.White),
                     contentPadding = PaddingValues()
-                ) {
-                    Text("Próximo", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                }
+                ) { Text("Próximo", fontWeight = FontWeight.Bold, fontSize = 16.sp) }
             } else {
-                // Slide 7: Voltar + Começar
                 OutlinedButton(
-                    onClick = {
-                        scope.launch {
-                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
-                        }
-                    },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(56.dp),
+                    onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
+                    modifier = Modifier.weight(1f).height(56.dp),
                     shape = RoundedCornerShape(50.dp),
                     border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.2f)),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = Color.White,
-                        containerColor = Color.Transparent
-                    )
-                ) {
-                    Text("Voltar", fontWeight = FontWeight.SemiBold)
-                }
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, containerColor = Color.Transparent)
+                ) { Text("Voltar", fontWeight = FontWeight.SemiBold) }
 
                 Button(
                     onClick = {
@@ -212,16 +153,60 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
                         prefs.edit().putBoolean("is_first_open", false).apply()
                         onNavigateToLogin()
                     },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(56.dp),
+                    modifier = Modifier.weight(1f).height(56.dp),
                     shape = RoundedCornerShape(50.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF10B981),
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text("Começar", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF10B981), contentColor = Color.White)
+                ) { Text("Começar", fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+            }
+        }
+    }
+}
+
+@Composable
+fun OnboardingPageContent(page: OnboardingPage) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (page.bgRes != null) {
+            Image(
+                painter = painterResource(id = page.bgRes),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Box(
+                modifier = Modifier.fillMaxSize()
+                    .background(Brush.verticalGradient(colors = listOf(Color(0xFF0C0C0E), Color(0xFF0D2137), Color(0xFF064E3B))))
+            ) { OnboardingCalendarVisual() }
+        }
+
+        Column(
+            modifier = Modifier.fillMaxSize().padding(bottom = 180.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = page.title, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = Color.White, textAlign = TextAlign.Center)
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = page.description, style = MaterialTheme.typography.bodyLarge, color = Color(0xFFE5E5EA), textAlign = TextAlign.Center, lineHeight = 24.sp)
+            }
+        }
+    }
+}
+
+@Composable
+fun OnboardingCalendarVisual() {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.size(300.dp).drawBehind {
+            drawCircle(brush = Brush.radialGradient(colors = listOf(Color(0xFF10B981).copy(alpha = 0.15f), Color.Transparent)))
+        })
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(painter = painterResource(id = android.R.drawable.ic_menu_today), contentDescription = null, modifier = Modifier.size(120.dp), tint = Color(0xFF10B981).copy(alpha = 0.8f))
+            Spacer(modifier = Modifier.height(24.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                repeat(5) {
+                    Box(modifier = Modifier.size(40.dp).clip(RoundedCornerShape(8.dp)).background(Color.White.copy(alpha = 0.05f)).drawBehind {
+                        if (it == 2) drawRect(color = Color(0xFF10B981), style = Stroke(width = 2.dp.toPx()))
+                    })
                 }
             }
         }
@@ -232,109 +217,22 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
 fun HexagonIndicator(isSelected: Boolean) {
     val size = if (isSelected) 14.dp else 10.dp
     val color = if (isSelected) Color(0xFF10B981) else Color.White.copy(alpha = 0.3f)
-    
-    Box(
-        modifier = Modifier
-            .size(size)
-            .drawBehind {
-                val radius = this.size.width / 2f
-                val center = Offset(this.size.width / 2f, this.size.height / 2f)
-                val path = Path()
-                
-                for (i in 0..5) {
-                    val angle = Math.toRadians((60 * i - 30).toDouble())
-                    val x = center.x + radius * cos(angle).toFloat()
-                    val y = center.y + radius * sin(angle).toFloat()
-                    
-                    if (i == 0) {
-                        path.moveTo(x, y)
-                    } else {
-                        path.lineTo(x, y)
-                    }
-                }
-                path.close()
-                
-                if (isSelected) {
-                    drawPath(
-                        path = path,
-                        color = color.copy(alpha = 0.3f),
-                        style = Stroke(width = 8f)
-                    )
-                    drawPath(
-                        path = path,
-                        color = color
-                    )
-                } else {
-                    drawPath(
-                        path = path,
-                        color = color,
-                        style = Stroke(width = 2f)
-                    )
-                }
-            }
-    )
-}
-
-@Composable
-fun OnboardingPageContent(page: OnboardingPage) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        // Background Individual por Slide (Imersão Total Edge-to-Edge)
-        if (page.bgRes != null) {
-            Image(
-                painter = painterResource(id = page.bgRes),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+    Box(modifier = Modifier.size(size).drawBehind {
+        val radius = this.size.width / 2f
+        val center = Offset(this.size.width / 2f, this.size.height / 2f)
+        val path = Path()
+        for (i in 0..5) {
+            val angle = Math.toRadians((60 * i - 30).toDouble())
+            val x = center.x + radius * cos(angle).toFloat()
+            val y = center.y + radius * sin(angle).toFloat()
+            if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
+        }
+        path.close()
+        if (isSelected) {
+            drawPath(path = path, color = color.copy(alpha = 0.3f), style = Stroke(width = 8f))
+            drawPath(path = path, color = color)
         } else {
-            // Gradiente programático (substitui bg_onb_calendario.png corrompido)
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        Brush.verticalGradient(
-                            colors = listOf(
-                                Color(0xFF0C0C0E),
-                                Color(0xFF0D2137),
-                                Color(0xFF064E3B)
-                            )
-                        )
-                    )
-            )
+            drawPath(path = path, color = color, style = Stroke(width = 2f))
         }
-
-        // Camada de Conteúdo (Tipografia)
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 180.dp), // Espaço para indicadores e botões
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = page.title,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = page.description,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color(0xFFE5E5EA),
-                    textAlign = TextAlign.Center,
-                    lineHeight = 24.sp
-                )
-            }
-        }
-    }
+    })
 }

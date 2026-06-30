@@ -164,6 +164,17 @@ class RideAssistantService : AccessibilityService() {
                     prefs.salvarTurnos(turnos)
                 }
             }
+
+            // --- Integração com Garagem (KM Total) ---
+            if (temp.estimatedKm > 0) {
+                val kmArredondado = temp.estimatedKm.toInt()
+                val kmAtual = prefs.obterKmAtual()
+                val kmTotal = prefs.obterKmTotal()
+                
+                // Soma no total e atualiza o hodômetro atual
+                prefs.salvarKmAtual(kmAtual + kmArredondado)
+                prefs.salvarKmTotal(kmTotal + kmArredondado)
+            }
             
             currentPendingRide = null
         }
