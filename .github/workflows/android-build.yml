@@ -27,10 +27,6 @@ jobs:
       run: |
         echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > app/release.keystore
 
-    - name: Keytool Debug (Temporary)
-      run: |
-        keytool -list -v -keystore app/release.keystore -alias ${{ secrets.ANDROID_KEY_ALIAS }} -storepass ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-
     - name: Build Release APK
       env:
         ANDROID_KEYSTORE_PATH: release.keystore
