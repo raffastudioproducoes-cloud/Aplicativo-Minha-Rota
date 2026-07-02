@@ -2,6 +2,7 @@ package com.raffastudioproducoes.minharota.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -41,20 +42,22 @@ fun DrawerConteudoGradientRainbowV2(
     val nomeUsuario = sharedPreferencesManager.obterNomeUsuario()
     val fotoPerfilUrl = sharedPreferencesManager.obterFotoPerfilUrl()
     val scrollState = rememberScrollState()
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     // Obter versão dinamicamente do PackageInfo
     val versionName = remember {
         try {
             val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            pInfo.versionName
-        } catch (e: Exception) { "1.1.0-release" }
+            pInfo.versionName ?: "2.0.0"
+        } catch (e: Exception) { "2.0.0" }
     }
 
     Column(
         modifier = Modifier
             .fillMaxHeight()
             .width(290.dp)
-            .background(Color(0xFF121214))
+            .background(MaterialTheme.colorScheme.surface)
             .statusBarsPadding()
     ) {
         // Espaçador para o status bar
@@ -78,7 +81,7 @@ fun DrawerConteudoGradientRainbowV2(
                     modifier = Modifier
                         .size(80.dp)
                         .clip(CircleShape)
-                        .background(Color(0x0DFFFFFF))
+                        .background(textColor.copy(alpha = 0.05f))
                         .clickable {
                             scope.launch { drawerState.close() }
                             onNavigate("perfil")
@@ -98,7 +101,7 @@ fun DrawerConteudoGradientRainbowV2(
                         Icon(
                             imageVector = Icons.Rounded.Person,
                             contentDescription = "Avatar",
-                            tint = Color(0xFF3B82F6),
+                            tint = if (isDark) Color(0xFF3B82F6) else Color(0xFF2563EB),
                             modifier = Modifier
                                 .size(48.dp)
                                 .align(Alignment.Center)
@@ -110,7 +113,7 @@ fun DrawerConteudoGradientRainbowV2(
 
                 Text(
                     text = nomeUsuario,
-                    color = Color.White,
+                    color = textColor,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -120,12 +123,12 @@ fun DrawerConteudoGradientRainbowV2(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(50.dp))
-                        .background(if (isPro) Color(0x1F10B981) else Color(0x1AFFFFFF))
+                        .background(if (isPro) Color(0x1F10B981) else textColor.copy(alpha = 0.1f))
                         .padding(horizontal = 14.dp, vertical = 4.dp)
                 ) {
                     Text(
                         text = if (isPro) "PRO" else "FREE",
-                        color = if (isPro) Color(0xFF10B981) else Color.LightGray,
+                        color = if (isPro) Color(0xFF10B981) else textColor.copy(alpha = 0.5f),
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold,
                         letterSpacing = 1.sp
@@ -134,7 +137,7 @@ fun DrawerConteudoGradientRainbowV2(
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-            Divider(color = Color(0x0DFFFFFF), modifier = Modifier.padding(horizontal = 24.dp))
+            HorizontalDivider(color = textColor.copy(alpha = 0.05f), modifier = Modifier.padding(horizontal = 24.dp))
 
             // 2. NAVEGAÇÃO PRINCIPAL
             CategoryHeader("NAVEGAÇÃO PRINCIPAL")
@@ -251,7 +254,7 @@ fun DrawerConteudoGradientRainbowV2(
                 label = "Versão $versionName",
                 icon = Icons.Rounded.Info,
                 isSelected = false,
-                gradientColors = listOf(Color(0x1AFFFFFF), Color.Transparent),
+                gradientColors = listOf(textColor.copy(alpha = 0.1f), Color.Transparent),
                 onClick = {}
             )
         }
@@ -260,9 +263,11 @@ fun DrawerConteudoGradientRainbowV2(
 
 @Composable
 fun CategoryHeader(title: String) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Text(
         text = title,
-        color = Color.Gray,
+        color = textColor.copy(alpha = 0.4f),
         fontSize = 11.sp,
         fontWeight = FontWeight.SemiBold,
         modifier = Modifier.padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 8.dp)
@@ -277,6 +282,8 @@ fun DrawerItemPill(
     gradientColors: List<Color>,
     onClick: () -> Unit
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     val backgroundBrush = if (isSelected) {
         Brush.horizontalGradient(colors = gradientColors)
     } else {
@@ -298,13 +305,13 @@ fun DrawerItemPill(
             Icon(
                 imageVector = icon,
                 contentDescription = label,
-                tint = if (isSelected) Color.White else Color.Gray,
+                tint = if (isSelected) Color.White else textColor.copy(alpha = 0.5f),
                 modifier = Modifier.size(20.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
                 text = label,
-                color = if (isSelected) Color.White else Color.Gray,
+                color = if (isSelected) Color.White else textColor.copy(alpha = 0.5f),
                 fontSize = 14.sp,
                 fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal
             )

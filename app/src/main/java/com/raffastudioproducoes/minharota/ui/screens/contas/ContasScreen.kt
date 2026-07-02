@@ -1,6 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.contas
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,7 +27,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.ContaFixa
 import com.raffastudioproducoes.minharota.ui.components.CardConta
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
@@ -37,6 +37,8 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
     val isPro by viewModel.isPro.collectAsState()
     val faturamentoAnual by viewModel.faturamentoAnual.collectAsState()
     val limiteMei by viewModel.limiteMei.collectAsState()
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     var showAddDialog by remember { mutableStateOf(false) }
     var showEditDialog by remember { mutableStateOf<ContaFixa?>(null) }
@@ -46,7 +48,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
         viewModel.carregarContas(context)
     }
 
-    Column(modifier = Modifier.fillMaxSize().background(FundoDark)) {
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         // Card de Destaque: Meta Diária Premium
         PremiumGlassCard(
             modifier = Modifier
@@ -61,7 +63,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                 Text(
                     text = "Meta Diária Automática",
                     style = MaterialTheme.typography.labelLarge,
-                    color = Color.White.copy(alpha = 0.9f),
+                    color = textColor.copy(alpha = 0.9f),
                     fontWeight = FontWeight.Medium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -79,7 +81,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                 Text(
                     text = "Baseado em suas contas fixas pendentes",
                     style = MaterialTheme.typography.labelSmall,
-                    color = Color.White.copy(alpha = 0.5f),
+                    color = textColor.copy(alpha = 0.5f),
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -95,7 +97,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                     text = "Minhas Contas",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = textColor,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
                 )
@@ -125,11 +127,11 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                         .padding(horizontal = 16.dp)
                         .height(56.dp),
                     shape = RoundedCornerShape(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.05f))
+                    colors = ButtonDefaults.buttonColors(containerColor = textColor.copy(alpha = 0.05f), contentColor = textColor)
                 ) {
-                    Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.White)
+                    Icon(Icons.Rounded.Add, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Adicionar Conta", color = Color.White)
+                    Text("Adicionar Conta")
                 }
             }
 
@@ -138,7 +140,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                     Text(
                         text = "Contas Pagas",
                         style = MaterialTheme.typography.titleSmall,
-                        color = Color.White.copy(alpha = 0.5f),
+                        color = textColor.copy(alpha = 0.5f),
                         modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp)
                     )
                 }
@@ -161,7 +163,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                 Text(
                     text = "GESTÃO MEI",
                     style = MaterialTheme.typography.labelMedium,
-                    color = Color.White.copy(alpha = 0.5f),
+                    color = textColor.copy(alpha = 0.5f),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
                 
@@ -179,7 +181,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(Icons.Rounded.BarChart, contentDescription = null, tint = VerdeNeon)
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text("FATURAMENTO ANUAL MEI", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, color = Color.White)
+                                Text("FATURAMENTO ANUAL MEI", style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Bold, color = textColor)
                             }
                             
                             val percentual = (faturamentoAnual / limiteMei * 100).coerceIn(0.0, 100.0)
@@ -197,11 +199,11 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
 
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Faturado em 2026", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                                Text("Faturado em 2026", color = textColor.copy(alpha = 0.5f), fontSize = 12.sp)
                                 Text("R$ ${String.format("%.0f", faturamentoAnual)}", color = VerdeNeon, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                             }
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Margem restante", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                                Text("Margem restante", color = textColor.copy(alpha = 0.5f), fontSize = 12.sp)
                                 Text("R$ ${String.format("%.0f", limiteMei - faturamentoAnual)}", color = VerdeNeon, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                             }
                         }
@@ -213,15 +215,15 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                             progress = { progresso },
                             modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
                             color = VerdeNeon,
-                            trackColor = Color.White.copy(alpha = 0.1f)
+                            trackColor = textColor.copy(alpha = 0.1f)
                         )
                         
                         Row(
                             modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text("${String.format("%.1f", progresso * 100)}% do limite", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
-                            Text("Teto: R$ ${String.format("%.0f", limiteMei)}", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                            Text("${String.format("%.1f", progresso * 100)}% do limite", color = textColor.copy(alpha = 0.5f), fontSize = 10.sp)
+                            Text("Teto: R$ ${String.format("%.0f", limiteMei)}", color = textColor.copy(alpha = 0.5f), fontSize = 10.sp)
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -229,7 +231,7 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
                         val projecao = if (faturamentoAnual > 0) (faturamentoAnual / Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) * 365 else 0.0
                         Text(
                             text = "📈 Com a média atual, a projeção anual é R$ ${String.format("%.0f", projecao)} — ${if (projecao <= limiteMei) "dentro do limite MEI. ✅" else "atenção ao limite! ⚠️"}",
-                            color = Color.White.copy(alpha = 0.5f),
+                            color = textColor.copy(alpha = 0.5f),
                             fontSize = 11.sp
                         )
                     }
@@ -277,16 +279,25 @@ fun ContaDialog(
     onDismiss: () -> Unit,
     onConfirm: (String, Double, String) -> Unit
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var nome by remember { mutableStateOf(contaInicial?.nome ?: "") }
     var valor by remember { mutableStateOf(if (contaInicial != null) contaInicial.valor.toString() else "") }
     var vencimento by remember { mutableStateOf(contaInicial?.dataVencimento ?: "") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(titulo, fontWeight = FontWeight.Bold) },
+        title = { Text(titulo, fontWeight = FontWeight.Bold, color = textColor) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                OutlinedTextField(value = nome, onValueChange = { nome = it }, label = { Text("Nome da Conta") }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp))
+                OutlinedTextField(
+                    value = nome,
+                    onValueChange = { nome = it },
+                    label = { Text("Nome da Conta") },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor)
+                )
                 OutlinedTextField(
                     value = valor,
                     onValueChange = { input ->
@@ -297,9 +308,17 @@ fun ContaDialog(
                     label = { Text("Valor (R$)") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor)
                 )
-                OutlinedTextField(value = vencimento, onValueChange = { vencimento = it }, label = { Text("Vencimento (Ex: 20/06)") }, modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp))
+                OutlinedTextField(
+                    value = vencimento,
+                    onValueChange = { vencimento = it },
+                    label = { Text("Vencimento (Ex: 20/06)") },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor)
+                )
             }
         },
         confirmButton = {
@@ -310,13 +329,15 @@ fun ContaDialog(
                         onConfirm(nome, v, vencimento)
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
+                colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)
             ) {
-                Text("Salvar", color = Color.Black)
+                Text("Salvar")
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancelar") }
-        }
+            TextButton(onClick = onDismiss) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) }
+        },
+        containerColor = if (isDark) Color(0xFF1E293B) else Color.White,
+        shape = RoundedCornerShape(24.dp)
     )
 }

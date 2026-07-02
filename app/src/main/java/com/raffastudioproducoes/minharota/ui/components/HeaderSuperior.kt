@@ -1,6 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -37,6 +38,9 @@ fun HeaderSuperior(onDrawerClick: () -> Unit, drawerState: DrawerState? = null) 
     val context = LocalContext.current
     val prefsManager = SharedPreferencesManager(context)
     val nomeUsuario = prefsManager.obterNomeUsuario()
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
+    
     TopAppBar(
         title = {
             Row(
@@ -46,7 +50,7 @@ fun HeaderSuperior(onDrawerClick: () -> Unit, drawerState: DrawerState? = null) 
             ) {
                 Text(
                     text = "Minha Rota",
-                    color = Color.White,
+                    color = textColor,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -63,7 +67,7 @@ fun HeaderSuperior(onDrawerClick: () -> Unit, drawerState: DrawerState? = null) 
                     Icon(
                         imageVector = Icons.Rounded.Close,
                         contentDescription = "Fechar Menu",
-                        tint = Color.White
+                        tint = textColor
                     )
                 } else {
                     MenuIconTwoLines()
@@ -71,7 +75,7 @@ fun HeaderSuperior(onDrawerClick: () -> Unit, drawerState: DrawerState? = null) 
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF121214)
+            containerColor = MaterialTheme.colorScheme.background
         )
     )
 }

@@ -30,6 +30,13 @@ class GraficosViewModel : ViewModel() {
     private val _tendenciaGanhos = MutableStateFlow<List<PontoTendencia>>(emptyList())
     val tendenciaGanhos: StateFlow<List<PontoTendencia>> = _tendenciaGanhos.asStateFlow()
 
+    // Ganhos vs Despesas v2.0
+    private val _totalGanhosSemana = MutableStateFlow(0.0)
+    val totalGanhosSemana: StateFlow<Double> = _totalGanhosSemana.asStateFlow()
+
+    private val _totalDespesasSemana = MutableStateFlow(0.0)
+    val totalDespesasSemana: StateFlow<Double> = _totalDespesasSemana.asStateFlow()
+
     private val _semanaSelecionadaOffset = MutableStateFlow(0) // 0 = Esta Semana, 1 = Semana Passada, etc.
     val semanaSelecionadaOffset: StateFlow<Int> = _semanaSelecionadaOffset.asStateFlow()
 
@@ -149,6 +156,18 @@ class GraficosViewModel : ViewModel() {
         _ganhosSemanais.value = novosGanhosSemanais
         _melhorDia.value = if (indexMelhorDia != -1) diasSemana[indexMelhorDia] else "---"
         _melhorHora.value = if (melhorHoraValor != -1) "${melhorHoraValor}h" else "--h"
+
+        // Calcular Totais v2.0
+        _totalGanhosSemana.value = novosGanhosSemanais.sum()
+        // Para despesas, somamos os custos fixos + variáveis dos turnos da semana
+        var despesasAcumuladas = 0.0
+        turnos.forEach { turno ->
+            val date = try { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(turno.data) } catch (e: Exception) { null }
+            if (date != null && date.time in startOfWeek..endOfWeek) {
+                despesasAcumuladas += turno.custoTotal
+            }
+        }
+        _totalDespesasSemana.value = despesasAcumuladas
 
         // Calcular tendência: todos os turnos, agregados por data única, ordenados cronologicamente
         calcularTendencia(turnos)

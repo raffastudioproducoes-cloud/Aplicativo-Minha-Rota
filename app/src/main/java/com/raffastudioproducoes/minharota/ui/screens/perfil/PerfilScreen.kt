@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -36,7 +37,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import java.io.File
 import java.time.Instant
@@ -55,6 +55,8 @@ fun PerfilScreen(
     val email by viewModel.email.collectAsState()
     val dataAniversario by viewModel.dataAniversario.collectAsState()
     val fotoPerfilUrl by viewModel.fotoPerfilUrl.collectAsState()
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     // Carregar dados persistidos ao abrir a tela
     LaunchedEffect(Unit) {
@@ -105,7 +107,7 @@ fun PerfilScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(FundoDark)
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -115,7 +117,7 @@ fun PerfilScreen(
             text = "Meu Perfil",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = textColor,
             modifier = Modifier.align(Alignment.Start)
         )
 
@@ -174,12 +176,12 @@ fun PerfilScreen(
                     text = nomeUsuario.ifBlank { "Motorista" },
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = textColor
                 )
                 Text(
                     text = email,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White.copy(alpha = 0.5f)
+                    color = textColor.copy(alpha = 0.5f)
                 )
             }
         }
@@ -199,7 +201,7 @@ fun PerfilScreen(
                         Spacer(modifier = Modifier.width(12.dp))
                         Text("Escolher da Galeria", color = VerdeNeon)
                     }
-                    Divider(color = Color.White.copy(alpha = 0.05f))
+                    HorizontalDivider(color = textColor.copy(alpha = 0.05f))
                     TextButton(
                         onClick = {
                             val permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
@@ -253,7 +255,7 @@ fun PerfilScreen(
                         Text(
                             text = "Data de Nascimento",
                             style = MaterialTheme.typography.labelMedium,
-                            color = Color.White.copy(alpha = 0.5f),
+                            color = textColor.copy(alpha = 0.5f),
                             fontWeight = FontWeight.Bold
                         )
                         IconButton(
@@ -274,10 +276,10 @@ fun PerfilScreen(
                             .fillMaxWidth()
                             .padding(vertical = 8.dp),
                         style = MaterialTheme.typography.bodyLarge,
-                        color = if (dataAniversario.isEmpty()) Color.White.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.9f),
+                        color = if (dataAniversario.isEmpty()) textColor.copy(alpha = 0.3f) else textColor.copy(alpha = 0.9f),
                         fontWeight = FontWeight.Medium
                     )
-                    Divider(color = Color.White.copy(alpha = 0.05f))
+                    HorizontalDivider(color = textColor.copy(alpha = 0.05f))
                 }
             }
         }
@@ -291,9 +293,9 @@ fun PerfilScreen(
                 .fillMaxWidth()
                 .height(56.dp),
             shape = RoundedCornerShape(50.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
+            colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)
         ) {
-            Text("Ver Planos Premium", fontWeight = FontWeight.Bold, color = Color.Black)
+            Text("Ver Planos Premium", fontWeight = FontWeight.Bold)
         }
 
         // Botão Sair
@@ -327,9 +329,11 @@ fun PerfilScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showDatePicker = false }) {
-                    Text("CANCELAR", color = Color.White.copy(alpha = 0.5f))
+                    Text("CANCELAR", color = textColor.copy(alpha = 0.5f))
                 }
-            }
+            },
+            containerColor = if (isDark) Color(0xFF1E293B) else Color.White,
+            shape = RoundedCornerShape(24.dp)
         ) {
             DatePicker(state = datePickerState)
         }
@@ -345,6 +349,8 @@ fun PerfilInputField(
     onValueChange: (String) -> Unit,
     placeholder: String = ""
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -354,13 +360,13 @@ fun PerfilInputField(
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelMedium,
-                color = Color.White.copy(alpha = 0.5f),
+                color = textColor.copy(alpha = 0.5f),
                 fontWeight = FontWeight.Bold
             )
             IconButton(onClick = onEditClick, modifier = Modifier.size(24.dp)) {
                 Icon(
                     imageVector = Icons.Outlined.Edit,
-                    contentDescription = "Editar $label",
+                    contentDescription = "Editar",
                     modifier = Modifier.size(18.dp),
                     tint = VerdeNeon
                 )
@@ -369,19 +375,18 @@ fun PerfilInputField(
 
         if (isEditing) {
             OutlinedTextField(
-                value = if (value == "Não informado") "" else value,
+                value = value,
                 onValueChange = onValueChange,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
-                shape = RoundedCornerShape(12.dp),
-                placeholder = { Text(placeholder, color = Color.White.copy(alpha = 0.3f)) },
+                    .padding(vertical = 4.dp),
+                placeholder = { Text(placeholder) },
                 singleLine = true,
+                shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = VerdeNeon,
-                    unfocusedBorderColor = Color.White.copy(alpha = 0.1f),
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    unfocusedTextColor = textColor,
+                    focusedTextColor = textColor
                 )
             )
         } else {
@@ -391,10 +396,10 @@ fun PerfilInputField(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 style = MaterialTheme.typography.bodyLarge,
-                color = if (value.isBlank()) Color.White.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.9f),
+                color = if (value.isBlank()) textColor.copy(alpha = 0.3f) else textColor.copy(alpha = 0.9f),
                 fontWeight = FontWeight.Medium
             )
-            Divider(color = Color.White.copy(alpha = 0.05f))
         }
+        HorizontalDivider(color = textColor.copy(alpha = 0.05f))
     }
 }

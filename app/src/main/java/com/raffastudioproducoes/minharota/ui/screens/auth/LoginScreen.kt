@@ -1,6 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.auth
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,7 +22,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,20 +33,22 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Login", color = Color.White) },
+                title = { Text("Login", color = textColor) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Rounded.ArrowBack, contentDescription = "Voltar", tint = Color.White)
+                        Icon(Icons.Rounded.ArrowBack, contentDescription = "Voltar", tint = textColor)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = FundoDark)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.background)
             )
         },
-        containerColor = FundoDark
+        containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
         Column(
             modifier = Modifier
@@ -59,13 +61,13 @@ fun LoginScreen(
                 text = "Bem-vindo de volta!",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
+                color = textColor,
                 modifier = Modifier.align(Alignment.Start)
             )
             Text(
                 text = "Acesse sua conta para sincronizar seus dados.",
                 fontSize = 14.sp,
-                color = Color.White.copy(alpha = 0.5f),
+                color = textColor.copy(alpha = 0.5f),
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 32.dp)
             )
 
@@ -79,7 +81,8 @@ fun LoginScreen(
                 shape = RoundedCornerShape(16.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = VerdeNeon,
-                    unfocusedBorderColor = Color.White.copy(alpha = 0.1f)
+                    unfocusedTextColor = textColor,
+                    focusedTextColor = textColor
                 )
             )
 
@@ -104,7 +107,8 @@ fun LoginScreen(
                 shape = RoundedCornerShape(16.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = VerdeNeon,
-                    unfocusedBorderColor = Color.White.copy(alpha = 0.1f)
+                    unfocusedTextColor = textColor,
+                    focusedTextColor = textColor
                 )
             )
 
@@ -115,7 +119,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)
             ) {
                 Text("Entrar", fontWeight = FontWeight.Bold, fontSize = 16.sp)

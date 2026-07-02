@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -24,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.compose.ui.platform.LocalContext
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import kotlinx.coroutines.launch
 
@@ -51,12 +51,12 @@ fun ScaffoldPrincipalPush(
         label = "ContentCornerRadius"
     )
 
-    Box(modifier = Modifier.background(FundoDark)) {
+    Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
         // Drawer (Push Navigation)
         Box(
             modifier = Modifier
                 .offset(x = -(280.dp - drawerOffsetPx))
-                .background(FundoDark)
+                .background(MaterialTheme.colorScheme.background)
         ) {
             val context = LocalContext.current
             val prefsManager = SharedPreferencesManager(context)
@@ -80,7 +80,7 @@ fun ScaffoldPrincipalPush(
         Box(
             modifier = Modifier
                 .offset(x = drawerOffsetPx)
-                .clip(RoundedCornerShape(topStart = cornerRadius, topEnd = 0.dp, bottomEnd = 0.dp, bottomStart = cornerRadius))
+                .clip(RoundedCornerShape(cornerRadius, 0.dp, 0.dp, cornerRadius))
         ) {
             Scaffold(
                 topBar = {
@@ -102,7 +102,8 @@ fun ScaffoldPrincipalPush(
                             onFabClick = { mostrarModalRapido = true }
                         )
                     }
-                }
+                },
+                containerColor = MaterialTheme.colorScheme.background
             ) { paddingValues ->
                 content(paddingValues)
             }

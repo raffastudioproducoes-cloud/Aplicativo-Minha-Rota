@@ -1,8 +1,8 @@
 package com.raffastudioproducoes.minharota.ui.screens.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -19,59 +19,49 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.raffastudioproducoes.minharota.R
+import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import kotlinx.coroutines.launch
 import kotlin.math.cos
 import kotlin.math.sin
 
 data class OnboardingPage(
     val title: String,
-    val description: String,
-    val bgRes: Int? // null = usar visual programático
+    val description: String
 )
 
 val onboardingPages = listOf(
     OnboardingPage(
         title = "Bem-vindo ao MinhaRota",
-        description = "Gerencie seus ganhos e despesas de forma inteligente",
-        bgRes = R.drawable.bg_onb_carro
+        description = "Gerencie seus ganhos e despesas de forma inteligente"
     ),
     OnboardingPage(
         title = "Registre seus Turnos",
-        description = "Acompanhe cada turno de trabalho com detalhes de ganhos e custos",
-        bgRes = null // Renderizado via OnboardingCalendarVisual
+        description = "Acompanhe cada turno de trabalho com detalhes de ganhos e custos"
     ),
     OnboardingPage(
         title = "Organize com Caixinhas",
-        description = "Separe seus ganhos em categorias personalizadas",
-        bgRes = R.drawable.bg_onb_caixas
+        description = "Separe seus ganhos em categorias personalizadas"
     ),
     OnboardingPage(
         title = "Controle sua Garagem",
-        description = "Acompanhe manutenções e custos do seu veículo",
-        bgRes = R.drawable.bg_onb_engrenagens
+        description = "Acompanhe manutenções e custos do seu veículo"
     ),
     OnboardingPage(
         title = "Visualize Mapa de Calor",
-        description = "Descubra os melhores horários e dias para trabalhar",
-        bgRes = R.drawable.bg_onb_mapa
+        description = "Descubra os melhores horários e dias para trabalhar"
     ),
     OnboardingPage(
         title = "Analise Tendências",
-        description = "Veja gráficos e estatísticas de desempenho",
-        bgRes = R.drawable.bg_onb_analise
+        description = "Veja gráficos e estatísticas de desempenho"
     ),
     OnboardingPage(
         title = "Comece Agora",
-        description = "Você está pronto para otimizar seus ganhos!",
-        bgRes = R.drawable.bg_onb_mapafinal
+        description = "Você está pronto para otimizar seus ganhos!"
     )
 )
 
@@ -81,9 +71,11 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
     val pagerState = rememberPagerState(pageCount = { onboardingPages.size })
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
     ) {
         HorizontalPager(
             state = pagerState,
@@ -126,8 +118,8 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
                     onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
                     modifier = Modifier.weight(1f).height(56.dp),
                     shape = RoundedCornerShape(50.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.2f)),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, containerColor = Color.Transparent)
+                    border = androidx.compose.foundation.BorderStroke(1.dp, textColor.copy(alpha = 0.2f)),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = textColor, containerColor = Color.Transparent)
                 ) { Text("Voltar", fontWeight = FontWeight.SemiBold) }
 
                 Button(
@@ -143,14 +135,15 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
                     onClick = { scope.launch { pagerState.animateScrollToPage(pagerState.currentPage - 1) } },
                     modifier = Modifier.weight(1f).height(56.dp),
                     shape = RoundedCornerShape(50.dp),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.2f)),
-                    colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White, containerColor = Color.Transparent)
+                    border = androidx.compose.foundation.BorderStroke(1.dp, textColor.copy(alpha = 0.2f)),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = textColor, containerColor = Color.Transparent)
                 ) { Text("Voltar", fontWeight = FontWeight.SemiBold) }
 
                 Button(
                     onClick = {
                         val prefs = context.getSharedPreferences("minha_rota_prefs", android.content.Context.MODE_PRIVATE)
-                        prefs.edit().putBoolean("is_first_open", false).apply()
+                        // v2.0: Usando KEY_IS_FIRST_RUN conforme diretriz de loop
+                        prefs.edit().putBoolean("isFirstRun", false).apply()
                         onNavigateToLogin()
                     },
                     modifier = Modifier.weight(1f).height(56.dp),
@@ -164,50 +157,57 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
 
 @Composable
 fun OnboardingPageContent(page: OnboardingPage) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
+    
     Box(modifier = Modifier.fillMaxSize()) {
-        if (page.bgRes != null) {
-            Image(
-                painter = painterResource(id = page.bgRes),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        } else {
-            Box(
-                modifier = Modifier.fillMaxSize()
-                    .background(Brush.verticalGradient(colors = listOf(Color(0xFF0C0C0E), Color(0xFF0D2137), Color(0xFF064E3B))))
-            ) { OnboardingCalendarVisual() }
-        }
+        // v2.0: Fundos Sólidos (Zero Imagens) com Gradiente Suave
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .background(
+                    if (isDark) {
+                        Brush.verticalGradient(colors = listOf(Color(0xFF0C0C0E), Color(0xFF111827), Color(0xFF064E3B).copy(alpha = 0.3f)))
+                    } else {
+                        Brush.verticalGradient(colors = listOf(Color.White, Color(0xFFF3F4F6), Color(0xFFD1FAE5).copy(alpha = 0.3f)))
+                    }
+                )
+        )
 
         Column(
             modifier = Modifier.fillMaxSize().padding(bottom = 180.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
+            verticalArrangement = Arrangement.Center
         ) {
-            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = page.title, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = Color.White, textAlign = TextAlign.Center)
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(text = page.description, style = MaterialTheme.typography.bodyLarge, color = Color(0xFFE5E5EA), textAlign = TextAlign.Center, lineHeight = 24.sp)
-            }
-        }
-    }
-}
+            // Placeholder visual para todas as páginas (Zero Imagens conforme solicitado)
+            Box(modifier = Modifier.size(240.dp).drawBehind {
+                drawCircle(
+                    brush = Brush.radialGradient(
+                        colors = listOf(
+                            if (isDark) VerdeNeon.copy(alpha = 0.2f) else VerdeNeon.copy(alpha = 0.4f),
+                            Color.Transparent
+                        )
+                    )
+                )
+            })
 
-@Composable
-fun OnboardingCalendarVisual() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Box(modifier = Modifier.size(300.dp).drawBehind {
-            drawCircle(brush = Brush.radialGradient(colors = listOf(Color(0xFF10B981).copy(alpha = 0.15f), Color.Transparent)))
-        })
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Icon(painter = painterResource(id = android.R.drawable.ic_menu_today), contentDescription = null, modifier = Modifier.size(120.dp), tint = Color(0xFF10B981).copy(alpha = 0.8f))
-            Spacer(modifier = Modifier.height(24.dp))
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                repeat(5) {
-                    Box(modifier = Modifier.size(40.dp).clip(RoundedCornerShape(8.dp)).background(Color.White.copy(alpha = 0.05f)).drawBehind {
-                        if (it == 2) drawRect(color = Color(0xFF10B981), style = Stroke(width = 2.dp.toPx()))
-                    })
-                }
+            Spacer(modifier = Modifier.height(48.dp))
+
+            Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = page.title,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = textColor,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = page.description,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = textColor.copy(alpha = 0.7f),
+                    textAlign = TextAlign.Center,
+                    lineHeight = 24.sp
+                )
             }
         }
     }
@@ -215,8 +215,9 @@ fun OnboardingCalendarVisual() {
 
 @Composable
 fun HexagonIndicator(isSelected: Boolean) {
+    val isDark = isSystemInDarkTheme()
     val size = if (isSelected) 14.dp else 10.dp
-    val color = if (isSelected) Color(0xFF10B981) else Color.White.copy(alpha = 0.3f)
+    val color = if (isSelected) Color(0xFF10B981) else (if (isDark) Color.White.copy(alpha = 0.3f) else Color.Black.copy(alpha = 0.2f))
     Box(modifier = Modifier.size(size).drawBehind {
         val radius = this.size.width / 2f
         val center = Offset(this.size.width / 2f, this.size.height / 2f)

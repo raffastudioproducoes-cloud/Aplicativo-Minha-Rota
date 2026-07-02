@@ -1,6 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.extrato
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,7 +24,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.Movimentacao
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,6 +35,8 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
     val totalEntradas by viewModel.totalEntradas.collectAsState()
     val totalSaidas by viewModel.totalSaidas.collectAsState()
     val saldoTotal by viewModel.saldoTotal.collectAsState()
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     // Cores Fintech Premium v1.7.0
     val corEntradas = Color(0xFF34D399) // Verde Menta
@@ -45,12 +47,12 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
         viewModel.carregarMovimentacoes(context)
     }
 
-    Column(modifier = Modifier.fillMaxSize().background(FundoDark)) {
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Text(
             text = "Meu Extrato",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = textColor,
             modifier = Modifier.padding(16.dp)
         )
 
@@ -70,15 +72,15 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
                     label = { Text(filtro) },
                     enabled = true,
                     colors = FilterChipDefaults.filterChipColors(
-                        containerColor = Color.White.copy(alpha = 0.05f),
+                        containerColor = textColor.copy(alpha = 0.05f),
                         selectedContainerColor = VerdeNeon,
-                        labelColor = Color.White.copy(alpha = 0.7f),
+                        labelColor = textColor.copy(alpha = 0.7f),
                         selectedLabelColor = Color.Black
                     ),
                     border = FilterChipDefaults.filterChipBorder(
                         enabled = true,
                         selected = isSelected,
-                        borderColor = Color.White.copy(alpha = 0.1f),
+                        borderColor = textColor.copy(alpha = 0.1f),
                         selectedBorderColor = Color.Transparent,
                         borderWidth = 1.dp
                     )
@@ -96,7 +98,7 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
             // Card 1: Entradas
             PremiumGlassCard(modifier = Modifier.weight(1f)) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text("Entradas", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Text("Entradas", color = textColor.copy(alpha = 0.5f), fontSize = 10.sp)
                     Spacer(modifier = Modifier.height(4.dp))
                     Text("R$ ${String.format("%.0f", totalEntradas)}", color = corEntradas, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 }
@@ -105,7 +107,7 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
             // Card 2: Saídas
             PremiumGlassCard(modifier = Modifier.weight(1f)) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text("Saídas", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Text("Saídas", color = textColor.copy(alpha = 0.5f), fontSize = 10.sp)
                     Spacer(modifier = Modifier.height(4.dp))
                     Text("R$ ${String.format("%.0f", totalSaidas)}", color = corSaidas, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 }
@@ -114,7 +116,7 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
             // Card 3: Saldo
             PremiumGlassCard(modifier = Modifier.weight(1f)) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text("Saldo", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Text("Saldo", color = textColor.copy(alpha = 0.5f), fontSize = 10.sp)
                     Spacer(modifier = Modifier.height(4.dp))
                     Text("R$ ${String.format("%.0f", saldoTotal)}", color = corSaldo, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 }
@@ -134,6 +136,8 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
 
 @Composable
 fun ItemMovimentacao(mov: Movimentacao) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     PremiumGlassCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -166,13 +170,13 @@ fun ItemMovimentacao(mov: Movimentacao) {
                 Column {
                     Text(
                         text = mov.descricao,
-                        color = Color.White.copy(alpha = 0.9f),
+                        color = textColor.copy(alpha = 0.9f),
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp
                     )
                     Text(
                         text = mov.data,
-                        color = Color.White.copy(alpha = 0.4f),
+                        color = textColor.copy(alpha = 0.4f),
                         fontSize = 11.sp
                     )
                 }

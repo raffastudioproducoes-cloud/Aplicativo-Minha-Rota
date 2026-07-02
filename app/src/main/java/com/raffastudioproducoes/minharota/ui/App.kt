@@ -54,8 +54,14 @@ fun MainAppContent() {
         startDestination = "splash"
     ) {
         composable("splash") {
+            val context = androidx.compose.ui.platform.LocalContext.current
             SplashScreen(onFinish = {
-                navController.navigate("onboarding") {
+                val prefs = context.getSharedPreferences("minha_rota_prefs", android.content.Context.MODE_PRIVATE)
+                val isFirstRun = prefs.getBoolean("isFirstRun", true)
+                
+                val nextRoute = if (isFirstRun) "onboarding" else "login_main"
+                
+                navController.navigate(nextRoute) {
                     popUpTo("splash") { inclusive = true }
                 }
             })

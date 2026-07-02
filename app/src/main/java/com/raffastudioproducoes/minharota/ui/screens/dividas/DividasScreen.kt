@@ -1,7 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.dividas
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.Divida
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import androidx.compose.foundation.text.KeyboardOptions
 
@@ -30,6 +29,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
     val context = LocalContext.current
     val dividas by viewModel.dividas.collectAsState()
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     
     var mostrarDialogoPagamento by remember { mutableStateOf(false) }
     var mostrarDialogoFormDivida by remember { mutableStateOf(false) }
@@ -43,12 +44,12 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
         viewModel.carregarDividas(context)
     }
 
-    Column(modifier = Modifier.fillMaxSize().background(FundoDark)) {
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Text(
             text = "Minhas Dívidas",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = textColor,
             modifier = Modifier.padding(16.dp)
         )
 
@@ -58,7 +59,7 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
         ) {
             PremiumGlassCard(modifier = Modifier.weight(1f)) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text("Em aberto", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Text("Em aberto", color = textColor.copy(alpha = 0.5f), fontSize = 10.sp)
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "R$ ${String.format("%.2f", dividas.sumOf { it.valorTotal - it.valorPago })}",
@@ -71,7 +72,7 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
 
             PremiumGlassCard(modifier = Modifier.weight(1f)) {
                 Column(modifier = Modifier.fillMaxWidth()) {
-                    Text("Total Pago", color = Color.White.copy(alpha = 0.5f), fontSize = 10.sp)
+                    Text("Total Pago", color = textColor.copy(alpha = 0.5f), fontSize = 10.sp)
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = "R$ ${String.format("%.2f", dividas.sumOf { it.valorPago })}",
@@ -113,11 +114,11 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
                     },
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp).height(56.dp),
                     shape = RoundedCornerShape(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.05f))
+                    colors = ButtonDefaults.buttonColors(containerColor = textColor.copy(alpha = 0.05f), contentColor = textColor)
                 ) {
-                    Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.White)
+                    Icon(Icons.Rounded.Add, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Adicionar Dívida", color = Color.White)
+                    Text("Adicionar Dívida")
                 }
             }
         }
@@ -126,12 +127,12 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
     if (mostrarDialogoPagamento && dividaSelecionada != null) {
         AlertDialog(
             onDismissRequest = { mostrarDialogoPagamento = false },
-            title = { Text("Pagar Parcela", fontWeight = FontWeight.Bold) },
+            title = { Text("Pagar Parcela", fontWeight = FontWeight.Bold, color = textColor) },
             text = {
                 Column {
-                    Text("Credor: ${dividaSelecionada?.credor ?: ""}", color = Color.White.copy(alpha = 0.7f))
+                    Text("Credor: ${dividaSelecionada?.credor ?: ""}", color = textColor.copy(alpha = 0.7f))
                     val restante = (dividaSelecionada?.valorTotal ?: 0.0) - (dividaSelecionada?.valorPago ?: 0.0)
-                    Text("Saldo devedor: R$ ${String.format("%.2f", restante)}", color = Color.White.copy(alpha = 0.5f))
+                    Text("Saldo devedor: R$ ${String.format("%.2f", restante)}", color = textColor.copy(alpha = 0.5f))
                     
                     if ((dividaSelecionada?.totalParcelas ?: 1) > 1) {
                         val valorParcela = (dividaSelecionada?.valorTotal ?: 0.0) / (dividaSelecionada?.totalParcelas ?: 1)
@@ -146,7 +147,12 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
                         modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                         shape = RoundedCornerShape(12.dp),
-                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon, focusedLabelColor = VerdeNeon)
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = VerdeNeon,
+                            focusedLabelColor = VerdeNeon,
+                            unfocusedTextColor = textColor,
+                            focusedTextColor = textColor
+                        )
                     )
                 }
             },
@@ -160,12 +166,14 @@ fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
                             dividaSelecionada = null
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
-                ) { Text("Confirmar", color = Color.Black) }
+                    colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)
+                ) { Text("Confirmar") }
             },
             dismissButton = {
-                TextButton(onClick = { mostrarDialogoPagamento = false }) { Text("Cancelar") }
-            }
+                TextButton(onClick = { mostrarDialogoPagamento = false }) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) }
+            },
+            containerColor = if (isDark) Color(0xFF1E293B) else Color.White,
+            shape = RoundedCornerShape(24.dp)
         )
     }
 
@@ -198,6 +206,8 @@ fun CardDivida(
     onExcluir: (String) -> Unit,
     onEditar: () -> Unit
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     val progresso = if (divida.valorTotal > 0) (divida.valorPago / divida.valorTotal).toFloat().coerceIn(0f, 1f) else 0f
     val corTotalPago = Color(0xFF34D399)
 
@@ -205,36 +215,36 @@ fun CardDivida(
         Column(modifier = Modifier.fillMaxWidth()) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Column {
-                    Text(text = divida.credor, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.9f))
+                    Text(text = divida.credor, fontWeight = FontWeight.Bold, color = textColor.copy(alpha = 0.9f))
                     if (divida.totalParcelas > 1) {
                         Text(
                             text = "${divida.parcelasPagas}/${divida.totalParcelas} parcelas • ${divida.recorrencia}",
                             fontSize = 11.sp,
-                            color = Color.White.copy(alpha = 0.4f)
+                            color = textColor.copy(alpha = 0.4f)
                         )
                     }
                 }
                 Row {
                     IconButton(onClick = onEditar) {
-                        Icon(Icons.Rounded.Edit, contentDescription = null, tint = Color.White.copy(alpha = 0.2f), modifier = Modifier.size(18.dp))
+                        Icon(Icons.Rounded.Edit, contentDescription = null, tint = textColor.copy(alpha = 0.3f), modifier = Modifier.size(18.dp))
                     }
                     IconButton(onClick = { onExcluir(divida.id) }) {
-                        Icon(Icons.Rounded.Delete, contentDescription = null, tint = Color.White.copy(alpha = 0.2f), modifier = Modifier.size(18.dp))
+                        Icon(Icons.Rounded.Delete, contentDescription = null, tint = Color.Red.copy(alpha = 0.4f), modifier = Modifier.size(18.dp))
                     }
                 }
             }
-            Text(text = "R$ ${String.format("%.2f", divida.valorTotal)}", color = Color.White.copy(alpha = 0.7f), fontSize = 14.sp)
+            Text(text = "R$ ${String.format("%.2f", divida.valorTotal)}", color = textColor.copy(alpha = 0.7f), fontSize = 14.sp)
             Spacer(modifier = Modifier.height(12.dp))
             LinearProgressIndicator(
                 progress = { progresso },
                 modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
                 color = corTotalPago,
-                trackColor = Color.White.copy(alpha = 0.1f)
+                trackColor = textColor.copy(alpha = 0.1f)
             )
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(text = "Pago: R$ ${String.format("%.2f", divida.valorPago)}", color = corTotalPago, fontSize = 12.sp, fontWeight = FontWeight.Medium)
-                Text(text = "${(progresso * 100).toInt()}%", color = Color.White.copy(alpha = 0.5f), fontSize = 12.sp)
+                Text(text = "${(progresso * 100).toInt()}%", color = textColor.copy(alpha = 0.5f), fontSize = 12.sp)
             }
             Spacer(modifier = Modifier.height(16.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -243,15 +253,15 @@ fun CardDivida(
                     enabled = divida.valorPago < divida.valorTotal,
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.1f))
+                    colors = ButtonDefaults.buttonColors(containerColor = textColor.copy(alpha = 0.1f), contentColor = textColor)
                 ) { Text("Pagar Parcela", fontSize = 11.sp) }
                 Button(
                     onClick = { onQuitarDivida(divida.id) },
                     enabled = divida.valorPago < divida.valorTotal,
                     modifier = Modifier.weight(1f),
                     shape = RoundedCornerShape(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
-                ) { Text("Quitar", color = Color.Black, fontSize = 11.sp) }
+                    colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)
+                ) { Text("Quitar", fontSize = 11.sp) }
             }
         }
     }
@@ -264,6 +274,8 @@ fun FormDividaDialog(
     onDismiss: () -> Unit,
     onSave: (String, Double, Int, String) -> Unit
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var credor by remember { mutableStateOf(dividaExistente?.credor ?: "") }
     var valorTotal by remember { mutableStateOf(dividaExistente?.valorTotal?.toString() ?: "") }
     var parcelas by remember { mutableStateOf(dividaExistente?.totalParcelas?.toString() ?: "1") }
@@ -274,7 +286,7 @@ fun FormDividaDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (dividaExistente != null) "Editar Dívida" else "Nova Dívida", fontWeight = FontWeight.Bold) },
+        title = { Text(if (dividaExistente != null) "Editar Dívida" else "Nova Dívida", fontWeight = FontWeight.Bold, color = textColor) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(
@@ -283,7 +295,12 @@ fun FormDividaDialog(
                     label = { Text("Credor / Nome") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon, focusedLabelColor = VerdeNeon)
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = VerdeNeon, 
+                        focusedLabelColor = VerdeNeon,
+                        unfocusedTextColor = textColor,
+                        focusedTextColor = textColor
+                    )
                 )
                 
                 OutlinedTextField(
@@ -293,7 +310,12 @@ fun FormDividaDialog(
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     shape = RoundedCornerShape(12.dp),
-                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon, focusedLabelColor = VerdeNeon)
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = VerdeNeon, 
+                        focusedLabelColor = VerdeNeon,
+                        unfocusedTextColor = textColor,
+                        focusedTextColor = textColor
+                    )
                 )
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -304,7 +326,12 @@ fun FormDividaDialog(
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         shape = RoundedCornerShape(12.dp),
-                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon, focusedLabelColor = VerdeNeon)
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = VerdeNeon, 
+                            focusedLabelColor = VerdeNeon,
+                            unfocusedTextColor = textColor,
+                            focusedTextColor = textColor
+                        )
                     )
                     
                     ExposedDropdownMenuBox(
@@ -316,21 +343,26 @@ fun FormDividaDialog(
                             value = recorrencia,
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Recorrência") },
+                            label = { Text("Frequência") },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                             modifier = Modifier.menuAnchor(),
                             shape = RoundedCornerShape(12.dp),
-                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon, focusedLabelColor = VerdeNeon)
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = VerdeNeon, 
+                                focusedLabelColor = VerdeNeon,
+                                unfocusedTextColor = textColor,
+                                focusedTextColor = textColor
+                            )
                         )
                         ExposedDropdownMenu(
                             expanded = expanded,
                             onDismissRequest = { expanded = false }
                         ) {
-                            recorrencias.forEach { option ->
+                            recorrencias.forEach { item ->
                                 DropdownMenuItem(
-                                    text = { Text(option) },
+                                    text = { Text(text = item) },
                                     onClick = {
-                                        recorrencia = option
+                                        recorrencia = item
                                         expanded = false
                                     }
                                 )
@@ -343,17 +375,19 @@ fun FormDividaDialog(
         confirmButton = {
             Button(
                 onClick = {
-                    val valor = valorTotal.replace(',', '.').toDoubleOrNull() ?: 0.0
-                    val numParcelas = parcelas.toIntOrNull() ?: 1
-                    if (credor.isNotBlank() && valor > 0) {
-                        onSave(credor, valor, numParcelas, recorrencia)
+                    val v = valorTotal.replace(',', '.').toDoubleOrNull() ?: 0.0
+                    val p = parcelas.toIntOrNull() ?: 1
+                    if (credor.isNotBlank() && v > 0) {
+                        onSave(credor, v, p, recorrencia)
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon)
-            ) { Text("Salvar", color = Color.Black) }
+                colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)
+            ) { Text("Salvar") }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancelar") }
-        }
+            TextButton(onClick = onDismiss) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) }
+        },
+        containerColor = if (isDark) Color(0xFF1E293B) else Color.White,
+        shape = RoundedCornerShape(24.dp)
     )
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -23,13 +24,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun ConfigScreen() {
     val context = LocalContext.current
     val prefs = context.getSharedPreferences("minha_rota_prefs", Context.MODE_PRIVATE)
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     
     // Estados de Configuração persistidos
     var temaEscuro by remember { mutableStateOf(prefs.getBoolean("tema_escuro", true)) }
@@ -39,14 +41,14 @@ fun ConfigScreen() {
     val versaoApp = remember {
         try {
             val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            pInfo.versionName ?: "1.1.0"
-        } catch (e: Exception) { "1.1.0" }
+            pInfo.versionName ?: "2.0.0"
+        } catch (e: Exception) { "2.0.0" }
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(FundoDark)
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
@@ -54,7 +56,7 @@ fun ConfigScreen() {
             text = "Configurações",
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = textColor,
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
@@ -70,7 +72,7 @@ fun ConfigScreen() {
                     onCheckedChange = { 
                         temaEscuro = it
                         prefs.edit().putBoolean("tema_escuro", it).apply()
-                        Toast.makeText(context, "Tema atualizado (Reinicie o app)", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Tema atualizado", Toast.LENGTH_SHORT).show()
                     }
                 )
             }
@@ -93,7 +95,7 @@ fun ConfigScreen() {
                     }
                 )
                 
-                Divider(color = Color.White.copy(alpha = 0.05f), modifier = Modifier.padding(horizontal = 16.dp))
+                HorizontalDivider(color = textColor.copy(alpha = 0.05f), modifier = Modifier.padding(horizontal = 16.dp))
                 
                 ConfigClickItem(
                     icon = Icons.Rounded.Sync,
@@ -132,7 +134,7 @@ fun ConfigScreen() {
                     title = "Versão do Sistema",
                     value = versaoApp
                 )
-                Divider(color = Color.White.copy(alpha = 0.05f), modifier = Modifier.padding(horizontal = 16.dp))
+                HorizontalDivider(color = textColor.copy(alpha = 0.05f), modifier = Modifier.padding(horizontal = 16.dp))
                 ConfigClickItem(
                     icon = Icons.Rounded.Description,
                     title = "Termos e Privacidade",
@@ -165,6 +167,8 @@ fun ConfigSwitchItem(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -173,17 +177,17 @@ fun ConfigSwitchItem(
     ) {
         IconContainer(icon)
         Column(modifier = Modifier.weight(1f).padding(horizontal = 16.dp)) {
-            Text(text = title, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            Text(text = subtitle, color = Color.White.copy(alpha = 0.5f), fontSize = 11.sp)
+            Text(text = title, color = textColor, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text(text = subtitle, color = textColor.copy(alpha = 0.5f), fontSize = 11.sp)
         }
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.Black,
+                checkedThumbColor = if (isDark) Color.Black else Color.White,
                 checkedTrackColor = VerdeNeon,
-                uncheckedThumbColor = Color.White.copy(alpha = 0.5f),
-                uncheckedTrackColor = Color.White.copy(alpha = 0.1f)
+                uncheckedThumbColor = textColor.copy(alpha = 0.5f),
+                uncheckedTrackColor = textColor.copy(alpha = 0.1f)
             )
         )
     }
@@ -196,6 +200,8 @@ fun ConfigClickItem(
     subtitle: String,
     onClick: () -> Unit
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -205,10 +211,10 @@ fun ConfigClickItem(
     ) {
         IconContainer(icon)
         Column(modifier = Modifier.weight(1f).padding(horizontal = 16.dp)) {
-            Text(text = title, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            Text(text = subtitle, color = Color.White.copy(alpha = 0.5f), fontSize = 11.sp)
+            Text(text = title, color = textColor, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text(text = subtitle, color = textColor.copy(alpha = 0.5f), fontSize = 11.sp)
         }
-        Icon(Icons.Rounded.ChevronRight, contentDescription = null, tint = Color.White.copy(alpha = 0.3f))
+        Icon(Icons.Rounded.ChevronRight, contentDescription = null, tint = textColor.copy(alpha = 0.3f))
     }
 }
 
@@ -218,6 +224,8 @@ fun ConfigInfoItem(
     title: String,
     value: String
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -226,7 +234,7 @@ fun ConfigInfoItem(
     ) {
         IconContainer(icon)
         Column(modifier = Modifier.weight(1f).padding(horizontal = 16.dp)) {
-            Text(text = title, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text(text = title, color = textColor, fontWeight = FontWeight.Bold, fontSize = 14.sp)
             Text(text = value, color = VerdeNeon, fontWeight = FontWeight.Medium, fontSize = 12.sp)
         }
     }
@@ -234,13 +242,15 @@ fun ConfigInfoItem(
 
 @Composable
 fun IconContainer(icon: ImageVector) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Box(
         modifier = Modifier
             .size(36.dp)
             .clip(CircleShape)
-            .background(Color.White.copy(alpha = 0.05f)),
+            .background(textColor.copy(alpha = 0.05f)),
         contentAlignment = Alignment.Center
     ) {
-        Icon(icon, contentDescription = null, tint = Color.White, modifier = Modifier.size(18.dp))
+        Icon(icon, contentDescription = null, tint = textColor, modifier = Modifier.size(18.dp))
     }
 }

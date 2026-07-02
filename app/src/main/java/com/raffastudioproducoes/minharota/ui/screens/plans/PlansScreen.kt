@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,7 +24,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -58,6 +58,8 @@ class PlansViewModel : ViewModel() {
 fun PlansScreen(plansViewModel: PlansViewModel = viewModel()) {
     val context = LocalContext.current
     val planoAtual by plansViewModel.planoAtual.collectAsState()
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     LaunchedEffect(Unit) {
         plansViewModel.carregarPlano(context)
@@ -66,7 +68,7 @@ fun PlansScreen(plansViewModel: PlansViewModel = viewModel()) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(FundoDark)
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(24.dp)
     ) {
@@ -74,7 +76,7 @@ fun PlansScreen(plansViewModel: PlansViewModel = viewModel()) {
             text = "Escolha seu Plano",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = textColor,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -166,6 +168,10 @@ fun PlanCard(
     destaque: Boolean = false,
     onEscolher: () -> Unit = {}
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
+    val cardColor = if (isDark) Color(0xFF1C1C1E) else Color.White
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -182,8 +188,9 @@ fun PlanCard(
             ),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (destaque) Color(0xFF1C1C1E).copy(alpha = 0.8f) else Color(0xFF1C1C1E)
-        )
+            containerColor = if (destaque) cardColor.copy(alpha = 0.8f) else cardColor
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = if (isDark) 0.dp else 4.dp)
     ) {
         Column(
             modifier = Modifier.padding(24.dp)
@@ -200,12 +207,12 @@ fun PlanCard(
                         text = titulo,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = textColor
                     )
                     Text(
                         text = descricao,
                         fontSize = 12.sp,
-                        color = Color.Gray,
+                        color = textColor.copy(alpha = 0.5f),
                         modifier = Modifier.padding(top = 4.dp)
                     )
                 }
@@ -252,7 +259,7 @@ fun PlanCard(
                     Text(
                         text = recurso,
                         fontSize = 14.sp,
-                        color = Color.White
+                        color = textColor
                     )
                 }
             }
@@ -268,6 +275,7 @@ fun PlanCard(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (ehAtual) Color.Gray else VerdeEntrada
                 ),
+                shape = RoundedCornerShape(50.dp),
                 enabled = !ehAtual
             ) {
                 Text(

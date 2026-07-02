@@ -2,6 +2,7 @@ package com.raffastudioproducoes.minharota.ui.screens.garagem
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -23,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
-import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,6 +34,8 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
     val kmTotal by viewModel.kmTotalAcumulado.collectAsState()
     val manutencoes by viewModel.manutencoes.collectAsState()
     val mediaKmL by viewModel.mediaResult.collectAsState()
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     var showBottomSheet by remember { mutableStateOf(false) }
     var manutencaoParaEditar by remember { mutableStateOf<Manutencao?>(null) }
@@ -45,7 +47,7 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
         viewModel.carregarDados(context)
     }
 
-    Column(modifier = Modifier.fillMaxSize().background(FundoDark)) {
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(16.dp),
@@ -56,13 +58,13 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     // KM TOTAL ACUMULADO
                     PremiumGlassCard(modifier = Modifier.weight(1f)) {
-                        Text("KM TOTAL", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.5f))
+                        Text("KM TOTAL", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = textColor.copy(alpha = 0.5f))
                         Text("${kmTotal} km", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = VerdeNeon)
                     }
                     // MÉDIA EFICIÊNCIA
                     PremiumGlassCard(modifier = Modifier.weight(1f)) {
-                        Text("EFICIÊNCIA", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = Color.White.copy(alpha = 0.5f))
-                        Text("${String.format("%.1f", mediaKmL)} km/L", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = Color.White)
+                        Text("EFICIÊNCIA", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = textColor.copy(alpha = 0.5f))
+                        Text("${String.format("%.1f", mediaKmL)} km/L", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = textColor)
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -73,7 +75,7 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
                         text = "ATUALIZAR HODÔMETRO (ATUAL: $kmAtual km)",
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.White.copy(alpha = 0.6f)
+                        color = textColor.copy(alpha = 0.6f)
                     )
                     Spacer(modifier = Modifier.height(12.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -81,10 +83,14 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
                             value = kmInput,
                             onValueChange = { if (it.isEmpty() || it.all { char -> char.isDigit() }) kmInput = it },
                             modifier = Modifier.weight(1f),
-                            placeholder = { Text("Novo KM...", color = Color.White.copy(alpha = 0.3f)) },
+                            placeholder = { Text("Novo KM...", color = textColor.copy(alpha = 0.3f)) },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             shape = RoundedCornerShape(12.dp),
-                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = VerdeNeon,
+                                unfocusedTextColor = textColor,
+                                focusedTextColor = textColor
+                            ),
                             singleLine = true
                         )
                         Spacer(modifier = Modifier.width(12.dp))
@@ -96,11 +102,11 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
                                     kmInput = ""
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon),
+                            colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black),
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier.height(56.dp)
                         ) {
-                            Text("Atualizar", color = Color.Black, fontWeight = FontWeight.Bold)
+                            Text("Atualizar", fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -114,7 +120,7 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("MANUTENÇÕES AGENDADAS", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text("MANUTENÇÕES AGENDADAS", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = textColor)
                     TextButton(onClick = { 
                         manutencaoParaEditar = null
                         showBottomSheet = true 
@@ -132,7 +138,7 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
                 item {
                     Text(
                         "Nenhuma manutenção registrada.",
-                        color = Color.White.copy(alpha = 0.3f),
+                        color = textColor.copy(alpha = 0.3f),
                         fontSize = 14.sp,
                         modifier = Modifier.padding(vertical = 32.dp)
                     )
@@ -164,7 +170,7 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
         ModalBottomSheet(
             onDismissRequest = { showBottomSheet = false },
             sheetState = sheetState,
-            containerColor = Color(0xFF1A1A1C)
+            containerColor = if (isDark) Color(0xFF1A1A1C) else Color.White
         ) {
             ManutencaoForm(
                 manutencaoExistente = manutencaoParaEditar,
@@ -193,13 +199,16 @@ fun ManutencaoCard(
     onEdit: () -> Unit,
     onConcluir: () -> Unit
 ) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
+
     PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(
                 modifier = Modifier.size(48.dp).clip(CircleShape).background(
                     if (manutencao.concluida) Color(0xFF10B981).copy(alpha = 0.1f)
                     else if (isCritico) Color.Red.copy(alpha = 0.2f) 
-                    else Color.White.copy(alpha = 0.05f)
+                    else textColor.copy(alpha = 0.05f)
                 ),
                 contentAlignment = Alignment.Center
             ) {
@@ -210,17 +219,17 @@ fun ManutencaoCard(
                         else -> Icons.Rounded.Build
                     },
                     contentDescription = null,
-                    tint = if (manutencao.concluida) Color(0xFF10B981) else if (isCritico) Color.Red else Color.White.copy(alpha = 0.6f)
+                    tint = if (manutencao.concluida) Color(0xFF10B981) else if (isCritico) Color.Red else textColor.copy(alpha = 0.6f)
                 )
             }
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(manutencao.nome, fontWeight = FontWeight.Bold, color = if (manutencao.concluida) Color.White.copy(alpha = 0.6f) else Color.White)
+                Text(manutencao.nome, fontWeight = FontWeight.Bold, color = if (manutencao.concluida) textColor.copy(alpha = 0.6f) else textColor)
                 Text(
                     text = if (manutencao.concluida) "Concluída em ${manutencao.dataConclusao}" 
                            else if (isCritico) "REVISÃO CRÍTICA!" 
                            else "Próxima em $kmRestante km",
-                    color = if (manutencao.concluida) Color(0xFF10B981) else if (isCritico) Color.Red else Color.White.copy(alpha = 0.5f),
+                    color = if (manutencao.concluida) Color(0xFF10B981) else if (isCritico) Color.Red else textColor.copy(alpha = 0.5f),
                     fontSize = 12.sp
                 )
             }
@@ -231,7 +240,7 @@ fun ManutencaoCard(
                         Icon(Icons.Rounded.CheckCircle, contentDescription = "Concluir", tint = VerdeNeon.copy(alpha = 0.8f), modifier = Modifier.size(22.dp))
                     }
                     IconButton(onClick = onEdit) {
-                        Icon(Icons.Rounded.Edit, contentDescription = "Editar", tint = Color.White.copy(alpha = 0.4f), modifier = Modifier.size(20.dp))
+                        Icon(Icons.Rounded.Edit, contentDescription = "Editar", tint = textColor.copy(alpha = 0.4f), modifier = Modifier.size(20.dp))
                     }
                 }
                 IconButton(onClick = onDelete) {
@@ -251,7 +260,7 @@ fun ManutencaoCard(
                 progress = { progresso },
                 modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
                 color = if (isCritico) Color.Red else VerdeNeon,
-                trackColor = Color.White.copy(alpha = 0.1f)
+                trackColor = textColor.copy(alpha = 0.1f)
             )
         }
     }
@@ -259,13 +268,15 @@ fun ManutencaoCard(
 
 @Composable
 fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, String) -> Unit, onCancel: () -> Unit) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var nome by remember { mutableStateOf(manutencaoExistente?.nome ?: "") }
     var intervalo by remember { mutableStateOf(manutencaoExistente?.intervaloKm?.toString() ?: "") }
     var ultimo by remember { mutableStateOf(manutencaoExistente?.ultimoServicoKm?.toString() ?: "") }
     var iconeSelecionado by remember { mutableStateOf(manutencaoExistente?.icone ?: "build") }
 
     Column(modifier = Modifier.padding(24.dp).fillMaxWidth()) {
-        Text(if (manutencaoExistente != null) "Editar Manutenção" else "Nova Manutenção", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text(if (manutencaoExistente != null) "Editar Manutenção" else "Nova Manutenção", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = textColor)
         Spacer(modifier = Modifier.height(24.dp))
         
         OutlinedTextField(
@@ -274,7 +285,11 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
             modifier = Modifier.fillMaxWidth(),
             label = { Text("Nome (Ex: Troca de óleo)") },
             shape = RoundedCornerShape(12.dp),
-            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon)
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = VerdeNeon,
+                unfocusedTextColor = textColor,
+                focusedTextColor = textColor
+            )
         )
         
         Spacer(modifier = Modifier.height(16.dp))
@@ -287,7 +302,11 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
                 label = { Text("Intervalo (km)") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 shape = RoundedCornerShape(12.dp),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon)
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = VerdeNeon,
+                    unfocusedTextColor = textColor,
+                    focusedTextColor = textColor
+                )
             )
             OutlinedTextField(
                 value = ultimo,
@@ -296,20 +315,24 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
                 label = { Text("Último serviço (km)") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 shape = RoundedCornerShape(12.dp),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = VerdeNeon)
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = VerdeNeon,
+                    unfocusedTextColor = textColor,
+                    focusedTextColor = textColor
+                )
             )
         }
         
         Spacer(modifier = Modifier.height(24.dp))
         
-        Text("Ícone", fontSize = 12.sp, color = Color.White.copy(alpha = 0.5f))
+        Text("Ícone", fontSize = 12.sp, color = textColor.copy(alpha = 0.5f))
         Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             listOf("build", "oil", "settings").forEach { icon ->
                 Box(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
-                        .background(if (iconeSelecionado == icon) VerdeNeon else Color.White.copy(alpha = 0.05f))
+                        .background(if (iconeSelecionado == icon) VerdeNeon else textColor.copy(alpha = 0.05f))
                         .clickable { iconeSelecionado = icon },
                     contentAlignment = Alignment.Center
                 ) {
@@ -320,7 +343,7 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
                             else -> Icons.Rounded.Build
                         },
                         contentDescription = null,
-                        tint = if (iconeSelecionado == icon) Color.Black else Color.White
+                        tint = if (iconeSelecionado == icon) Color.Black else textColor.copy(alpha = 0.6f)
                     )
                 }
             }
@@ -330,19 +353,21 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
         
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             TextButton(onClick = onCancel, modifier = Modifier.weight(1f)) {
-                Text("Cancelar", color = Color.White.copy(alpha = 0.5f))
+                Text("Cancelar", color = textColor.copy(alpha = 0.5f))
             }
             Button(
                 onClick = { 
-                    if (nome.isNotBlank()) {
-                        onSave(nome, intervalo.toIntOrNull() ?: 0, ultimo.toIntOrNull() ?: 0, iconeSelecionado)
+                    val inter = intervalo.toIntOrNull() ?: 0
+                    val ult = ultimo.toIntOrNull() ?: 0
+                    if (nome.isNotBlank() && inter > 0) {
+                        onSave(nome, inter, ult, iconeSelecionado)
                     }
                 },
-                modifier = Modifier.weight(1f).height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon),
+                modifier = Modifier.weight(1f),
+                colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text("Salvar", color = Color.Black, fontWeight = FontWeight.Bold)
+                Text("Salvar", fontWeight = FontWeight.Bold)
             }
         }
         Spacer(modifier = Modifier.height(24.dp))

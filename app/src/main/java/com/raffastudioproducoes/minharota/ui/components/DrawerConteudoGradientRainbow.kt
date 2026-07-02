@@ -172,7 +172,7 @@ fun DrawerItemGradientRainbow(
             .fillMaxWidth(0.9f)
             .height(56.dp)
             .padding(horizontal = 12.dp, vertical = 4.dp)
-            .background(brush = gradient, shape = RoundedCornerShape(topStart = 28.dp, topEnd = 0.dp, bottomEnd = 0.dp, bottomStart = 28.dp))
+            .background(brush = gradient, shape = RoundedCornerShape(28.dp))
             .clickable(onClick = onClick),
         contentAlignment = Alignment.CenterStart
     ) {
