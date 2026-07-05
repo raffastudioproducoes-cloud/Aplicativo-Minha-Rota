@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -13,6 +14,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -22,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.OAuthProvider
 import com.raffastudioproducoes.minharota.R
@@ -38,6 +42,8 @@ fun AuthScreen(
     val scope = rememberCoroutineScope()
     val auth = FirebaseAuth.getInstance()
     val isDark = isSystemInDarkTheme()
+    
+    var showAppleDialog by remember { mutableStateOf(false) }
 
     // Cores Neon
     val cianoNeon = Color(0xFF22D3EE)
@@ -45,19 +51,15 @@ fun AuthScreen(
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     fun handleSocialLogin(providerId: String) {
+        if (providerId == "apple.com") {
+            showAppleDialog = true
+            return
+        }
+        
         scope.launch {
             try {
                 if (providerId == "google.com") {
                     Toast.makeText(context, "Google Login: SHA-1 e Firebase Console necessários.", Toast.LENGTH_LONG).show()
-                } else if (providerId == "apple.com") {
-                    val provider = OAuthProvider.newBuilder("apple.com")
-                    provider.scopes = listOf("email", "name")
-                    
-                    auth.startActivityForSignInWithProvider(context as android.app.Activity, provider.build())
-                        .addOnSuccessListener { onAuthSuccess() }
-                        .addOnFailureListener { e ->
-                            Toast.makeText(context, "Erro Apple: ${e.message}", Toast.LENGTH_SHORT).show()
-                        }
                 }
             } catch (e: Exception) {
                 Log.e("AuthScreen", "Erro Social Login", e)
@@ -216,6 +218,57 @@ fun AuthScreen(
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.clickable { onNavigateToRegister() }
                 )
+            }
+        }
+    }
+
+    // Modal Glassmorphism "Em Breve" v2.0.0
+    if (showAppleDialog) {
+        Dialog(onDismissRequest = { showAppleDialog = false }) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(Color(0x1F121214))
+                    .border(
+                        width = 1.dp,
+                        brush = Brush.linearGradient(
+                            colors = listOf(Color.White.copy(alpha = 0.15f), Color.Transparent)
+                        ),
+                        shape = RoundedCornerShape(24.dp)
+                    )
+                    .padding(24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = "Em Breve",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color.White,
+                        textAlign = TextAlign.Center
+                    )
+                    
+                    Spacer(modifier = Modifier.height(12.dp))
+                    
+                    Text(
+                        text = "O login com a Apple estará disponível nas próximas atualizações.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color(0xFF8E8E93),
+                        textAlign = TextAlign.Center
+                    )
+                    
+                    Spacer(modifier = Modifier.height(24.dp))
+                    
+                    Button(
+                        onClick = { showAppleDialog = false },
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                        shape = RoundedCornerShape(50.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF10B981))
+                    ) {
+                        Text("Entendi", color = Color.Black, fontWeight = FontWeight.Bold)
+                    }
+                }
             }
         }
     }
