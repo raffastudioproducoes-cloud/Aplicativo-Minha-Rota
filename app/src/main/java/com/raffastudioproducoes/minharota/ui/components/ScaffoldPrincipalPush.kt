@@ -84,7 +84,10 @@ fun ScaffoldPrincipalPush(
                     onNavigate = { route ->
                         scope.launch { drawerState.close() }
                         navController.navigate(route) {
-                            popUpTo(navController.graph.startDestinationId) { saveState = true }
+                            // AQUI ESTÁ A MÁGICA: Ele usa a Tela Hoje como base, e não a Splash.
+                            popUpTo(com.raffastudioproducoes.minharota.ui.navigation.Rota.Hoje.route) { 
+                                saveState = true 
+                            }
                             launchSingleTop = true
                             restoreState = true
                         }
