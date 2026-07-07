@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.raffastudioproducoes.minharota.ui.navigation.Rota
 import com.raffastudioproducoes.minharota.ui.navigation.itensNavegacao
 import com.raffastudioproducoes.minharota.ui.theme.CyanBright
 import com.raffastudioproducoes.minharota.ui.theme.ElectricBlue
@@ -79,7 +80,8 @@ fun BottomNavBarNotch(
                         IconButton(onClick = {
                             if (!isSelected) {
                                 navController.navigate(item.route) {
-                                    popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                    // CORREÇÃO: Agora usa a tela Hoje como âncora, e não o Splash!
+                                    popUpTo(Rota.Hoje.route) { saveState = true }
                                     launchSingleTop = true
                                     restoreState = true
                                 }
