@@ -88,12 +88,9 @@ fun ScaffoldPrincipalPush(
                         // 2. Proteção: Só viaja se o usuário clicar em uma tela diferente da atual
                         if (navController.currentDestination?.route != route) {
                             navController.navigate(route) {
-                                // 3. A MÁGICA: Limpa a pilha até a tela "Hoje" sem tentar restaurar memórias corrompidas
-                                popUpTo(com.raffastudioproducoes.minharota.ui.navigation.Rota.Hoje.route) {
-                                    saveState = false // Isso evita o loop que te jogava de volta
-                                }
+                                // 3. A MÁGICA: Navegação limpa e direta! Sem popUpTo para evitar conflito de rotas.
                                 launchSingleTop = true
-                                restoreState = false // Viagem limpa e direta
+                                restoreState = true 
                             }
                         }
                     },
