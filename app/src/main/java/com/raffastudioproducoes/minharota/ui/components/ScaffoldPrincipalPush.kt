@@ -78,20 +78,18 @@ fun ScaffoldPrincipalPush(
                     drawerState = drawerState,
                     scope = scope,
                     onNavigate = { route ->
-                        // A MÁGICA: O app vai ESPERAR o menu fechar antes de viajar, blindando o GPS.
-                        scope.launch { 
-                            drawerState.close() 
-                            
-                            if (navController.currentDestination?.route != route) {
-                                navController.navigate(route) {
-                                    popUpTo(com.raffastudioproducoes.minharota.ui.navigation.Rota.Hoje.route) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true 
+                        // 1. Dispara a navegação IMEDIATAMENTE (Igual a BottomBar)
+                        if (navController.currentDestination?.route != route) {
+                            navController.navigate(route) {
+                                popUpTo(com.raffastudioproducoes.minharota.ui.navigation.Rota.Hoje.route) {
+                                    saveState = true
                                 }
+                                launchSingleTop = true
+                                restoreState = true 
                             }
                         }
+                        // 2. Oculta o menu em paralelo, sem travar o GPS!
+                        scope.launch { drawerState.close() }
                     },
                     currentRoute = navController.currentDestination?.route ?: "",
                     sharedPreferencesManager = prefsManager
