@@ -4,8 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,7 +20,6 @@ fun GlassCard(
 ) {
     val isDark = isSystemInDarkTheme()
     
-    // Configurações de vidro baseadas no tema
     val backgroundColor = if (isDark) Color(0x26FFFFFF) else Color(0x66FFFFFF)
     val borderColor = if (isDark) 
         Brush.linearGradient(colors = listOf(Color.White.copy(alpha = 0.2f), Color.Transparent))
@@ -36,6 +35,10 @@ fun GlassCard(
                 shape = RoundedCornerShape(24.dp)
             )
     ) {
-        content()
+        // AQUI ADICIONAMOS O ESPAÇAMENTO:
+        // O conteúdo fica preso dentro desta Box que tem o padding interno
+        Box(modifier = Modifier.padding(16.dp)) { 
+            content()
+        }
     }
 }
