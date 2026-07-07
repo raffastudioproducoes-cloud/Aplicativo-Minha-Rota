@@ -52,112 +52,101 @@ fun DrawerConteudoGradientRainbow(navController: NavController, onClose: () -> U
         modifier = Modifier.fillMaxHeight(),
         drawerContainerColor = MaterialTheme.colorScheme.surface
     ) {
-        Row(
+        // Coluna principal com espaçamento organizado
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.End
+                .fillMaxSize()
+                .padding(vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp) // Respiro entre itens
         ) {
-            IconButton(onClick = onClose) {
-                Icon(Icons.Outlined.Close, contentDescription = "Fechar Menu")
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
+                IconButton(onClick = onClose) {
+                    Icon(Icons.Outlined.Close, contentDescription = "Fechar Menu")
+                }
+            }
+            
+            Text(
+                text = "MinhaRota",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+            )
+
+            Divider(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+
+            Text(
+                text = "Navegação Principal",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+            )
+
+            val mainItems = listOf(
+                Triple(Icons.Outlined.Today, "Hoje", Brush.linearGradient(colors = listOf(TealAccent.copy(alpha = 0.8f), Color.Transparent))),
+                Triple(Icons.Outlined.AccountBalanceWallet, "Contas", Brush.linearGradient(colors = listOf(ElectricBlue.copy(alpha = 0.8f), Color.Transparent))),
+                Triple(Icons.Outlined.Inventory2, "Caixas", Brush.linearGradient(colors = listOf(PinkVibrant.copy(alpha = 0.8f), Color.Transparent))),
+                Triple(Icons.Outlined.BarChart, "Gráficos", Brush.linearGradient(colors = listOf(VerdeEntrada.copy(alpha = 0.8f), Color.Transparent)))
+            )
+
+            mainItems.forEach { (icon, title, gradient) ->
+                DrawerItemGradientRainbow(icon, title, gradient) {
+                    val route = when (title) {
+                        "Hoje" -> Rota.Hoje.route
+                        "Contas" -> Rota.Contas.route
+                        "Caixas" -> Rota.Caixas.route
+                        "Gráficos" -> Rota.Graficos.route
+                        else -> Rota.Hoje.route
+                    }
+                    onClose() // Fecha o drawer primeiro
+                    navController.navigate(route) {
+                        popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "Outros",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+            )
+
+            val secondaryItems = listOf(
+                Triple(Icons.Outlined.ReceiptLong, "Extrato", Brush.linearGradient(colors = listOf(CyanBright.copy(alpha = 0.8f), Color.Transparent))),
+                Triple(Icons.Outlined.MoneyOff, "Dívidas", Brush.linearGradient(colors = listOf(OrangeWarm.copy(alpha = 0.8f), Color.Transparent))),
+                Triple(Icons.Outlined.TwoWheeler, "Garagem", Brush.linearGradient(colors = listOf(VerdeEntrada.copy(alpha = 0.8f), Color.Transparent))),
+                Triple(Icons.Outlined.Settings, "Configurações", Brush.linearGradient(colors = listOf(ElectricBlue.copy(alpha = 0.8f), Color.Transparent)))
+            )
+
+            secondaryItems.forEach { (icon, title, gradient) ->
+                DrawerItemGradientRainbow(icon, title, gradient) {
+                    val route = when (title) {
+                        "Extrato" -> Rota.Extrato.route
+                        "Dívidas" -> Rota.Dividas.route
+                        "Garagem" -> Rota.Garagem.route
+                        "Configurações" -> Rota.Configuracoes.route
+                        else -> Rota.Hoje.route
+                    }
+                    onClose()
+                    navController.navigate(route) {
+                        popUpTo(navController.graph.startDestinationId) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             }
         }
-        
-        Text(
-            text = "MinhaRota",
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(horizontal = 24.dp)
-        )
-
-        Divider(modifier = Modifier.padding(horizontal = 16.dp))
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Navegação Principal",
-            style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-        )
-
-        // Itens Principais com Gradientes Arco-Íris para Transparente
-        val mainItems = listOf(
-            Triple(Icons.Outlined.Today, "Hoje", Brush.linearGradient(
-                colors = listOf(TealAccent.copy(alpha = 0.8f), Color.Transparent)
-            )),
-            Triple(Icons.Outlined.AccountBalanceWallet, "Contas", Brush.linearGradient(
-                colors = listOf(ElectricBlue.copy(alpha = 0.8f), Color.Transparent)
-            )),
-            Triple(Icons.Outlined.Inventory2, "Caixas", Brush.linearGradient(
-                colors = listOf(PinkVibrant.copy(alpha = 0.8f), Color.Transparent)
-            )),
-            Triple(Icons.Outlined.BarChart, "Gráficos", Brush.linearGradient(
-                colors = listOf(VerdeEntrada.copy(alpha = 0.8f), Color.Transparent)
-            ))
-        )
-
-        mainItems.forEach { (icon, title, gradient) ->
-            DrawerItemGradientRainbow(icon, title, gradient) {
-                val route = when (title) {
-                    "Hoje" -> Rota.Hoje.route
-                    "Contas" -> Rota.Contas.route
-                    "Caixas" -> Rota.Caixas.route
-                    "Gráficos" -> Rota.Graficos.route
-                    else -> Rota.Hoje.route
-                }
-                navController.navigate(route) {
-                    popUpTo(navController.graph.startDestinationId) { saveState = true }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-                onClose()
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Outros",
-            style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-        )
-
-        // Itens Secundários com Gradientes Arco-Íris para Transparente
-        val secondaryItems = listOf(
-            Triple(Icons.Outlined.ReceiptLong, "Extrato", Brush.linearGradient(
-                colors = listOf(CyanBright.copy(alpha = 0.8f), Color.Transparent)
-            )),
-            Triple(Icons.Outlined.MoneyOff, "Dívidas", Brush.linearGradient(
-                colors = listOf(OrangeWarm.copy(alpha = 0.8f), Color.Transparent)
-            )),
-            Triple(Icons.Outlined.TwoWheeler, "Garagem", Brush.linearGradient(
-                colors = listOf(VerdeEntrada.copy(alpha = 0.8f), Color.Transparent)
-            )),
-            Triple(Icons.Outlined.Settings, "Configurações", Brush.linearGradient(
-                colors = listOf(ElectricBlue.copy(alpha = 0.8f), Color.Transparent)
-            ))
-        )
-
-        secondaryItems.forEach { (icon, title, gradient) ->
-            DrawerItemGradientRainbow(icon, title, gradient) {
-                val route = when (title) {
-                    "Extrato" -> Rota.Extrato.route
-                    "Dívidas" -> Rota.Dividas.route
-                    "Garagem" -> Rota.Garagem.route
-                    "Configurações" -> Rota.Configuracoes.route
-                    else -> Rota.Hoje.route
-                }
-                navController.navigate(route) {
-                    popUpTo(navController.graph.startDestinationId) { saveState = true }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-                onClose()
-            }
-        }
-    }
 }
 
 @Composable
