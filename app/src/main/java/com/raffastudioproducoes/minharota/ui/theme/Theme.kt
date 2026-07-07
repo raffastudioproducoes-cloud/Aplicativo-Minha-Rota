@@ -51,6 +51,7 @@ fun MinhaRotaTema(
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
     val view = LocalView.current
+    
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
@@ -61,6 +62,7 @@ fun MinhaRotaTema(
 
     MaterialTheme(
         colorScheme = colorScheme,
+        typography = Typography, // Certifique-se de que o seu Typography está importado
         content = content
     )
 }
