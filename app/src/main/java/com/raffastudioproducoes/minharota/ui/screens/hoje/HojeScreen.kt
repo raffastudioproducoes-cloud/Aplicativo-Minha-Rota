@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -27,10 +28,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.raffastudioproducoes.minharota.ui.components.*
+import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
+import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
+import com.raffastudioproducoes.minharota.ui.components.RenovacaoAlertCard
+import com.raffastudioproducoes.minharota.ui.components.TimeInput
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
 import com.raffastudioproducoes.minharota.util.TextRecognitionHelper
@@ -66,9 +72,11 @@ fun HojeScreen(
     var showDatePicker by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
     
+    var metaDiariaInput by remember { mutableStateOf(if (metaDiaria > 0) metaDiaria.toString() else "") }
     var showMetaDialog by remember { mutableStateOf(false) }
     var metaInputDialog by remember { mutableStateOf("") }
     var ganhoBrutoInput by remember { mutableStateOf(if (ganhoBruto > 0) ganhoBruto.toString() else "") }
+
     var showAccessibilityDialog by remember { mutableStateOf(false) }
 
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
@@ -89,66 +97,120 @@ fun HojeScreen(
                             Toast.makeText(context, "Não foi possível identificar o valor no print.", Toast.LENGTH_SHORT).show()
                         }
                     },
-                    onError = { Toast.makeText(context, "Erro ao processar imagem.", Toast.LENGTH_SHORT).show() }
+                    onError = {
+                        Toast.makeText(context, "Erro ao processar imagem.", Toast.LENGTH_SHORT).show()
+                    }
                 )
             }
         }
     )
 
+    // Coletar estados do Gemini AI
     val hojeInsight by geminiViewModel.hojeInsight.collectAsState()
     val hojeIsLoading by geminiViewModel.hojeIsLoading.collectAsState()
+
+    // Coletar estados de alerta de renovação
     val exibirAlertaRenovacao by viewModel.exibirAlertaRenovacao.collectAsState()
     val diasParaVencer by viewModel.diasParaVencer.collectAsState()
     val nomePlanoAtivo by viewModel.nomePlanoAtivo.collectAsState()
+
+    // Estado do modal de checkout (renovar)
     var mostrarCheckoutRenovacao by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) { viewModel.carregarDadosMei(context) }
+    LaunchedEffect(Unit) {
+        viewModel.carregarDadosMei(context)
+    }
+
+    // Disparar insight ao carregar a tela (somente PRO — o ViewModel verifica internamente)
     LaunchedEffect(ganhoBruto, horasTrabalhadas, ganhoLiquido) {
         if (ganhoBruto > 0 || ganhoLiquido > 0) {
-            geminiViewModel.gerarInsightHoje(context, ganhoBruto, horasTrabalhadas, ganhoLiquido)
+            geminiViewModel.gerarInsightHoje(
+                context = context,
+                ganhoBruto = ganhoBruto,
+                horasTrabalhadas = horasTrabalhadas,
+                ganhoLiquido = ganhoLiquido
+            )
         }
     }
 
+    // Modal de renovação
     if (mostrarCheckoutRenovacao) {
         CheckoutModal(
             nomePlano = nomePlanoAtivo.ifBlank { "Premium" },
             onDismiss = { mostrarCheckoutRenovacao = false },
-            onSuccess = { mostrarCheckoutRenovacao = false; viewModel.verificarVencimentoPlano(context) }
+            onSuccess = {
+                mostrarCheckoutRenovacao = false
+                viewModel.verificarVencimentoPlano(context)
+            }
         )
     }
 
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
         ) {
+            // ALERTA DE RENOVAÇÃO DO PLANO (10 dias ou menos)
             if (exibirAlertaRenovacao && diasParaVencer >= 0) {
-                item { RenovacaoAlertCard(nomePlano = nomePlanoAtivo, diasRestantes = diasParaVencer, onRenovar = { mostrarCheckoutRenovacao = true }, modifier = Modifier.padding(bottom = 12.dp)) }
+                item {
+                    RenovacaoAlertCard(
+                        nomePlano = nomePlanoAtivo,
+                        diasRestantes = diasParaVencer,
+                        onRenovar = { mostrarCheckoutRenovacao = true },
+                        modifier = Modifier.padding(bottom = 12.dp)
+                    )
+                }
             }
 
-            item { AiInsightCard(isPro = true, isLoading = hojeIsLoading, insight = hojeInsight, modifier = Modifier.padding(bottom = 16.dp)) }
+            // AI INSIGHT CARD (PRO) — topo absoluto da tela
+            item {
+                AiInsightCard(
+                    isPro = true, // controle real feito dentro do GeminiAiViewModel via SharedPreferences
+                    isLoading = hojeIsLoading,
+                    insight = hojeInsight,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
 
+            // ALERTA MEI
             if (exibirAlertaMei) {
                 item {
-                    GlassCard(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
-                        Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Rounded.Warning, contentDescription = null, tint = Color.Red)
+                    Card(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFF991B1B)),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(Icons.Rounded.Warning, contentDescription = null, tint = Color.White)
                             Spacer(modifier = Modifier.width(12.dp))
                             Column {
-                                Text("LIMITE MEI ATINGIDO!", color = textColor, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                                Text("Seu faturamento bruto está acima do teto.", color = textColor.copy(alpha = 0.8f), fontSize = 12.sp)
+                                Text("LIMITE MEI ATINGIDO!", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                Text(
+                                    "Seu faturamento bruto (R$ ${String.format("%.2f", faturamentoAcumulado)}) está próximo ou acima do teto anual do MEI.",
+                                    color = Color.White.copy(alpha = 0.9f),
+                                    fontSize = 12.sp
+                                )
                             }
                         }
                     }
                 }
             }
 
+            // GATILHO ACESSIBILIDADE
             item {
-                GlassCard(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp).clickable { showAccessibilityDialog = true }
+                PremiumGlassCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                        .clickable { showAccessibilityDialog = true }
                 ) {
-                    Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Rounded.Bolt, contentDescription = null, tint = Color(0xFFFACC15))
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
@@ -160,7 +222,11 @@ fun HojeScreen(
             }
 
             item {
-                HojeSectionCard(title = "DATA DO REGISTRO", subtitle = "Data (padrão: hoje)", icon = Icons.Rounded.CalendarToday) {
+                HojeSectionCard(
+                    title = "DATA DO REGISTRO",
+                    subtitle = "Data (padrão: hoje)",
+                    icon = Icons.Rounded.CalendarToday
+                ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Surface(
                             onClick = { showDatePicker = true },
@@ -169,7 +235,11 @@ fun HojeScreen(
                             border = androidx.compose.foundation.BorderStroke(1.dp, textColor.copy(alpha = 0.1f)),
                             modifier = Modifier.weight(1f)
                         ) {
-                            Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween) {
+                            Row(
+                                modifier = Modifier.padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
                                 Text(text = dataRegistro, color = textColor)
                                 Icon(Icons.Rounded.CalendarMonth, contentDescription = null, tint = VerdeNeon)
                             }
@@ -185,22 +255,41 @@ fun HojeScreen(
                         }
                     }
                 }
+                Spacer(modifier = Modifier.height(16.dp))
             }
 
             item {
-                HojeSectionCard(title = "HORÁRIOS DE TRABALHO", icon = Icons.Rounded.AccessTime) {
+                HojeSectionCard(
+                    title = "HORÁRIOS DE TRABALHO",
+                    icon = Icons.Rounded.AccessTime
+                ) {
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Box(modifier = Modifier.weight(1f)) { TimeInput(label = "Início", selectedTime = horaInicio, onTimeSelected = { viewModel.updateHoraInicio(it) }) }
-                        Box(modifier = Modifier.weight(1f)) { TimeInput(label = "Término", selectedTime = horaFim, onTimeSelected = { viewModel.updateHoraFim(it) }) }
+                        Box(modifier = Modifier.weight(1f)) {
+                            TimeInput(label = "Início", selectedTime = horaInicio, onTimeSelected = { viewModel.updateHoraInicio(it) })
+                        }
+                        Box(modifier = Modifier.weight(1f)) {
+                            TimeInput(label = "Término", selectedTime = horaFim, onTimeSelected = { viewModel.updateHoraFim(it) })
+                        }
                     }
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
-                        Checkbox(checked = houvePausa, onCheckedChange = { viewModel.updateHouvePausa(it) }, colors = CheckboxDefaults.colors(checkedColor = verdeEsmeralda))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+                    ) {
+                        Checkbox(
+                            checked = houvePausa,
+                            onCheckedChange = { viewModel.updateHouvePausa(it) },
+                            colors = CheckboxDefaults.colors(checkedColor = verdeEsmeralda)
+                        )
                         Text("Houve intervalo / pausa?", color = textColor.copy(alpha = 0.7f), fontSize = 14.sp)
                     }
                     if (houvePausa) {
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Box(modifier = Modifier.weight(1f)) { TimeInput(label = "Início Pausa", selectedTime = horaInicioPausa, onTimeSelected = { viewModel.updateHoraInicioPausa(it) }) }
-                            Box(modifier = Modifier.weight(1f)) { TimeInput(label = "Fim Pausa", selectedTime = horaFimPausa, onTimeSelected = { viewModel.updateHoraFimPausa(it) }) }
+                            Box(modifier = Modifier.weight(1f)) {
+                                TimeInput(label = "Início Pausa", selectedTime = horaInicioPausa, onTimeSelected = { viewModel.updateHoraInicioPausa(it) })
+                            }
+                            Box(modifier = Modifier.weight(1f)) {
+                                TimeInput(label = "Fim Pausa", selectedTime = horaFimPausa, onTimeSelected = { viewModel.updateHoraFimPausa(it) })
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(8.dp))
@@ -210,10 +299,14 @@ fun HojeScreen(
                         Text(text = "Horas trabalhadas: $horasTrabalhadas", color = VerdeNeon, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                     }
                 }
+                Spacer(modifier = Modifier.height(16.dp))
             }
 
             item {
-                HojeSectionCard(title = "VALORES DO DIA E CUSTOS", icon = Icons.Rounded.AttachMoney) {
+                HojeSectionCard(
+                    title = "VALORES DO DIA E CUSTOS",
+                    icon = Icons.Rounded.AttachMoney
+                ) {
                     OutlinedTextField(
                         value = ganhoBrutoInput,
                         onValueChange = { input ->
@@ -241,7 +334,11 @@ fun HojeScreen(
                         },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                         shape = RoundedCornerShape(16.dp),
-                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = verdeEsmeralda, unfocusedTextColor = textColor, focusedTextColor = textColor)
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = verdeEsmeralda,
+                            unfocusedTextColor = textColor,
+                            focusedTextColor = textColor
+                        )
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text("Custos de rua / pessoal", color = textColor.copy(alpha = 0.6f), fontSize = 12.sp, fontWeight = FontWeight.Bold)
@@ -260,18 +357,50 @@ fun HojeScreen(
                     }
                     Spacer(modifier = Modifier.height(12.dp))
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedTextField(value = descCusto, onValueChange = { descCusto = it }, modifier = Modifier.weight(1.5f), label = { Text("O que gastou?", fontSize = 12.sp) }, shape = RoundedCornerShape(16.dp), colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor))
-                        OutlinedTextField(value = valorCusto, onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) valorCusto = it.replace(',', '.') }, modifier = Modifier.weight(1f), label = { Text("Valor", fontSize = 12.sp) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), shape = RoundedCornerShape(16.dp), colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor))
-                        IconButton(onClick = { if (descCusto.isNotEmpty() && valorCusto.isNotEmpty()) { viewModel.adicionarCusto(descCusto, valorCusto.toDoubleOrNull() ?: 0.0); descCusto = ""; valorCusto = "" } }, modifier = Modifier.align(Alignment.CenterVertically).background(verdeEsmeralda, CircleShape)) { Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.Black) }
+                        OutlinedTextField(
+                            value = descCusto,
+                            onValueChange = { descCusto = it },
+                            modifier = Modifier.weight(1.5f),
+                            label = { Text("O que gastou?", fontSize = 12.sp) },
+                            shape = RoundedCornerShape(16.dp),
+                            colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor)
+                        )
+                        OutlinedTextField(
+                            value = valorCusto,
+                            onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) valorCusto = it.replace(',', '.') },
+                            modifier = Modifier.weight(1f),
+                            label = { Text("Valor", fontSize = 12.sp) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                            shape = RoundedCornerShape(16.dp),
+                            colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor)
+                        )
+                        IconButton(
+                            onClick = {
+                                if (descCusto.isNotEmpty() && valorCusto.isNotEmpty()) {
+                                    viewModel.adicionarCusto(descCusto, valorCusto.toDoubleOrNull() ?: 0.0)
+                                    descCusto = ""
+                                    valorCusto = ""
+                                }
+                            },
+                            modifier = Modifier.align(Alignment.CenterVertically).background(verdeEsmeralda, CircleShape)
+                        ) {
+                            Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.Black)
+                        }
                     }
                 }
+                Spacer(modifier = Modifier.height(16.dp))
             }
 
             item {
-                GlassCard(modifier = Modifier.fillMaxWidth()) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
                         Text("GANHO LÍQUIDO ESTIMADO", style = MaterialTheme.typography.labelSmall, color = textColor.copy(alpha = 0.5f))
-                        Text(text = "R$ ${String.format("%.2f", ganhoLiquido)}", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.ExtraBold, color = VerdeNeon)
+                        Text(
+                            text = "R$ ${String.format("%.2f", ganhoLiquido)}",
+                            style = MaterialTheme.typography.headlineMedium,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = VerdeNeon
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(Icons.Rounded.Bolt, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(16.dp))
@@ -284,38 +413,42 @@ fun HojeScreen(
             }
 
             item {
-                GlassCard(modifier = Modifier.fillMaxWidth()) {
-                    Column(modifier = Modifier.padding(16.dp)) {
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                            Column {
-                                Text("META DIÁRIA", style = MaterialTheme.typography.labelSmall, color = textColor.copy(alpha = 0.5f))
-                                Text(text = "R$ ${String.format("%.2f", metaDiaria)}", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = textColor)
-                            }
-                            IconButton(onClick = { metaInputDialog = metaDiaria.toString(); showMetaDialog = true }) {
-                                Icon(Icons.Rounded.Edit, contentDescription = null, tint = VerdeNeon)
-                            }
+                PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                        Column {
+                            Text("META DIÁRIA", style = MaterialTheme.typography.labelSmall, color = textColor.copy(alpha = 0.5f))
+                            Text(text = "R$ ${String.format("%.2f", metaDiaria)}", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = textColor)
                         }
-                        Spacer(modifier = Modifier.height(12.dp))
-                        val progresso = if (metaDiaria > 0) (ganhoBruto / metaDiaria).toFloat().coerceIn(0f, 1.2f) else 0f
-                        LinearProgressIndicator(
-                            progress = progresso.coerceAtMost(1f), 
-                            modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)), 
-                            color = if (progresso >= 1f) VerdeNeon else verdeEsmeralda, 
-                            trackColor = textColor.copy(alpha = 0.1f)
-                        )
+                        IconButton(onClick = { metaInputDialog = metaDiaria.toString(); showMetaDialog = true }) {
+                            Icon(Icons.Rounded.Edit, contentDescription = null, tint = VerdeNeon)
+                        }
                     }
+                    Spacer(modifier = Modifier.height(12.dp))
+                    val progresso = if (metaDiaria > 0) (ganhoBruto / metaDiaria).toFloat().coerceIn(0f, 1.2f) else 0f
+                    LinearProgressIndicator(
+                        progress = progresso.coerceAtMost(1f),
+                        modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)),
+                        color = if (progresso >= 1f) VerdeNeon else verdeEsmeralda,
+                        trackColor = textColor.copy(alpha = 0.1f)
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = if (progresso >= 1f) "Meta atingida! 🔥" else "${(progresso * 100).toInt()}% da meta concluída",
+                        fontSize = 12.sp,
+                        color = if (progresso >= 1f) VerdeNeon else textColor.copy(alpha = 0.5f),
+                        fontWeight = FontWeight.Bold
+                    )
                 }
                 Spacer(modifier = Modifier.height(32.dp))
             }
 
             item {
-                Button(onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(50.dp), colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) {
-                    Icon(Icons.Rounded.Save, contentDescription = null)
-                    Spacer(modifier = Modifier.height(32.dp))
-            }
-
-            item {
-                Button(onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(50.dp), colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) {
+                Button(
+                    onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) },
+                    modifier = Modifier.fillMaxWidth().height(56.dp),
+                    shape = RoundedCornerShape(50.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)
+                ) {
                     Icon(Icons.Rounded.Save, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("FECHAR E SALVAR TURNO", fontWeight = FontWeight.ExtraBold, fontSize = 16.sp)
@@ -324,15 +457,116 @@ fun HojeScreen(
         }
     }
 
+    // DIÁLOGOS
     if (showDatePicker) {
-        DatePickerDialog(onDismissRequest = { showDatePicker = false }, confirmButton = { TextButton(onClick = { datePickerState.selectedDateMillis?.let { val date = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate(); viewModel.alterarDataRegistro(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))) }; showDatePicker = false }) { Text("OK", color = VerdeNeon) } }, dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) } }) { DatePicker(state = datePickerState) }
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let {
+                        val date = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
+                        viewModel.alterarDataRegistro(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                    }
+                    showDatePicker = false
+                }) { Text("OK", color = VerdeNeon) }
+            },
+            dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) } }
+        ) { DatePicker(state = datePickerState) }
     }
 
     if (showMetaDialog) {
-        AlertDialog(onDismissRequest = { showMetaDialog = false }, title = { Text("Ajustar Meta Diária", color = textColor) }, text = { OutlinedTextField(value = metaInputDialog, onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) metaInputDialog = it.replace(',', '.') }, label = { Text("Valor da Meta (R$)") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), shape = RoundedCornerShape(16.dp), colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor)) }, confirmButton = { Button(onClick = { val valor = metaInputDialog.toDoubleOrNull() ?: 0.0; viewModel.updateMetaDiaria(valor); showMetaDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) { Text("Salvar") } }, dismissButton = { TextButton(onClick = { showMetaDialog = false }) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) } }, containerColor = if (isDark) Color(0xFF1E293B) else Color.White, shape = RoundedCornerShape(24.dp))
+        AlertDialog(
+            onDismissRequest = { showMetaDialog = false },
+            title = { Text("Ajustar Meta Diária", color = textColor) },
+            text = {
+                OutlinedTextField(
+                    value = metaInputDialog,
+                    onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) metaInputDialog = it.replace(',', '.') },
+                    label = { Text("Valor da Meta (R$)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor)
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        val valor = metaInputDialog.toDoubleOrNull() ?: 0.0
+                        viewModel.updateMetaDiaria(valor)
+                        showMetaDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)
+                ) { Text("Salvar") }
+            },
+            dismissButton = { TextButton(onClick = { showMetaDialog = false }) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) } },
+            containerColor = if (isDark) Color(0xFF1E293B) else Color.White,
+            shape = RoundedCornerShape(24.dp)
+        )
     }
 
     if (showAccessibilityDialog) {
-        AlertDialog(onDismissRequest = { showAccessibilityDialog = false }, title = { Row(verticalAlignment = Alignment.CenterVertically) { Icon(Icons.Rounded.Security, contentDescription = null, tint = VerdeNeon); Spacer(modifier = Modifier.width(8.dp)); Text("Ativar RideAssistant", color = textColor) } }, text = { Text("Para capturar ganhos da Uber, 99 e iFood automaticamente, precisamos da permissão de Acessibilidade.\n\n1. Clique em 'Ir para Configurações'\n2. Procure por 'MinhaRota PRO'\n3. Ative a chave de serviço.", color = textColor.copy(alpha = 0.7f)) }, confirmButton = { Button(onClick = { showAccessibilityDialog = false; val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS); context.startActivity(intent) }, colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black), shape = RoundedCornerShape(50.dp)) { Text("Ir para Configurações") } }, dismissButton = { TextButton(onClick = { showAccessibilityDialog = false }) { Text("Agora não", color = textColor.copy(alpha = 0.5f)) } }, containerColor = if (isDark) Color(0xFF1E293B) else Color.White, shape = RoundedCornerShape(24.dp))
+        AlertDialog(
+            onDismissRequest = { showAccessibilityDialog = false },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(Icons.Rounded.Security, contentDescription = null, tint = VerdeNeon)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Ativar RideAssistant", color = textColor)
+                }
+            },
+            text = {
+                Text(
+                    "Para capturar ganhos da Uber, 99 e iFood automaticamente, precisamos da permissão de Acessibilidade.\n\n" +
+                    "1. Clique em 'Ir para Configurações'\n" +
+                    "2. Procure por 'MinhaRota PRO'\n" +
+                    "3. Ative a chave de serviço.",
+                    color = textColor.copy(alpha = 0.7f)
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showAccessibilityDialog = false
+                        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+                        context.startActivity(intent)
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black),
+                    shape = RoundedCornerShape(50.dp)
+                ) { Text("Ir para Configurações") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showAccessibilityDialog = false }) {
+                    Text("Agora não", color = textColor.copy(alpha = 0.5f))
+                }
+            },
+            containerColor = if (isDark) Color(0xFF1E293B) else Color.White,
+            shape = RoundedCornerShape(24.dp)
+        )
     }
+}
+
+@Composable
+fun HojeSectionCard(
+    title: String,
+    subtitle: String? = null,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    val isDark = isSystemInDarkTheme()
+    val textColor = if (isDark) Color.White else Color(0xFF1F2937)
+    
+    PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(icon, contentDescription = null, tint = VerdeNeon, modifier = Modifier.size(20.dp))
+            Spacer(modifier = Modifier.width(8.dp))
+            Column {
+                Text(text = title, fontSize = 12.sp, fontWeight = FontWeight.ExtraBold, color = textColor, letterSpacing = 1.sp)
+                if (subtitle != null) {
+                    Text(text = subtitle, fontSize = 10.sp, color = textColor.copy(alpha = 0.5f))
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        content()
     }
+}
