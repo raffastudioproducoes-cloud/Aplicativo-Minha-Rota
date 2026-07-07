@@ -297,7 +297,12 @@ fun HojeScreen(
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         val progresso = if (metaDiaria > 0) (ganhoBruto / metaDiaria).toFloat().coerceIn(0f, 1.2f) else 0f
-                        LinearProgressIndicator(progress = progresso.coerceAtMost(1f), modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)), color = if (progresso >= 1f) VerdeNeon else verdeEsmeralda, trackColor = textColor.copy(alpha = 0.1f))
+                        LinearProgressIndicator(
+                            progress = progresso.coerceAtMost(1f), 
+                            modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)), 
+                            color = if (progresso >= 1f) VerdeNeon else verdeEsmeralda, 
+                            trackColor = textColor.copy(alpha = 0.1f)
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.height(32.dp))
@@ -306,6 +311,28 @@ fun HojeScreen(
             item {
                 Button(onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(50.dp), colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) {
                     Icon(Icons.Rounded.Save, contentDescription = null)
+                    Spacer(modifier = Modifier.height(32.dp))
+            }
+
+            item {
+                Button(onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(50.dp), colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) {
+                    Icon(Icons.Rounded.Save, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("FECHAR E SALVAR TURNO", fontWeight = FontWeight.ExtraBold, fontSize = 16.sp)
-              
+                }
+            }
+        }
+    }
+
+    if (showDatePicker) {
+        DatePickerDialog(onDismissRequest = { showDatePicker = false }, confirmButton = { TextButton(onClick = { datePickerState.selectedDateMillis?.let { val date = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate(); viewModel.alterarDataRegistro(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))) }; showDatePicker = false }) { Text("OK", color = VerdeNeon) } }, dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) } }) { DatePicker(state = datePickerState) }
+    }
+
+    if (showMetaDialog) {
+        AlertDialog(onDismissRequest = { showMetaDialog = false }, title = { Text("Ajustar Meta Diária", color = textColor) }, text = { OutlinedTextField(value = metaInputDialog, onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) metaInputDialog = it.replace(',', '.') }, label = { Text("Valor da Meta (R$)") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), shape = RoundedCornerShape(16.dp), colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor)) }, confirmButton = { Button(onClick = { val valor = metaInputDialog.toDoubleOrNull() ?: 0.0; viewModel.updateMetaDiaria(valor); showMetaDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) { Text("Salvar") } }, dismissButton = { TextButton(onClick = { showMetaDialog = false }) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) } }, containerColor = if (isDark) Color(0xFF1E293B) else Color.White, shape = RoundedCornerShape(24.dp))
+    }
+
+    if (showAccessibilityDialog) {
+        AlertDialog(onDismissRequest = { showAccessibilityDialog = false }, title = { Row(verticalAlignment = Alignment.CenterVertically) { Icon(Icons.Rounded.Security, contentDescription = null, tint = VerdeNeon); Spacer(modifier = Modifier.width(8.dp)); Text("Ativar RideAssistant", color = textColor) } }, text = { Text("Para capturar ganhos da Uber, 99 e iFood automaticamente, precisamos da permissão de Acessibilidade.\n\n1. Clique em 'Ir para Configurações'\n2. Procure por 'MinhaRota PRO'\n3. Ative a chave de serviço.", color = textColor.copy(alpha = 0.7f)) }, confirmButton = { Button(onClick = { showAccessibilityDialog = false; val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS); context.startActivity(intent) }, colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black), shape = RoundedCornerShape(50.dp)) { Text("Ir para Configurações") } }, dismissButton = { TextButton(onClick = { showAccessibilityDialog = false }) { Text("Agora não", color = textColor.copy(alpha = 0.5f)) } }, containerColor = if (isDark) Color(0xFF1E293B) else Color.White, shape = RoundedCornerShape(24.dp))
+    }
+    }
