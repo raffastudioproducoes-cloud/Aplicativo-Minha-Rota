@@ -332,7 +332,9 @@ fun PerfilScreen(
                     Text("CANCELAR", color = textColor.copy(alpha = 0.5f))
                 }
             },
-            containerColor = if (isDark) Color(0xFF1E293B) else Color.White,
+            colors = DatePickerDefaults.colors(
+                containerColor = if (isDark) Color(0xFF1E293B) else Color.White
+            ),
             shape = RoundedCornerShape(24.dp)
         ) {
             DatePicker(state = datePickerState)

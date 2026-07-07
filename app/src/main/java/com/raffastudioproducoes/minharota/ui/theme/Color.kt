@@ -18,3 +18,13 @@ val SurfaceDark = Color(0xFF1A1A1E) // Chumbo Acetinado
 // Paleta Light
 val FundoLight = Color(0xFFF4F4F6) // Cinza claro/chumbo suave
 val SurfaceLight = Color(0xFFFFFFFF) // Branco puro para superfícies
+
+// Cores Adicionais (v1.9.1 - Glassmorphism & Neon)
+val CyanBright = Color(0xFF00E5FF)
+val ElectricBlue = Color(0xFF2962FF)
+val OrangeWarm = Color(0xFFFF9100)
+val PinkVibrant = Color(0xFFFF1744)
+val TealAccent = Color(0xFF1DE9B6)
+val HaloBlue = Color(0xFF4FC3F7)
+val TextoPrimary = Color(0xFFFFFFFF) 
+val TextoPrimaryLight = Color(0xFF1E1E22) 

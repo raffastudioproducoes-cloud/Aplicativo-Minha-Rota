@@ -85,10 +85,10 @@ fun DrawerConteudoGradient(navController: NavController, onClose: () -> Unit) {
 
         // Itens Principais com Degradês
         val mainItems = listOf(
-            Triple(Icons.Rounded.Today, "Hoje", Brush.linearGradient(listOf(TealAccent, VerdeEntrada))),
-            Triple(Icons.Rounded.AccountBalanceWallet, "Contas", Brush.linearGradient(listOf(ElectricBlue, CyanBright))),
-            Triple(Icons.Rounded.Inventory2, "Caixas", Brush.linearGradient(listOf(PinkVibrant, OrangeWarm))),
-            Triple(Icons.Rounded.BarChart, "Gráficos", Brush.linearGradient(listOf(VerdeEntrada, ElectricBlue)))
+            Triple(Icons.Rounded.Today, "Hoje", Brush.linearGradient(colors = listOf(TealAccent, VerdeEntrada))),
+            Triple(Icons.Rounded.AccountBalanceWallet, "Contas", Brush.linearGradient(colors = listOf(ElectricBlue, CyanBright))),
+            Triple(Icons.Rounded.Inventory2, "Caixas", Brush.linearGradient(colors = listOf(PinkVibrant, OrangeWarm))),
+            Triple(Icons.Rounded.BarChart, "Gráficos", Brush.linearGradient(colors = listOf(VerdeEntrada, ElectricBlue)))
         )
 
         mainItems.forEach { (icon, title, gradient) ->
@@ -121,7 +121,7 @@ fun DrawerConteudoGradient(navController: NavController, onClose: () -> Unit) {
         DrawerItemGradient(
             Icons.Rounded.AccountBalanceWallet,
             "⭐ Conta Diária",
-            Brush.linearGradient(listOf(Color(0xFF10B981), Color(0xFF059669)))
+            Brush.linearGradient(colors = listOf(Color(0xFF10B981), Color(0xFF059669)))
         ) {
             navController.navigate(Rota.ContaDiaria.route) {
                 popUpTo(navController.graph.startDestinationId) { saveState = true }
@@ -141,10 +141,10 @@ fun DrawerConteudoGradient(navController: NavController, onClose: () -> Unit) {
 
         // Itens Secundários com Degradês
         val secondaryItems = listOf(
-            Triple(Icons.Rounded.ReceiptLong, "Extrato", Brush.linearGradient(listOf(CyanBright, ElectricBlue))),
-            Triple(Icons.Rounded.MoneyOff, "Dívidas", Brush.linearGradient(listOf(OrangeWarm, PinkVibrant))),
-            Triple(Icons.Rounded.TwoWheeler, "Garagem", Brush.linearGradient(listOf(VerdeEntrada, TealAccent))),
-            Triple(Icons.Rounded.Settings, "Configurações", Brush.linearGradient(listOf(ElectricBlue, VerdeEntrada)))
+            Triple(Icons.Rounded.ReceiptLong, "Extrato", Brush.linearGradient(colors = listOf(CyanBright, ElectricBlue))),
+            Triple(Icons.Rounded.MoneyOff, "Dívidas", Brush.linearGradient(colors = listOf(OrangeWarm, PinkVibrant))),
+            Triple(Icons.Rounded.TwoWheeler, "Garagem", Brush.linearGradient(colors = listOf(VerdeEntrada, TealAccent))),
+            Triple(Icons.Rounded.Settings, "Configurações", Brush.linearGradient(colors = listOf(ElectricBlue, VerdeEntrada)))
         )
 
         secondaryItems.forEach { (icon, title, gradient) ->

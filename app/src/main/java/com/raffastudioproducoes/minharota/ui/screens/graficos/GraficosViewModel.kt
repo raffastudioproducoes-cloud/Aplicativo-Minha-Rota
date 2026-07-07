@@ -164,7 +164,7 @@ class GraficosViewModel : ViewModel() {
         turnos.forEach { turno ->
             val date = try { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(turno.data) } catch (e: Exception) { null }
             if (date != null && date.time in startOfWeek..endOfWeek) {
-                despesasAcumuladas += turno.custoTotal
+                despesasAcumuladas += turno.custoRua
             }
         }
         _totalDespesasSemana.value = despesasAcumuladas
