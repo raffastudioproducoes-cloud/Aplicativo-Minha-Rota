@@ -82,16 +82,19 @@ fun ScaffoldPrincipalPush(
                     drawerState = drawerState,
                     scope = scope,
                     onNavigate = { route ->
-                        // 1. Fecha o menu lateral de forma suave
+                        // 1. Fecha o menu lateral de forma suave primeiro
                         scope.launch { drawerState.close() }
                         
-                        // 2. Proteção: Só viaja se o usuário clicar em uma tela diferente da atual
-                        if (navController.currentDestination?.route != route) {
-                            navController.navigate(route) {
-                                // 3. A MÁGICA: Navegação limpa e direta! Sem popUpTo para evitar conflito de rotas.
-                                launchSingleTop = true
-                                restoreState = true 
+                        // 2. A MÁGICA: Roteamento agressivo e blindado!
+                        navController.navigate(route) {
+                            // Limpa o histórico de telas até a "hoje" para não pesar a memória do celular
+                            popUpTo("hoje") {
+                                saveState = true
                             }
+                            // Evita o bug de abrir a mesma tela duas vezes
+                            launchSingleTop = true
+                            // Restaura os dados se a tela já foi aberta
+                            restoreState = true
                         }
                     },
                     currentRoute = navController.currentDestination?.route ?: "",
