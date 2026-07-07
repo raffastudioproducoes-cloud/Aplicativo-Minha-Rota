@@ -17,6 +17,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,9 +34,6 @@ import com.raffastudioproducoes.minharota.ui.components.*
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
 import com.raffastudioproducoes.minharota.util.TextRecognitionHelper
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -121,17 +121,19 @@ fun HojeScreen(
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
+            // AQUI ESTÁ O SEGREDO DO ESPAÇAMENTO AUTOMÁTICO
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
         ) {
             if (exibirAlertaRenovacao && diasParaVencer >= 0) {
-                item { RenovacaoAlertCard(nomePlano = nomePlanoAtivo, diasRestantes = diasParaVencer, onRenovar = { mostrarCheckoutRenovacao = true }, modifier = Modifier.padding(bottom = 12.dp)) }
+                item { RenovacaoAlertCard(nomePlano = nomePlanoAtivo, diasRestantes = diasParaVencer, onRenovar = { mostrarCheckoutRenovacao = true }) }
             }
 
-            item { AiInsightCard(isPro = true, isLoading = hojeIsLoading, insight = hojeInsight, modifier = Modifier.padding(bottom = 16.dp)) }
+            item { AiInsightCard(isPro = true, isLoading = hojeIsLoading, insight = hojeInsight) }
 
             if (exibirAlertaMei) {
                 item {
-                    GlassCard(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
+                    GlassCard(modifier = Modifier.fillMaxWidth()) {
                         Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                             Icon(Icons.Rounded.Warning, contentDescription = null, tint = Color.Red)
                             Spacer(modifier = Modifier.width(12.dp))
@@ -145,9 +147,7 @@ fun HojeScreen(
             }
 
             item {
-                GlassCard(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp).clickable { showAccessibilityDialog = true }
-                ) {
+                GlassCard(modifier = Modifier.fillMaxWidth().clickable { showAccessibilityDialog = true }) {
                     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Rounded.Bolt, contentDescription = null, tint = Color(0xFFFACC15))
                         Spacer(modifier = Modifier.width(12.dp))
@@ -280,7 +280,6 @@ fun HojeScreen(
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(24.dp))
             }
 
             item {
@@ -305,9 +304,9 @@ fun HojeScreen(
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(32.dp))
             }
-item {
+
+            item {
                 Button(onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(50.dp), colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) {
                     Icon(Icons.Rounded.Save, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
@@ -316,7 +315,6 @@ item {
             }
         }
     }
-
     if (showDatePicker) {
         DatePickerDialog(onDismissRequest = { showDatePicker = false }, confirmButton = { TextButton(onClick = { datePickerState.selectedDateMillis?.let { val date = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate(); viewModel.alterarDataRegistro(date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))) }; showDatePicker = false }) { Text("OK", color = VerdeNeon) } }, dismissButton = { TextButton(onClick = { showDatePicker = false }) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) } }) { DatePicker(state = datePickerState) }
     }
