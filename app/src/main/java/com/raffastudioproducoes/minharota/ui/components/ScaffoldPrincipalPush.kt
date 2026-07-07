@@ -1,11 +1,15 @@
 package com.raffastudioproducoes.minharota.ui.components
 
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
@@ -35,89 +39,119 @@ fun ScaffoldPrincipalPush(
     hojeViewModel: HojeViewModel,
     content: @Composable (PaddingValues) -> Unit
 ) {
+    // 1. Motor nativo do Compose para gerenciar o gesto e o botão Voltar
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var mostrarModalRapido by remember { mutableStateOf(false) }
     val isRidingMode by hojeViewModel.isRidingMode.collectAsState()
 
-    // Lógica de animação do Push e cantos arredondados
-    val isDrawerOpen = drawerState.isOpen || drawerState.isAnimationRunning
-    val drawerOffsetPx by animateDpAsState(
-        targetValue = if (isDrawerOpen) 280.dp else 0.dp,
-        label = "DrawerPushOffset"
-    )
-    val cornerRadius by animateDpAsState(
-        targetValue = if (isDrawerOpen) 24.dp else 0.dp,
-        label = "ContentCornerRadius"
-    )
-
     val context = LocalContext.current
     val prefsManager = remember { SharedPreferencesManager(context) }
 
-    // O "motor" restaurado: ModalNavigationDrawer fornece as âncoras para o gesto
+    // 2. Hack Mágico: ModalNavigationDrawer invisível apenas para ancorar o estado sem erro
     ModalNavigationDrawer(
         drawerState = drawerState,
-        scrimColor = Color.Black.copy(alpha = 0.32f), // Fundo escurecido que fecha ao tocar
-        drawerContent = {
-            DrawerConteudoGradientRainbowV2(
-                drawerState = drawerState,
-                scope = scope,
-                onNavigate = { route ->
-                    navController.navigate(route) {
-                        popUpTo(navController.graph.startDestinationId) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-                currentRoute = navController.currentDestination?.route ?: "",
-                sharedPreferencesManager = prefsManager
-            )
-        }
+        scrimColor = Color.Transparent, // Oculta a sombra padrão
+        drawerContent = { Box(modifier = Modifier.width(0.dp)) } // Menu falso vazio
     ) {
-        // Conteúdo Principal que será empurrado para o lado
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .offset(x = drawerOffsetPx)
-                // Usando a assinatura posicional para obedecer ao protocolo anti-quebra (topStart, topEnd, bottomEnd, bottomStart)
-                .clip(RoundedCornerShape(cornerRadius, 0.dp, 0.dp, cornerRadius))
-        ) {
-            Scaffold(
-                topBar = {
-                    if (!isRidingMode) {
-                        HeaderSuperior(
-                            onDrawerClick = {
-                                scope.launch {
-                                    if (drawerState.isOpen) drawerState.close() else drawerState.open()
-                                }
-                            },
-                            drawerState = drawerState
-                        )
-                    }
-                },
-                bottomBar = {
-                    if (!isRidingMode) {
-                        BottomNavBarNotch(
-                            navController = navController,
-                            onFabClick = { mostrarModalRapido = true }
-                        )
-                    }
-                },
-                containerColor = MaterialTheme.colorScheme.background
-            ) { paddingValues ->
-                content(paddingValues)
-            }
-        }
+        // 3. Lógica de animação do Push customizado
+        val isDrawerOpen = drawerState.isOpen || drawerState.isAnimationRunning
+        val drawerWidth = 280.dp
 
-        if (mostrarModalRapido) {
-            ModalRegistroRapido(
-                onDismiss = { mostrarModalRapido = false },
-                onSave = { valor ->
-                    hojeViewModel.registrarGanhoRapido(valor)
-                    mostrarModalRapido = false
+        val drawerOffsetPx by animateDpAsState(
+            targetValue = if (isDrawerOpen) drawerWidth else 0.dp,
+            animationSpec = tween(durationMillis = 350),
+            label = "DrawerPushOffset"
+        )
+
+        val cornerRadius by animateDpAsState(
+            targetValue = if (isDrawerOpen) 24.dp else 0.dp,
+            animationSpec = tween(durationMillis = 350),
+            label = "ContentCornerRadius"
+        )
+
+        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+            
+            // 4. O NOSSO MENU LATERAL REAL (Desliza e fica no fundo)
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .offset(x = -(drawerWidth - drawerOffsetPx))
+            ) {
+                DrawerConteudoGradientRainbowV2(
+                    drawerState = drawerState, 
+                    scope = scope,
+                    onNavigate = { route ->
+                        scope.launch { drawerState.close() }
+                        navController.navigate(route) {
+                            popUpTo(navController.graph.startDestinationId) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    currentRoute = navController.currentDestination?.route ?: "",
+                    sharedPreferencesManager = prefsManager
+                )
+            }
+
+            // 5. O CONTEÚDO DA TELA (Empurrado para a direita com cantos arredondados)
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .offset(x = drawerOffsetPx)
+                    .clip(RoundedCornerShape(topStart = cornerRadius, bottomStart = cornerRadius, topEnd = 0.dp, bottomEnd = 0.dp))
+            ) {
+                Scaffold(
+                    topBar = {
+                        if (!isRidingMode) {
+                            HeaderSuperior(
+                                onDrawerClick = {
+                                    scope.launch {
+                                        if (drawerState.isOpen) drawerState.close() else drawerState.open()
+                                    }
+                                },
+                                drawerState = drawerState
+                            )
+                        }
+                    },
+                    bottomBar = {
+                        if (!isRidingMode) {
+                            BottomNavBarNotch(
+                                navController = navController,
+                                onFabClick = { mostrarModalRapido = true }
+                            )
+                        }
+                    },
+                    containerColor = MaterialTheme.colorScheme.background
+                ) { paddingValues ->
+                    content(paddingValues)
                 }
-            )
+
+                // Sombra da tela e captura do toque fora do menu para fechar
+                if (isDrawerOpen) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.3f))
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                scope.launch { drawerState.close() }
+                            }
+                    )
+                }
+            }
+
+            if (mostrarModalRapido) {
+                ModalRegistroRapido(
+                    onDismiss = { mostrarModalRapido = false },
+                    onSave = { valor ->
+                        hojeViewModel.registrarGanhoRapido(valor)
+                        mostrarModalRapido = false
+                    }
+                )
+            }
         }
     }
 }
