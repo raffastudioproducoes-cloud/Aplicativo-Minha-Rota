@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.raffastudioproducoes.minharota.ui.components.ScaffoldPrincipalPush
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
 import com.raffastudioproducoes.minharota.ui.navigation.Rota
@@ -29,8 +30,6 @@ import com.raffastudioproducoes.minharota.ui.screens.extrato.ExtratoScreen
 import com.raffastudioproducoes.minharota.ui.screens.dividas.DividasScreen
 import com.raffastudioproducoes.minharota.ui.screens.perfil.PerfilScreen
 import com.raffastudioproducoes.minharota.ui.screens.config.ConfigScreen
-import com.raffastudioproducoes.minharota.ui.screens.splash.SplashScreen
-import com.raffastudioproducoes.minharota.ui.screens.onboarding.OnboardingScreen
 import com.raffastudioproducoes.minharota.ui.screens.auth.AuthScreen
 import com.raffastudioproducoes.minharota.ui.screens.auth.LoginScreen
 import com.raffastudioproducoes.minharota.ui.screens.auth.RegisterScreen
@@ -42,41 +41,22 @@ fun MainAppContent() {
     val navController = rememberNavController()
     val hojeViewModel: HojeViewModel = viewModel()
 
-    // Sistema Global de Permissões v1.9.2
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        // Lógica de feedback pode ser implementada aqui se necessário
-    }
+    ) { permissions -> }
+
+    // Rota inicial inteligente: se já estiver logado, pula o login e vai pro Hoje!
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    val startRoute = if (currentUser != null) Rota.Hoje.route else "login_main"
 
     NavHost(
         navController = navController,
-        startDestination = "splash"
+        startDestination = startRoute
     ) {
-        composable("splash") {
-            val context = androidx.compose.ui.platform.LocalContext.current
-            SplashScreen(onFinish = {
-                val prefs = context.getSharedPreferences("minha_rota_prefs", android.content.Context.MODE_PRIVATE)
-                val isFirstRun = prefs.getBoolean("isFirstRun", true)
-                
-                val nextRoute = if (isFirstRun) "onboarding" else "login_main"
-                
-                navController.navigate(nextRoute) {
-                    popUpTo("splash") { inclusive = true }
-                }
-            })
-        }
-        composable("onboarding") {
-            OnboardingScreen(onNavigateToLogin = {
-                navController.navigate("login_main") {
-                    popUpTo("onboarding") { inclusive = true }
-                }
-            })
-        }
+        
         composable("login_main") {
             AuthScreen(
                 onAuthSuccess = {
-                    // Disparar permissões ao entrar na Main Screen v1.9.2
                     val permissions = mutableListOf(
                         Manifest.permission.CAMERA,
                         Manifest.permission.ACCESS_FINE_LOCATION,
@@ -102,54 +82,30 @@ fun MainAppContent() {
                 }
             )
         }
+        
         composable("login_email") {
             LoginScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onLoginSuccess = {
-                    // Disparar permissões ao entrar na Main Screen v1.9.2
-                    val permissions = mutableListOf(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    )
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        permissions.add(Manifest.permission.POST_NOTIFICATIONS)
-                        permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
-                    } else {
-                        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    }
-                    permissionLauncher.launch(permissions.toTypedArray())
-
                     navController.navigate(Rota.Hoje.route) {
                         popUpTo("login_main") { inclusive = true }
                     }
                 }
             )
         }
+        
         composable("register") {
             RegisterScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onRegisterSuccess = {
-                    // Disparar permissões ao entrar na Main Screen v1.9.2
-                    val permissions = mutableListOf(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    )
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        permissions.add(Manifest.permission.POST_NOTIFICATIONS)
-                        permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
-                    } else {
-                        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    }
-                    permissionLauncher.launch(permissions.toTypedArray())
-
                     navController.navigate(Rota.Hoje.route) {
                         popUpTo("login_main") { inclusive = true }
                     }
                 }
             )
         }
+        
+        // --- ROTAS DO APP ---
         composable(Rota.Hoje.route) {
             ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
                 Box(modifier = Modifier.padding(padding)) { HojeScreen(viewModel = hojeViewModel) }
