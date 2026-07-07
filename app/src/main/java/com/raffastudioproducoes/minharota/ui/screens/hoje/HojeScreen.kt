@@ -30,12 +30,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
-import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
-import com.raffastudioproducoes.minharota.ui.components.RenovacaoAlertCard
-import com.raffastudioproducoes.minharota.ui.components.TimeInput
-import com.raffastudioproducoes.minharota.ui.components.GlassCard
-import com.raffastudioproducoes.minharota.ui.components.HojeSectionCard
+import com.raffastudioproducoes.minharota.ui.components.*
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
 import com.raffastudioproducoes.minharota.util.TextRecognitionHelper
@@ -309,4 +304,8 @@ fun HojeScreen(
             }
 
             item {
-                Button(onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCorn
+                Button(onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(50.dp), colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) {
+                    Icon(Icons.Rounded.Save, contentDescription = null)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("FECHAR E SALVAR TURNO", fontWeight = FontWeight.ExtraBold, fontSize = 16.sp)
+              
