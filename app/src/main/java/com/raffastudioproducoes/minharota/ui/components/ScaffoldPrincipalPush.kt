@@ -79,17 +79,22 @@ fun ScaffoldPrincipalPush(
                     .offset(x = -(drawerWidth - drawerOffsetPx))
             ) {
                 DrawerConteudoGradientRainbowV2(
-                    drawerState = drawerState, 
+                    drawerState = drawerState,
                     scope = scope,
                     onNavigate = { route ->
+                        // 1. Fecha o menu lateral de forma suave
                         scope.launch { drawerState.close() }
-                        navController.navigate(route) {
-                            // AQUI ESTÁ A MÁGICA: Ele usa a Tela Hoje como base, e não a Splash.
-                            popUpTo(com.raffastudioproducoes.minharota.ui.navigation.Rota.Hoje.route) { 
-                                saveState = true 
+                        
+                        // 2. Proteção: Só viaja se o usuário clicar em uma tela diferente da atual
+                        if (navController.currentDestination?.route != route) {
+                            navController.navigate(route) {
+                                // 3. A MÁGICA: Limpa a pilha até a tela "Hoje" sem tentar restaurar memórias corrompidas
+                                popUpTo(com.raffastudioproducoes.minharota.ui.navigation.Rota.Hoje.route) {
+                                    saveState = false // Isso evita o loop que te jogava de volta
+                                }
+                                launchSingleTop = true
+                                restoreState = false // Viagem limpa e direta
                             }
-                            launchSingleTop = true
-                            restoreState = true
                         }
                     },
                     currentRoute = navController.currentDestination?.route ?: "",
