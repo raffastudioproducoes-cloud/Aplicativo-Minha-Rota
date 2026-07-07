@@ -71,9 +71,8 @@ fun HeaderSuperior(onDrawerClick: () -> Unit, drawerState: DrawerState? = null) 
                         tint = textColor
                     )
                 } else {
-                    // Ícone oficial nativo que NÃO bloqueia o clique!
                     Icon(
-                        imageVector = androidx.compose.material.icons.Icons.Rounded.Menu,
+                        imageVector = Icons.Rounded.Menu,
                         contentDescription = "Abrir Menu",
                         tint = textColor
                     )
