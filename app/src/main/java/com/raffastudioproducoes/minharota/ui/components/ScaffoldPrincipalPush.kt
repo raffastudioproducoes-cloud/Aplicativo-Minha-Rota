@@ -39,7 +39,6 @@ fun ScaffoldPrincipalPush(
     hojeViewModel: HojeViewModel,
     content: @Composable (PaddingValues) -> Unit
 ) {
-    // 1. Motor nativo do Compose para gerenciar o gesto e o botão Voltar
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var mostrarModalRapido by remember { mutableStateOf(false) }
@@ -48,13 +47,11 @@ fun ScaffoldPrincipalPush(
     val context = LocalContext.current
     val prefsManager = remember { SharedPreferencesManager(context) }
 
-    // 2. Hack Mágico: ModalNavigationDrawer invisível apenas para ancorar o estado sem erro
     ModalNavigationDrawer(
         drawerState = drawerState,
-        scrimColor = Color.Transparent, // Oculta a sombra padrão
-        drawerContent = { Box(modifier = Modifier.width(0.dp)) } // Menu falso vazio
+        scrimColor = Color.Transparent, 
+        drawerContent = { Box(modifier = Modifier.width(0.dp)) } 
     ) {
-        // 3. Lógica de animação do Push customizado
         val isDrawerOpen = drawerState.isOpen || drawerState.isAnimationRunning
         val drawerWidth = 280.dp
 
@@ -72,7 +69,6 @@ fun ScaffoldPrincipalPush(
 
         Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             
-            // 4. O NOSSO MENU LATERAL REAL (Desliza e fica no fundo)
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -82,19 +78,19 @@ fun ScaffoldPrincipalPush(
                     drawerState = drawerState,
                     scope = scope,
                     onNavigate = { route ->
-                        // 1. Fecha o menu lateral de forma suave primeiro
-                        scope.launch { drawerState.close() }
-                        
-                        // 2. A MÁGICA: Roteamento agressivo e blindado!
-                        navController.navigate(route) {
-                            // Limpa o histórico de telas até a "hoje" para não pesar a memória do celular
-                            popUpTo("hoje") {
-                                saveState = true
+                        // A MÁGICA: O app vai ESPERAR o menu fechar antes de viajar, blindando o GPS.
+                        scope.launch { 
+                            drawerState.close() 
+                            
+                            if (navController.currentDestination?.route != route) {
+                                navController.navigate(route) {
+                                    popUpTo(com.raffastudioproducoes.minharota.ui.navigation.Rota.Hoje.route) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true 
+                                }
                             }
-                            // Evita o bug de abrir a mesma tela duas vezes
-                            launchSingleTop = true
-                            // Restaura os dados se a tela já foi aberta
-                            restoreState = true
                         }
                     },
                     currentRoute = navController.currentDestination?.route ?: "",
@@ -102,7 +98,6 @@ fun ScaffoldPrincipalPush(
                 )
             }
 
-            // 5. O CONTEÚDO DA TELA (Empurrado para a direita com cantos arredondados)
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -135,7 +130,6 @@ fun ScaffoldPrincipalPush(
                     content(paddingValues)
                 }
 
-                // Sombra da tela e captura do toque fora do menu para fechar
                 if (isDrawerOpen) {
                     Box(
                         modifier = Modifier
