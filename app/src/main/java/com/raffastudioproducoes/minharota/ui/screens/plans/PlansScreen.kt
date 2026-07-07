@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
+import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
 import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -60,6 +61,9 @@ fun PlansScreen(plansViewModel: PlansViewModel = viewModel()) {
     val planoAtual by plansViewModel.planoAtual.collectAsState()
     val isDark = isSystemInDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
+
+    // Estado do modal de checkout
+    var checkoutPlano by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
         plansViewModel.carregarPlano(context)
@@ -131,7 +135,7 @@ fun PlansScreen(plansViewModel: PlansViewModel = viewModel()) {
             ),
             ehAtual = planoAtual == "premium",
             destaque = true,
-            onEscolher = { plansViewModel.escolherPlano("premium", context) }
+            onEscolher = { checkoutPlano = "Premium" }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -151,10 +155,22 @@ fun PlansScreen(plansViewModel: PlansViewModel = viewModel()) {
             ),
             ehAtual = planoAtual == "pro",
             destaque = false,
-            onEscolher = { plansViewModel.escolherPlano("pro", context) }
+            onEscolher = { checkoutPlano = "Pro" }
         )
 
         Spacer(modifier = Modifier.height(40.dp))
+    }
+
+    // Modal de Checkout Glassmorphic
+    checkoutPlano?.let { plano ->
+        CheckoutModal(
+            nomePlano = plano,
+            onDismiss = { checkoutPlano = null },
+            onSuccess = {
+                plansViewModel.escolherPlano(plano.lowercase(), context)
+                checkoutPlano = null
+            }
+        )
     }
 }
 

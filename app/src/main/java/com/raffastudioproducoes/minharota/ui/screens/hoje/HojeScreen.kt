@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
+import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
+import com.raffastudioproducoes.minharota.ui.components.RenovacaoAlertCard
 import com.raffastudioproducoes.minharota.ui.components.TimeInput
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
@@ -107,6 +109,14 @@ fun HojeScreen(
     val hojeInsight by geminiViewModel.hojeInsight.collectAsState()
     val hojeIsLoading by geminiViewModel.hojeIsLoading.collectAsState()
 
+    // Coletar estados de alerta de renovação
+    val exibirAlertaRenovacao by viewModel.exibirAlertaRenovacao.collectAsState()
+    val diasParaVencer by viewModel.diasParaVencer.collectAsState()
+    val nomePlanoAtivo by viewModel.nomePlanoAtivo.collectAsState()
+
+    // Estado do modal de checkout (renovar)
+    var mostrarCheckoutRenovacao by remember { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         viewModel.carregarDadosMei(context)
     }
@@ -123,6 +133,18 @@ fun HojeScreen(
         }
     }
 
+    // Modal de renovação
+    if (mostrarCheckoutRenovacao) {
+        CheckoutModal(
+            nomePlano = nomePlanoAtivo.ifBlank { "Premium" },
+            onDismiss = { mostrarCheckoutRenovacao = false },
+            onSuccess = {
+                mostrarCheckoutRenovacao = false
+                viewModel.verificarVencimentoPlano(context)
+            }
+        )
+    }
+
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         LazyColumn(
             modifier = Modifier
@@ -131,6 +153,18 @@ fun HojeScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
         ) {
+            // ALERTA DE RENOVAÇÃO DO PLANO (10 dias ou menos)
+            if (exibirAlertaRenovacao && diasParaVencer >= 0) {
+                item {
+                    RenovacaoAlertCard(
+                        nomePlano = nomePlanoAtivo,
+                        diasRestantes = diasParaVencer,
+                        onRenovar = { mostrarCheckoutRenovacao = true },
+                        modifier = Modifier.padding(bottom = 12.dp)
+                    )
+                }
+            }
+
             // AI INSIGHT CARD (PRO) — topo absoluto da tela
             item {
                 AiInsightCard(

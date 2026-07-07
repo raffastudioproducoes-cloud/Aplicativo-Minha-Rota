@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
@@ -83,6 +84,19 @@ class HojeViewModel : ViewModel() {
     private val _exibirAlertaMei = MutableStateFlow(false)
     val exibirAlertaMei: StateFlow<Boolean> = _exibirAlertaMei.asStateFlow()
 
+    // --- Alerta de Renovação do Plano ---
+    /** Número de dias restantes para o vencimento do plano (-1 = sem plano ativo). */
+    private val _diasParaVencer = MutableStateFlow(-1L)
+    val diasParaVencer: StateFlow<Long> = _diasParaVencer.asStateFlow()
+
+    /** Nome do plano ativo (ex: "Premium", "Pro"). */
+    private val _nomePlanoAtivo = MutableStateFlow("")
+    val nomePlanoAtivo: StateFlow<String> = _nomePlanoAtivo.asStateFlow()
+
+    /** Verdadeiro quando faltam 10 dias ou menos para o vencimento. */
+    private val _exibirAlertaRenovacao = MutableStateFlow(false)
+    val exibirAlertaRenovacao: StateFlow<Boolean> = _exibirAlertaRenovacao.asStateFlow()
+
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
@@ -93,6 +107,31 @@ class HojeViewModel : ViewModel() {
         val metaSalva = prefs.obterMetaDiaria()
         if (metaSalva > 0) _metaDiaria.value = metaSalva
         verificarAlertaMei()
+        verificarVencimentoPlano(context)
+    }
+
+    /** Verifica a data de vencimento do plano e atualiza os estados de alerta. */
+    fun verificarVencimentoPlano(context: Context) {
+        val prefs = SharedPreferencesManager(context)
+        val dataVencimentoStr = prefs.obterDataVencimento()
+        val nomePlano = prefs.obterNomePlano()
+        if (dataVencimentoStr.isBlank() || nomePlano == "Free") {
+            _diasParaVencer.value = -1L
+            _nomePlanoAtivo.value = ""
+            _exibirAlertaRenovacao.value = false
+            return
+        }
+        try {
+            val dataVencimento = LocalDate.parse(dataVencimentoStr, DateTimeFormatter.ISO_LOCAL_DATE)
+            val hoje = LocalDate.now()
+            val dias = ChronoUnit.DAYS.between(hoje, dataVencimento)
+            _diasParaVencer.value = dias
+            _nomePlanoAtivo.value = nomePlano
+            _exibirAlertaRenovacao.value = dias in 0..10
+        } catch (e: Exception) {
+            _diasParaVencer.value = -1L
+            _exibirAlertaRenovacao.value = false
+        }
     }
 
     private fun verificarAlertaMei() {

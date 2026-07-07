@@ -188,6 +188,25 @@ class SharedPreferencesManager(context: Context) {
         return sharedPreferences.getBoolean(KEY_IS_PRO, false)
     }
 
+    // --- Plano e Vencimento ---
+    fun salvarNomePlano(nome: String) {
+        sharedPreferences.edit().putString(KEY_NOME_PLANO, nome).apply()
+    }
+
+    fun obterNomePlano(): String {
+        return sharedPreferences.getString(KEY_NOME_PLANO, "Free") ?: "Free"
+    }
+
+    /** Salva a data de vencimento do plano no formato ISO (yyyy-MM-dd). */
+    fun salvarDataVencimento(dataIso: String) {
+        sharedPreferences.edit().putString(KEY_DATA_VENCIMENTO, dataIso).apply()
+    }
+
+    /** Retorna a data de vencimento do plano no formato ISO (yyyy-MM-dd), ou string vazia se não definida. */
+    fun obterDataVencimento(): String {
+        return sharedPreferences.getString(KEY_DATA_VENCIMENTO, "") ?: ""
+    }
+
     // --- Dias de Folga ---
     fun salvarDiasFolga(dias: Set<Int>) {
         sharedPreferences.edit().putStringSet(KEY_DIAS_FOLGA, dias.map { it.toString() }.toSet()).apply()
@@ -285,6 +304,8 @@ class SharedPreferencesManager(context: Context) {
         private const val KEY_DATA_ANIVERSARIO = "data_aniversario"
         private const val KEY_FOTO_PERFIL = "foto_perfil"
         private const val KEY_IS_PRO = "is_pro"
+        private const val KEY_NOME_PLANO = "nome_plano"
+        private const val KEY_DATA_VENCIMENTO = "data_vencimento_plano"
         private const val KEY_CONTAS_DIARIAS = "contas_diarias"
         private const val KEY_DIAS_FOLGA = "dias_folga"
         private const val KEY_META_DIARIA = "meta_diaria_persistente"

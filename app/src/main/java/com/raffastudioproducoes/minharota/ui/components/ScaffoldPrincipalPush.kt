@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
@@ -14,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,24 +41,29 @@ fun ScaffoldPrincipalPush(
     var mostrarModalRapido by remember { mutableStateOf(false) }
     val isRidingMode by hojeViewModel.isRidingMode.collectAsState()
 
+    // Usar derivedStateOf para garantir recomposição reativa ao estado do drawer
+    val isDrawerOpen by remember { derivedStateOf { drawerState.currentValue == DrawerValue.Open } }
+
     // Animar o offset do conteúdo quando o drawer abre/fecha
     val drawerOffsetPx by animateDpAsState(
-        targetValue = if (drawerState.isOpen) 280.dp else 0.dp,
+        targetValue = if (isDrawerOpen) 280.dp else 0.dp,
         label = "DrawerPushOffset"
     )
 
     // Animar o arredondamento do canto quando o drawer abre
     val cornerRadius by animateDpAsState(
-        targetValue = if (drawerState.isOpen) 24.dp else 0.dp,
+        targetValue = if (isDrawerOpen) 24.dp else 0.dp,
         label = "ContentCornerRadius"
     )
 
-    Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
-        // Drawer (Push Navigation)
+    // fillMaxSize garante que o Box ocupe toda a tela e o drawer tenha espaço para aparecer
+    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+
+        // Drawer (Push Navigation) — posicionado à esquerda, começa fora da tela
         Box(
             modifier = Modifier
+                .fillMaxSize()
                 .offset(x = -(280.dp - drawerOffsetPx))
-                .background(MaterialTheme.colorScheme.background)
         ) {
             val context = LocalContext.current
             val prefsManager = SharedPreferencesManager(context)
@@ -75,10 +82,11 @@ fun ScaffoldPrincipalPush(
             )
         }
 
-        // Conteúdo Principal (Deslocado) com Canto Arredondado Dinâmico (Cima e Baixo)
+        // Conteúdo Principal (Deslocado) com Canto Arredondado Dinâmico
         // Usando a assinatura posicional clássica para evitar erros de compilação conforme diretriz v1.5.0
         Box(
             modifier = Modifier
+                .fillMaxSize()
                 .offset(x = drawerOffsetPx)
                 .clip(RoundedCornerShape(cornerRadius, 0.dp, 0.dp, cornerRadius))
         ) {
@@ -109,14 +117,17 @@ fun ScaffoldPrincipalPush(
             }
         }
 
-        // Overlay Scrim (quando drawer está aberto)
-        if (drawerState.isOpen) {
+        // Overlay Scrim (quando drawer está aberto) — fecha ao tocar fora
+        if (isDrawerOpen) {
             Box(
                 modifier = Modifier
-                    .matchParentSize()
-                    .background(Color.Black.copy(alpha = 0.32f))
+                    .fillMaxSize()
                     .offset(x = drawerOffsetPx)
-                    .clickable {
+                    .background(Color.Black.copy(alpha = 0.32f))
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+                    ) {
                         scope.launch { drawerState.close() }
                     }
             )
