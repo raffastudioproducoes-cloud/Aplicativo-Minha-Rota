@@ -25,12 +25,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.ContaFixa
+import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
 import com.raffastudioproducoes.minharota.ui.components.CardConta
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
+import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
 
 @Composable
-fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
+fun ContasScreen(
+    viewModel: ContasViewModel = viewModel(),
+    geminiViewModel: GeminiAiViewModel = viewModel()
+) {
     val context = LocalContext.current
     val contas by viewModel.contas.collectAsState()
     val metaDiaria by viewModel.metaDiariaAutomatica.collectAsState()
@@ -44,11 +49,37 @@ fun ContasScreen(viewModel: ContasViewModel = viewModel()) {
     var showEditDialog by remember { mutableStateOf<ContaFixa?>(null) }
     var showPaywallModal by remember { mutableStateOf(false) }
 
+    // Coletar estados do Gemini AI
+    val contasInsight by geminiViewModel.contasInsight.collectAsState()
+    val contasIsLoading by geminiViewModel.contasIsLoading.collectAsState()
+
     LaunchedEffect(Unit) {
         viewModel.carregarContas(context)
     }
 
+    // Disparar insight ao carregar (somente PRO — o ViewModel verifica internamente)
+    LaunchedEffect(contas) {
+        val contasPendentes = contas.filter { !it.paga }
+        if (contasPendentes.isNotEmpty()) {
+            val dividasInfo = contasPendentes.joinToString("\n") {
+                "- ${it.nome}: R$ ${String.format("%.2f", it.valor)} (vence ${it.dataVencimento})"
+            }
+            geminiViewModel.gerarInsightContas(
+                context = context,
+                dividasInfo = dividasInfo
+            )
+        }
+    }
+
     Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        // AI INSIGHT CARD (PRO) — topo absoluto da tela
+        AiInsightCard(
+            isPro = isPro,
+            isLoading = contasIsLoading,
+            insight = contasInsight,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+        )
+
         // Card de Destaque: Meta Diária Premium
         PremiumGlassCard(
             modifier = Modifier

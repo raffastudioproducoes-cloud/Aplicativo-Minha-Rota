@@ -32,14 +32,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
 import com.raffastudioproducoes.minharota.ui.components.TimeInput
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
+import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
 import com.raffastudioproducoes.minharota.util.TextRecognitionHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
+fun HojeScreen(
+    viewModel: HojeViewModel = viewModel(),
+    geminiViewModel: GeminiAiViewModel = viewModel()
+) {
     val context = LocalContext.current
     val isDark = isSystemInDarkTheme()
     
@@ -98,8 +103,24 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
         }
     )
 
+    // Coletar estados do Gemini AI
+    val hojeInsight by geminiViewModel.hojeInsight.collectAsState()
+    val hojeIsLoading by geminiViewModel.hojeIsLoading.collectAsState()
+
     LaunchedEffect(Unit) {
         viewModel.carregarDadosMei(context)
+    }
+
+    // Disparar insight ao carregar a tela (somente PRO — o ViewModel verifica internamente)
+    LaunchedEffect(ganhoBruto, horasTrabalhadas, ganhoLiquido) {
+        if (ganhoBruto > 0 || ganhoLiquido > 0) {
+            geminiViewModel.gerarInsightHoje(
+                context = context,
+                ganhoBruto = ganhoBruto,
+                horasTrabalhadas = horasTrabalhadas,
+                ganhoLiquido = ganhoLiquido
+            )
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
@@ -110,6 +131,16 @@ fun HojeScreen(viewModel: HojeViewModel = viewModel()) {
             horizontalAlignment = Alignment.CenterHorizontally,
             contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
         ) {
+            // AI INSIGHT CARD (PRO) — topo absoluto da tela
+            item {
+                AiInsightCard(
+                    isPro = true, // controle real feito dentro do GeminiAiViewModel via SharedPreferences
+                    isLoading = hojeIsLoading,
+                    insight = hojeInsight,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
+
             // ALERTA MEI
             if (exibirAlertaMei) {
                 item {

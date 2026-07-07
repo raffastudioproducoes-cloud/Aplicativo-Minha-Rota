@@ -23,12 +23,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
+import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
+fun GaragemScreen(
+    viewModel: GaragemViewModel = viewModel(),
+    geminiViewModel: GeminiAiViewModel = viewModel()
+) {
     val context = LocalContext.current
     val kmAtual by viewModel.kmAtual.collectAsState()
     val kmTotal by viewModel.kmTotalAcumulado.collectAsState()
@@ -43,8 +48,25 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
     
     val sheetState = rememberModalBottomSheetState()
 
+    // Coletar estados do Gemini AI
+    val garagemInsight by geminiViewModel.garagemInsight.collectAsState()
+    val garagemIsLoading by geminiViewModel.garagemIsLoading.collectAsState()
+
     LaunchedEffect(Unit) {
         viewModel.carregarDados(context)
+    }
+
+    // Disparar insight ao carregar (somente PRO — o ViewModel verifica internamente)
+    LaunchedEffect(kmTotal, manutencoes) {
+        val proximasManutencoes = manutencoes
+            .filter { !it.concluida }
+            .joinToString("; ") { "${it.nome} (a cada ${it.intervaloKm} km)" }
+            .ifBlank { "Nenhuma manutenção pendente" }
+        geminiViewModel.gerarInsightGaragem(
+            context = context,
+            kmTotal = kmTotal,
+            proximasManutencoes = proximasManutencoes
+        )
     }
 
     Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
@@ -53,6 +75,16 @@ fun GaragemScreen(viewModel: GaragemViewModel = viewModel()) {
             contentPadding = PaddingValues(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // AI INSIGHT CARD (PRO) — topo absoluto da tela
+            item {
+                AiInsightCard(
+                    isPro = true, // controle real feito dentro do GeminiAiViewModel via SharedPreferences
+                    isLoading = garagemIsLoading,
+                    insight = garagemInsight,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+            }
+
             // 1. CARDS DE QUILOMETRAGEM (Total e Atual)
             item {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
