@@ -2,15 +2,7 @@ package com.raffastudioproducoes.minharota.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountBalanceWallet
@@ -22,12 +14,7 @@ import androidx.compose.material.icons.outlined.ReceiptLong
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Today
 import androidx.compose.material.icons.outlined.TwoWheeler
-import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,12 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.raffastudioproducoes.minharota.ui.navigation.Rota
-import com.raffastudioproducoes.minharota.ui.theme.CyanBright
-import com.raffastudioproducoes.minharota.ui.theme.ElectricBlue
-import com.raffastudioproducoes.minharota.ui.theme.OrangeWarm
-import com.raffastudioproducoes.minharota.ui.theme.PinkVibrant
-import com.raffastudioproducoes.minharota.ui.theme.TealAccent
-import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
+import com.raffastudioproducoes.minharota.ui.theme.*
 
 @Composable
 fun DrawerConteudoGradientRainbow(navController: NavController, onClose: () -> Unit) {
@@ -52,12 +34,11 @@ fun DrawerConteudoGradientRainbow(navController: NavController, onClose: () -> U
         modifier = Modifier.fillMaxHeight(),
         drawerContainerColor = MaterialTheme.colorScheme.surface
     ) {
-        // Coluna principal com espaçamento organizado
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp) // Respiro entre itens
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Row(
                 modifier = Modifier
@@ -84,7 +65,6 @@ fun DrawerConteudoGradientRainbow(navController: NavController, onClose: () -> U
             Text(
                 text = "Navegação Principal",
                 style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
             )
 
@@ -104,12 +84,12 @@ fun DrawerConteudoGradientRainbow(navController: NavController, onClose: () -> U
                         "Gráficos" -> Rota.Graficos.route
                         else -> Rota.Hoje.route
                     }
-                    onClose() // Fecha o drawer primeiro
                     navController.navigate(route) {
                         popUpTo(navController.graph.startDestinationId) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
+                    onClose()
                 }
             }
 
@@ -118,7 +98,6 @@ fun DrawerConteudoGradientRainbow(navController: NavController, onClose: () -> U
             Text(
                 text = "Outros",
                 style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
                 modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
             )
 
@@ -138,24 +117,20 @@ fun DrawerConteudoGradientRainbow(navController: NavController, onClose: () -> U
                         "Configurações" -> Rota.Configuracoes.route
                         else -> Rota.Hoje.route
                     }
-                    onClose()
                     navController.navigate(route) {
                         popUpTo(navController.graph.startDestinationId) { saveState = true }
                         launchSingleTop = true
                         restoreState = true
                     }
+                    onClose()
                 }
             }
         }
+    }
 }
 
 @Composable
-fun DrawerItemGradientRainbow(
-    icon: ImageVector,
-    title: String,
-    gradient: Brush,
-    onClick: () -> Unit
-) {
+fun DrawerItemGradientRainbow(icon: ImageVector, title: String, gradient: Brush, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth(0.9f)
@@ -166,25 +141,12 @@ fun DrawerItemGradientRainbow(
         contentAlignment = Alignment.CenterStart
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = title,
-                modifier = Modifier.size(24.dp),
-                tint = Color.White
-            )
+            Icon(imageVector = icon, contentDescription = title, modifier = Modifier.size(24.dp), tint = Color.White)
             Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.White,
-                fontSize = 14.sp
-            )
+            Text(text = title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = Color.White, fontSize = 14.sp)
         }
     }
 }
