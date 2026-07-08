@@ -1,20 +1,10 @@
 package com.raffastudioproducoes.minharota.ui.components
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
-import kotlinx.coroutines.launch
-import androidx.compose.runtime.collectAsState
 
 @Composable
 fun ScaffoldPrincipal(
@@ -30,7 +20,8 @@ fun ScaffoldPrincipal(
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            DrawerConteudo(
+            // Chamando o drawer com gradiente que você prefere
+            DrawerConteudoGradientRainbow(
                 navController = navController,
                 onClose = {
                     scope.launch { drawerState.close() }
@@ -53,7 +44,10 @@ fun ScaffoldPrincipal(
                 }
             }
         ) { paddingValues ->
-            content(paddingValues)
+            // Espaçamento extra aqui para não colidir com o Header ou BottomBar
+            Box(modifier = Modifier.padding(paddingValues)) {
+                content(PaddingValues(0.dp)) // O padding já está aplicado no Box pai
+            }
         }
 
         if (mostrarModalRapido) {
