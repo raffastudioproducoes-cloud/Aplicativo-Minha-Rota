@@ -48,6 +48,7 @@ import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeScreen
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
 import com.raffastudioproducoes.minharota.ui.screens.perfil.PerfilScreen
 import com.raffastudioproducoes.minharota.ui.screens.plans.PlansScreen
+import com.raffastudioproducoes.minharota.ui.screens.splash.SplashScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -80,6 +81,11 @@ fun MainAppContent() {
     // Rota inicial inteligente
     val currentUser = FirebaseAuth.getInstance().currentUser
     val startRoute = if (currentUser != null) Rota.Hoje.route else "login_main"
+
+    // Camada do Splash/Cards (Aparece antes de tudo)
+    if (exibirSplashCard) {
+        SplashScreen(onFinish = { exibirSplashCard = false })
+    } else {
 
     // Camada do App (Drawer e Scaffold aqui dentro)
     ModalNavigationDrawer(
@@ -186,6 +192,7 @@ fun MainAppContent() {
                 composable(Rota.Configuracoes.route) { ConfigScreen() }
             }
         }
+    }
     }
     // Modal de Registro Rápido (Global)
     if (mostrarModalRapido) {
