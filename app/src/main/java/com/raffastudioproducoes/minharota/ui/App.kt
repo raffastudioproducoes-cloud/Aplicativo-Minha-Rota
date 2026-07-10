@@ -7,17 +7,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
+import com.raffastudioproducoes.minharota.ui.components.ModalRegistroRapido
 import com.raffastudioproducoes.minharota.ui.components.ScaffoldPrincipalPush
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
 import com.raffastudioproducoes.minharota.ui.navigation.Rota
@@ -40,137 +42,128 @@ import com.raffastudioproducoes.minharota.ui.screens.plans.PlansScreen
 fun MainAppContent() {
     val navController = rememberNavController()
     val hojeViewModel: HojeViewModel = viewModel()
+    val context = LocalContext.current
+    val prefsManager = remember { SharedPreferencesManager(context) }
+    
+    // Estados Hoisted (Elevados) para persistência entre navegação
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+    var mostrarModalRapido by remember { mutableStateOf(false) }
+    val isRidingMode by hojeViewModel.isRidingMode.collectAsState()
+
+    // Controle de visibilidade do Scaffold (Header/BottomBar)
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val rotasSemScaffold = listOf("login_main", "login_email", "register", "splash", "onboarding")
+    val mostrarScaffold = currentRoute != null && !rotasSemScaffold.contains(currentRoute)
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions -> }
 
-    // Rota inicial inteligente: se já estiver logado, pula o login e vai pro Hoje!
+    // Rota inicial inteligente
     val currentUser = FirebaseAuth.getInstance().currentUser
     val startRoute = if (currentUser != null) Rota.Hoje.route else "login_main"
 
-    NavHost(
+    // ESTRUTURA GLOBAL: Drawer > Scaffold > NavHost
+    ScaffoldPrincipalPush(
         navController = navController,
-        startDestination = startRoute
-    ) {
+        drawerState = drawerState,
+        scope = scope,
+        isRidingMode = isRidingMode,
+        mostrarHeader = mostrarScaffold,
+        mostrarBottomBar = mostrarScaffold,
+        onFabClick = { mostrarModalRapido = true },
+        prefsManager = prefsManager
+    ) { paddingValues ->
         
-        composable("login_main") {
-            AuthScreen(
-                onAuthSuccess = {
-                    val permissions = mutableListOf(
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    )
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        permissions.add(Manifest.permission.POST_NOTIFICATIONS)
-                        permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
-                    } else {
-                        permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    }
-                    permissionLauncher.launch(permissions.toTypedArray())
-
-                    navController.navigate(Rota.Hoje.route) {
-                        popUpTo("login_main") { inclusive = true }
-                    }
-                },
-                onNavigateToRegister = {
-                    navController.navigate("register")
-                },
-                onNavigateToEmailLogin = {
-                    navController.navigate("login_email")
-                }
-            )
-        }
-        
-        composable("login_email") {
-            LoginScreen(
-                onNavigateBack = { navController.popBackStack() },
-                onLoginSuccess = {
-                    navController.navigate(Rota.Hoje.route) {
-                        popUpTo("login_main") { inclusive = true }
-                    }
-                }
-            )
-        }
-        
-        composable("register") {
-            RegisterScreen(
-                onNavigateBack = { navController.popBackStack() },
-                onRegisterSuccess = {
-                    navController.navigate(Rota.Hoje.route) {
-                        popUpTo("login_main") { inclusive = true }
-                    }
-                }
-            )
-        }
-        
-        // --- ROTAS DO APP ---
-        composable(Rota.Hoje.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { HojeScreen(viewModel = hojeViewModel) }
-            }
-        }
-        composable(Rota.Contas.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { ContasScreen() }
-            }
-        }
-        composable(Rota.Caixas.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { CaixasScreen(hojeViewModel = hojeViewModel) }
-            }
-        }
-        composable(Rota.Graficos.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { GraficosScreen() }
-            }
-        }
-        composable(Rota.Garagem.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { GaragemScreen() }
-            }
-        }
-        composable(Rota.Extrato.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { ExtratoScreen() }
-            }
-        }
-        composable(Rota.Dividas.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { DividasScreen() }
-            }
-        }
-        composable(Rota.ContaDiaria.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { ContaDiariaScreen() }
-            }
-        }
-        composable(Rota.Perfil.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { 
-                    PerfilScreen(
-                        onNavigatePlans = {
-                            navController.navigate(Rota.Plans.route)
-                        },
-                        onLogout = {
-                            navController.navigate("login_main") {
-                                popUpTo(Rota.Hoje.route) { inclusive = true }
-                            }
+        NavHost(
+            navController = navController,
+            startDestination = startRoute,
+            modifier = Modifier.padding(if (mostrarScaffold) paddingValues else androidx.compose.foundation.layout.PaddingValues(0.dp))
+        ) {
+            
+            // --- ROTAS DE AUTENTICAÇÃO ---
+            composable("login_main") {
+                AuthScreen(
+                    onAuthSuccess = {
+                        val permissions = mutableListOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                        )
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+                            permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
+                        } else {
+                            permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
                         }
-                    )
-                }
+                        permissionLauncher.launch(permissions.toTypedArray())
+
+                        navController.navigate(Rota.Hoje.route) {
+                            popUpTo("login_main") { inclusive = true }
+                        }
+                    },
+                    onNavigateToRegister = { navController.navigate("register") },
+                    onNavigateToEmailLogin = { navController.navigate("login_email") }
+                )
             }
-        }
-        composable(Rota.Plans.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { PlansScreen() }
+            
+            composable("login_email") {
+                LoginScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onLoginSuccess = {
+                        navController.navigate(Rota.Hoje.route) {
+                            popUpTo("login_main") { inclusive = true }
+                        }
+                    }
+                )
             }
-        }
-        composable(Rota.Configuracoes.route) {
-            ScaffoldPrincipalPush(navController, hojeViewModel) { padding ->
-                Box(modifier = Modifier.padding(padding)) { ConfigScreen() }
+            
+            composable("register") {
+                RegisterScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onRegisterSuccess = {
+                        navController.navigate(Rota.Hoje.route) {
+                            popUpTo("login_main") { inclusive = true }
+                        }
+                    }
+                )
             }
+            
+            // --- ROTAS DO APP (Sem wrappers duplicados!) ---
+            composable(Rota.Hoje.route) { HojeScreen(viewModel = hojeViewModel) }
+            composable(Rota.Contas.route) { ContasScreen() }
+            composable(Rota.Caixas.route) { CaixasScreen(hojeViewModel = hojeViewModel) }
+            composable(Rota.Graficos.route) { GraficosScreen() }
+            composable(Rota.Garagem.route) { GaragemScreen() }
+            composable(Rota.Extrato.route) { ExtratoScreen() }
+            composable(Rota.Dividas.route) { DividasScreen() }
+            composable(Rota.ContaDiaria.route) { ContaDiariaScreen() }
+            composable(Rota.Perfil.route) {
+                PerfilScreen(
+                    onNavigatePlans = { navController.navigate(Rota.Plans.route) },
+                    onLogout = {
+                        navController.navigate("login_main") {
+                            popUpTo(Rota.Hoje.route) { inclusive = true }
+                        }
+                    }
+                )
+            }
+            composable(Rota.Plans.route) { PlansScreen() }
+            composable(Rota.Configuracoes.route) { ConfigScreen() }
         }
+    }
+
+    // Modal de Registro Rápido (Global)
+    if (mostrarModalRapido) {
+        ModalRegistroRapido(
+            onDismiss = { mostrarModalRapido = false },
+            onSave = { valor ->
+                hojeViewModel.registrarGanhoRapido(valor)
+                mostrarModalRapido = false
+            }
+        )
     }
 }
