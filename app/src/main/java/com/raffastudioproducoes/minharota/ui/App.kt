@@ -97,7 +97,8 @@ fun MainAppContent() {
                     scope = scope,
                     onNavigate = { route -> navController.navigate(route) },
                     currentRoute = currentRoute ?: "",
-                    sharedPreferencesManager = prefsManager
+                    sharedPreferencesManager = prefsManager,
+                    onClose = { scope.launch { drawerState.close() } }
                 )
             }
         }
@@ -209,7 +210,7 @@ fun MainAppContent() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewDoMeuApp() {
 
