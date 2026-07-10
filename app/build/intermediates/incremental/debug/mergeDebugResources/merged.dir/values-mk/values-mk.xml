@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+    <string msgid="8397015543330865059" name="android.credentials.TYPE_PASSWORD_CREDENTIAL">"Лозинка"</string>
+    <string msgid="3929015085059320822" name="androidx.credentials.TYPE_PUBLIC_KEY_CREDENTIAL">"Криптографски клуч"</string>
     <string msgid="881409763997275156" name="call_notification_answer_action">"Одговори"</string>
     <string msgid="8793775615905189152" name="call_notification_answer_video_action">"Видео"</string>
     <string msgid="3229508546291798546" name="call_notification_decline_action">"Одбиј"</string>
@@ -25,7 +27,7 @@
     <string name="common_google_play_services_updating_text">%1$s нема да се извршува без услугите на Google Play што се ажурираат во моментов.</string>
     <string name="common_google_play_services_wear_update_text">Потребна е нова верзија на услугите на Google Play. Таа наскоро самата ќе се ажурира.</string>
     <string name="common_open_on_phone">Отвори на телефонот</string>
-    <string name="common_signin_button_text">Најави се</string>
+    <string name="common_signin_button_text">Најавете се</string>
     <string name="common_signin_button_text_long">Најави се со Google</string>
     <string msgid="3260749812566568062" name="copy_toast_msg">"Линкот е копиран во привремена меморија"</string>
     <string msgid="8038256446254964252" name="default_error_message">"Неважечки запис"</string>
