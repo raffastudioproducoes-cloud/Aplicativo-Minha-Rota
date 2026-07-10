@@ -8,18 +8,63 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import androidx.compose.material.icons.rounded.AccessTime
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.AttachMoney
+import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.CalendarMonth
+import androidx.compose.material.icons.rounded.CalendarToday
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.PhotoCamera
+import androidx.compose.material.icons.rounded.Save
+import androidx.compose.material.icons.rounded.Security
+import androidx.compose.material.icons.rounded.Timer
+import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,10 +75,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.raffastudioproducoes.minharota.ui.components.*
+import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
+import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
+import com.raffastudioproducoes.minharota.ui.components.GlassCard
+import com.raffastudioproducoes.minharota.ui.components.HojeSectionCard
+import com.raffastudioproducoes.minharota.ui.components.RenovacaoAlertCard
+import com.raffastudioproducoes.minharota.ui.components.TimeInput
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
 import com.raffastudioproducoes.minharota.util.TextRecognitionHelper
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -117,9 +170,13 @@ fun HojeScreen(
         )
     }
 
-    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background)) {
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             // AQUI ESTÁ O SEGREDO DO ESPAÇAMENTO AUTOMÁTICO
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -147,7 +204,9 @@ fun HojeScreen(
             }
 
             item {
-                GlassCard(modifier = Modifier.fillMaxWidth().clickable { showAccessibilityDialog = true }) {
+                GlassCard(modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showAccessibilityDialog = true }) {
                     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Rounded.Bolt, contentDescription = null, tint = Color(0xFFFACC15))
                         Spacer(modifier = Modifier.width(12.dp))
@@ -160,7 +219,11 @@ fun HojeScreen(
             }
 
             item {
-                HojeSectionCard(title = "DATA DO REGISTRO", subtitle = "Data (padrão: hoje)", icon = Icons.Rounded.CalendarToday) {
+                HojeSectionCard(
+                    title = "DATA DO REGISTRO ",
+                    subtitle = "Data (padrão: hoje)",
+                    icon = Icons.Rounded.CalendarToday
+                ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Surface(
                             onClick = { showDatePicker = true },
@@ -193,7 +256,9 @@ fun HojeScreen(
                         Box(modifier = Modifier.weight(1f)) { TimeInput(label = "Início", selectedTime = horaInicio, onTimeSelected = { viewModel.updateHoraInicio(it) }) }
                         Box(modifier = Modifier.weight(1f)) { TimeInput(label = "Término", selectedTime = horaFim, onTimeSelected = { viewModel.updateHoraFim(it) }) }
                     }
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)) {
                         Checkbox(checked = houvePausa, onCheckedChange = { viewModel.updateHouvePausa(it) }, colors = CheckboxDefaults.colors(checkedColor = verdeEsmeralda))
                         Text("Houve intervalo / pausa?", color = textColor.copy(alpha = 0.7f), fontSize = 14.sp)
                     }
@@ -230,8 +295,17 @@ fun HojeScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .padding(end = 8.dp)
-                                    .clickable { photoPickerLauncher.launch(androidx.activity.result.PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
-                                    .background(if (isDark) Color(0xFF1E293B) else Color(0xFFE2E8F0), RoundedCornerShape(8.dp))
+                                    .clickable {
+                                        photoPickerLauncher.launch(
+                                            androidx.activity.result.PickVisualMediaRequest(
+                                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                                            )
+                                        )
+                                    }
+                                    .background(
+                                        if (isDark) Color(0xFF1E293B) else Color(0xFFE2E8F0),
+                                        RoundedCornerShape(8.dp)
+                                    )
                                     .padding(horizontal = 8.dp, vertical = 4.dp)
                             ) {
                                 Icon(Icons.Rounded.PhotoCamera, contentDescription = "IA", tint = Color(0xFF38BDF8), modifier = Modifier.size(18.dp))
@@ -249,11 +323,16 @@ fun HojeScreen(
                         Text("Nenhum custo adicionado.", color = textColor.copy(alpha = 0.3f), fontSize = 14.sp, modifier = Modifier.padding(vertical = 8.dp))
                     } else {
                         listaCustos.forEach { custo ->
-                            Row(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Row(modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                                 Text(custo.descricao, color = textColor, fontSize = 14.sp)
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Text("R$ ${String.format("%.2f", custo.valor)}", color = textColor, fontWeight = FontWeight.Bold)
-                                    Icon(Icons.Rounded.Close, contentDescription = null, tint = Color.Red.copy(alpha = 0.5f), modifier = Modifier.size(18.dp).clickable { viewModel.removerCusto(custo.id) }.padding(start = 8.dp))
+                                    Icon(Icons.Rounded.Close, contentDescription = null, tint = Color.Red.copy(alpha = 0.5f), modifier = Modifier
+                                        .size(18.dp)
+                                        .clickable { viewModel.removerCusto(custo.id) }
+                                        .padding(start = 8.dp))
                                 }
                             }
                         }
@@ -262,14 +341,18 @@ fun HojeScreen(
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedTextField(value = descCusto, onValueChange = { descCusto = it }, modifier = Modifier.weight(1.5f), label = { Text("O que gastou?", fontSize = 12.sp) }, shape = RoundedCornerShape(16.dp), colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor))
                         OutlinedTextField(value = valorCusto, onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) valorCusto = it.replace(',', '.') }, modifier = Modifier.weight(1f), label = { Text("Valor", fontSize = 12.sp) }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), shape = RoundedCornerShape(16.dp), colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor))
-                        IconButton(onClick = { if (descCusto.isNotEmpty() && valorCusto.isNotEmpty()) { viewModel.adicionarCusto(descCusto, valorCusto.toDoubleOrNull() ?: 0.0); descCusto = ""; valorCusto = "" } }, modifier = Modifier.align(Alignment.CenterVertically).background(verdeEsmeralda, CircleShape)) { Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.Black) }
+                        IconButton(onClick = { if (descCusto.isNotEmpty() && valorCusto.isNotEmpty()) { viewModel.adicionarCusto(descCusto, valorCusto.toDoubleOrNull() ?: 0.0); descCusto = ""; valorCusto = "" } }, modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .background(verdeEsmeralda, CircleShape)) { Icon(Icons.Rounded.Add, contentDescription = null, tint = Color.Black) }
                     }
                 }
             }
 
             item {
                 GlassCard(modifier = Modifier.fillMaxWidth()) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)) {
                         Text("GANHO LÍQUIDO ESTIMADO", style = MaterialTheme.typography.labelSmall, color = textColor.copy(alpha = 0.5f))
                         Text(text = "R$ ${String.format("%.2f", ganhoLiquido)}", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.ExtraBold, color = VerdeNeon)
                         Spacer(modifier = Modifier.height(8.dp))
@@ -298,7 +381,10 @@ fun HojeScreen(
                         val progresso = if (metaDiaria > 0) (ganhoBruto / metaDiaria).toFloat().coerceIn(0f, 1.2f) else 0f
                         LinearProgressIndicator(
                             progress = progresso.coerceAtMost(1f), 
-                            modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)), 
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(8.dp)
+                                .clip(RoundedCornerShape(4.dp)),
                             color = if (progresso >= 1f) VerdeNeon else verdeEsmeralda, 
                             trackColor = textColor.copy(alpha = 0.1f)
                         )
@@ -307,7 +393,9 @@ fun HojeScreen(
             }
 
             item {
-                Button(onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) }, modifier = Modifier.fillMaxWidth().height(56.dp), shape = RoundedCornerShape(50.dp), colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) {
+                Button(onClick = { viewModel.salvarTurno(context, onSuccess = { Toast.makeText(context, "Turno salvo com sucesso!", Toast.LENGTH_SHORT).show() }) }, modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp), shape = RoundedCornerShape(50.dp), colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) {
                     Icon(Icons.Rounded.Save, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("FECHAR E SALVAR TURNO", fontWeight = FontWeight.ExtraBold, fontSize = 16.sp)
