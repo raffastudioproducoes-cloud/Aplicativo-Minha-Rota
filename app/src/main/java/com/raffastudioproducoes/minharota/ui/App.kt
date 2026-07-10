@@ -29,7 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import com.raffastudioproducoes.minharota.ui.components.CustomBottomNavBarGlow
-import com.raffastudioproducoes.minharota.ui.components.DrawerConteudoGradientRainbow
+import com.raffastudioproducoes.minharota.ui.components.DrawerConteudoGradientRainbowV2
 import com.raffastudioproducoes.minharota.ui.components.HeaderSuperior
 import com.raffastudioproducoes.minharota.ui.components.ModalRegistroRapido
 import com.raffastudioproducoes.minharota.ui.navigation.Rota
@@ -92,9 +92,12 @@ fun MainAppContent() {
         drawerState = drawerState,
         drawerContent = {
             if (mostrarScaffold) {
-                DrawerConteudoGradientRainbow(
-                    navController = navController,
-                    onClose = { scope.launch { drawerState.close() } }
+                DrawerConteudoGradientRainbowV2(
+                    drawerState = drawerState,
+                    scope = scope,
+                    onNavigate = { route -> navController.navigate(route) },
+                    currentRoute = currentRoute ?: "",
+                    sharedPreferencesManager = prefsManager
                 )
             }
         }
