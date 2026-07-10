@@ -106,15 +106,14 @@ fun DrawerConteudoGradientRainbowV2(
         ) {
             // 1. CONTA
             CategoryHeader("CONTA")
-            Column(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.End
             ) {
                 IconButton(
-                    onClick = { onClose() },
-                    modifier = Modifier.padding(16.dp)
+                    onClick = { onClose() }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
