@@ -12,7 +12,20 @@
           "package_name": "com.raffastudioproducoes.minharota"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "511340037072-fcplhfmgou9svh2fm6fn7u95ce9lsopb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raffastudioproducoes.minharota",
+            "certificate_hash": "120a01eb16cd062a938d3a8b55a66333a0c57b28"
+          }
+        },
+        {
+          "client_id": "511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDbElqYkw7qr9N0JULxdjYuq8emf_D5p7A"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

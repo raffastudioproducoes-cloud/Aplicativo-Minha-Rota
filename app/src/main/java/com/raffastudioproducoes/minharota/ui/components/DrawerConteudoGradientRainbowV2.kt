@@ -17,9 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.rounded.AccountBalanceWallet
@@ -41,6 +39,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -106,35 +105,26 @@ fun DrawerConteudoGradientRainbowV2(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(scrollState)
-                .padding(bottom = 24.dp)
+                .padding(16.dp) // Padding geral do cabeçalho
         ) {
             // 1. CONTA
             CategoryHeader("CONTA")
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.End
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End // Joga o X para o canto direito
             ) {
-                IconButton(
-                    onClick = { onClose() }
-                ) {
+                IconButton(onClick = { onClose() }) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = "Fechar menu",
                         tint = Color.White
                     )
                 }
-                Box(
+                Row(
                     modifier = Modifier
-                        .size(80.dp)
-                        .clip(CircleShape)
-                        .background(textColor.copy(alpha = 0.05f))
-                        .clickable {
-                            scope.launch { drawerState.close() }
-                            onNavigate("perfil")
-                        }
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically // Centraliza foto e texto na mesma altura
                 ) {
                     if (fotoPerfilUrl.isNotEmpty()) {
                         coil.compose.AsyncImage(
@@ -158,30 +148,30 @@ fun DrawerConteudoGradientRainbowV2(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-                Text(
-                    text = nomeUsuario,
-                    color = textColor,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Column {
+                    Text(
+                        text = nomeUsuario,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(50.dp))
-                        .background(if (isPro) Color(0x1F10B981) else textColor.copy(alpha = 0.1f))
-                        .padding(horizontal = 14.dp, vertical = 4.dp)
-                ) {
-                    Text(
-                        text = if (isPro) "PRO" else "FREE",
-                        color = if (isPro) Color(0xFF10B981) else textColor.copy(alpha = 0.5f),
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp
-                    )
+                    Surface(
+                        color = if (isPro) Color(0xFF4CAF50) else Color.Gray, // Verde se Pro, Cinza se Free
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier.padding(top = 4.dp)
+                    ) {
+                        Text(
+                            text = if (isPro) "PRO" else "FREE",
+                            color = Color.White,
+                            fontSize = 10.sp,
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                        )
+                    }
                 }
             }
 
@@ -386,4 +376,14 @@ fun PreviewDrawerConteudo() {
         sharedPreferencesManager = prefsManager,
         onClose = { }
     )
+}
+
+@Composable
+fun CategoryHeader(x0: String) {
+    TODO("Not yet implemented")
+}
+
+@Composable
+fun CategoryHeader(x0: String) {
+    TODO("Not yet implemented")
 }
