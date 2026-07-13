@@ -19,9 +19,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -53,7 +53,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainAppContent() {
-    val navController = rememberNavController()
+    val navController: NavHostController = rememberNavController()
     val hojeViewModel: HojeViewModel = viewModel()
     val context = LocalContext.current
     val prefsManager = remember { SharedPreferencesManager(context) }
@@ -208,10 +208,4 @@ fun MainAppContent() {
             }
         )
     }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewDoMeuApp() {
-
 }
