@@ -6,6 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
@@ -29,7 +30,6 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import com.raffastudioproducoes.minharota.ui.components.CustomBottomNavBarGlow
-import com.raffastudioproducoes.minharota.ui.components.DrawerConteudoGradientRainbowV2
 import com.raffastudioproducoes.minharota.ui.components.HeaderSuperior
 import com.raffastudioproducoes.minharota.ui.components.ModalRegistroRapido
 import com.raffastudioproducoes.minharota.ui.navigation.Rota
@@ -49,6 +49,7 @@ import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
 import com.raffastudioproducoes.minharota.ui.screens.perfil.PerfilScreen
 import com.raffastudioproducoes.minharota.ui.screens.plans.PlansScreen
 import com.raffastudioproducoes.minharota.ui.screens.splash.SplashScreen
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
@@ -208,4 +209,14 @@ fun MainAppContent() {
             }
         )
     }
+}
+
+fun DrawerConteudoGradientRainbowV2(
+    drawerState: DrawerState,
+    scope: CoroutineScope,
+    onNavigate: (String) -> Unit,
+    currentRoute: String,
+    sharedPreferencesManager: SharedPreferencesManager,
+    onClose: () -> Unit
+) {
 }

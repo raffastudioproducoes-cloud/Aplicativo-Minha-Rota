@@ -1,3 +1,4 @@
+C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\domain\model\Transaction.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\theme\Theme.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\CustomBottomNavBarGlow.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\MainActivity.kt
@@ -14,6 +15,7 @@ C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffas
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\plans\PlansScreen.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\HojeSectionCard.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\viewmodel\GeminiAiViewModel.kt
+C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\repository\UserRepository.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\AiInsightCard.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\CardConta.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\auth\AuthScreen.kt
@@ -21,14 +23,17 @@ C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffas
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\login\LoginScreen.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\App.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\graficos\GraficosViewModel.kt
+C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\domain\model\Account.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\auth\LoginScreen.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\perfil\PerfilScreen.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\PremiumGlassCard.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\garagem\GaragemScreen.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\garagem\GaragemViewModel.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\ScaffoldPrincipal.kt
+C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\domain\model\Category.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\TimePicker.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\graficos\GraficosScreen.kt
+C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\domain\model\Vehicle.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\DrawerConteudo.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\hoje\HojeScreen.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\theme\Color.kt
@@ -42,6 +47,7 @@ C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffas
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\CheckoutModal.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\PaywallModal.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\perfil\PerfilViewModel.kt
+C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\domain\model\User.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\dividas\DividasScreen.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\onboarding\OnboardingScreen.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\RenovacaoAlertCard.kt
@@ -50,6 +56,7 @@ C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffas
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\components\HeaderSuperior.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\contadiaria\ContaDiariaViewModel.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\splash\SplashScreen.kt
+C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\viewmodel\UserViewModel.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\data\local\SharedPreferencesManager.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\services\RideAssistantService.kt
 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\java\com\raffastudioproducoes\minharota\ui\screens\caixas\CaixasViewModel.kt

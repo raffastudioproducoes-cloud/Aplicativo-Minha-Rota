@@ -104,422 +104,421 @@
 56-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:29:9-54
 57        android:supportsRtl="true"
 57-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:30:9-35
-58        android:testOnly="true"
-59        android:theme="@android:style/Theme.Material.Light.NoActionBar" >
-59-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:31:9-72
-60        <activity
-60-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:33:9-41:20
-61            android:name="com.raffastudioproducoes.minharota.MainActivity"
-61-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:34:13-41
-62            android:exported="true"
-62-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:35:13-36
-63            android:theme="@android:style/Theme.Material.Light.NoActionBar" >
-63-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:36:13-76
-64            <intent-filter>
-64-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:37:13-40:29
-65                <action android:name="android.intent.action.MAIN" />
-65-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:38:17-69
-65-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:38:25-66
-66
-67                <category android:name="android.intent.category.LAUNCHER" />
-67-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:39:17-77
-67-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:39:27-74
-68            </intent-filter>
-69        </activity>
-70
-71        <service
-71-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:43:9-54:19
-72            android:name="com.raffastudioproducoes.minharota.services.RideAssistantService"
-72-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:44:13-58
-73            android:exported="true"
-73-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:46:13-36
-74            android:label="Assistente de Corrida MinhaRota"
-74-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:47:13-60
-75            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
-75-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:45:13-79
-76            <intent-filter>
-76-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:48:13-50:29
-77                <action android:name="android.accessibilityservice.AccessibilityService" />
-77-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:49:17-92
-77-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:49:25-89
-78            </intent-filter>
-79
-80            <meta-data
-80-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:51:13-53:65
-81                android:name="android.accessibilityservice"
-81-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:52:17-60
-82                android:resource="@xml/ride_assistant_config" />
-82-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:53:17-62
-83        </service>
-84
-85        <provider
-85-->INJECTED
-86            android:name="androidx.core.content.FileProvider"
-86-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:57:13-62
-87            android:authorities="com.raffastudioproducoes.minharota.fileprovider"
-87-->INJECTED
-88            android:exported="false"
-88-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:59:13-37
-89            android:grantUriPermissions="true" >
-89-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:60:13-47
-90            <meta-data
-90-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:61:13-63:54
-91                android:name="android.support.FILE_PROVIDER_PATHS"
-91-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:62:17-67
-92                android:resource="@xml/file_paths" />
-92-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:63:17-51
-93        </provider>
-94
-95        <service
-95-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:8:9-14:19
-96            android:name="com.google.firebase.components.ComponentDiscoveryService"
-96-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:9:13-84
-97            android:directBootAware="true"
-97-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:32:13-43
-98            android:exported="false" >
-98-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:10:13-37
-99            <meta-data
-99-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:11:13-13:85
-100                android:name="com.google.firebase.components:com.google.firebase.auth.ktx.FirebaseAuthLegacyRegistrar"
-100-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:12:17-119
-101                android:value="com.google.firebase.components.ComponentRegistrar" />
-101-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:13:17-82
-102            <meta-data
-102-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:69:13-71:85
-103                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
-103-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:70:17-109
-104                android:value="com.google.firebase.components.ComponentRegistrar" />
-104-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:71:17-82
-105            <meta-data
-105-->[com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:12:13-14:85
-106                android:name="com.google.firebase.components:com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar"
-106-->[com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:13:17-129
-107                android:value="com.google.firebase.components.ComponentRegistrar" />
-107-->[com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:14:17-82
-108            <meta-data
-108-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:17:13-19:85
-109                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
-109-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:18:17-122
-110                android:value="com.google.firebase.components.ComponentRegistrar" />
-110-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:19:17-82
-111            <meta-data
-111-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:20:13-22:85
-112                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
-112-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:21:17-111
-113                android:value="com.google.firebase.components.ComponentRegistrar" />
-113-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:22:17-82
-114            <meta-data
-114-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:12:13-14:85
-115                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
-115-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:13:17-116
-116                android:value="com.google.firebase.components.ComponentRegistrar" />
-116-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:14:17-82
-117            <meta-data
-117-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:35:13-37:85
-118                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
-118-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:36:17-109
-119                android:value="com.google.firebase.components.ComponentRegistrar" />
-119-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:37:17-82
-120        </service>
-121
-122        <activity
-122-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:29:9-46:20
-123            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
-123-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:30:13-80
-124            android:excludeFromRecents="true"
-124-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:31:13-46
-125            android:exported="true"
-125-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:32:13-36
-126            android:launchMode="singleTask"
-126-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:33:13-44
-127            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-127-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:34:13-72
-128            <intent-filter>
-128-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:35:13-45:29
-129                <action android:name="android.intent.action.VIEW" />
-129-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:17-69
-129-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:25-66
-130
-131                <category android:name="android.intent.category.DEFAULT" />
-131-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:17-76
-131-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:27-73
-132                <category android:name="android.intent.category.BROWSABLE" />
-132-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:17-78
-132-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:27-75
-133
-134                <data
-134-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:41:17-44:51
-135                    android:host="firebase.auth"
-135-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:42:21-49
-136                    android:path="/"
-136-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:43:21-37
-137                    android:scheme="genericidp" />
-137-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:44:21-48
-138            </intent-filter>
-139        </activity>
-140        <activity
-140-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:47:9-64:20
-141            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
-141-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:48:13-79
-142            android:excludeFromRecents="true"
-142-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:49:13-46
-143            android:exported="true"
-143-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:50:13-36
-144            android:launchMode="singleTask"
-144-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:51:13-44
-145            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-145-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:52:13-72
-146            <intent-filter>
-146-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:53:13-63:29
-147                <action android:name="android.intent.action.VIEW" />
-147-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:17-69
-147-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:25-66
-148
-149                <category android:name="android.intent.category.DEFAULT" />
-149-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:17-76
-149-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:27-73
-150                <category android:name="android.intent.category.BROWSABLE" />
-150-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:17-78
-150-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:27-75
-151
-152                <data
-152-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:41:17-44:51
-153                    android:host="firebase.auth"
-153-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:42:21-49
-154                    android:path="/"
-154-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:43:21-37
-155                    android:scheme="recaptcha" />
-155-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:44:21-48
-156            </intent-filter>
-157        </activity>
-158
-159        <service
-159-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:24:9-32:19
-160            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
-160-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:25:13-94
-161            android:enabled="true"
-161-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:26:13-35
-162            android:exported="false" >
-162-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:27:13-37
-163            <meta-data
-163-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:29:13-31:104
-164                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
-164-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:30:17-76
-165                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
-165-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:31:17-101
-166        </service>
-167
-168        <activity
-168-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:34:9-41:20
-169            android:name="androidx.credentials.playservices.HiddenActivity"
-169-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:35:13-76
-170            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
-170-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:36:13-87
-171            android:enabled="true"
-171-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:37:13-35
-172            android:exported="false"
-172-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:38:13-37
-173            android:fitsSystemWindows="true"
-173-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:39:13-45
-174            android:theme="@style/Theme.Hidden" >
-174-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:40:13-48
-175        </activity>
-176        <activity
-176-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:23:9-27:75
-177            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
-177-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:24:13-93
-178            android:excludeFromRecents="true"
-178-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:25:13-46
-179            android:exported="false"
-179-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:26:13-37
-180            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-180-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:27:13-72
-181        <!--
-182            Service handling Google Sign-In user revocation. For apps that do not integrate with
-183            Google Sign-In, this service will never be started.
-184        -->
-185        <service
-185-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:33:9-37:51
-186            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
-186-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:34:13-89
-187            android:exported="true"
-187-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:35:13-36
-188            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
-188-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:36:13-107
-189            android:visibleToInstantApps="true" />
-189-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:37:13-48
-190        <service
-190-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:9:9-15:19
-191            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
-191-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:10:13-91
-192            android:directBootAware="true"
-192-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:17:13-43
-193            android:exported="false" >
-193-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:11:13-37
-194            <meta-data
-194-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:12:13-14:85
-195                android:name="com.google.firebase.components:com.google.mlkit.vision.text.internal.TextRegistrar"
-195-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:13:17-114
-196                android:value="com.google.firebase.components.ComponentRegistrar" />
-196-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:14:17-82
-197            <meta-data
-197-->[com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:12:13-14:85
-198                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
-198-->[com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:13:17-124
-199                android:value="com.google.firebase.components.ComponentRegistrar" />
-199-->[com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:14:17-82
-200            <meta-data
-200-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:20:13-22:85
-201                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
-201-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:21:17-120
-202                android:value="com.google.firebase.components.ComponentRegistrar" />
-202-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:22:17-82
-203        </service>
-204
-205        <provider
-205-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:9:9-13:38
-206            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
-206-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:10:13-78
-207            android:authorities="com.raffastudioproducoes.minharota.mlkitinitprovider"
-207-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:11:13-69
-208            android:exported="false"
-208-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:12:13-37
-209            android:initOrder="99" />
-209-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:13:13-35
-210
-211        <activity
-211-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
-212            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-212-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:19-85
-213            android:exported="false"
-213-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:22:19-43
-214            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-214-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:21:19-78
-215
-216        <provider
-216-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:23:9-28:39
-217            android:name="com.google.firebase.provider.FirebaseInitProvider"
-217-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:24:13-77
-218            android:authorities="com.raffastudioproducoes.minharota.firebaseinitprovider"
-218-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:25:13-72
-219            android:directBootAware="true"
-219-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:26:13-43
-220            android:exported="false"
-220-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:27:13-37
-221            android:initOrder="100" />
-221-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:28:13-36
-222        <provider
-222-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
-223            android:name="androidx.startup.InitializationProvider"
-223-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:25:13-67
-224            android:authorities="com.raffastudioproducoes.minharota.androidx-startup"
-224-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:26:13-68
-225            android:exported="false" >
-225-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:27:13-37
-226            <meta-data
-226-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
-227                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-227-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:30:17-75
-228                android:value="androidx.startup" />
-228-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:31:17-49
-229            <meta-data
-229-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
-230                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-230-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
-231                android:value="androidx.startup" />
-231-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
-232            <meta-data
-232-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
-233                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-233-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
-234                android:value="androidx.startup" />
-234-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
-235        </provider>
-236
-237        <receiver
-237-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
-238            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-238-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
-239            android:directBootAware="false"
-239-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
-240            android:enabled="true"
-240-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
-241            android:exported="true"
-241-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
-242            android:permission="android.permission.DUMP" >
-242-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
-243            <intent-filter>
-243-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
-244                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-244-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
-244-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
-245            </intent-filter>
-246            <intent-filter>
-246-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
-247                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-247-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
-247-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
-248            </intent-filter>
-249            <intent-filter>
-249-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
-250                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-250-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
-250-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
-251            </intent-filter>
-252            <intent-filter>
-252-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
-253                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-253-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
-253-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
-254            </intent-filter>
-255        </receiver>
-256
-257        <meta-data
-257-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:6:9-122
-258            android:name="com.google.android.gms.version"
-258-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:6:20-65
-259            android:value="@integer/google_play_services_version" />
-259-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:6:66-119
-260
-261        <service
-261-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:29:9-35:19
-262            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-262-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:30:13-103
-263            android:exported="false" >
-263-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:31:13-37
-264            <meta-data
-264-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:32:13-34:39
-265                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-265-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:33:17-94
-266                android:value="cct" />
-266-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:34:17-36
-267        </service>
-268        <service
-268-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:26:9-30:19
-269            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-269-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:27:13-117
-270            android:exported="false"
-270-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:28:13-37
-271            android:permission="android.permission.BIND_JOB_SERVICE" >
-271-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:29:13-69
-272        </service>
-273
-274        <receiver
-274-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:32:9-34:40
-275            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-275-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:33:13-132
-276            android:exported="false" /> <!-- The activities will be merged into the manifest of the hosting app. -->
-276-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:34:13-37
-277        <activity
-277-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:14:9-18:65
-278            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
-278-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:15:13-93
-279            android:exported="false"
-279-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:16:13-37
-280            android:stateNotNeeded="true"
-280-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:17:13-42
-281            android:theme="@style/Theme.PlayCore.Transparent" />
-281-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:18:13-62
-282    </application>
-283
-284</manifest>
+58        android:theme="@android:style/Theme.Material.Light.NoActionBar" >
+58-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:31:9-72
+59        <activity
+59-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:33:9-41:20
+60            android:name="com.raffastudioproducoes.minharota.MainActivity"
+60-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:34:13-41
+61            android:exported="true"
+61-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:35:13-36
+62            android:theme="@android:style/Theme.Material.Light.NoActionBar" >
+62-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:36:13-76
+63            <intent-filter>
+63-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:37:13-40:29
+64                <action android:name="android.intent.action.MAIN" />
+64-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:38:17-69
+64-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:38:25-66
+65
+66                <category android:name="android.intent.category.LAUNCHER" />
+66-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:39:17-77
+66-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:39:27-74
+67            </intent-filter>
+68        </activity>
+69
+70        <service
+70-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:43:9-54:19
+71            android:name="com.raffastudioproducoes.minharota.services.RideAssistantService"
+71-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:44:13-58
+72            android:exported="true"
+72-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:46:13-36
+73            android:label="Assistente de Corrida MinhaRota"
+73-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:47:13-60
+74            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+74-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:45:13-79
+75            <intent-filter>
+75-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:48:13-50:29
+76                <action android:name="android.accessibilityservice.AccessibilityService" />
+76-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:49:17-92
+76-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:49:25-89
+77            </intent-filter>
+78
+79            <meta-data
+79-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:51:13-53:65
+80                android:name="android.accessibilityservice"
+80-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:52:17-60
+81                android:resource="@xml/ride_assistant_config" />
+81-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:53:17-62
+82        </service>
+83
+84        <provider
+84-->INJECTED
+85            android:name="androidx.core.content.FileProvider"
+85-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:57:13-62
+86            android:authorities="com.raffastudioproducoes.minharota.fileprovider"
+86-->INJECTED
+87            android:exported="false"
+87-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:59:13-37
+88            android:grantUriPermissions="true" >
+88-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:60:13-47
+89            <meta-data
+89-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:61:13-63:54
+90                android:name="android.support.FILE_PROVIDER_PATHS"
+90-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:62:17-67
+91                android:resource="@xml/file_paths" />
+91-->C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:63:17-51
+92        </provider>
+93
+94        <service
+94-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:8:9-14:19
+95            android:name="com.google.firebase.components.ComponentDiscoveryService"
+95-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:9:13-84
+96            android:directBootAware="true"
+96-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:32:13-43
+97            android:exported="false" >
+97-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:10:13-37
+98            <meta-data
+98-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:11:13-13:85
+99                android:name="com.google.firebase.components:com.google.firebase.auth.ktx.FirebaseAuthLegacyRegistrar"
+99-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:12:17-119
+100                android:value="com.google.firebase.components.ComponentRegistrar" />
+100-->[com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:13:17-82
+101            <meta-data
+101-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:69:13-71:85
+102                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+102-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:70:17-109
+103                android:value="com.google.firebase.components.ComponentRegistrar" />
+103-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:71:17-82
+104            <meta-data
+104-->[com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:12:13-14:85
+105                android:name="com.google.firebase.components:com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar"
+105-->[com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:13:17-129
+106                android:value="com.google.firebase.components.ComponentRegistrar" />
+106-->[com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:14:17-82
+107            <meta-data
+107-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:17:13-19:85
+108                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+108-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:18:17-122
+109                android:value="com.google.firebase.components.ComponentRegistrar" />
+109-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:19:17-82
+110            <meta-data
+110-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:20:13-22:85
+111                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+111-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:21:17-111
+112                android:value="com.google.firebase.components.ComponentRegistrar" />
+112-->[com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:22:17-82
+113            <meta-data
+113-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:12:13-14:85
+114                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+114-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:13:17-116
+115                android:value="com.google.firebase.components.ComponentRegistrar" />
+115-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:14:17-82
+116            <meta-data
+116-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:35:13-37:85
+117                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+117-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:36:17-109
+118                android:value="com.google.firebase.components.ComponentRegistrar" />
+118-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:37:17-82
+119        </service>
+120
+121        <activity
+121-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:29:9-46:20
+122            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+122-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:30:13-80
+123            android:excludeFromRecents="true"
+123-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:31:13-46
+124            android:exported="true"
+124-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:32:13-36
+125            android:launchMode="singleTask"
+125-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:33:13-44
+126            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+126-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:34:13-72
+127            <intent-filter>
+127-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:35:13-45:29
+128                <action android:name="android.intent.action.VIEW" />
+128-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:17-69
+128-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:25-66
+129
+130                <category android:name="android.intent.category.DEFAULT" />
+130-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:17-76
+130-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:27-73
+131                <category android:name="android.intent.category.BROWSABLE" />
+131-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:17-78
+131-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:27-75
+132
+133                <data
+133-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:41:17-44:51
+134                    android:host="firebase.auth"
+134-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:42:21-49
+135                    android:path="/"
+135-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:43:21-37
+136                    android:scheme="genericidp" />
+136-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:44:21-48
+137            </intent-filter>
+138        </activity>
+139        <activity
+139-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:47:9-64:20
+140            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+140-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:48:13-79
+141            android:excludeFromRecents="true"
+141-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:49:13-46
+142            android:exported="true"
+142-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:50:13-36
+143            android:launchMode="singleTask"
+143-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:51:13-44
+144            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+144-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:52:13-72
+145            <intent-filter>
+145-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:53:13-63:29
+146                <action android:name="android.intent.action.VIEW" />
+146-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:17-69
+146-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:25-66
+147
+148                <category android:name="android.intent.category.DEFAULT" />
+148-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:17-76
+148-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:27-73
+149                <category android:name="android.intent.category.BROWSABLE" />
+149-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:17-78
+149-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:27-75
+150
+151                <data
+151-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:41:17-44:51
+152                    android:host="firebase.auth"
+152-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:42:21-49
+153                    android:path="/"
+153-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:43:21-37
+154                    android:scheme="recaptcha" />
+154-->[com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:44:21-48
+155            </intent-filter>
+156        </activity>
+157
+158        <service
+158-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:24:9-32:19
+159            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
+159-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:25:13-94
+160            android:enabled="true"
+160-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:26:13-35
+161            android:exported="false" >
+161-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:27:13-37
+162            <meta-data
+162-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:29:13-31:104
+163                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
+163-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:30:17-76
+164                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
+164-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:31:17-101
+165        </service>
+166
+167        <activity
+167-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:34:9-41:20
+168            android:name="androidx.credentials.playservices.HiddenActivity"
+168-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:35:13-76
+169            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+169-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:36:13-87
+170            android:enabled="true"
+170-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:37:13-35
+171            android:exported="false"
+171-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:38:13-37
+172            android:fitsSystemWindows="true"
+172-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:39:13-45
+173            android:theme="@style/Theme.Hidden" >
+173-->[androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:40:13-48
+174        </activity>
+175        <activity
+175-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:23:9-27:75
+176            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+176-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:24:13-93
+177            android:excludeFromRecents="true"
+177-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:25:13-46
+178            android:exported="false"
+178-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:26:13-37
+179            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+179-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:27:13-72
+180        <!--
+181            Service handling Google Sign-In user revocation. For apps that do not integrate with
+182            Google Sign-In, this service will never be started.
+183        -->
+184        <service
+184-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:33:9-37:51
+185            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+185-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:34:13-89
+186            android:exported="true"
+186-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:35:13-36
+187            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+187-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:36:13-107
+188            android:visibleToInstantApps="true" />
+188-->[com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:37:13-48
+189        <service
+189-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:9:9-15:19
+190            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+190-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:10:13-91
+191            android:directBootAware="true"
+191-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:17:13-43
+192            android:exported="false" >
+192-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:11:13-37
+193            <meta-data
+193-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:12:13-14:85
+194                android:name="com.google.firebase.components:com.google.mlkit.vision.text.internal.TextRegistrar"
+194-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:13:17-114
+195                android:value="com.google.firebase.components.ComponentRegistrar" />
+195-->[com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:14:17-82
+196            <meta-data
+196-->[com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:12:13-14:85
+197                android:name="com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar"
+197-->[com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:13:17-124
+198                android:value="com.google.firebase.components.ComponentRegistrar" />
+198-->[com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:14:17-82
+199            <meta-data
+199-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:20:13-22:85
+200                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+200-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:21:17-120
+201                android:value="com.google.firebase.components.ComponentRegistrar" />
+201-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:22:17-82
+202        </service>
+203
+204        <provider
+204-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:9:9-13:38
+205            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+205-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:10:13-78
+206            android:authorities="com.raffastudioproducoes.minharota.mlkitinitprovider"
+206-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:11:13-69
+207            android:exported="false"
+207-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:12:13-37
+208            android:initOrder="99" />
+208-->[com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:13:13-35
+209
+210        <activity
+210-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+211            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+211-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+212            android:exported="false"
+212-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+213            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+213-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+214
+215        <provider
+215-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:23:9-28:39
+216            android:name="com.google.firebase.provider.FirebaseInitProvider"
+216-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:24:13-77
+217            android:authorities="com.raffastudioproducoes.minharota.firebaseinitprovider"
+217-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:25:13-72
+218            android:directBootAware="true"
+218-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:26:13-43
+219            android:exported="false"
+219-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:27:13-37
+220            android:initOrder="100" />
+220-->[com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:28:13-36
+221        <provider
+221-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+222            android:name="androidx.startup.InitializationProvider"
+222-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:25:13-67
+223            android:authorities="com.raffastudioproducoes.minharota.androidx-startup"
+223-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:26:13-68
+224            android:exported="false" >
+224-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:27:13-37
+225            <meta-data
+225-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+226                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+226-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:30:17-75
+227                android:value="androidx.startup" />
+227-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:31:17-49
+228            <meta-data
+228-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+229                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+229-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+230                android:value="androidx.startup" />
+230-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+231            <meta-data
+231-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+232                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+232-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+233                android:value="androidx.startup" />
+233-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+234        </provider>
+235
+236        <receiver
+236-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+237            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+237-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+238            android:directBootAware="false"
+238-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+239            android:enabled="true"
+239-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+240            android:exported="true"
+240-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+241            android:permission="android.permission.DUMP" >
+241-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+242            <intent-filter>
+242-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+243                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+243-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+243-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+244            </intent-filter>
+245            <intent-filter>
+245-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+246                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+246-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+246-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+247            </intent-filter>
+248            <intent-filter>
+248-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+249                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+249-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+249-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+250            </intent-filter>
+251            <intent-filter>
+251-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+252                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+252-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+252-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+253            </intent-filter>
+254        </receiver>
+255
+256        <meta-data
+256-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:6:9-122
+257            android:name="com.google.android.gms.version"
+257-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:6:20-65
+258            android:value="@integer/google_play_services_version" />
+258-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:6:66-119
+259
+260        <service
+260-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:29:9-35:19
+261            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+261-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:30:13-103
+262            android:exported="false" >
+262-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:31:13-37
+263            <meta-data
+263-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:32:13-34:39
+264                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+264-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:33:17-94
+265                android:value="cct" />
+265-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:34:17-36
+266        </service>
+267        <service
+267-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:26:9-30:19
+268            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+268-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:27:13-117
+269            android:exported="false"
+269-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:28:13-37
+270            android:permission="android.permission.BIND_JOB_SERVICE" >
+270-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:29:13-69
+271        </service>
+272
+273        <receiver
+273-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:32:9-34:40
+274            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+274-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:33:13-132
+275            android:exported="false" /> <!-- The activities will be merged into the manifest of the hosting app. -->
+275-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:34:13-37
+276        <activity
+276-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:14:9-18:65
+277            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
+277-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:15:13-93
+278            android:exported="false"
+278-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:16:13-37
+279            android:stateNotNeeded="true"
+279-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:17:13-42
+280            android:theme="@style/Theme.PlayCore.Transparent" />
+280-->[com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:18:13-62
+281    </application>
+282
+283</manifest>

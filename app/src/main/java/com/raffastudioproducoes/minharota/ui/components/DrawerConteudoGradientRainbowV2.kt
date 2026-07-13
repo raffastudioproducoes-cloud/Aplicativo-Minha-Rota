@@ -55,9 +55,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.firestore.auth.User
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
+private val User?.isPro: Boolean
 
 /**
  * IMPLEMENTAÇÃO CORRIGIDA DO MENU DRAWER.
@@ -69,6 +72,7 @@ fun DrawerConteudoGradientRainbowV2(
     scope: CoroutineScope,
     onNavigate: (String) -> Unit,
     currentRoute: String,
+    user: User?, // <-- Agora recebemos o modelo de dados completo
     sharedPreferencesManager: SharedPreferencesManager,
     onClose: () -> Unit
 ) {
@@ -152,7 +156,8 @@ fun DrawerConteudoGradientRainbowV2(
 
                 Column {
                     Text(
-                        text = nomeUsuario,
+                        text = user?.displayName
+                            ?: "Convidado", // Exibe o nome ou 'Convidado' se null
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp
@@ -166,7 +171,10 @@ fun DrawerConteudoGradientRainbowV2(
                         modifier = Modifier.padding(top = 4.dp)
                     ) {
                         Text(
-                            text = if (isPro) "PRO" else "FREE",
+                            EtiquetaStatus(
+                                isPro = user?.isPro ?: false
+                            ), // Passa o status real do Firebase
+                            //text = if (isPro) "PRO" else "FREE",
                             color = Color.White,
                             fontSize = 10.sp,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
@@ -298,6 +306,11 @@ fun DrawerConteudoGradientRainbowV2(
             )
         }
     }
+}
+
+@Composable
+fun EtiquetaStatus(isPro: Boolean) {
+    TODO("Not yet implemented")
 }
 
 
