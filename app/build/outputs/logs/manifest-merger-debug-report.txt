@@ -1,0 +1,897 @@
+-- Merging decision tree log ---
+provider#androidx.core.content.FileProvider
+INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:56:9-64:20
+	android:grantUriPermissions
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:60:13-47
+	android:authorities
+		INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:58:13-64
+	android:exported
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:59:13-37
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:57:13-62
+manifest
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:2:1-68:12
+INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:2:1-68:12
+INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:2:1-68:12
+INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:2:1-68:12
+MERGED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:2:1-17:12
+MERGED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:17:1-75:12
+MERGED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:17:1-44:12
+MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\76037d81430d394210a81d4d177d5586\transformed\jetified-googleid-1.1.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.credentials:credentials:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5da3e7235eda28f8d6327090030f1fe4\transformed\jetified-credentials-1.2.1\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.ai.client.generativeai:generativeai:0.9.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26cd8b25f3b49a0c1fa33db5a9bf4e61\transformed\jetified-generativeai-0.9.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:17:1-40:12
+MERGED from [com.google.android.gms:play-services-mlkit-text-recognition:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\24dace637cbcf13f67a1270ddc9704ae\transformed\jetified-play-services-mlkit-text-recognition-19.0.0\AndroidManifest.xml:2:1-8:12
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\120e1d81100998e63e619f6bc7905b21\transformed\jetified-play-services-auth-api-phone-18.0.2\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\f45cd23a9790804619a989d85a8c46f4\transformed\jetified-play-services-auth-base-18.0.10\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.gms:play-services-fido:20.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e61f072b1248af8a5ea37e612d1edebd\transformed\jetified-play-services-fido-20.1.0\AndroidManifest.xml:2:1-10:12
+MERGED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:2:1-18:12
+MERGED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:2:1-18:12
+MERGED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:2:1-26:12
+MERGED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:2:1-18:12
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:2:1-26:12
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\fa558f8137aa2f1ebed30f8efdbcbb2b\transformed\jetified-firebase-appcheck-interop-17.0.0\AndroidManifest.xml:15:1-25:12
+MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8250387c2a3a39b0f300607dad345eff\transformed\jetified-firebase-database-collection-18.0.1\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:16:1-24:12
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:2:1-18:12
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\20b9967878bf277b44e23e37acc34537\transformed\jetified-firebase-auth-interop-20.0.0\AndroidManifest.xml:2:1-10:12
+MERGED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:15:1-41:12
+MERGED from [com.google.mlkit:vision-interfaces:16.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a49864e49465281f3c49ed68811c1d87\transformed\jetified-vision-interfaces-16.2.0\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0796115eb77f061076fc1c4d7958ffb8\transformed\jetified-recaptcha-18.5.1\AndroidManifest.xml:2:1-11:12
+MERGED from [com.google.android.play:integrity:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bc523a7b34d274e4a3fb2e3f2618b96b\transformed\jetified-integrity-1.3.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-common:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\42778a7b776641c71ce075d6d1a4bb33\transformed\navigation-common-2.7.7\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-runtime:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\ac032042f33f5e1972f0da98066a3970\transformed\navigation-runtime-2.7.7\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\ba2f06ae7e917e2660f884eb03952080\transformed\navigation-common-ktx-2.7.7\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\70932a50f66b0f3dce24cbf5ae8afad1\transformed\navigation-runtime-ktx-2.7.7\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.navigation:navigation-compose:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b43247786d6b22b8eea7b446308e09d3\transformed\jetified-navigation-compose-2.7.7\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.loader:loader:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bba9d782ec885108badefde7f23c75e0\transformed\loader-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\133a9068eee2336486182ab5e1a8f490\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.material3:material3-android:1.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0e88fd85a438b851307f0896c0aef944\transformed\jetified-material3-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity-compose:1.8.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b733b78aa1add18952d73ad9fc1b6e9\transformed\jetified-activity-compose-1.8.2\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-compose:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8a7499106612988c852986ec1f6db679\transformed\jetified-coil-compose-2.6.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-compose-base:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c99a35c339d55f5f79f64becba0c943c\transformed\jetified-coil-compose-base-2.6.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\fbc5c17a241766bbd0017e3a1d5a02be\transformed\jetified-foundation-layout-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e67eae7f7c7e2dd0d0a7c5bceeb8a943\transformed\jetified-material-icons-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-icons-extended-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b14b619f482618419bf77cf923cff47e\transformed\jetified-material-icons-extended-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.material:material-ripple-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bcd9a602fd95b53133dfc6c740d5c3d1\transformed\jetified-material-ripple-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.foundation:foundation-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bd2780553cf6af141fd7b9a099fe57ac\transformed\jetified-foundation-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-core-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e5110e4af160378cf02942148ff14936\transformed\jetified-animation-core-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.animation:animation-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9d23735aa79e08168dd2b19f34242f46\transformed\jetified-animation-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-unit-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1f2f907ab19a6c1bb89ce17360293a0\transformed\jetified-ui-unit-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-text-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2e301c2e28f1a2650efbc45301f4ce5f\transformed\jetified-ui-text-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-util-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7027d312b061942dca730f603b390937\transformed\jetified-ui-util-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-geometry-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\4c456e48e3254e296945d3f8bdfb818b\transformed\jetified-ui-geometry-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\062fabdb8af141768d5dc751d37b2f73\transformed\jetified-ui-tooling-preview-release\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.compose.ui:ui-graphics-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e390c4e0f9f838fe13ced3d58e1fc008\transformed\jetified-ui-graphics-release\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5c966f24454ceabdcad7e289dbe39d9a\transformed\jetified-accompanist-drawablepainter-0.32.0\AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.compose.ui:ui-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bd20119fef7e8673105c0349a4cd8f03\transformed\jetified-ui-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity-ktx:1.8.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\66ed8b82965f4fa383305ad449bb48ef\transformed\jetified-activity-ktx-1.8.2\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.activity:activity:1.8.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\f3b27013e7dd428c6b1e6278f7c2832c\transformed\jetified-activity-1.8.2\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.browser:browser:1.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e0f9ed8fb58fa6331bd3cb025e4f2fa6\transformed\browser-1.4.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\80bf7e6c64eaccc5e8e14560e6ac070b\transformed\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\13594d40de9ece1b088c72bdb188e9b5\transformed\jetified-autofill-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [io.coil-kt:coil:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\55a2d8b0bd4ccd74ba989ae7a9a3b847\transformed\jetified-coil-2.6.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-base:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9873871dcaa3bb5107eced97d317aa40\transformed\jetified-coil-base-2.6.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8df92e6614e6ba2f5242b1875d844a98\transformed\jetified-appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\124f9f8cee4f5fc9247a1717d4ac3069\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3d943c86ae57e25c038d3fb1616723a5\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5ba4e5350d7cb1e333446453041292c8\transformed\jetified-savedstate-ktx-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e8de8a3cba8f4cf43c53f4b94bf7465e\transformed\jetified-savedstate-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7d9fc94aa86f5389e9b4481b3e909c72\transformed\lifecycle-livedata-core-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d884eeb7a81c7ee119e82598347f5858\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\045c85a25a5b2d82439b7925f08c290c\transformed\jetified-lifecycle-viewmodel-ktx-2.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\54365f06fef3a3fa6625916112329afa\transformed\lifecycle-viewmodel-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2abeb7f3cf304fa25e39b3a06b3d4bb9\transformed\lifecycle-runtime-2.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2b3efb119ab6fc341c0ba64075442082\transformed\jetified-lifecycle-viewmodel-compose-2.7.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bb5cc14bd0121679d00695975533c8cb\transformed\jetified-lifecycle-runtime-ktx-2.7.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.ai.client.generativeai:common:0.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9f62e86f5eb037749a156f29f03da29d\transformed\jetified-common-0.8.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7743250a832eef99fdcac57059aa4a37\transformed\jetified-runtime-saveable-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.compose.runtime:runtime-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\ffa1bc0ce021d1cc8e8060993802dc36\transformed\jetified-runtime-release\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:17:1-55:12
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5ec71180fcda150954446c16bd3f9963\transformed\jetified-play-services-tasks-18.2.0\AndroidManifest.xml:2:1-5:12
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.fragment:fragment:1.5.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\6e2e1fa7795559528e0309e046c3a518\transformed\fragment-1.5.7\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\185f69c65489ea628fd4559a72602882\transformed\jetified-customview-poolingcontainer-1.0.0\AndroidManifest.xml:17:1-23:12
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e2d3ebe617ba895a0e11ce699f07f011\transformed\jetified-core-ktx-1.12.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\490b97c11e0b678b9aecac53d862b88e\transformed\jetified-annotation-experimental-1.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0b2ed8683fa38db5110934f2bcd17ede\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [com.google.firebase:firebase-components:18.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d74174ae38956e6c9e177588c4e0baef\transformed\jetified-firebase-components-18.0.0\AndroidManifest.xml:15:1-20:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\840ce87ffa58bf6fd42e00030d8d2c27\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a27415fcb09654c610a725c6e635720c\transformed\core-runtime-2.2.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:15:1-38:12
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:15:1-41:12
+MERGED from [com.google.android.datatransport:transport-api:2.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b2477b91a4021a3ff3bd6edaa7901ebf\transformed\jetified-transport-api-2.2.1\AndroidManifest.xml:15:1-22:12
+MERGED from [com.google.firebase:firebase-encoders-json:17.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\16d9bc48149e2c73fa90b56910ebd21d\transformed\jetified-firebase-encoders-json-17.1.0\AndroidManifest.xml:15:1-23:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2db49443c75190fa65a2cb8351e8f83a\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db920eb68d4a2f099674feac37248262\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b75e5fc2f7ee2a3a48b413d7f756df6c\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0faf9caebbfb0f8db56ed3f8416c060c\transformed\exifinterface-1.3.7\AndroidManifest.xml:17:1-24:12
+MERGED from [io.grpc:grpc-android:1.62.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\703aea60f453eba59b96164f2641f6b3\transformed\jetified-grpc-android-1.62.2\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.odml:image:1.0.0-beta1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8d81a05a50dde6b9de67f836ee679ea0\transformed\jetified-image-1.0.0-beta1\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9f559203eac8bbde84690393dea46bdb\transformed\jetified-protolite-well-known-types-18.0.0\AndroidManifest.xml:2:1-11:12
+MERGED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:2:1-21:12
+	package
+		INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:4:5-67
+MERGED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:25:5-67
+MERGED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:25:5-67
+MERGED from [com.google.ai.client.generativeai:generativeai:0.9.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26cd8b25f3b49a0c1fa33db5a9bf4e61\transformed\jetified-generativeai-0.9.0\AndroidManifest.xml:22:5-67
+MERGED from [com.google.ai.client.generativeai:generativeai:0.9.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26cd8b25f3b49a0c1fa33db5a9bf4e61\transformed\jetified-generativeai-0.9.0\AndroidManifest.xml:22:5-67
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:11:5-67
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:11:5-67
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0796115eb77f061076fc1c4d7958ffb8\transformed\jetified-recaptcha-18.5.1\AndroidManifest.xml:7:5-67
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0796115eb77f061076fc1c4d7958ffb8\transformed\jetified-recaptcha-18.5.1\AndroidManifest.xml:7:5-67
+MERGED from [com.google.ai.client.generativeai:common:0.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9f62e86f5eb037749a156f29f03da29d\transformed\jetified-common-0.8.0\AndroidManifest.xml:22:5-67
+MERGED from [com.google.ai.client.generativeai:common:0.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9f62e86f5eb037749a156f29f03da29d\transformed\jetified-common-0.8.0\AndroidManifest.xml:22:5-67
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:26:5-67
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:26:5-67
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:4:22-64
+uses-permission#android.permission.BIND_ACCESSIBILITY_SERVICE
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:5:5-85
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:5:22-82
+uses-permission#android.permission.CAMERA
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:6:5-65
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:6:22-62
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:9:5-79
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:9:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:10:5-81
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:10:22-78
+uses-permission#android.permission.READ_MEDIA_IMAGES
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:13:5-76
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:13:22-73
+uses-permission#android.permission.READ_MEDIA_VIDEO
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:14:5-75
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:14:22-72
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:15:5-107
+	android:maxSdkVersion
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:15:78-104
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:15:22-77
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:16:5-108
+	android:maxSdkVersion
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:16:79-105
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:16:22-78
+uses-permission#android.permission.POST_NOTIFICATIONS
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:19:5-77
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:19:22-74
+uses-feature#android.hardware.camera
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:21:5-85
+	android:required
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:21:58-82
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:21:19-57
+uses-feature#android.hardware.location.gps
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:22:5-91
+	android:required
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:22:64-88
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:22:19-63
+application
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:24:5-66:19
+INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:24:5-66:19
+MERGED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:7:5-15:19
+MERGED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:7:5-15:19
+MERGED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:28:5-73:19
+MERGED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:28:5-73:19
+MERGED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:23:5-42:19
+MERGED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:23:5-42:19
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:22:5-38:19
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:22:5-38:19
+MERGED from [com.google.android.gms:play-services-fido:20.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e61f072b1248af8a5ea37e612d1edebd\transformed\jetified-play-services-fido-20.1.0\AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-fido:20.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e61f072b1248af8a5ea37e612d1edebd\transformed\jetified-play-services-fido-20.1.0\AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:8:5-24:19
+MERGED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:8:5-24:19
+MERGED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:13:5-24:19
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:13:5-24:19
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\fa558f8137aa2f1ebed30f8efdbcbb2b\transformed\jetified-firebase-appcheck-interop-17.0.0\AndroidManifest.xml:23:5-20
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\fa558f8137aa2f1ebed30f8efdbcbb2b\transformed\jetified-firebase-appcheck-interop-17.0.0\AndroidManifest.xml:23:5-20
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:8:5-16:19
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\20b9967878bf277b44e23e37acc34537\transformed\jetified-firebase-auth-interop-20.0.0\AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\20b9967878bf277b44e23e37acc34537\transformed\jetified-firebase-auth-interop-20.0.0\AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:22:5-39:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:22:5-39:19
+MERGED from [com.google.android.play:integrity:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bc523a7b34d274e4a3fb2e3f2618b96b\transformed\jetified-integrity-1.3.0\AndroidManifest.xml:5:5-6:19
+MERGED from [com.google.android.play:integrity:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bc523a7b34d274e4a3fb2e3f2618b96b\transformed\jetified-integrity-1.3.0\AndroidManifest.xml:5:5-6:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:23:5-53:19
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5ec71180fcda150954446c16bd3f9963\transformed\jetified-play-services-tasks-18.2.0\AndroidManifest.xml:4:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5ec71180fcda150954446c16bd3f9963\transformed\jetified-play-services-tasks-18.2.0\AndroidManifest.xml:4:5-20
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:5:5-7:19
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:5:5-7:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0b2ed8683fa38db5110934f2bcd17ede\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0b2ed8683fa38db5110934f2bcd17ede\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:28:5-36:19
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:28:5-36:19
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:25:5-39:19
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:25:5-39:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db920eb68d4a2f099674feac37248262\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db920eb68d4a2f099674feac37248262\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [com.google.android.odml:image:1.0.0-beta1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8d81a05a50dde6b9de67f836ee679ea0\transformed\jetified-image-1.0.0-beta1\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.odml:image:1.0.0-beta1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8d81a05a50dde6b9de67f836ee679ea0\transformed\jetified-image-1.0.0-beta1\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:11:5-19:19
+MERGED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:11:5-19:19
+	android:extractNativeLibs
+		INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:30:9-35
+	android:label
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:28:9-41
+	android:roundIcon
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:29:9-54
+	android:icon
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:27:9-49
+	android:allowBackup
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:26:9-35
+	android:theme
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:31:9-72
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:25:9-37
+activity#com.raffastudioproducoes.minharota.MainActivity
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:33:9-41:20
+	android:exported
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:35:13-36
+	android:theme
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:36:13-76
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:34:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:37:13-40:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:38:17-69
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:38:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:39:17-77
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:39:27-74
+service#com.raffastudioproducoes.minharota.services.RideAssistantService
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:43:9-54:19
+	android:label
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:47:13-60
+	android:exported
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:46:13-36
+	android:permission
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:45:13-79
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:44:13-58
+intent-filter#action:name:android.accessibilityservice.AccessibilityService
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:48:13-50:29
+action#android.accessibilityservice.AccessibilityService
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:49:17-92
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:49:25-89
+meta-data#android.accessibilityservice
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:51:13-53:65
+	android:resource
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:53:17-62
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:52:17-60
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:61:13-63:54
+	android:resource
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:63:17-51
+	android:name
+		ADDED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml:62:17-67
+uses-sdk
+INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml
+MERGED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:21:5-23:151
+MERGED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:21:5-23:151
+MERGED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:21:5-44
+MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\76037d81430d394210a81d4d177d5586\transformed\jetified-googleid-1.1.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.libraries.identity.googleid:googleid:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\76037d81430d394210a81d4d177d5586\transformed\jetified-googleid-1.1.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.credentials:credentials:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5da3e7235eda28f8d6327090030f1fe4\transformed\jetified-credentials-1.2.1\AndroidManifest.xml:5:5-44
+MERGED from [androidx.credentials:credentials:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5da3e7235eda28f8d6327090030f1fe4\transformed\jetified-credentials-1.2.1\AndroidManifest.xml:5:5-44
+MERGED from [com.google.ai.client.generativeai:generativeai:0.9.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26cd8b25f3b49a0c1fa33db5a9bf4e61\transformed\jetified-generativeai-0.9.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.ai.client.generativeai:generativeai:0.9.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26cd8b25f3b49a0c1fa33db5a9bf4e61\transformed\jetified-generativeai-0.9.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-mlkit-text-recognition:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\24dace637cbcf13f67a1270ddc9704ae\transformed\jetified-play-services-mlkit-text-recognition-19.0.0\AndroidManifest.xml:6:5-44
+MERGED from [com.google.android.gms:play-services-mlkit-text-recognition:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\24dace637cbcf13f67a1270ddc9704ae\transformed\jetified-play-services-mlkit-text-recognition-19.0.0\AndroidManifest.xml:6:5-44
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\120e1d81100998e63e619f6bc7905b21\transformed\jetified-play-services-auth-api-phone-18.0.2\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-api-phone:18.0.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\120e1d81100998e63e619f6bc7905b21\transformed\jetified-play-services-auth-api-phone-18.0.2\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\f45cd23a9790804619a989d85a8c46f4\transformed\jetified-play-services-auth-base-18.0.10\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-auth-base:18.0.10] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\f45cd23a9790804619a989d85a8c46f4\transformed\jetified-play-services-auth-base-18.0.10\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-fido:20.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e61f072b1248af8a5ea37e612d1edebd\transformed\jetified-play-services-fido-20.1.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-fido:20.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e61f072b1248af8a5ea37e612d1edebd\transformed\jetified-play-services-fido-20.1.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:6:5-44
+MERGED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:6:5-44
+MERGED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:6:5-44
+MERGED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:6:5-44
+MERGED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:6:5-44
+MERGED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:6:5-44
+MERGED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:6:5-44
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:6:5-44
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\fa558f8137aa2f1ebed30f8efdbcbb2b\transformed\jetified-firebase-appcheck-interop-17.0.0\AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.firebase:firebase-appcheck-interop:17.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\fa558f8137aa2f1ebed30f8efdbcbb2b\transformed\jetified-firebase-appcheck-interop-17.0.0\AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8250387c2a3a39b0f300607dad345eff\transformed\jetified-firebase-database-collection-18.0.1\AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8250387c2a3a39b0f300607dad345eff\transformed\jetified-firebase-database-collection-18.0.1\AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\20b9967878bf277b44e23e37acc34537\transformed\jetified-firebase-auth-interop-20.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\20b9967878bf277b44e23e37acc34537\transformed\jetified-firebase-auth-interop-20.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:19:5-44
+MERGED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:19:5-44
+MERGED from [com.google.mlkit:vision-interfaces:16.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a49864e49465281f3c49ed68811c1d87\transformed\jetified-vision-interfaces-16.2.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.mlkit:vision-interfaces:16.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a49864e49465281f3c49ed68811c1d87\transformed\jetified-vision-interfaces-16.2.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0796115eb77f061076fc1c4d7958ffb8\transformed\jetified-recaptcha-18.5.1\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0796115eb77f061076fc1c4d7958ffb8\transformed\jetified-recaptcha-18.5.1\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.play:integrity:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bc523a7b34d274e4a3fb2e3f2618b96b\transformed\jetified-integrity-1.3.0\AndroidManifest.xml:4:5-44
+MERGED from [com.google.android.play:integrity:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bc523a7b34d274e4a3fb2e3f2618b96b\transformed\jetified-integrity-1.3.0\AndroidManifest.xml:4:5-44
+MERGED from [androidx.navigation:navigation-common:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\42778a7b776641c71ce075d6d1a4bb33\transformed\navigation-common-2.7.7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\42778a7b776641c71ce075d6d1a4bb33\transformed\navigation-common-2.7.7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\ac032042f33f5e1972f0da98066a3970\transformed\navigation-runtime-2.7.7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-runtime:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\ac032042f33f5e1972f0da98066a3970\transformed\navigation-runtime-2.7.7\AndroidManifest.xml:20:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\ba2f06ae7e917e2660f884eb03952080\transformed\navigation-common-ktx-2.7.7\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-common-ktx:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\ba2f06ae7e917e2660f884eb03952080\transformed\navigation-common-ktx-2.7.7\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\70932a50f66b0f3dce24cbf5ae8afad1\transformed\navigation-runtime-ktx-2.7.7\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-runtime-ktx:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\70932a50f66b0f3dce24cbf5ae8afad1\transformed\navigation-runtime-ktx-2.7.7\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b43247786d6b22b8eea7b446308e09d3\transformed\jetified-navigation-compose-2.7.7\AndroidManifest.xml:5:5-44
+MERGED from [androidx.navigation:navigation-compose:2.7.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b43247786d6b22b8eea7b446308e09d3\transformed\jetified-navigation-compose-2.7.7\AndroidManifest.xml:5:5-44
+MERGED from [androidx.loader:loader:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bba9d782ec885108badefde7f23c75e0\transformed\loader-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.loader:loader:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bba9d782ec885108badefde7f23c75e0\transformed\loader-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\133a9068eee2336486182ab5e1a8f490\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\133a9068eee2336486182ab5e1a8f490\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0e88fd85a438b851307f0896c0aef944\transformed\jetified-material3-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.material3:material3-android:1.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0e88fd85a438b851307f0896c0aef944\transformed\jetified-material3-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity-compose:1.8.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b733b78aa1add18952d73ad9fc1b6e9\transformed\jetified-activity-compose-1.8.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-compose:1.8.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b733b78aa1add18952d73ad9fc1b6e9\transformed\jetified-activity-compose-1.8.2\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8a7499106612988c852986ec1f6db679\transformed\jetified-coil-compose-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8a7499106612988c852986ec1f6db679\transformed\jetified-coil-compose-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c99a35c339d55f5f79f64becba0c943c\transformed\jetified-coil-compose-base-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c99a35c339d55f5f79f64becba0c943c\transformed\jetified-coil-compose-base-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\fbc5c17a241766bbd0017e3a1d5a02be\transformed\jetified-foundation-layout-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-layout-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\fbc5c17a241766bbd0017e3a1d5a02be\transformed\jetified-foundation-layout-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e67eae7f7c7e2dd0d0a7c5bceeb8a943\transformed\jetified-material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-core-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e67eae7f7c7e2dd0d0a7c5bceeb8a943\transformed\jetified-material-icons-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b14b619f482618419bf77cf923cff47e\transformed\jetified-material-icons-extended-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-icons-extended-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b14b619f482618419bf77cf923cff47e\transformed\jetified-material-icons-extended-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bcd9a602fd95b53133dfc6c740d5c3d1\transformed\jetified-material-ripple-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.material:material-ripple-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bcd9a602fd95b53133dfc6c740d5c3d1\transformed\jetified-material-ripple-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bd2780553cf6af141fd7b9a099fe57ac\transformed\jetified-foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.foundation:foundation-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bd2780553cf6af141fd7b9a099fe57ac\transformed\jetified-foundation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e5110e4af160378cf02942148ff14936\transformed\jetified-animation-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-core-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e5110e4af160378cf02942148ff14936\transformed\jetified-animation-core-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9d23735aa79e08168dd2b19f34242f46\transformed\jetified-animation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.animation:animation-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9d23735aa79e08168dd2b19f34242f46\transformed\jetified-animation-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1f2f907ab19a6c1bb89ce17360293a0\transformed\jetified-ui-unit-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-unit-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1f2f907ab19a6c1bb89ce17360293a0\transformed\jetified-ui-unit-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2e301c2e28f1a2650efbc45301f4ce5f\transformed\jetified-ui-text-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-text-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2e301c2e28f1a2650efbc45301f4ce5f\transformed\jetified-ui-text-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7027d312b061942dca730f603b390937\transformed\jetified-ui-util-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-util-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7027d312b061942dca730f603b390937\transformed\jetified-ui-util-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\4c456e48e3254e296945d3f8bdfb818b\transformed\jetified-ui-geometry-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-geometry-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\4c456e48e3254e296945d3f8bdfb818b\transformed\jetified-ui-geometry-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\062fabdb8af141768d5dc751d37b2f73\transformed\jetified-ui-tooling-preview-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-tooling-preview-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\062fabdb8af141768d5dc751d37b2f73\transformed\jetified-ui-tooling-preview-release\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e390c4e0f9f838fe13ced3d58e1fc008\transformed\jetified-ui-graphics-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-graphics-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e390c4e0f9f838fe13ced3d58e1fc008\transformed\jetified-ui-graphics-release\AndroidManifest.xml:5:5-44
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5c966f24454ceabdcad7e289dbe39d9a\transformed\jetified-accompanist-drawablepainter-0.32.0\AndroidManifest.xml:21:5-44
+MERGED from [com.google.accompanist:accompanist-drawablepainter:0.32.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5c966f24454ceabdcad7e289dbe39d9a\transformed\jetified-accompanist-drawablepainter-0.32.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.compose.ui:ui-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bd20119fef7e8673105c0349a4cd8f03\transformed\jetified-ui-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.ui:ui-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bd20119fef7e8673105c0349a4cd8f03\transformed\jetified-ui-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\66ed8b82965f4fa383305ad449bb48ef\transformed\jetified-activity-ktx-1.8.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity-ktx:1.8.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\66ed8b82965f4fa383305ad449bb48ef\transformed\jetified-activity-ktx-1.8.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.activity:activity:1.8.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\f3b27013e7dd428c6b1e6278f7c2832c\transformed\jetified-activity-1.8.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.8.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\f3b27013e7dd428c6b1e6278f7c2832c\transformed\jetified-activity-1.8.2\AndroidManifest.xml:20:5-44
+MERGED from [androidx.browser:browser:1.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e0f9ed8fb58fa6331bd3cb025e4f2fa6\transformed\browser-1.4.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.browser:browser:1.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e0f9ed8fb58fa6331bd3cb025e4f2fa6\transformed\browser-1.4.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\80bf7e6c64eaccc5e8e14560e6ac070b\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\80bf7e6c64eaccc5e8e14560e6ac070b\transformed\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\13594d40de9ece1b088c72bdb188e9b5\transformed\jetified-autofill-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\13594d40de9ece1b088c72bdb188e9b5\transformed\jetified-autofill-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [io.coil-kt:coil:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\55a2d8b0bd4ccd74ba989ae7a9a3b847\transformed\jetified-coil-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\55a2d8b0bd4ccd74ba989ae7a9a3b847\transformed\jetified-coil-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9873871dcaa3bb5107eced97d317aa40\transformed\jetified-coil-base-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.6.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9873871dcaa3bb5107eced97d317aa40\transformed\jetified-coil-base-2.6.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8df92e6614e6ba2f5242b1875d844a98\transformed\jetified-appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8df92e6614e6ba2f5242b1875d844a98\transformed\jetified-appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\124f9f8cee4f5fc9247a1717d4ac3069\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\124f9f8cee4f5fc9247a1717d4ac3069\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3d943c86ae57e25c038d3fb1616723a5\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3d943c86ae57e25c038d3fb1616723a5\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5ba4e5350d7cb1e333446453041292c8\transformed\jetified-savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5ba4e5350d7cb1e333446453041292c8\transformed\jetified-savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e8de8a3cba8f4cf43c53f4b94bf7465e\transformed\jetified-savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e8de8a3cba8f4cf43c53f4b94bf7465e\transformed\jetified-savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7d9fc94aa86f5389e9b4481b3e909c72\transformed\lifecycle-livedata-core-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7d9fc94aa86f5389e9b4481b3e909c72\transformed\lifecycle-livedata-core-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d884eeb7a81c7ee119e82598347f5858\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d884eeb7a81c7ee119e82598347f5858\transformed\jetified-lifecycle-viewmodel-savedstate-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\045c85a25a5b2d82439b7925f08c290c\transformed\jetified-lifecycle-viewmodel-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\045c85a25a5b2d82439b7925f08c290c\transformed\jetified-lifecycle-viewmodel-ktx-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\54365f06fef3a3fa6625916112329afa\transformed\lifecycle-viewmodel-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\54365f06fef3a3fa6625916112329afa\transformed\lifecycle-viewmodel-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2abeb7f3cf304fa25e39b3a06b3d4bb9\transformed\lifecycle-runtime-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2abeb7f3cf304fa25e39b3a06b3d4bb9\transformed\lifecycle-runtime-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2b3efb119ab6fc341c0ba64075442082\transformed\jetified-lifecycle-viewmodel-compose-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2b3efb119ab6fc341c0ba64075442082\transformed\jetified-lifecycle-viewmodel-compose-2.7.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bb5cc14bd0121679d00695975533c8cb\transformed\jetified-lifecycle-runtime-ktx-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-runtime-ktx:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\bb5cc14bd0121679d00695975533c8cb\transformed\jetified-lifecycle-runtime-ktx-2.7.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.ai.client.generativeai:common:0.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9f62e86f5eb037749a156f29f03da29d\transformed\jetified-common-0.8.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.ai.client.generativeai:common:0.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9f62e86f5eb037749a156f29f03da29d\transformed\jetified-common-0.8.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7743250a832eef99fdcac57059aa4a37\transformed\jetified-runtime-saveable-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-saveable-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7743250a832eef99fdcac57059aa4a37\transformed\jetified-runtime-saveable-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\ffa1bc0ce021d1cc8e8060993802dc36\transformed\jetified-runtime-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.compose.runtime:runtime-android:1.6.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\ffa1bc0ce021d1cc8e8060993802dc36\transformed\jetified-runtime-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5ec71180fcda150954446c16bd3f9963\transformed\jetified-play-services-tasks-18.2.0\AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-tasks:18.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5ec71180fcda150954446c16bd3f9963\transformed\jetified-play-services-tasks-18.2.0\AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:3:5-44
+MERGED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:3:5-44
+MERGED from [androidx.fragment:fragment:1.5.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\6e2e1fa7795559528e0309e046c3a518\transformed\fragment-1.5.7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.5.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\6e2e1fa7795559528e0309e046c3a518\transformed\fragment-1.5.7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\185f69c65489ea628fd4559a72602882\transformed\jetified-customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.customview:customview-poolingcontainer:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\185f69c65489ea628fd4559a72602882\transformed\jetified-customview-poolingcontainer-1.0.0\AndroidManifest.xml:20:5-21:38
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e2d3ebe617ba895a0e11ce699f07f011\transformed\jetified-core-ktx-1.12.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e2d3ebe617ba895a0e11ce699f07f011\transformed\jetified-core-ktx-1.12.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\490b97c11e0b678b9aecac53d862b88e\transformed\jetified-annotation-experimental-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\490b97c11e0b678b9aecac53d862b88e\transformed\jetified-annotation-experimental-1.4.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0b2ed8683fa38db5110934f2bcd17ede\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0b2ed8683fa38db5110934f2bcd17ede\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.firebase:firebase-components:18.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d74174ae38956e6c9e177588c4e0baef\transformed\jetified-firebase-components-18.0.0\AndroidManifest.xml:18:5-44
+MERGED from [com.google.firebase:firebase-components:18.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d74174ae38956e6c9e177588c4e0baef\transformed\jetified-firebase-components-18.0.0\AndroidManifest.xml:18:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\840ce87ffa58bf6fd42e00030d8d2c27\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\840ce87ffa58bf6fd42e00030d8d2c27\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a27415fcb09654c610a725c6e635720c\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a27415fcb09654c610a725c6e635720c\transformed\core-runtime-2.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.android.datatransport:transport-api:2.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b2477b91a4021a3ff3bd6edaa7901ebf\transformed\jetified-transport-api-2.2.1\AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.android.datatransport:transport-api:2.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b2477b91a4021a3ff3bd6edaa7901ebf\transformed\jetified-transport-api-2.2.1\AndroidManifest.xml:18:5-20:41
+MERGED from [com.google.firebase:firebase-encoders-json:17.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\16d9bc48149e2c73fa90b56910ebd21d\transformed\jetified-firebase-encoders-json-17.1.0\AndroidManifest.xml:19:5-21:41
+MERGED from [com.google.firebase:firebase-encoders-json:17.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\16d9bc48149e2c73fa90b56910ebd21d\transformed\jetified-firebase-encoders-json-17.1.0\AndroidManifest.xml:19:5-21:41
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2db49443c75190fa65a2cb8351e8f83a\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\2db49443c75190fa65a2cb8351e8f83a\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db920eb68d4a2f099674feac37248262\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db920eb68d4a2f099674feac37248262\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b75e5fc2f7ee2a3a48b413d7f756df6c\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\b75e5fc2f7ee2a3a48b413d7f756df6c\transformed\jetified-tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0faf9caebbfb0f8db56ed3f8416c060c\transformed\exifinterface-1.3.7\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.7] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0faf9caebbfb0f8db56ed3f8416c060c\transformed\exifinterface-1.3.7\AndroidManifest.xml:20:5-22:41
+MERGED from [io.grpc:grpc-android:1.62.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\703aea60f453eba59b96164f2641f6b3\transformed\jetified-grpc-android-1.62.2\AndroidManifest.xml:5:5-44
+MERGED from [io.grpc:grpc-android:1.62.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\703aea60f453eba59b96164f2641f6b3\transformed\jetified-grpc-android-1.62.2\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.odml:image:1.0.0-beta1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8d81a05a50dde6b9de67f836ee679ea0\transformed\jetified-image-1.0.0-beta1\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.odml:image:1.0.0-beta1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\8d81a05a50dde6b9de67f836ee679ea0\transformed\jetified-image-1.0.0-beta1\AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9f559203eac8bbde84690393dea46bdb\transformed\jetified-protolite-well-known-types-18.0.0\AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9f559203eac8bbde84690393dea46bdb\transformed\jetified-protolite-well-known-types-18.0.0\AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:7:5-9:41
+	tools:overrideLibrary
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:23:9-148
+	android:targetSdkVersion
+		INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\AndroidManifest.xml
+service#com.google.firebase.components.ComponentDiscoveryService
+ADDED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:8:9-14:19
+MERGED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:66:9-72:19
+MERGED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:66:9-72:19
+MERGED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:9:9-15:19
+MERGED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:9:9-15:19
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:14:9-23:19
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:14:9-23:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:9:9-15:19
+MERGED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:9:9-15:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:30:9-38:19
+MERGED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:30:9-38:19
+	android:exported
+		ADDED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:10:13-37
+	tools:targetApi
+		ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:34:13-32
+	android:directBootAware
+		ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:32:13-43
+	android:name
+		ADDED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:9:13-84
+meta-data#com.google.firebase.components:com.google.firebase.auth.ktx.FirebaseAuthLegacyRegistrar
+ADDED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:11:13-13:85
+	android:value
+		ADDED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:13:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-auth-ktx:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\5b50b5ba7272c4b275b43c274d00a097\transformed\jetified-firebase-auth-ktx-23.1.0\AndroidManifest.xml:12:17-119
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:26:5-79
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:10:5-79
+MERGED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:10:5-79
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0796115eb77f061076fc1c4d7958ffb8\transformed\jetified-recaptcha-18.5.1\AndroidManifest.xml:8:5-79
+MERGED from [com.google.android.recaptcha:recaptcha:18.5.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0796115eb77f061076fc1c4d7958ffb8\transformed\jetified-recaptcha-18.5.1\AndroidManifest.xml:8:5-79
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:25:5-79
+MERGED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:25:5-79
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:22:5-79
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:22:5-79
+MERGED from [io.grpc:grpc-android:1.62.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\703aea60f453eba59b96164f2641f6b3\transformed\jetified-grpc-android-1.62.2\AndroidManifest.xml:7:5-79
+MERGED from [io.grpc:grpc-android:1.62.2] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\703aea60f453eba59b96164f2641f6b3\transformed\jetified-grpc-android-1.62.2\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:26:22-76
+activity#com.google.firebase.auth.internal.GenericIdpActivity
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:29:9-46:20
+	android:excludeFromRecents
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:31:13-46
+	android:launchMode
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:33:13-44
+	android:exported
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:32:13-36
+	android:theme
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:34:13-72
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:30:13-80
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:firebase.auth+data:path:/+data:scheme:genericidp
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:35:13-45:29
+action#android.intent.action.VIEW
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:17-69
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:36:25-66
+category#android.intent.category.DEFAULT
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:17-76
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:38:27-73
+category#android.intent.category.BROWSABLE
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:17-78
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:39:27-75
+data
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:41:17-44:51
+	android:path
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:43:21-37
+	android:host
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:42:21-49
+	android:scheme
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:44:21-48
+activity#com.google.firebase.auth.internal.RecaptchaActivity
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:47:9-64:20
+	android:excludeFromRecents
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:49:13-46
+	android:launchMode
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:51:13-44
+	android:exported
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:50:13-36
+	android:theme
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:52:13-72
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:48:13-79
+intent-filter#action:name:android.intent.action.VIEW+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.DEFAULT+data:host:firebase.auth+data:path:/+data:scheme:recaptcha
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:53:13-63:29
+meta-data#com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar
+ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:69:13-71:85
+	android:value
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:71:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-auth:23.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\a697a65f00469cf2632c8fe308acedf3\transformed\jetified-firebase-auth-23.1.0\AndroidManifest.xml:70:17-109
+service#androidx.credentials.playservices.CredentialProviderMetadataHolder
+ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:24:9-32:19
+	android:enabled
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:26:13-35
+	android:exported
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:27:13-37
+	tools:ignore
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:28:13-60
+	android:name
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:25:13-94
+meta-data#androidx.credentials.CREDENTIAL_PROVIDER_KEY
+ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:29:13-31:104
+	android:value
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:31:17-101
+	android:name
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:30:17-76
+activity#androidx.credentials.playservices.HiddenActivity
+ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:34:9-41:20
+	android:fitsSystemWindows
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:39:13-45
+	android:enabled
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:38:13-37
+	android:configChanges
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:36:13-87
+	android:theme
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:40:13-48
+	android:name
+		ADDED from [androidx.credentials:credentials-play-services-auth:1.2.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\1b31106e13d09dbd8c2c8265b2405157\transformed\jetified-credentials-play-services-auth-1.2.1\AndroidManifest.xml:35:13-76
+activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
+ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:23:9-27:75
+	android:excludeFromRecents
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:25:13-46
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:26:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:27:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:24:13-93
+service#com.google.android.gms.auth.api.signin.RevocationBoundService
+ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:33:9-37:51
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:35:13-36
+	android:visibleToInstantApps
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:37:13-48
+	android:permission
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:36:13-107
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9a0d69e20060a034fd03621ab51fbba9\transformed\jetified-play-services-auth-21.0.0\AndroidManifest.xml:34:13-89
+service#com.google.mlkit.common.internal.MlKitComponentDiscoveryService
+ADDED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:9:9-15:19
+MERGED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:9:9-15:19
+MERGED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:9:9-15:19
+MERGED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:15:9-23:19
+MERGED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:15:9-23:19
+	android:exported
+		ADDED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:11:13-37
+	tools:targetApi
+		ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:19:13-32
+	android:directBootAware
+		ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:17:13-43
+	android:name
+		ADDED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:10:13-91
+meta-data#com.google.firebase.components:com.google.mlkit.vision.text.internal.TextRegistrar
+ADDED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:12:13-14:85
+	android:value
+		ADDED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:14:17-82
+	android:name
+		ADDED from [com.google.android.gms:play-services-mlkit-text-recognition-common:19.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\00c7e1730dcdb22170068ae16c84ff0d\transformed\jetified-play-services-mlkit-text-recognition-common-19.0.0\AndroidManifest.xml:13:17-114
+meta-data#com.google.firebase.components:com.google.mlkit.vision.common.internal.VisionCommonRegistrar
+ADDED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:12:13-14:85
+	android:value
+		ADDED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:14:17-82
+	android:name
+		ADDED from [com.google.mlkit:vision-common:17.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\36ab4aaf87b611ef7c7314997688623c\transformed\jetified-vision-common-17.3.0\AndroidManifest.xml:13:17-124
+provider#com.google.mlkit.common.internal.MlKitInitProvider
+ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:9:9-13:38
+	android:authorities
+		ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:11:13-69
+	android:exported
+		ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:12:13-37
+	android:initOrder
+		ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:13:13-35
+	android:name
+		ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:10:13-78
+meta-data#com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar
+ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:20:13-22:85
+	android:value
+		ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:22:17-82
+	android:name
+		ADDED from [com.google.mlkit:common:18.8.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\d1405a8d81253b550893202e4f4d82fa\transformed\jetified-common-18.8.0\AndroidManifest.xml:21:17-120
+meta-data#com.google.firebase.components:com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar
+ADDED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:12:13-14:85
+	android:value
+		ADDED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:14:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-firestore-ktx:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\26a70a48f9cd801fc7cb175dbb4fdbac\transformed\jetified-firebase-firestore-ktx-25.1.1\AndroidManifest.xml:13:17-129
+meta-data#com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar
+ADDED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:17:13-19:85
+	android:value
+		ADDED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:19:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:18:17-122
+meta-data#com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar
+ADDED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:20:13-22:85
+	android:value
+		ADDED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:22:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-firestore:25.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\e4b048145e7d12f9c95e813b67803482\transformed\jetified-firebase-firestore-25.1.1\AndroidManifest.xml:21:17-111
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.1.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\664fa7b3de3706326e8a1157629038a5\transformed\jetified-play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+meta-data#com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar
+ADDED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:12:13-14:85
+	android:value
+		ADDED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:14:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\7511dedb7874865253705a583455b8eb\transformed\jetified-firebase-common-ktx-21.0.0\AndroidManifest.xml:13:17-116
+provider#com.google.firebase.provider.FirebaseInitProvider
+ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:23:9-28:39
+	android:authorities
+		ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:25:13-72
+	android:exported
+		ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:27:13-37
+	android:directBootAware
+		ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:26:13-43
+	android:initOrder
+		ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:28:13-36
+	android:name
+		ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:24:13-77
+meta-data#com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar
+ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:35:13-37:85
+	android:value
+		ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:37:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-common:21.0.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db8aba0e2dd818fb0e721383d8ebc39a\transformed\jetified-firebase-common-21.0.0\AndroidManifest.xml:36:17-109
+uses-permission#com.google.android.providers.gsf.permission.READ_GSERVICES
+ADDED from [com.google.android.recaptcha:recaptcha:18.5.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0796115eb77f061076fc1c4d7958ffb8\transformed\jetified-recaptcha-18.5.1\AndroidManifest.xml:9:5-98
+	android:name
+		ADDED from [com.google.android.recaptcha:recaptcha:18.5.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\0796115eb77f061076fc1c4d7958ffb8\transformed\jetified-recaptcha-18.5.1\AndroidManifest.xml:9:22-95
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db920eb68d4a2f099674feac37248262\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\db920eb68d4a2f099674feac37248262\transformed\jetified-startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.3.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\381672e1eab908407912e0f89a52ae4f\transformed\jetified-emoji2-1.3.0\AndroidManifest.xml:30:17-75
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+permission#com.raffastudioproducoes.minharota.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+uses-permission#com.raffastudioproducoes.minharota.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\49b0bfd48f7bf4ba0635319edc672eb1\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\401172d43952ad323ba672687851a123\transformed\jetified-lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+meta-data#androidx.profileinstaller.ProfileInstallerInitializer
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+receiver#androidx.profileinstaller.ProfileInstallReceiver
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+	android:enabled
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+	android:exported
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+	android:permission
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+	android:directBootAware
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+intent-filter#action:name:androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+action#androidx.profileinstaller.action.INSTALL_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+intent-filter#action:name:androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+action#androidx.profileinstaller.action.SKIP_FILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+intent-filter#action:name:androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+action#androidx.profileinstaller.action.SAVE_PROFILE
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+intent-filter#action:name:androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+action#androidx.profileinstaller.action.BENCHMARK_OPERATION
+ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+	android:name
+		ADDED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\deb9ffbecdf9280bf2ac82a11a22e064\transformed\jetified-profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:6:9-122
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:6:66-119
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:18.4.0] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\c21dc69f897f7b2fecb92e1b2180e686\transformed\jetified-play-services-basement-18.4.0\AndroidManifest.xml:6:20-65
+service#com.google.android.datatransport.runtime.backends.TransportBackendDiscovery
+ADDED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:29:9-35:19
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:36:9-38:40
+MERGED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:36:9-38:40
+	android:exported
+		ADDED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:31:13-37
+	android:name
+		ADDED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:30:13-103
+meta-data#backend:com.google.android.datatransport.cct.CctBackendFactory
+ADDED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:32:13-34:39
+	android:value
+		ADDED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:34:17-36
+	android:name
+		ADDED from [com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\43ec476368759d2cfd99b2bcf9b4e0a4\transformed\jetified-transport-backend-cct-2.3.3\AndroidManifest.xml:33:17-94
+service#com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService
+ADDED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:26:9-30:19
+	android:exported
+		ADDED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:28:13-37
+	android:permission
+		ADDED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:29:13-69
+	android:name
+		ADDED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:27:13-117
+receiver#com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver
+ADDED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:32:9-34:40
+	android:exported
+		ADDED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:34:13-37
+	android:name
+		ADDED from [com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\9ad42926e69106995c4135fb9e82dc73\transformed\jetified-transport-runtime-2.2.6\AndroidManifest.xml:33:13-132
+activity#com.google.android.play.core.common.PlayCoreDialogWrapperActivity
+ADDED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:14:9-18:65
+	android:stateNotNeeded
+		ADDED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:17:13-42
+	android:exported
+		ADDED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:16:13-37
+	android:theme
+		ADDED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:18:13-62
+	android:name
+		ADDED from [com.google.android.play:core-common:2.0.3] C:\Users\Wilma\.gradle\caches\9.4.1\transforms\3a954c88f952ae3aa646b4db49ddc6fd\transformed\jetified-core-common-2.0.3\AndroidManifest.xml:15:13-93

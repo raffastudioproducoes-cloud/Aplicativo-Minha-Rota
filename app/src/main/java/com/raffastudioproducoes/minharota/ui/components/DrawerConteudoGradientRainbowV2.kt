@@ -143,7 +143,7 @@ fun DrawerConteudoGradientRainbowV2(
                             tint = if (isDark) Color(0xFF3B82F6) else Color(0xFF2563EB),
                             modifier = Modifier
                                 .size(48.dp)
-                                .align(Alignment.Center)
+                                .align(Alignment.CenterVertically as Alignment.Vertical)
                         )
                     }
                 }
@@ -376,14 +376,4 @@ fun PreviewDrawerConteudo() {
         sharedPreferencesManager = prefsManager,
         onClose = { }
     )
-}
-
-@Composable
-fun CategoryHeader(x0: String) {
-    TODO("Not yet implemented")
-}
-
-@Composable
-fun CategoryHeader(x0: String) {
-    TODO("Not yet implemented")
 }

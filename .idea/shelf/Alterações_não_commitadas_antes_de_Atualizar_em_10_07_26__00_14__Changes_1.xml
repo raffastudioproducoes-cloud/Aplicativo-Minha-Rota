@@ -1,0 +1,1149 @@
+<changelist name="Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1" date="1783653361092" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Alterações não commitadas antes de Atualizar em 10/07/26, 00:14 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$Manutencao$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$Manutencao$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Veiculo$Manutencao$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.s" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.s" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-classes.tab.values.s" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/subtypes.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/AppKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/AppKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/AppKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Divida$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Divida$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Divida$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DividasViewModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex" />
+    <option name="AFTER_PATH" value="app/build/intermediates/dex/debug/mergeProjectDexDebug/3/classes.dex" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/classes.dex" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/intermediates/dex/debug/mergeExtDexDebug/classes3.dex" />
+    <option name="AFTER_PATH" value="app/build/intermediates/dex/debug/mergeExtDexDebug/classes3.dex" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/classes3.dex" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/internal-name-to-source.tab.values" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/subtypes.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/id-to-file.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/DrawerConteudoKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/DrawerConteudoKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DrawerConteudoKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Plans.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Plans.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Plans.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/PremiumGlassCardKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/PremiumGlassCardKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/PremiumGlassCardKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/id-to-file.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/RotaKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/RotaKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/RotaKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contas/ContasViewModel.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contas/ContasViewModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContasViewModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Veiculo$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/extrato/ExtratoScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/extrato/ExtratoScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ExtratoScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Divida$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Divida$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Divida$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/extrato/ExtratoViewModel$carregarMovimentacoes$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/extrato/ExtratoViewModel$carregarMovimentacoes$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ExtratoViewModel$carregarMovimentacoes$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/Manutencao$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/Manutencao$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Manutencao$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/supertypes.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-fq-name-to-source.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/extrato/ExtratoViewModel.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/extrato/ExtratoViewModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ExtratoViewModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ScaffoldPrincipalPushKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ScaffoldPrincipalPushKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ScaffoldPrincipalPushKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contadiaria/ComposableSingletons$ContaDiariaScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contadiaria/ComposableSingletons$ContaDiariaScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$ContaDiariaScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-fq-name-to-source.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/intermediates/dex/debug/mergeExtDexDebug/classes4.dex" />
+    <option name="AFTER_PATH" value="app/build/intermediates/dex/debug/mergeExtDexDebug/classes4.dex" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/classes4.dex" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/package-parts.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/subtypes.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-attributes.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/DrawerConteudoGradientKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/DrawerConteudoGradientKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DrawerConteudoGradientKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-output.tab.values" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeViewModel$CustoItem.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeViewModel$CustoItem.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/HojeViewModel$CustoItem.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/HeaderSuperiorKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/HeaderSuperiorKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/HeaderSuperiorKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/login/LoginScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/login/LoginScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/LoginScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/id-to-file.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/META-INF/app_debug.kotlin_module" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/META-INF/app_debug.kotlin_module" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/app_debug.kotlin_module" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaFixa$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaFixa$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContaFixa$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/file-to-id.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$BottomNavBarSquircleKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$BottomNavBarSquircleKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$BottomNavBarSquircleKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$pagarParcela$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$pagarParcela$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DividasViewModel$pagarParcela$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/util/TextRecognitionHelper.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/util/TextRecognitionHelper.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/TextRecognitionHelper.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/internal-name-to-source.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/extrato/ExtratoViewModel$carregarMovimentacoes$1$invokeSuspend$$inlined$sortedByDescending$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/extrato/ExtratoViewModel$carregarMovimentacoes$1$invokeSuspend$$inlined$sortedByDescending$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ExtratoViewModel$carregarMovimentacoes$1$invokeSuspend$$inlined$sortedByDescending$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Caixas.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Caixas.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Caixas.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Extrato.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Extrato.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Extrato.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/lookups.tab.values" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$adicionarDivida$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$adicionarDivida$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DividasViewModel$adicionarDivida$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/config/ConfigScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/config/ConfigScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ConfigScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$BottomNavBarNotchKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$BottomNavBarNotchKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$BottomNavBarNotchKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex" />
+    <option name="AFTER_PATH" value="app/build/intermediates/dex/debug/mergeExtDexDebug/classes2.dex" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/classes2.dex" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/file-to-id.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/lookups.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/package-parts.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/file-to-id.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/ComposableSingletons$GaragemScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/ComposableSingletons$GaragemScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$GaragemScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-attributes.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/ComposableSingletons$LoginScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/ComposableSingletons$LoginScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$LoginScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/lookups.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$quitarDivida$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$quitarDivida$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DividasViewModel$quitarDivida$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/id-to-file.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contadiaria/ContaDiariaScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contadiaria/ContaDiariaScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContaDiariaScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contas/ComposableSingletons$ContasScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contas/ComposableSingletons$ContasScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$ContasScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ScaffoldPrincipalKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ScaffoldPrincipalKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ScaffoldPrincipalKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/shrunk-classpath-snapshot.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/lookups.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-attributes.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/internal-name-to-source.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Caixinha$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Caixinha$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Caixinha$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/proto.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Movimentacao$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Movimentacao$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Movimentacao$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/caixas/CaixasViewModel.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/caixas/CaixasViewModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/CaixasViewModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/supertypes.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/data/local/SharedPreferencesManager.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/data/local/SharedPreferencesManager.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/SharedPreferencesManager.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$CardContaKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$CardContaKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$CardContaKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/graficos/GraficosViewModel.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/graficos/GraficosViewModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/GraficosViewModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/splash/SplashScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/splash/SplashScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/SplashScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/proto.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Veiculo$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/file-to-id.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$Manutencao$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$Manutencao$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Veiculo$Manutencao$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/graficos/GraficosScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/graficos/GraficosScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/GraficosScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaFixa.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaFixa.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContaFixa.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/proto.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Turno$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Turno$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Turno$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/ComposableSingletons$HojeScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/ComposableSingletons$HojeScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$HojeScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ModalRegistroRapidoKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ModalRegistroRapidoKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ModalRegistroRapidoKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.s" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.s" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/lookups.tab.values.s" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/RegisterScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/RegisterScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/RegisterScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contadiaria/ContaDiariaViewModel$carregarContas$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contadiaria/ContaDiariaViewModel$carregarContas$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContaDiariaViewModel$carregarContas$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/ComposableSingletons$AppKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/ComposableSingletons$AppKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$AppKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.s" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.s" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/proto.tab.values.s" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeViewModel.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeViewModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/HojeViewModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/proto.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/internal-name-to-source.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/AuthScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/AuthScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/AuthScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/theme/ThemeKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/theme/ThemeKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ThemeKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/package-parts.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/TimePickerKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/TimePickerKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/TimePickerKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/subtypes.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/onboarding/ComposableSingletons$OnboardingScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/onboarding/ComposableSingletons$OnboardingScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$OnboardingScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/onboarding/OnboardingScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/onboarding/OnboardingScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/OnboardingScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/id-to-file.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/ComposableSingletons$DividasScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/ComposableSingletons$DividasScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$DividasScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Configuracoes.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Configuracoes.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Configuracoes.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/theme/ColorKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/theme/ColorKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ColorKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-output.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/DrawerConteudoGradientRainbowKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/DrawerConteudoGradientRainbowKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DrawerConteudoGradientRainbowKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/lookups.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-classes.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/caixas/CaixasScreenKt$CaixasScreen$2$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/caixas/CaixasScreenKt$CaixasScreen$2$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/CaixasScreenKt$CaixasScreen$2$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Turno.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Turno.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Turno.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/package-parts.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/proto.tab.values" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$DrawerConteudoGradientRainbowKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$DrawerConteudoGradientRainbowKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$DrawerConteudoGradientRainbowKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/id-to-file.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$excluirDivida$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$excluirDivida$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DividasViewModel$excluirDivida$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.s" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.s" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-output.tab.values.s" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Perfil.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Perfil.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Perfil.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$CustomBottomNavBarGlowKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$CustomBottomNavBarGlowKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$CustomBottomNavBarGlowKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ComposableSingletons$MainActivityKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ComposableSingletons$MainActivityKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$MainActivityKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Hoje.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Hoje.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Hoje.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-classes.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/proto.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$Manutencao.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo$Manutencao.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Veiculo$Manutencao.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/caixas/ComposableSingletons$CaixasScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/caixas/ComposableSingletons$CaixasScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$CaixasScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/last-build.bin" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/last-build.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/last-build.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/GaragemScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/GaragemScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/GaragemScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-fq-name-to-source.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/MainActivity.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/MainActivity.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/MainActivity.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/supertypes.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-attributes.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Corrida.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Corrida.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Corrida.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Caixinha.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Caixinha.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Caixinha.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$PaywallModalKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$PaywallModalKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$PaywallModalKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-output.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/GaragemScreenKt$GaragemScreen$2$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/GaragemScreenKt$GaragemScreen$2$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/GaragemScreenKt$GaragemScreen$2$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-classes.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-attributes.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-output.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Movimentacao.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Movimentacao.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Movimentacao.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/CrashHandler.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/CrashHandler.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/CrashHandler.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/data/local/SharedPreferencesManager$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/data/local/SharedPreferencesManager$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/SharedPreferencesManager$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CardTurnoKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CardTurnoKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/CardTurnoKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/HojeScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CardCaixinhaKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CardCaixinhaKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/CardCaixinhaKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$DrawerConteudoGradientKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$DrawerConteudoGradientKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$DrawerConteudoGradientKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Divida.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Divida.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Divida.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$CustomBottomNavBarKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$CustomBottomNavBarKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$CustomBottomNavBarKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/subtypes.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-classes.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/perfil/PerfilScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/perfil/PerfilScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/PerfilScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeViewModel$salvarTurno$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeViewModel$salvarTurno$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/HojeViewModel$salvarTurno$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/perfil/PerfilViewModel.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/perfil/PerfilViewModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/PerfilViewModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/package-parts.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DividasScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Veiculo.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Veiculo.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/supertypes.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/MinhaRotaApp.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/MinhaRotaApp.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/MinhaRotaApp.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Corrida$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Corrida$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Corrida$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$ModalRegistroRapidoKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$ModalRegistroRapidoKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$ModalRegistroRapidoKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/lookups.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/internal-name-to-source.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/outputs/apk/debug/app-debug.apk" />
+    <option name="AFTER_PATH" value="app/build/outputs/apk/debug/app-debug.apk" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/app-debug.apk" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaFixa$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaFixa$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContaFixa$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contas/ContasScreenKt$ContasScreen$2$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contas/ContasScreenKt$ContasScreen$2$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContasScreenKt$ContasScreen$2$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/file-to-id.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$carregarDividas$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/dividas/DividasViewModel$carregarDividas$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DividasViewModel$carregarDividas$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CustomBottomNavBarKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CustomBottomNavBarKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/CustomBottomNavBarKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/Manutencao.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/Manutencao.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Manutencao.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/onboarding/OnboardingPage.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/onboarding/OnboardingPage.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/OnboardingPage.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/plans/PlansScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/plans/PlansScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/PlansScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/package-parts.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/supertypes.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/BottomNavBarSquircleKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/BottomNavBarSquircleKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/BottomNavBarSquircleKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-output.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/BottomNavBarNotchKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/BottomNavBarNotchKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/BottomNavBarNotchKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Corrida$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Corrida$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Corrida$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-attributes.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-output.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Graficos.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Graficos.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Graficos.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Turno$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Turno$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Turno$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/ComposableSingletons$RegisterScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/ComposableSingletons$RegisterScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$RegisterScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$TimePickerKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$TimePickerKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$TimePickerKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contadiaria/ContaDiariaViewModel.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contadiaria/ContaDiariaViewModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContaDiariaViewModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/lookups.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-classes.tab.values" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Movimentacao$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Movimentacao$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Movimentacao$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/lookups.tab_i.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/internal-name-to-source.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CardContaKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CardContaKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/CardContaKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/PaywallModalKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/PaywallModalKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/PaywallModalKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-fq-name-to-source.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$ContaDiaria.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$ContaDiaria.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$ContaDiaria.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaDiaria$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaDiaria$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContaDiaria$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/file-to-id.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/ComposableSingletons$AuthScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/auth/ComposableSingletons$AuthScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$AuthScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/GaragemViewModel.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/GaragemViewModel.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/GaragemViewModel.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/Manutencao$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/garagem/Manutencao$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Manutencao$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/perfil/ComposableSingletons$PerfilScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/perfil/ComposableSingletons$PerfilScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$PerfilScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaDiaria.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaDiaria.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContaDiaria.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeViewModel$GanhoRapido.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeViewModel$GanhoRapido.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/HojeViewModel$GanhoRapido.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-output.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-fq-name-to-source.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/splash/SplashScreenKt$SplashScreen$1$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/splash/SplashScreenKt$SplashScreen$1$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/SplashScreenKt$SplashScreen$1$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/intermediates/incremental/debug-mergeJavaRes/merge-state" />
+    <option name="AFTER_PATH" value="app/build/intermediates/incremental/debug-mergeJavaRes/merge-state" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/merge-state" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/subtypes.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Contas.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Contas.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Contas.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/supertypes.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/MenuIconKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/MenuIconKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/MenuIconKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/internal-name-to-source.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$DrawerConteudoKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/ComposableSingletons$DrawerConteudoKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$DrawerConteudoKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contas/ContasScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/contas/ContasScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContasScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/class-fq-name-to-source.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CustomBottomNavBarGlowKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/CustomBottomNavBarGlowKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/CustomBottomNavBarGlowKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Caixinha$Companion.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/Caixinha$Companion.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Caixinha$Companion.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeScreenKt$HojeScreen$2$1.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/hoje/HojeScreenKt$HojeScreen$2$1.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/HojeScreenKt$HojeScreen$2$1.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Dividas.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Dividas.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Dividas.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/proto.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Garagem.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/navigation/Rota$Garagem.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/Rota$Garagem.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-classes.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len" />
+    <option name="AFTER_PATH" value="app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/source-to-classes.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/caixas/CaixasScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/caixas/CaixasScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/CaixasScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaDiaria$$serializer.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/domain/model/ContaDiaria$$serializer.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ContaDiaria$$serializer.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/plans/ComposableSingletons$PlansScreenKt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/screens/plans/ComposableSingletons$PlansScreenKt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/ComposableSingletons$PlansScreenKt.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/DrawerConteudoGradientRainbowV2Kt.class" />
+    <option name="AFTER_PATH" value="app/build/tmp/kotlin-classes/debug/com/raffastudioproducoes/minharota/ui/components/DrawerConteudoGradientRainbowV2Kt.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Alterações_não_commitadas_antes_de_Atualizar_em_10_07_26,_00_14_[Changes]1/DrawerConteudoGradientRainbowV2Kt.class" />
+  </binary>
+</changelist>
