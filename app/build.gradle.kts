@@ -12,10 +12,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(System.getenv("ANDROID_KEYSTORE_PATH") ?: "release.keystore")
-            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: "MinhaRota@2025Prod!"
-            keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "minharota_alias"
-            keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: "MinhaRota@2025Prod!"
+            storeFile = file(System.getenv("ANDROID_KEYSTORE_PATH") ?: "release.jks")
+            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: "Leafar2787@"
+            keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "minharota_key"
+            keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: "Leafar2787@"
         }
     }
 
