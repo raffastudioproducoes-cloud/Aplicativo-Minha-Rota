@@ -30,6 +30,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestoreSettings
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
+import com.raffastudioproducoes.minharota.domain.model.User
 import com.raffastudioproducoes.minharota.ui.components.CustomBottomNavBarGlow
 import com.raffastudioproducoes.minharota.ui.components.DrawerConteudoGradientRainbowV2
 import com.raffastudioproducoes.minharota.ui.components.HeaderSuperior
@@ -85,7 +86,17 @@ fun MainAppContent() {
 
     // Rota inicial inteligente
     val currentUser = FirebaseAuth.getInstance().currentUser
+    val firebaseUser = FirebaseAuth.getInstance().currentUser
     val startRoute = if (currentUser != null) Rota.Hoje.route else "login_main"
+    val userModel = firebaseUser?.let {
+        User(
+            uid = it.uid,
+            displayName = it.displayName ?: "",
+            email = it.email ?: "",
+            photoUrl = it.photoUrl?.toString() ?: "",
+            isPro = false
+        )
+    }
 
     // Camada do Splash/Cards (Aparece antes de tudo)
     if (exibirSplashCard) {
@@ -103,7 +114,7 @@ fun MainAppContent() {
                     onNavigate = { route -> navController.navigate(route) },
                     currentRoute = currentRoute ?: "",
                     sharedPreferencesManager = prefsManager,
-                    user = currentUser,
+                    user = userModel,
                     onClose = { scope.launch { drawerState.close() } }
                 )
             }
