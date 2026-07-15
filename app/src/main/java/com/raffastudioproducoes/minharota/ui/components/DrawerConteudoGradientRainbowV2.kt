@@ -1,6 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.rounded.AccountBalanceWallet
@@ -50,17 +52,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.firebase.firestore.auth.User
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
+import com.raffastudioproducoes.minharota.domain.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
-private val User?.isPro: Boolean
 
 /**
  * IMPLEMENTAÇÃO CORRIGIDA DO MENU DRAWER.
@@ -109,6 +110,7 @@ fun DrawerConteudoGradientRainbowV2(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
                 .padding(16.dp) // Padding geral do cabeçalho
         ) {
             // 1. CONTA
@@ -137,8 +139,11 @@ fun DrawerConteudoGradientRainbowV2(
                                 .crossfade(true)
                                 .build(),
                             contentDescription = "Avatar",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .border(2.dp, Color.White, CircleShape)
                         )
                     } else {
                         Icon(
@@ -166,15 +171,13 @@ fun DrawerConteudoGradientRainbowV2(
                 Spacer(modifier = Modifier.height(6.dp))
 
                     Surface(
-                        color = if (isPro) Color(0xFF4CAF50) else Color.Gray, // Verde se Pro, Cinza se Free
+                        color = if (user?.isPro == true) Color(0xFF4CAF50) else Color.Gray, // Verde se Pro, Cinza se Free
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.padding(top = 4.dp)
                     ) {
                         Text(
-                            EtiquetaStatus(
-                                isPro = user?.isPro ?: false
-                            ), // Passa o status real do Firebase
-                            //text = if (isPro) "PRO" else "FREE",
+                            //EtiquetaStatus(isPro = user?.isPro ?: false), // Passa o status real do Firebase
+                            text = if (user?.isPro == true) "PRO" else "FREE",
                             color = Color.White,
                             fontSize = 10.sp,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
@@ -381,12 +384,20 @@ fun PreviewDrawerConteudo() {
 
     val prefsManager = remember { SharedPreferencesManager(context) }
 
+    val usuarioTeste = User(
+        uid = "123",
+        displayName = "Rafael Machado",
+        email = "rafael@teste.com",
+        isPro = true
+    )
+
     DrawerConteudoGradientRainbowV2(
         drawerState = drawerState,
         scope = scope,
         onNavigate = { route -> },
         currentRoute = "hoje",
         sharedPreferencesManager = prefsManager,
+        user = usuarioTeste,
         onClose = { }
     )
 }
