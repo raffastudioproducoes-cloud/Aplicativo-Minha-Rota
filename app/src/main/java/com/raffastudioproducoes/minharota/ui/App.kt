@@ -98,7 +98,7 @@ fun MainAppContent() {
                     onNavigate = { route -> navController.navigate(route) },
                     currentRoute = currentRoute ?: "",
                     sharedPreferencesManager = prefsManager,
-                    user = currentUser,
+                    user = User,
                     onClose = { scope.launch { drawerState.close() } }
                 )
             }
