@@ -27,6 +27,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.firestoreSettings
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import com.raffastudioproducoes.minharota.ui.components.CustomBottomNavBarGlow
 import com.raffastudioproducoes.minharota.ui.components.DrawerConteudoGradientRainbowV2
@@ -57,7 +59,10 @@ fun MainAppContent() {
     val hojeViewModel: HojeViewModel = viewModel()
     val context = LocalContext.current
     val prefsManager = remember { SharedPreferencesManager(context) }
-    
+    val setting = firestoreSettings {
+        isPersistenceEnabled = true
+    }
+    FirebaseFirestore.getInstance().firestoreSettings = setting
     // Estados Hoisted (Elevados) para persistência entre navegação
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -98,7 +103,7 @@ fun MainAppContent() {
                     onNavigate = { route -> navController.navigate(route) },
                     currentRoute = currentRoute ?: "",
                     sharedPreferencesManager = prefsManager,
-                    user = User,
+                    user = currentUser,
                     onClose = { scope.launch { drawerState.close() } }
                 )
             }

@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
+import com.raffastudioproducoes.minharota.domain.model.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -42,7 +43,8 @@ fun ScaffoldPrincipalPush(
     mostrarBottomBar: Boolean,
     onFabClick: () -> Unit,
     prefsManager: SharedPreferencesManager,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
+    user: User?
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -91,6 +93,7 @@ fun ScaffoldPrincipalPush(
                     },
                     currentRoute = navController.currentDestination?.route ?: "",
                     sharedPreferencesManager = prefsManager,
+                    user = user,
                     onClose = { scope.launch { drawerState.close() } }
                 )
             }

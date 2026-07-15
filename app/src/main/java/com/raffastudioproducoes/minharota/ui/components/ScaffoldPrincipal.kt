@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
+import com.raffastudioproducoes.minharota.domain.model.User
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
 import kotlinx.coroutines.launch
 
@@ -28,12 +29,14 @@ import kotlinx.coroutines.launch
 fun ScaffoldPrincipal(
     navController: NavHostController,
     hojeViewModel: HojeViewModel,
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable (PaddingValues) -> Unit,
+    user: User?
 ) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var mostrarModalRapido by remember { mutableStateOf(false) }
     val isRidingMode by hojeViewModel.isRidingMode.collectAsState()
+
 
     // 1. Declarando o contexto e o gerenciador de prefs que faltavam
     val context = LocalContext.current
@@ -52,6 +55,7 @@ fun ScaffoldPrincipal(
                 onNavigate = { route -> navController.navigate(route) },
                 currentRoute = currentRoute ?: "",
                 sharedPreferencesManager = prefsManager,
+                user = user,
                 onClose = { scope.launch { drawerState.close() } }
             )
         }
