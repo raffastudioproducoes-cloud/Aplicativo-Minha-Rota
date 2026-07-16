@@ -118,7 +118,8 @@ fun DrawerConteudoGradientRainbowV2(
             CategoryHeader("CONTA")
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End // Joga o X para o canto direito
+                horizontalArrangement = Arrangement.SpaceBetween,// Joga o X para o canto direito
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = { onClose() }) {
                     Icon(
@@ -127,11 +128,11 @@ fun DrawerConteudoGradientRainbowV2(
                         tint = Color.White
                     )
                 }
-                Row(
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically // Centraliza foto e texto na mesma altura
+                        .padding(bottom = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if (fotoPerfilUrl.isNotEmpty()) {
                         coil.compose.AsyncImage(
@@ -152,36 +153,39 @@ fun DrawerConteudoGradientRainbowV2(
                             contentDescription = "Avatar",
                             tint = if (isDark) Color(0xFF3B82F6) else Color(0xFF2563EB),
                             modifier = Modifier
-                                .size(48.dp)
-                                .align(Alignment.CenterVertically as Alignment.Vertical)
+                                .size(80.dp)
+                                .clip(CircleShape)
+                                .background(Color.Gray.copy(alpha = 0.2f))
                         )
                     }
                 }
 
                 Spacer(modifier = Modifier.width(12.dp))
 
-                Column {
-                    Text(
-                        text = user?.displayName
-                            ?: "Convidado", // Exibe o nome ou 'Convidado' se null
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp
-                    )
+                Text(
+                    text = user?.displayName ?: "Convidado",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+
+                EtiquetaStatus(isPro = user?.isPro ?: false)
 
                 Spacer(modifier = Modifier.height(6.dp))
 
+                @Composable
+                fun EtiquetaStatus(isPro: Boolean) {
                     Surface(
-                        color = if (user?.isPro == true) Color(0xFF4CAF50) else Color.Gray, // Verde se Pro, Cinza se Free
+                        color = if (isPro) Color(0xFF00C853) else Color.Gray,
                         shape = RoundedCornerShape(12.dp),
-                        modifier = Modifier.padding(top = 4.dp)
+                        modifier = Modifier.padding(top = 8.dp)
                     ) {
                         Text(
-                            //EtiquetaStatus(isPro = user?.isPro ?: false), // Passa o status real do Firebase
-                            text = if (user?.isPro == true) "PRO" else "FREE",
+                            text = if (isPro) "PRO" else "FREE",
                             color = Color.White,
                             fontSize = 10.sp,
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp)
                         )
                     }
                 }

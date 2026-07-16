@@ -4,7 +4,7 @@
             "outputFile": "com.raffastudioproducoes.minharota.app-mergeDebugResources-57:/values-v21/values-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Wilma\\.gradle\\caches\\9.4.1\\transforms\\49b0bfd48f7bf4ba0635319edc672eb1\\transformed\\core-1.12.0\\res\\values-v21\\values-v21.xml",
+                    "source": "C:\\Users\\Wilma\\.gradle\\caches\\9.5.0\\transforms\\81ced17bebb3c98f4a15dd6e1f04a317\\transformed\\core-1.12.0\\res\\values-v21\\values-v21.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,13",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Wilma\\.gradle\\caches\\9.4.1\\transforms\\1b31106e13d09dbd8c2c8265b2405157\\transformed\\jetified-credentials-play-services-auth-1.2.1\\res\\values-v21\\values-v21.xml",
+                    "source": "C:\\Users\\Wilma\\.gradle\\caches\\9.5.0\\transforms\\f63e3c97d0814ac94d59afeb9c8836ba\\transformed\\jetified-credentials-play-services-auth-1.2.1\\res\\values-v21\\values-v21.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

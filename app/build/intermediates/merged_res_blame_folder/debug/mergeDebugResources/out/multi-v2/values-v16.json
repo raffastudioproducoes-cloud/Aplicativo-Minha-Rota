@@ -4,7 +4,7 @@
             "outputFile": "com.raffastudioproducoes.minharota.app-mergeDebugResources-57:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Wilma\\.gradle\\caches\\9.4.1\\transforms\\49b0bfd48f7bf4ba0635319edc672eb1\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\Wilma\\.gradle\\caches\\9.5.0\\transforms\\81ced17bebb3c98f4a15dd6e1f04a317\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
