@@ -9,15 +9,16 @@ class UserRepository {
 
     fun saveUser(user: User, onResult: (Boolean) -> Unit) {
         db.collection("users").document(user.uid)
-            .set(user)
+            .set(user, com.google.firebase.firestore.SetOptions.merge())
             .addOnSuccessListener { onResult(true) }
             .addOnFailureListener { onResult(false) }
     }
 
-    fun getUser(uid: String, onResult: (User?) -> Unit) {
+    fun getUser(uid: String, onUserLoaded: (User?) -> Unit) {
         db.collection("users").document(uid).get()
             .addOnSuccessListener { document ->
-                onResult(document.toObject(User::class.java))
+                onUserLoaded(document.toObject(User::class.java))
             }
+            .addOnFailureListener { onUserLoaded(null) }
     }
 }

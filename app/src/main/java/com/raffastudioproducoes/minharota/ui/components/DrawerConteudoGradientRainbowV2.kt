@@ -60,7 +60,7 @@ import kotlinx.coroutines.launch
  */
 @Composable
 fun DrawerConteudoGradientRainbowV2(
-    drawerState: DrawerState,
+    drawerState: DrawerState?,
     scope: CoroutineScope,
     onNavigate: (String) -> Unit,
     currentRoute: String,
@@ -113,7 +113,11 @@ fun DrawerConteudoGradientRainbowV2(
                         .clip(CircleShape)
                         .background(textColor.copy(alpha = 0.05f))
                         .clickable {
-                            scope.launch { drawerState.close() }
+                            scope.launch {
+                                if (drawerState != null) {
+                                    drawerState.close()
+                                }
+                            }
                             onNavigate("perfil")
                         }
                 ) {
@@ -177,7 +181,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = currentRoute == Rota.Hoje.route,
                 gradientColors = listOf(Color(0xFF10B981), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     onNavigate(Rota.Hoje.route)
                 }
             )
@@ -187,7 +195,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = currentRoute == Rota.Contas.route,
                 gradientColors = listOf(Color(0xFF3B82F6), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     onNavigate(Rota.Contas.route)
                 }
             )
@@ -197,7 +209,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = currentRoute == Rota.Caixas.route,
                 gradientColors = listOf(Color(0xFFEC4899), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     onNavigate(Rota.Caixas.route)
                 }
             )
@@ -207,7 +223,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = currentRoute == Rota.Graficos.route,
                 gradientColors = listOf(Color(0xFF10B981), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     onNavigate(Rota.Graficos.route)
                 }
             )
@@ -220,7 +240,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = currentRoute == Rota.Extrato.route,
                 gradientColors = listOf(Color(0xFF3B82F6), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     onNavigate(Rota.Extrato.route)
                 }
             )
@@ -230,7 +254,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = currentRoute == Rota.Dividas.route,
                 gradientColors = listOf(Color(0xFFEF4444), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     onNavigate(Rota.Dividas.route)
                 }
             )
@@ -240,7 +268,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = currentRoute == Rota.Garagem.route,
                 gradientColors = listOf(Color(0xFFF59E0B), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     onNavigate(Rota.Garagem.route)
                 }
             )
@@ -250,7 +282,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = currentRoute == Rota.Configuracoes.route,
                 gradientColors = listOf(Color(0xFF6B7280), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     onNavigate(Rota.Configuracoes.route)
                 }
             )
@@ -263,7 +299,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = false,
                 gradientColors = listOf(Color(0xFF3B82F6), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     // Ação de ajuda
                 }
             )
@@ -273,7 +313,11 @@ fun DrawerConteudoGradientRainbowV2(
                 isSelected = false,
                 gradientColors = listOf(Color(0xFF10B981), Color.Transparent),
                 onClick = {
-                    scope.launch { drawerState.close() }
+                    scope.launch {
+                        if (drawerState != null) {
+                            drawerState.close()
+                        }
+                    }
                     // Ação de feedback
                 }
             )

@@ -7,9 +7,13 @@ import com.raffastudioproducoes.minharota.repository.UserRepository
 
 class UserViewModel : ViewModel() {
     private val repository = UserRepository()
-
-    // Variável que a tela observa
     val userData = mutableStateOf<User?>(null)
+
+    fun registerOrUpdateUser(user: User) {
+        repository.saveUser(user) { success ->
+            if (success) loadUserData(user.uid)
+        }
+    }
 
     fun loadUserData(uid: String) {
         repository.getUser(uid) { user ->

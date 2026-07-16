@@ -6,10 +6,12 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.raffastudioproducoes.minharota.ui.components.ScaffoldPrincipalPush
@@ -29,11 +31,16 @@ import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeScreen
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
 import com.raffastudioproducoes.minharota.ui.screens.perfil.PerfilScreen
 import com.raffastudioproducoes.minharota.ui.screens.plans.PlansScreen
+import com.raffastudioproducoes.minharota.ui.viewmodel.UserViewModel
 
 @Composable
 fun MainAppContent() {
     val navController = rememberNavController()
     val hojeViewModel: HojeViewModel = viewModel()
+
+    // Captura a rota atual para passar para o Scaffold
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
@@ -43,7 +50,11 @@ fun MainAppContent() {
     val currentUser = FirebaseAuth.getInstance().currentUser
     val startRoute = if (currentUser != null) Rota.Hoje.route else "login_main"
 
-    ScaffoldPrincipalPush(navController, hojeViewModel) { paddingValues ->
+    ScaffoldPrincipalPush(
+        navController = navController,
+        hojeViewModel = hojeViewModel,
+        currentRoute = currentRoute
+    ) { paddingValues ->
         NavHost(
             navController = navController,
             startDestination = startRoute,
@@ -51,6 +62,7 @@ fun MainAppContent() {
         ) {
 
             composable("login_main") {
+                val userViewModel: UserViewModel = viewModel()
                 AuthScreen(
                     onAuthSuccess = {
                         val permissions = mutableListOf(
@@ -75,7 +87,8 @@ fun MainAppContent() {
                     },
                     onNavigateToEmailLogin = {
                         navController.navigate("login_email")
-                    }
+                    },
+                    userViewModel = userViewModel
                 )
             }
 

@@ -8,13 +8,33 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
@@ -29,16 +49,24 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.raffastudioproducoes.minharota.R
+import com.raffastudioproducoes.minharota.domain.model.User
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
+import com.raffastudioproducoes.minharota.ui.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun AuthScreen(
     onAuthSuccess: () -> Unit,
     onNavigateToRegister: () -> Unit,
-    onNavigateToEmailLogin: () -> Unit
+    onNavigateToEmailLogin: () -> Unit,
+    userViewModel: UserViewModel
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -56,19 +84,67 @@ fun AuthScreen(
     val verdeEsmeralda = Color(0xFF10B981)
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
-    fun handleSocialLogin(providerId: String) {
+    fun handleSocialLogin(
+        providerId: String,
+        userViewModel: UserViewModel,
+        onAuthSuccess: () -> Unit
+    ) {
         if (providerId == "apple.com") {
             showAppleDialog = true
             return
         }
-        
-        scope.launch {
-            try {
-                if (providerId == "google.com") {
-                    Toast.makeText(context, "Google Login: SHA-1 e Firebase Console necessários.", Toast.LENGTH_LONG).show()
+
+        if (providerId == "google.com") {
+            val credentialManager = CredentialManager.create(context)
+
+            val googleIdOption = GetGoogleIdOption.Builder()
+                .setFilterByAuthorizedAccounts(false)
+                .setServerClientId("511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com") // <--- COLE O ID DO FIREBASE AQUI
+                .build()
+
+            val request = GetCredentialRequest.Builder()
+                .addCredentialOption(googleIdOption)
+                .build()
+
+            scope.launch {
+                try {
+                    val result = credentialManager.getCredential(context, request)
+                    val credential = result.credential
+
+                    if (credential is GoogleIdTokenCredential) {
+                        val firebaseCredential =
+                            GoogleAuthProvider.getCredential(credential.idToken, null)
+
+                        auth.signInWithCredential(firebaseCredential)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    // MUDANÇA: Use o resultado da tarefa para pegar o usuário
+                                    val firebaseUser = task.result.user
+                                    if (firebaseUser != null) {
+                                        val user = User(
+                                            uid = firebaseUser.uid,
+                                            displayName = firebaseUser.displayName ?: "Usuário",
+                                            email = firebaseUser.email ?: "",
+                                            photoUrl = (firebaseUser.photoUrl ?: "") as String
+                                        )
+                                        // Chama o ViewModel que você já definiu anteriormente
+                                        userViewModel.registerOrUpdateUser(user)
+                                        onAuthSuccess()
+                                    }
+                                } else {
+                                    Log.e("AuthScreen", "Erro Firebase: ${task.exception?.message}")
+                                    Toast.makeText(
+                                        context,
+                                        "Erro: ${task.exception?.message}",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+                    }
+                } catch (e: Exception) {
+                    Log.e("AuthScreen", "Erro no login Google", e)
+                    Toast.makeText(context, "Login cancelado ou erro.", Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
-                Log.e("AuthScreen", "Erro Social Login", e)
             }
         }
     }
@@ -94,7 +170,9 @@ fun AuthScreen(
                 Image(
                     painter = painterResource(id = R.drawable.app_icon_master),
                     contentDescription = "MinhaRota PRO Logo Master",
-                    modifier = Modifier.size(180.dp).padding(bottom = 24.dp)
+                    modifier = Modifier
+                        .size(180.dp)
+                        .padding(bottom = 24.dp)
                 )
 
                 Text(
@@ -114,8 +192,16 @@ fun AuthScreen(
                 )
 
                 Button(
-                    onClick = { handleSocialLogin("google.com") },
-                    modifier = Modifier.fillMaxWidth().height(56.dp),
+                    onClick = {
+                        handleSocialLogin(
+                            "google.com",
+                            userViewModel = userViewModel, // O ViewModel que você está usando na tela
+                            onAuthSuccess = onAuthSuccess  // A função de navegação
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (isDark) Color.White else Color(0xFFF3F4F6),
@@ -132,8 +218,16 @@ fun AuthScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = { handleSocialLogin("apple.com") },
-                    modifier = Modifier.fillMaxWidth().height(56.dp),
+                    onClick = {
+                        handleSocialLogin(
+                            "apple.com",
+                            userViewModel = userViewModel, // O ViewModel que você está usando na tela
+                            onAuthSuccess = onAuthSuccess  // A função de navegação
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if (isDark) Color(0xFF1A1A1A) else Color.Black,
@@ -155,7 +249,12 @@ fun AuthScreen(
                         .fillMaxWidth()
                         .height(56.dp)
                         .background(
-                            brush = Brush.horizontalGradient(colors = listOf(cianoNeon, verdeEsmeralda)),
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(
+                                    cianoNeon,
+                                    verdeEsmeralda
+                                )
+                            ),
                             shape = RoundedCornerShape(50.dp)
                         ),
                     shape = RoundedCornerShape(50.dp),
@@ -226,7 +325,9 @@ fun AuthScreen(
                             Image(
                                 painter = painterResource(id = R.drawable.app_icon_master), // Pode trocar a imagem depois
                                 contentDescription = "Apresentação",
-                                modifier = Modifier.size(140.dp).padding(bottom = 24.dp)
+                                modifier = Modifier
+                                    .size(140.dp)
+                                    .padding(bottom = 24.dp)
                             )
                             
                             Text(
@@ -258,7 +359,12 @@ fun AuthScreen(
                                 .fillMaxWidth()
                                 .height(56.dp)
                                 .background(
-                                    brush = Brush.horizontalGradient(colors = listOf(cianoNeon, verdeEsmeralda)),
+                                    brush = Brush.horizontalGradient(
+                                        colors = listOf(
+                                            cianoNeon,
+                                            verdeEsmeralda
+                                        )
+                                    ),
                                     shape = RoundedCornerShape(50.dp)
                                 ),
                             shape = RoundedCornerShape(50.dp),
@@ -278,10 +384,15 @@ fun AuthScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(24.dp))
-                        .background(Color(0x1F121214))
+                        .background(Color(0xfd121214))
                         .border(
                             width = 1.dp,
-                            brush = Brush.linearGradient(colors = listOf(Color.White.copy(alpha = 0.15f), Color.Transparent)),
+                            brush = Brush.linearGradient(
+                                colors = listOf(
+                                    Color.White.copy(alpha = 0.0f),
+                                    Color.Transparent
+                                )
+                            ),
                             shape = RoundedCornerShape(24.dp)
                         )
                         .padding(24.dp),
@@ -294,7 +405,9 @@ fun AuthScreen(
                         Spacer(modifier = Modifier.height(24.dp))
                         Button(
                             onClick = { showAppleDialog = false },
-                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(48.dp),
                             shape = RoundedCornerShape(50.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF10B981))
                         ) {
