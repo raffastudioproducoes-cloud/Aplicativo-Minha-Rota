@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="default_web_client_id" translatable="false">372497650027-7rupms87dvd6d8ageb5dj67t6l6n89j9.apps.googleusercontent.com</string>
-    <string name="gcm_defaultSenderId" translatable="false">372497650027</string>
-    <string name="google_api_key" translatable="false">AIzaSyBbQZNBbhI2BhAULltqLHRjTBFNenEpUt8</string>
-    <string name="google_app_id" translatable="false">1:372497650027:android:80fd23fdafcc29efe2fc2e</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBbQZNBbhI2BhAULltqLHRjTBFNenEpUt8</string>
-    <string name="google_storage_bucket" translatable="false">minha-rota-42295.firebasestorage.app</string>
-    <string name="project_id" translatable="false">minha-rota-42295</string>
+    <string name="gcm_defaultSenderId" translatable="false">511340037072</string>
+    <string name="google_api_key" translatable="false">AIzaSyDbElqYkw7qr9N0JULxdjYuq8emf_D5p7A</string>
+    <string name="google_app_id" translatable="false">1:511340037072:android:0bc83f39026c6b79a3afd5</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDbElqYkw7qr9N0JULxdjYuq8emf_D5p7A</string>
+    <string name="google_storage_bucket" translatable="false">gen-lang-client-0676359727.firebasestorage.app</string>
+    <string name="project_id" translatable="false">gen-lang-client-0676359727</string>
 </resources>

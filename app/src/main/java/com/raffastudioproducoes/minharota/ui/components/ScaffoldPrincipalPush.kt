@@ -67,7 +67,9 @@ fun ScaffoldPrincipalPush(
             label = "ContentCornerRadius"
         )
 
-        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)) {
             
             Box(
                 modifier = Modifier
@@ -75,9 +77,12 @@ fun ScaffoldPrincipalPush(
                     .offset(x = -(drawerWidth - drawerOffsetPx))
             ) {
                 DrawerConteudoGradientRainbowV2(
+                    modifier = Modifier.fillMaxSize(),
                     drawerState = drawerState,
                     scope = scope,
                     onNavigate = { route ->
+                        android.util.Log.d("NAV_DEBUG", "Navegando para: $route")
+                        println("Cliquei!")
                         // 1. Dispara a navegação IMEDIATAMENTE (Igual a BottomBar)
                         if (navController.currentDestination?.route != route) {
                             navController.navigate(route) {
@@ -100,7 +105,14 @@ fun ScaffoldPrincipalPush(
                 modifier = Modifier
                     .fillMaxSize()
                     .offset(x = drawerOffsetPx)
-                    .clip(RoundedCornerShape(topStart = cornerRadius, bottomStart = cornerRadius, topEnd = 0.dp, bottomEnd = 0.dp))
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = cornerRadius,
+                            bottomStart = cornerRadius,
+                            topEnd = 0.dp,
+                            bottomEnd = 0.dp
+                        )
+                    )
             ) {
                 Scaffold(
                     topBar = {

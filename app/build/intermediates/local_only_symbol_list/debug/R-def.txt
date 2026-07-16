@@ -5,7 +5,6 @@ color ic_launcher_foreground
 drawable app_icon_master
 drawable bg_onb_analise
 drawable bg_onb_caixas
-drawable bg_onb_calendario
 drawable bg_onb_carro
 drawable bg_onb_engrenagens
 drawable bg_onb_mapa
@@ -27,10 +26,12 @@ mipmap ic_launcher_background
 mipmap ic_launcher_foreground
 mipmap ic_launcher_round
 string app_name
-string default_web_client_id
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id
 string google_crash_reporting_api_key
 string google_storage_bucket
 string project_id
+string ride_assistant_description
+xml file_paths
+xml ride_assistant_config
