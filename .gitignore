@@ -1,6 +1,9 @@
 *.iml
-.gradle
+*.iws
+*.log
+.gradle/
 /local.properties
+.idea/
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
@@ -9,10 +12,10 @@
 /.idea/assetWizard.settings.xml
 .DS_Store
 /build
+/app/build
 /captures
 .externalNativeBuild
 .cxx
-local.properties
 
 # Keystore de producao - NUNCA commitar no repositorio
 *.keystore
