@@ -1,9 +1,0 @@
-com.raffastudioproducoes.minharota.app-res-0 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\build\generated\res\processDebugGoogleServices
-com.raffastudioproducoes.minharota.app-resValues-1 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\build\generated\res\resValues\debug
-com.raffastudioproducoes.minharota.app-updated_navigation_xml-2 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\build\generated\updated_navigation_xml\debug
-com.raffastudioproducoes.minharota.app-packageDebugResources-3 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.raffastudioproducoes.minharota.app-packageDebugResources-4 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.raffastudioproducoes.minharota.app-debug-5 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\build\intermediates\merged_res\debug\mergeDebugResources
-com.raffastudioproducoes.minharota.app-debug-6 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\debug\res
-com.raffastudioproducoes.minharota.app-main-7 C:\Users\Wilma\StudioProjects\Aplicativo-Minha-Rota\app\src\main\res
-gradleHome-0 C:\Users\Wilma\.gradle
