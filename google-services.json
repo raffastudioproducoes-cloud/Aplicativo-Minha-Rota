@@ -1,41 +1,42 @@
 {
   "project_info": {
-    "project_number": "372497650027",
-    "project_id": "minha-rota-42295",
-    "storage_bucket": "minha-rota-42295.firebasestorage.app"
+    "project_number": "511340037072",
+    "project_id": "gen-lang-client-0676359727",
+    "storage_bucket": "gen-lang-client-0676359727.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:372497650027:android:80fd23fdafcc29efe2fc2e",
+        "mobilesdk_app_id": "1:511340037072:android:0bc83f39026c6b79a3afd5",
         "android_client_info": {
           "package_name": "com.raffastudioproducoes.minharota"
         }
       },
       "oauth_client": [
         {
-          "client_id": "372497650027-7rupms87dvd6d8ageb5dj67t6l6n89j9.apps.googleusercontent.com",
+          "client_id": "511340037072-fcplhfmgou9svh2fm6fn7u95ce9lsopb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raffastudioproducoes.minharota",
+            "certificate_hash": "120a01eb16cd062a938d3a8b55a66333a0c57b28"
+          }
+        },
+        {
+          "client_id": "511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBbQZNBbhI2BhAULltqLHRjTBFNenEpUt8"
+          "current_key": "AIzaSyDbElqYkw7qr9N0JULxdjYuq8emf_D5p7A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "372497650027-7rupms87dvd6d8ageb5dj67t6l6n89j9.apps.googleusercontent.com",
+              "client_id": "511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "372497650027-ehgmgi0m3o44cjd2vl1p2c705vrrp397.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.raffastudioproducoes.minharota"
-              }
             }
           ]
         }

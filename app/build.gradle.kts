@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.gms.google-services")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -11,10 +12,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(System.getenv("ANDROID_KEYSTORE_PATH") ?: "release.keystore")
-            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: "MinhaRota@2025Prod!"
-            keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "minharota_alias"
-            keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: "MinhaRota@2025Prod!"
+            storeFile = file(System.getenv("ANDROID_KEYSTORE_PATH") ?: "release.jks")
+            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: "Leafar2787@"
+            keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "minharota_key"
+            keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: "Leafar2787@"
         }
     }
 
@@ -55,9 +56,6 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
     }
 
 }
