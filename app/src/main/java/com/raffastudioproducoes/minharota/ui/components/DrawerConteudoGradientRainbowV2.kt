@@ -217,41 +217,41 @@ fun DrawerConteudoGradientRainbowV2(
             DrawerItemPill(
                 label = "Extrato",
                 icon = Icons.Rounded.ReceiptLong,
-                isSelected = currentRoute == "extrato",
+                isSelected = currentRoute == Rota.Extrato.route,
                 gradientColors = listOf(Color(0xFF3B82F6), Color.Transparent),
                 onClick = {
                     scope.launch { drawerState.close() }
-                    onNavigate("extrato")
+                    onNavigate(Rota.Extrato.route)
                 }
             )
             DrawerItemPill(
                 label = "Dívidas",
                 icon = Icons.Rounded.MoneyOff,
-                isSelected = currentRoute == "dividas",
+                isSelected = currentRoute == Rota.Dividas.route,
                 gradientColors = listOf(Color(0xFFEF4444), Color.Transparent),
                 onClick = {
                     scope.launch { drawerState.close() }
-                    onNavigate("dividas")
+                    onNavigate(Rota.Dividas.route)
                 }
             )
             DrawerItemPill(
                 label = "Garagem",
                 icon = Icons.Rounded.TwoWheeler,
-                isSelected = currentRoute == "garagem",
+                isSelected = currentRoute == Rota.Garagem.route,
                 gradientColors = listOf(Color(0xFFF59E0B), Color.Transparent),
                 onClick = {
                     scope.launch { drawerState.close() }
-                    onNavigate("garagem")
+                    onNavigate(Rota.Garagem.route)
                 }
             )
             DrawerItemPill(
                 label = "Configurações",
                 icon = Icons.Rounded.Settings,
-                isSelected = currentRoute == "configuracoes",
+                isSelected = currentRoute == Rota.Configuracoes.route,
                 gradientColors = listOf(Color(0xFF6B7280), Color.Transparent),
                 onClick = {
                     scope.launch { drawerState.close() }
-                    onNavigate("configuracoes")
+                    onNavigate(Rota.Configuracoes.route)
                 }
             )
 
