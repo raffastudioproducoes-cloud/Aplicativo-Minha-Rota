@@ -110,6 +110,7 @@ fun DrawerConteudoGradientRainbowV2(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(Color(0xFF1C1B1F))
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp) // Padding geral do cabeçalho
         ) {
@@ -157,7 +158,7 @@ fun DrawerConteudoGradientRainbowV2(
                     }
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(12.dp))
 
                 Column {
                     Text(
@@ -375,29 +376,24 @@ fun DrawerItemPill(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 320, heightDp = 640, device = "id:pixel_9_pro_xl")
 @Composable
-fun PreviewDrawerConteudo() {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Open)
-    val scope = rememberCoroutineScope()
+fun PreviewDrawerIsolado() {
     val context = LocalContext.current
-
-    val prefsManager = remember { SharedPreferencesManager(context) }
-
     val usuarioTeste = User(
         uid = "123",
         displayName = "Rafael Machado",
         email = "rafael@teste.com",
         isPro = true
     )
-
+    val prefsManager = remember { SharedPreferencesManager(context) }
     DrawerConteudoGradientRainbowV2(
-        drawerState = drawerState,
-        scope = scope,
-        onNavigate = { route -> },
-        currentRoute = "hoje",
-        sharedPreferencesManager = prefsManager,
+        drawerState = rememberDrawerState(initialValue = DrawerValue.Open),
+        scope = rememberCoroutineScope(),
+        onNavigate = {},
         user = usuarioTeste,
-        onClose = { }
+        onClose = {},
+        currentRoute = "hoje",
+        sharedPreferencesManager = prefsManager
     )
 }
