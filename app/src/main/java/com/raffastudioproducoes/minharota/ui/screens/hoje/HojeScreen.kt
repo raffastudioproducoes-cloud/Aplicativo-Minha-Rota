@@ -408,7 +408,51 @@ fun HojeScreen(
     }
 
     if (showMetaDialog) {
-        AlertDialog(onDismissRequest = { showMetaDialog = false }, title = { Text("Ajustar Meta Diária", color = textColor) }, text = { OutlinedTextField(value = metaInputDialog, onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) metaInputDialog = it.replace(',', '.') }, label = { Text("Valor da Meta (R$)") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal), shape = RoundedCornerShape(16.dp), colors = OutlinedTextFieldDefaults.colors(unfocusedTextColor = textColor, focusedTextColor = textColor)) }, confirmButton = { Button(onClick = { val valor = metaInputDialog.toDoubleOrNull() ?: 0.0; viewModel.updateMetaDiaria(valor); showMetaDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)) { Text("Salvar") } }, dismissButton = { TextButton(onClick = { showMetaDialog = false }) { Text("Cancelar", color = textColor.copy(alpha = 0.5f)) } }, containerColor = if (isDark) Color(0xFF1E293B) else Color.White, shape = RoundedCornerShape(24.dp))
+        AlertDialog(
+            onDismissRequest = { showMetaDialog = false },
+            title = { Text("Ajustar Meta Diária", color = textColor) },
+            text = {
+                OutlinedTextField(
+                    value = metaInputDialog,
+                    onValueChange = {
+                        if (it.isEmpty() || it.matches(Regex("^\\d*[.,]?\\d*$"))) metaInputDialog =
+                            it.replace(',', '.')
+                    },
+                    label = { Text("Valor da Meta (R$)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedTextColor = textColor,
+                        focusedTextColor = textColor
+                    )
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        val valor =
+                            metaInputDialog.toDoubleOrNull() ?: 0.0; viewModel.updateMetaDiaria(
+                        valor,
+                        context
+                    ); showMetaDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = VerdeNeon,
+                        contentColor = Color.Black
+                    )
+                ) { Text("Salvar") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showMetaDialog = false }) {
+                    Text(
+                        "Cancelar",
+                        color = textColor.copy(alpha = 0.5f)
+                    )
+                }
+            },
+            containerColor = if (isDark) Color(0xFF1E293B) else Color.White,
+            shape = RoundedCornerShape(24.dp)
+        )
     }
 
     if (showAccessibilityDialog) {

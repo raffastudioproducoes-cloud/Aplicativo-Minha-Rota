@@ -26,6 +26,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -84,6 +85,8 @@ fun AuthScreen(
     val verdeEsmeralda = Color(0xFF10B981)
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
+    var isSigningIn by remember { mutableStateOf(false) }
+
     fun handleSocialLogin(
         providerId: String,
         userViewModel: UserViewModel,
@@ -125,13 +128,17 @@ fun AuthScreen(
                                             uid = firebaseUser.uid,
                                             displayName = firebaseUser.displayName ?: "Usuário",
                                             email = firebaseUser.email ?: "",
-                                            photoUrl = (firebaseUser.photoUrl ?: "") as String
+                                            photoUrl = firebaseUser.photoUrl?.toString()
                                         )
+                                        // Navega apenas dentro do callback de sucesso do salvamento
                                         // Chama o ViewModel que você já definiu anteriormente
-                                        userViewModel.registerOrUpdateUser(user)
-                                        onAuthSuccess()
+                                        userViewModel.registerOrUpdateUser(user) {
+                                            isSigningIn = false
+                                            onAuthSuccess()
+                                        }
                                     }
                                 } else {
+                                    isSigningIn = false
                                     Log.e("AuthScreen", "Erro Firebase: ${task.exception?.message}")
                                     Toast.makeText(
                                         context,
@@ -142,8 +149,19 @@ fun AuthScreen(
                             }
                     }
                 } catch (e: Exception) {
-                    Log.e("AuthScreen", "Erro no login Google", e)
-                    Toast.makeText(context, "Login cancelado ou erro.", Toast.LENGTH_SHORT).show()
+                    // 1. Log detalhado para o desenvolvedor (Aparece no Logcat do Android Studio)
+                    // O 'e' no final faz o Android imprimir o Stack Trace completo.
+                    Log.e("AuthScreen", "--- ERRO DE LOGIN ---", e)
+                    Log.e("AuthScreen", "Mensagem: ${e.message}")
+                    Log.e("AuthScreen", "Causa: ${e.cause}")
+
+                    // 2. Feedback amigável para o usuário (Não mostre stack trace para o usuário final!)
+                    val mensagemErro = when {
+                        e.message?.contains("10") == true -> "Erro de configuração (Google API Code 10)"
+                        e.message?.contains("Canceled") == true -> "Login cancelado"
+                        else -> "Erro: ${e.localizedMessage}"
+                    }
+                    Toast.makeText(context, mensagemErro, Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -193,12 +211,14 @@ fun AuthScreen(
 
                 Button(
                     onClick = {
+                        isSigningIn = true // Bloqueia o botão e mostra loading
                         handleSocialLogin(
                             "google.com",
                             userViewModel = userViewModel, // O ViewModel que você está usando na tela
                             onAuthSuccess = onAuthSuccess  // A função de navegação
                         )
                     },
+                    enabled = !isSigningIn, // Desabilita enquanto carrega
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
@@ -208,6 +228,8 @@ fun AuthScreen(
                         contentColor = Color.Black
                     )
                 ) {
+                    if (isSigningIn) CircularProgressIndicator(Modifier.size(20.dp))
+                    else
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(painter = painterResource(id = R.drawable.ic_google_logo), contentDescription = null, modifier = Modifier.size(20.dp), tint = Color.Unspecified)
                         Spacer(modifier = Modifier.width(12.dp))

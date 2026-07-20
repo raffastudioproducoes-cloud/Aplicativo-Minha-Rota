@@ -9,9 +9,10 @@ class UserViewModel : ViewModel() {
     private val repository = UserRepository()
     val userData = mutableStateOf<User?>(null)
 
-    fun registerOrUpdateUser(user: User) {
+    fun registerOrUpdateUser(user: User, onComplete: () -> Unit) {
         repository.saveUser(user) { success ->
-            if (success) loadUserData(user.uid)
+            loadUserData(user.uid)
+            onComplete() //Só chama quando o Fiestone terminar
         }
     }
 

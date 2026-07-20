@@ -85,7 +85,7 @@ class GeminiAiViewModel : ViewModel() {
                     - Horas Trabalhadas: $horasTrabalhadas
                     - Ganho Líquido: R$ $ganhoLiquido
                     
-                    Forneça UMA dica curta e amigável de MÁXIMO 2 linhas para maximizar lucros.
+                    Forneça UMA dica curta e amigável de MÁXIMO 6 linhas para maximizar lucros.
                     Responda SEM formatação, SEM emojis, SEM markdown.
                     Exemplo: "Seus ganhos estão bons! Continue focando em horários de pico para aumentar ainda mais."
                 """.trimIndent()
@@ -110,7 +110,7 @@ class GeminiAiViewModel : ViewModel() {
      * GARAGEM SCREEN: Gera dica preditiva sobre manutenção
      * 
      * Prompt: "Atue como mecânico. KM Total: [KM]. Próximas manutenções: [Manutenções]. 
-     * Dê uma dica preditiva de 2 linhas sobre desgaste de peças."
+     * Dê uma dica preditiva de 6 linhas sobre desgaste de peças."
      */
     fun gerarInsightGaragem(
         context: Context,
@@ -135,7 +135,7 @@ class GeminiAiViewModel : ViewModel() {
                     - KM Total Acumulado: $kmTotal km
                     - Próximas Manutenções Previstas: $proximasManutencoes
                     
-                    Dê UMA dica preditiva de MÁXIMO 2 linhas sobre desgaste potencial de peças.
+                    Dê UMA dica preditiva de MÁXIMO 6 linhas sobre desgaste potencial de peças.
                     Foque em prevenção e economia.
                     Responda SEM formatação, SEM emojis, SEM markdown.
                     Exemplo: "Com esse quilometragem, fique atento ao óleo do motor. Preventivo agora economiza dinheiro depois."
@@ -161,7 +161,7 @@ class GeminiAiViewModel : ViewModel() {
      * CONTAS SCREEN: Gera estratégia de quitação de dívidas
      * 
      * Prompt: "Atue como estrategista financeiro. Dívidas: [Dívidas]. 
-     * Dê um conselho curto de 2 linhas sobre como quitar ou evitar juros (efeito bola de neve)."
+     * Dê um conselho curto de 6 linhas sobre como quitar ou evitar juros (efeito bola de neve)."
      */
     fun gerarInsightContas(
         context: Context,
@@ -184,7 +184,7 @@ class GeminiAiViewModel : ViewModel() {
                     Situação de Dívidas:
                     $dividasInfo
                     
-                    Dê UM conselho curto de MÁXIMO 2 linhas sobre como quitar dívidas ou evitar o efeito bola de neve de juros.
+                    Dê UM conselho curto de MÁXIMO 6 linhas sobre como quitar dívidas ou evitar o efeito bola de neve de juros.
                     Seja prático e motivador.
                     Responda SEM formatação, SEM emojis, SEM markdown.
                     Exemplo: "Priorize a dívida com maior taxa de juros. Isso quebra o ciclo e libera cash flow mais rápido."

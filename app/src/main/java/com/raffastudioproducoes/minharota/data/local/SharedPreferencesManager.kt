@@ -3,13 +3,13 @@ package com.raffastudioproducoes.minharota.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import com.raffastudioproducoes.minharota.domain.model.Caixinha
+import com.raffastudioproducoes.minharota.domain.model.ContaDiaria
 import com.raffastudioproducoes.minharota.domain.model.ContaFixa
+import com.raffastudioproducoes.minharota.domain.model.Corrida
+import com.raffastudioproducoes.minharota.domain.model.Divida
 import com.raffastudioproducoes.minharota.domain.model.Movimentacao
 import com.raffastudioproducoes.minharota.domain.model.Turno
-import com.raffastudioproducoes.minharota.domain.model.Divida
 import com.raffastudioproducoes.minharota.domain.model.Veiculo
-import com.raffastudioproducoes.minharota.domain.model.Corrida
-import com.raffastudioproducoes.minharota.domain.model.ContaDiaria
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.UUID
@@ -181,11 +181,11 @@ class SharedPreferencesManager(context: Context) {
     }
 
     fun salvarIsPro(isPro: Boolean) {
-        sharedPreferences.edit().putBoolean(KEY_IS_PRO, isPro).apply()
+        sharedPreferences.edit().putBoolean("is_pro", isPro).apply()
     }
 
     fun obterIsPro(): Boolean {
-        return sharedPreferences.getBoolean(KEY_IS_PRO, false)
+        return sharedPreferences.getBoolean("is_pro", false)
     }
 
     // --- Plano e Vencimento ---

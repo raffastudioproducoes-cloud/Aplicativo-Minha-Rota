@@ -18,7 +18,9 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import java.util.*
+import java.util.Date
+import java.util.Locale
+import java.util.UUID
 
 class HojeViewModel : ViewModel() {
     private val _dataRegistro = MutableStateFlow(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()))
@@ -226,8 +228,9 @@ class HojeViewModel : ViewModel() {
         }
 
         // 2. Sincronização Firebase (Firestore)
+        val isPro = prefs.obterIsPro()
         val user = auth.currentUser
-        if (user != null) {
+        if (user != null && isPro) {
             viewModelScope.launch {
                 firestore.collection("usuarios")
                     .document(user.uid)
@@ -237,6 +240,8 @@ class HojeViewModel : ViewModel() {
                     .addOnSuccessListener { Log.d("Firebase", "Turno sincronizado!") }
                     .addOnFailureListener { e -> Log.e("Firebase", "Erro ao sincronizar", e) }
             }
+        } else {
+            Log.d("Firebase", "Usuário Free ou não logado - Sincronização na nuvem ignorada.")
         }
         
         limparCampos()
