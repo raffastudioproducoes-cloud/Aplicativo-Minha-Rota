@@ -73,11 +73,11 @@ fun AuthScreen(
     val scope = rememberCoroutineScope()
     val auth = FirebaseAuth.getInstance()
     val isDark = isSystemInDarkTheme()
-    
+
     // Gerenciador da primeira visita
     val prefs = remember { context.getSharedPreferences("minha_rota_prefs", Context.MODE_PRIVATE) }
     var showOnboardingCard by remember { mutableStateOf(prefs.getBoolean("isFirstRun", true)) }
-    
+
     var showAppleDialog by remember { mutableStateOf(false) }
 
     // Cores
@@ -102,7 +102,7 @@ fun AuthScreen(
 
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
-                .setServerClientId("511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com") // <--- COLE O ID DO FIREBASE AQUI
+                .setServerClientId("511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com")
                 .build()
 
             val request = GetCredentialRequest.Builder()
@@ -117,45 +117,86 @@ fun AuthScreen(
                     if (credential is GoogleIdTokenCredential) {
                         val firebaseCredential =
                             GoogleAuthProvider.getCredential(credential.idToken, null)
+                        val currentUser = auth.currentUser
 
-                        auth.signInWithCredential(firebaseCredential)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    // MUDANÇA: Use o resultado da tarefa para pegar o usuário
-                                    val firebaseUser = task.result.user
-                                    if (firebaseUser != null) {
-                                        val user = User(
-                                            uid = firebaseUser.uid,
-                                            displayName = firebaseUser.displayName ?: "Usuário",
-                                            email = firebaseUser.email ?: "",
-                                            photoUrl = firebaseUser.photoUrl?.toString()
-                                        )
-                                        // Navega apenas dentro do callback de sucesso do salvamento
-                                        // Chama o ViewModel que você já definiu anteriormente
-                                        userViewModel.registerOrUpdateUser(user) {
+                        // VERIFICAÇÃO DE VISITANTE: Se já era anônimo, vinculamos em vez de sobrescrever
+                        if (currentUser != null && currentUser.isAnonymous) {
+                            currentUser.linkWithCredential(firebaseCredential)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        val firebaseUser = auth.currentUser
+                                        if (firebaseUser != null) {
+                                            val user = User(
+                                                uid = firebaseUser.uid,
+                                                displayName = firebaseUser.displayName ?: "Usuário",
+                                                email = firebaseUser.email ?: "",
+                                                photoUrl = firebaseUser.photoUrl?.toString()
+                                            )
+                                            userViewModel.registerOrUpdateUser(user) {
+                                                isSigningIn = false
+                                                onAuthSuccess()
+                                            }
+                                        } else {
                                             isSigningIn = false
-                                            onAuthSuccess()
                                         }
+                                    } else {
+                                        isSigningIn = false
+                                        Log.e(
+                                            "AuthScreen",
+                                            "Erro ao vincular conta: ${task.exception?.message}"
+                                        )
+                                        Toast.makeText(
+                                            context,
+                                            "Erro ao vincular conta: ${task.exception?.message}",
+                                            Toast.LENGTH_LONG
+                                        ).show()
                                     }
-                                } else {
-                                    isSigningIn = false
-                                    Log.e("AuthScreen", "Erro Firebase: ${task.exception?.message}")
-                                    Toast.makeText(
-                                        context,
-                                        "Erro: ${task.exception?.message}",
-                                        Toast.LENGTH_LONG
-                                    ).show()
                                 }
-                            }
+                        } else {
+                            // FLUXO NORMAL DE LOGIN (Caso não seja visitante)
+                            auth.signInWithCredential(firebaseCredential)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        val firebaseUser = task.result?.user
+                                        if (firebaseUser != null) {
+                                            val user = User(
+                                                uid = firebaseUser.uid,
+                                                displayName = firebaseUser.displayName ?: "Usuário",
+                                                email = firebaseUser.email ?: "",
+                                                photoUrl = firebaseUser.photoUrl?.toString()
+                                            )
+                                            userViewModel.registerOrUpdateUser(user) {
+                                                isSigningIn = false
+                                                onAuthSuccess()
+                                            }
+                                        } else {
+                                            isSigningIn = false
+                                        }
+                                    } else {
+                                        isSigningIn = false
+                                        Log.e(
+                                            "AuthScreen",
+                                            "Erro Firebase: ${task.exception?.message}"
+                                        )
+                                        Toast.makeText(
+                                            context,
+                                            "Erro: ${task.exception?.message}",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
+                        }
+                    } else {
+                        isSigningIn = false
                     }
                 } catch (e: Exception) {
-                    // 1. Log detalhado para o desenvolvedor (Aparece no Logcat do Android Studio)
-                    // O 'e' no final faz o Android imprimir o Stack Trace completo.
+                    // Garante que o loading para caso ocorra qualquer exceção ou cancelamento
+                    isSigningIn = false
+
                     Log.e("AuthScreen", "--- ERRO DE LOGIN ---", e)
                     Log.e("AuthScreen", "Mensagem: ${e.message}")
                     Log.e("AuthScreen", "Causa: ${e.cause}")
 
-                    // 2. Feedback amigável para o usuário (Não mostre stack trace para o usuário final!)
                     val mensagemErro = when {
                         e.message?.contains("10") == true -> "Erro de configuração (Google API Code 10)"
                         e.message?.contains("Canceled") == true -> "Login cancelado"

@@ -77,8 +77,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
 import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
-import com.raffastudioproducoes.minharota.ui.components.GlassCard
 import com.raffastudioproducoes.minharota.ui.components.HojeSectionCard
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.components.RenovacaoAlertCard
 import com.raffastudioproducoes.minharota.ui.components.TimeInput
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
@@ -190,7 +190,7 @@ fun HojeScreen(
 
             if (exibirAlertaMei) {
                 item {
-                    GlassCard(modifier = Modifier.fillMaxWidth()) {
+                    PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
                         Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                             Icon(Icons.Rounded.Warning, contentDescription = null, tint = Color.Red)
                             Spacer(modifier = Modifier.width(12.dp))
@@ -204,9 +204,10 @@ fun HojeScreen(
             }
 
             item {
-                GlassCard(modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { showAccessibilityDialog = true }) {
+                PremiumGlassCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { showAccessibilityDialog = true }) {
                     Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Rounded.Bolt, contentDescription = null, tint = Color(0xFFFACC15))
                         Spacer(modifier = Modifier.width(12.dp))
@@ -349,7 +350,7 @@ fun HojeScreen(
             }
 
             item {
-                GlassCard(modifier = Modifier.fillMaxWidth()) {
+                PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)) {
@@ -366,7 +367,7 @@ fun HojeScreen(
             }
 
             item {
-                GlassCard(modifier = Modifier.fillMaxWidth()) {
+                PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                             Column {
