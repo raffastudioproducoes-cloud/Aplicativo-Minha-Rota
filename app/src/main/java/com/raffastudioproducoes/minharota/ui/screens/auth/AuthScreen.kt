@@ -57,6 +57,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.raffastudioproducoes.minharota.R
+import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import com.raffastudioproducoes.minharota.domain.model.User
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import com.raffastudioproducoes.minharota.ui.viewmodel.UserViewModel
@@ -132,6 +133,11 @@ fun AuthScreen(
                                                 email = firebaseUser.email ?: "",
                                                 photoUrl = firebaseUser.photoUrl?.toString()
                                             )
+                                            val prefs = SharedPreferencesManager(context)
+                                            // Defina com base na resposta do Firestore após o login:
+                                            prefs.salvarIsPro(false) // ou true se for assinante
+                                            prefs.salvarNomePlano("Free") // ou "Premium"
+
                                             userViewModel.registerOrUpdateUser(user) {
                                                 isSigningIn = false
                                                 onAuthSuccess()

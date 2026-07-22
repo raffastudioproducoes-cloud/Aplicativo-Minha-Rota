@@ -2,17 +2,42 @@ package com.raffastudioproducoes.minharota.ui.screens.contas
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import java.util.Calendar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.BarChart
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,11 +55,13 @@ import com.raffastudioproducoes.minharota.ui.components.CardConta
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
+import java.util.Calendar
 
 @Composable
 fun ContasScreen(
     viewModel: ContasViewModel = viewModel(),
-    geminiViewModel: GeminiAiViewModel = viewModel()
+    geminiViewModel: GeminiAiViewModel = viewModel(),
+    onNavigateToPlans: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val contas by viewModel.contas.collectAsState()
@@ -71,7 +98,11 @@ fun ContasScreen(
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         // AI INSIGHT CARD (PRO) — topo absoluto da tela
         AiInsightCard(
             isPro = isPro,
@@ -130,7 +161,9 @@ fun ContasScreen(
                     fontWeight = FontWeight.Bold,
                     color = textColor,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp)
                 )
             }
 
@@ -244,13 +277,18 @@ fun ContasScreen(
                         val progresso = (faturamentoAnual / limiteMei).toFloat().coerceIn(0f, 1f)
                         LinearProgressIndicator(
                             progress = { progresso },
-                            modifier = Modifier.fillMaxWidth().height(6.dp).clip(CircleShape),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(6.dp)
+                                .clip(CircleShape),
                             color = VerdeNeon,
                             trackColor = textColor.copy(alpha = 0.1f)
                         )
                         
                         Row(
-                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text("${String.format("%.1f", progresso * 100)}% do limite", color = textColor.copy(alpha = 0.5f), fontSize = 10.sp)
@@ -295,12 +333,6 @@ fun ContasScreen(
         )
     }
 
-    if (showPaywallModal) {
-        com.raffastudioproducoes.minharota.ui.components.PaywallModal(
-            onDismiss = { showPaywallModal = false },
-            onUpgrade = { /* Implementar lógica de upgrade */ }
-        )
-    }
 }
 
 @Composable

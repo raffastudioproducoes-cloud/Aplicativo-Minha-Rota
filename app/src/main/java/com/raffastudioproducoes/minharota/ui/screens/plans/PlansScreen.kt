@@ -1,28 +1,49 @@
 package com.raffastudioproducoes.minharota.ui.screens.plans
 
 import android.content.Context
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.border
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
 import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
@@ -44,8 +65,28 @@ class PlansViewModel : ViewModel() {
     fun escolherPlano(plano: String, context: Context) {
         val prefs = SharedPreferencesManager(context)
         _planoAtual.value = plano
-        // Persiste localmente — simula confirmação do billing
-        prefs.salvarIsPro(plano != "free")
+
+        val isPro = plano != "free"
+        val nomePlanoFormatado =
+            if (plano == "pro") "Pro" else if (plano == "premium") "Premium" else "Free"
+
+        // Persiste localmente de forma completa
+        prefs.salvarIsPro(isPro)
+        prefs.salvarNomePlano(nomePlanoFormatado)
+
+        // Sincroniza com o Firestore
+        val uid = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
+        if (uid != null) {
+            com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                .collection("usuarios")
+                .document(uid)
+                .update(
+                    mapOf(
+                        "isPro" to isPro,
+                        "nomePlano" to nomePlanoFormatado
+                    )
+                )
+        }
     }
 
     fun cancelarPlano(context: Context) {
@@ -56,7 +97,10 @@ class PlansViewModel : ViewModel() {
 }
 
 @Composable
-fun PlansScreen(plansViewModel: PlansViewModel = viewModel()) {
+fun PlansScreen(
+    plansViewModel: PlansViewModel = viewModel(),
+    onBack: () -> Unit = {}
+) {
     val context = LocalContext.current
     val planoAtual by plansViewModel.planoAtual.collectAsState()
     val isDark = isSystemInDarkTheme()
@@ -169,6 +213,7 @@ fun PlansScreen(plansViewModel: PlansViewModel = viewModel()) {
             onSuccess = {
                 plansViewModel.escolherPlano(plano.lowercase(), context)
                 checkoutPlano = null
+                onBack()
             }
         )
     }

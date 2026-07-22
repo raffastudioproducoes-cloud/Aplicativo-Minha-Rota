@@ -27,6 +27,7 @@ import com.raffastudioproducoes.minharota.ui.screens.dividas.DividasScreen
 import com.raffastudioproducoes.minharota.ui.screens.extrato.ExtratoScreen
 import com.raffastudioproducoes.minharota.ui.screens.garagem.GaragemScreen
 import com.raffastudioproducoes.minharota.ui.screens.graficos.GraficosScreen
+import com.raffastudioproducoes.minharota.ui.screens.help.HelpScreen
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeScreen
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
 import com.raffastudioproducoes.minharota.ui.screens.perfil.PerfilScreen
@@ -119,10 +120,19 @@ fun MainAppContent() {
                 HojeScreen(viewModel = hojeViewModel)
             }
             composable(Rota.Contas.route) {
-                ContasScreen()
+                ContasScreen(
+                    onNavigateToPlans = {
+                        navController.navigate("plans")
+                    }
+                )
             }
             composable(Rota.Caixas.route) {
-                CaixasScreen(hojeViewModel = hojeViewModel)
+                CaixasScreen(
+                    hojeViewModel = hojeViewModel,
+                    onNavigateToPlans = {
+                        navController.navigate("plans")
+                    }
+                )
             }
             composable(Rota.Graficos.route) {
                 GraficosScreen()
@@ -142,7 +152,7 @@ fun MainAppContent() {
             composable(Rota.Perfil.route) {
                 PerfilScreen(
                     onNavigatePlans = {
-                        navController.navigate(Rota.Plans.route)
+                        navController.navigate("plans")
                     },
                     onLogout = {
                         navController.navigate("login_main") {
@@ -152,10 +162,19 @@ fun MainAppContent() {
                 )
             }
             composable(Rota.Plans.route) {
-                PlansScreen()
+                PlansScreen(
+                    onBack = {
+                        navController.popBackStack() // <--- Retorna para a tela anterior instantaneamente
+                    }
+                )
             }
             composable(Rota.Configuracoes.route) {
                 ConfigScreen()
+            }
+            composable("ajuda") {
+                HelpScreen(
+                    onClose = { navController.popBackStack() }
+                )
             }
         }
     }

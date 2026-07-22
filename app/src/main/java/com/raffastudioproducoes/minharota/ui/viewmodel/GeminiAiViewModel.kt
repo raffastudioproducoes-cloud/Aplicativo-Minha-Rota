@@ -11,17 +11,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
-/**
- * ViewModel centralizado para gerenciar chamadas ao Gemini AI
- * 
- * Responsável por:
- * 1. Gerar insights financeiros para HojeScreen
- * 2. Gerar dicas de manutenção para GaragemScreen
- * 3. Gerar estratégias financeiras para ContasScreen
- * 
- * Apenas funciona se o usuário é PRO
- */
 class GeminiAiViewModel : ViewModel() {
 
     private val _hojeInsight = MutableStateFlow("")
@@ -45,7 +36,6 @@ class GeminiAiViewModel : ViewModel() {
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
 
-    // Instância do GenerativeModel do Gemini
     private val generativeModel: GenerativeModel by lazy {
         GenerativeModel(
             modelName = "gemini-1.5-flash",
@@ -53,13 +43,15 @@ class GeminiAiViewModel : ViewModel() {
         )
     }
 
-    /**
-     * HOJE SCREEN: Gera insight financeiro baseado em ganhos/horas
-     * 
-     * Prompt: "Atue como um mentor financeiro para motoristas. 
-     * Dados: [Ganhos/Horas]. 
-     * Forneça uma dica curta e amigável de 2 linhas para maximizar lucros. Sem formatação."
-     */
+    private fun obterPeriodoAtual(): String {
+        val hora = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        return when (hora) {
+            in 5..11 -> "MANHA"
+            in 12..17 -> "TARDE"
+            else -> "NOITE"
+        }
+    }
+
     fun gerarInsightHoje(
         context: Context,
         ganhoBruto: Double,
@@ -69,49 +61,57 @@ class GeminiAiViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val prefs = SharedPreferencesManager(context)
-                if (!prefs.obterIsPro()) {
-                    Log.d("GeminiAI", "Usuário FREE - Insight não gerado")
-                    return@launch
-                }
+                if (!prefs.obterIsPro()) return@launch
+
+                val periodo = obterPeriodoAtual()
+                val hojeStr = Calendar.getInstance().get(Calendar.DAY_OF_YEAR).toString()
+
+                if (prefs.jaGerouInsight(
+                        "hoje",
+                        periodo,
+                        hojeStr
+                    ) && _hojeInsight.value.isNotBlank()
+                ) return@launch
 
                 _hojeIsLoading.value = true
                 _errorMessage.value = null
 
-                val prompt = """
+                val prompt = if (ganhoBruto <= 0.0 && horasTrabalhadas == "00:00") {
+                    """
+                    Atue como um mentor motivacional para motoristas e entregadores.
+                    O motorista ainda não registrou dados de ganhos hoje.
+                    Dê uma mensagem motivacional contagiante de MÁXIMO 6 linhas incentivando-o a ligar o aplicativo e ir para a rua com foco e segurança.
+                    Responda SEM formatação, SEM emojis, SEM markdown.
+                    """.trimIndent()
+                } else {
+                    """
                     Atue como um mentor financeiro para motoristas e entregadores.
-                    
-                    Dados do turno:
+                    Dados do turno atual:
                     - Ganho Bruto: R$ $ganhoBruto
                     - Horas Trabalhadas: $horasTrabalhadas
                     - Ganho Líquido: R$ $ganhoLiquido
                     
-                    Forneça UMA dica curta e amigável de MÁXIMO 6 linhas para maximizar lucros.
+                    Forneça UMA dica prática de MÁXIMO 6 linhas para maximizar lucros ou gerenciar o turno.
                     Responda SEM formatação, SEM emojis, SEM markdown.
-                    Exemplo: "Seus ganhos estão bons! Continue focando em horários de pico para aumentar ainda mais."
-                """.trimIndent()
+                    """.trimIndent()
+                }
 
                 val response = generativeModel.generateContent(prompt)
-                val insight = response.text?.trim() ?: "Não foi possível gerar insight"
+                val insight = response.text?.trim()
+                    ?: "Mantenha o foco e tenha um excelente turno de trabalho!"
 
                 _hojeInsight.value = insight
-                Log.d("GeminiAI", "Insight Hoje gerado: $insight")
+                prefs.salvarInsightGerado("hoje", periodo, hojeStr)
 
             } catch (e: Exception) {
                 Log.e("GeminiAI", "Erro ao gerar insight Hoje", e)
-                _errorMessage.value = "Erro ao gerar insight: ${e.message}"
-                _hojeInsight.value = ""
+                _hojeInsight.value = "Foco na direção e bons ganhos hoje!"
             } finally {
                 _hojeIsLoading.value = false
             }
         }
     }
 
-    /**
-     * GARAGEM SCREEN: Gera dica preditiva sobre manutenção
-     * 
-     * Prompt: "Atue como mecânico. KM Total: [KM]. Próximas manutenções: [Manutenções]. 
-     * Dê uma dica preditiva de 6 linhas sobre desgaste de peças."
-     */
     fun gerarInsightGaragem(
         context: Context,
         kmTotal: Int,
@@ -120,49 +120,57 @@ class GeminiAiViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val prefs = SharedPreferencesManager(context)
-                if (!prefs.obterIsPro()) {
-                    Log.d("GeminiAI", "Usuário FREE - Insight Garagem não gerado")
-                    return@launch
-                }
+                if (!prefs.obterIsPro()) return@launch
+
+                val periodo = obterPeriodoAtual()
+                val hojeStr = Calendar.getInstance().get(Calendar.DAY_OF_YEAR).toString()
+
+                if (prefs.jaGerouInsight(
+                        "garagem",
+                        periodo,
+                        hojeStr
+                    ) && _garagemInsight.value.isNotBlank()
+                ) return@launch
 
                 _garagemIsLoading.value = true
                 _errorMessage.value = null
 
-                val prompt = """
-                    Atue como um mecânico experiente em motos e veículos de entrega.
-                    
-                    Dados do veículo:
-                    - KM Total Acumulado: $kmTotal km
-                    - Próximas Manutenções Previstas: $proximasManutencoes
-                    
-                    Dê UMA dica preditiva de MÁXIMO 6 linhas sobre desgaste potencial de peças.
-                    Foque em prevenção e economia.
+                val prompt = if (kmTotal <= 0 && proximasManutencoes.isBlank()) {
+                    """
+                    Atue como um mecânico experiente e parceiro de motoristas.
+                    O motorista ainda não cadastrou a quilometragem ou manutenções do veículo.
+                    Dê uma mensagem motivacional de MÁXIMO 6 linhas lembrando da importância de cuidar da moto ou carro como ferramenta essencial de trabalho.
                     Responda SEM formatação, SEM emojis, SEM markdown.
-                    Exemplo: "Com esse quilometragem, fique atento ao óleo do motor. Preventivo agora economiza dinheiro depois."
-                """.trimIndent()
+                    """.trimIndent()
+                } else {
+                    """
+                    Atue como um mecânico experiente em veículos de aplicativo.
+                    Dados do veículo:
+                    - KM Total: $kmTotal km
+                    - Próximas Manutenções: $proximasManutencoes
+                    
+                    Dê UMA dica preditiva e preventiva de MÁXIMO 6 linhas focada em economia de peças e segurança.
+                    Responda SEM formatação, SEM emojis, SEM markdown.
+                    """.trimIndent()
+                }
 
                 val response = generativeModel.generateContent(prompt)
-                val insight = response.text?.trim() ?: "Não foi possível gerar insight"
+                val insight = response.text?.trim()
+                    ?: "Faça uma revisão rápida nos pneus e óleo regularmente."
 
                 _garagemInsight.value = insight
-                Log.d("GeminiAI", "Insight Garagem gerado: $insight")
+                prefs.salvarInsightGerado("garagem", periodo, hojeStr)
 
             } catch (e: Exception) {
                 Log.e("GeminiAI", "Erro ao gerar insight Garagem", e)
-                _errorMessage.value = "Erro ao gerar insight: ${e.message}"
-                _garagemInsight.value = ""
+                _garagemInsight.value =
+                    "Mantenha a manutenção preventiva em dia para evitar surpresas na rua."
             } finally {
                 _garagemIsLoading.value = false
             }
         }
     }
 
-    /**
-     * CONTAS SCREEN: Gera estratégia de quitação de dívidas
-     * 
-     * Prompt: "Atue como estrategista financeiro. Dívidas: [Dívidas]. 
-     * Dê um conselho curto de 6 linhas sobre como quitar ou evitar juros (efeito bola de neve)."
-     */
     fun gerarInsightContas(
         context: Context,
         dividasInfo: String
@@ -170,45 +178,56 @@ class GeminiAiViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val prefs = SharedPreferencesManager(context)
-                if (!prefs.obterIsPro()) {
-                    Log.d("GeminiAI", "Usuário FREE - Insight Contas não gerado")
-                    return@launch
-                }
+                if (!prefs.obterIsPro()) return@launch
+
+                val periodo = obterPeriodoAtual()
+                val hojeStr = Calendar.getInstance().get(Calendar.DAY_OF_YEAR).toString()
+
+                if (prefs.jaGerouInsight(
+                        "contas",
+                        periodo,
+                        hojeStr
+                    ) && _contasInsight.value.isNotBlank()
+                ) return@launch
 
                 _contasIsLoading.value = true
                 _errorMessage.value = null
 
-                val prompt = """
-                    Atue como um estrategista financeiro especializado em educação financeira para motoristas.
-                    
-                    Situação de Dívidas:
+                val prompt = if (dividasInfo.isBlank()) {
+                    """
+                    Atue como um estrategista financeiro motivacional para motoristas.
+                    O motorista não possui dívidas cadastradas no momento.
+                    Dê uma mensagem de incentivo e parabéns de MÁXIMO 6 linhas focada em inteligência financeira, reserva de emergência e investimentos futuros.
+                    Responda SEM formatação, SEM emojis, SEM markdown.
+                    """.trimIndent()
+                } else {
+                    """
+                    Atue como um estrategista financeiro para motoristas.
+                    Situação de dívidas cadastradas:
                     $dividasInfo
                     
-                    Dê UM conselho curto de MÁXIMO 6 linhas sobre como quitar dívidas ou evitar o efeito bola de neve de juros.
-                    Seja prático e motivador.
+                    Dê UM conselho prático de MÁXIMO 6 linhas sobre como organizar os pagamentos ou escapar de juros altos.
                     Responda SEM formatação, SEM emojis, SEM markdown.
-                    Exemplo: "Priorize a dívida com maior taxa de juros. Isso quebra o ciclo e libera cash flow mais rápido."
-                """.trimIndent()
+                    """.trimIndent()
+                }
 
                 val response = generativeModel.generateContent(prompt)
-                val insight = response.text?.trim() ?: "Não foi possível gerar insight"
+                val insight = response.text?.trim()
+                    ?: "Organize suas finanças semanais para manter o caixa saudável."
 
                 _contasInsight.value = insight
-                Log.d("GeminiAI", "Insight Contas gerado: $insight")
+                prefs.salvarInsightGerado("contas", periodo, hojeStr)
 
             } catch (e: Exception) {
                 Log.e("GeminiAI", "Erro ao gerar insight Contas", e)
-                _errorMessage.value = "Erro ao gerar insight: ${e.message}"
-                _contasInsight.value = ""
+                _contasInsight.value =
+                    "Controle rigoroso dos gastos diários garante tranquilidade no fim do mês."
             } finally {
                 _contasIsLoading.value = false
             }
         }
     }
 
-    /**
-     * Limpa todos os insights (útil ao sair das telas)
-     */
     fun limparInsights() {
         _hojeInsight.value = ""
         _garagemInsight.value = ""

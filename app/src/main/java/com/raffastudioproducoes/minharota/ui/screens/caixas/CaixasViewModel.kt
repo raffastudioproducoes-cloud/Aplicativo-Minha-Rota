@@ -28,6 +28,10 @@ class CaixasViewModel : ViewModel() {
     private val _erroPercentual = MutableStateFlow<String?>(null)
     val erroPercentual: StateFlow<String?> = _erroPercentual.asStateFlow()
 
+    private val _navigateToPlans = MutableStateFlow(false)
+
+    val navigateToPlans: StateFlow<Boolean> = _navigateToPlans.asStateFlow()
+
     fun carregarDados(context: Context) {
         val prefs = SharedPreferencesManager(context)
         _isPro.value = prefs.obterIsPro()
@@ -61,7 +65,7 @@ class CaixasViewModel : ViewModel() {
         val prefs = SharedPreferencesManager(context)
         val listaAtual = _caixinhas.value.toMutableList()
         val index = listaAtual.indexOfFirst { it.id == caixinhaId }
-        
+
         if (index != -1) {
             val caixinha = listaAtual[index]
             listaAtual[index] = caixinha.copy(saldoAtual = caixinha.saldoAtual + valor)
@@ -71,12 +75,15 @@ class CaixasViewModel : ViewModel() {
     }
 
     fun adicionarCaixinha(context: Context) {
+        val prefs = SharedPreferencesManager(context)
+        // Atualiza o isPro antes de verificar o limite
+        _isPro.value = prefs.obterIsPro()
+
         if (!_isPro.value && _caixinhas.value.size >= 3) {
-            _showPaywallModal.value = true
+            _navigateToPlans.value = true
             return
         }
-        
-        val prefs = SharedPreferencesManager(context)
+
         val listaAtual = _caixinhas.value.toMutableList()
         val nova = Caixinha(
             id = UUID.randomUUID().toString(),
@@ -89,6 +96,10 @@ class CaixasViewModel : ViewModel() {
         prefs.salvarCaixinhas(listaAtual)
         _caixinhas.value = listaAtual
         validarPercentuais()
+    }
+
+    fun onNavigatedToPlans() {
+        _navigateToPlans.value = false
     }
 
     fun atualizarCaixinha(context: Context, caixinha: Caixinha) {
@@ -108,13 +119,6 @@ class CaixasViewModel : ViewModel() {
     }
 
     fun dismissPaywallModal() {
-        _showPaywallModal.value = false
-    }
-
-    fun upgradeToPro(context: Context) {
-        val prefs = SharedPreferencesManager(context)
-        prefs.salvarIsPro(true)
-        _isPro.value = true
         _showPaywallModal.value = false
     }
 }

@@ -7,14 +7,37 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CreditCard
 import androidx.compose.material.icons.rounded.Payments
 import androidx.compose.material.icons.rounded.Smartphone
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,7 +84,7 @@ fun CheckoutModal(
     val context = LocalContext.current
     val isDark = isSystemInDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
-    val surfaceAlpha = if (isDark) 0.18f else 0.85f
+    val surfaceAlpha = 1.0f
 
     val precoBase = if (nomePlano == "Pro") PRECO_PRO else PRECO_PREMIUM
 
@@ -83,9 +106,9 @@ fun CheckoutModal(
                 .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                 .background(
                     if (isDark)
-                        Color(0xFF1C1C1E).copy(alpha = surfaceAlpha)
+                        Color(0xFF1C1C1E)
                     else
-                        Color.White.copy(alpha = surfaceAlpha)
+                        Color.White
                 )
                 .border(
                     width = 1.dp,
@@ -414,7 +437,31 @@ private fun calcularValor(precoBase: Double, ciclo: CicloFaturamento): Double {
 private fun confirmarPagamento(context: Context, nomePlano: String, ciclo: CicloFaturamento) {
     val prefs = SharedPreferencesManager(context)
     val dataVencimento = LocalDate.now().plusMonths(ciclo.meses.toLong())
+    val dataIso = dataVencimento.format(DateTimeFormatter.ISO_LOCAL_DATE)
+
+    // 1. Salva localmente
     prefs.salvarIsPro(true)
     prefs.salvarNomePlano(nomePlano)
-    prefs.salvarDataVencimento(dataVencimento.format(DateTimeFormatter.ISO_LOCAL_DATE))
+    prefs.salvarDataVencimento(dataIso)
+
+    // 2. Salva no Firebase Firestore para o servidor não sobrescrever ao reabrir o app
+    val uid = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
+    if (uid != null) {
+        val dadosAtualizados = mapOf(
+            "isPro" to true,
+            "nomePlano" to nomePlano,
+            "dataVencimento" to dataIso
+        )
+        com.google.firebase.firestore.FirebaseFirestore.getInstance()
+            .collection("usuarios")
+            .document(uid)
+            .update(dadosAtualizados)
+            .addOnFailureListener {
+                // Caso o documento não exista ainda, criamos com set(..., SetOptions.merge())
+                com.google.firebase.firestore.FirebaseFirestore.getInstance()
+                    .collection("usuarios")
+                    .document(uid)
+                    .set(dadosAtualizados, com.google.firebase.firestore.SetOptions.merge())
+            }
+    }
 }

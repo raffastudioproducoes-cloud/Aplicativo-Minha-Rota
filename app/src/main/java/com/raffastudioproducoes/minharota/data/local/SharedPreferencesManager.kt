@@ -147,6 +147,16 @@ class SharedPreferencesManager(context: Context) {
         }
     }
 
+    fun jaGerouInsight(tipo: String, periodo: String, hojeStr: String): Boolean {
+        val chave = "last_insight_${tipo}_$periodo"
+        return sharedPreferences.getString(chave, "") == hojeStr
+    }
+
+    fun salvarInsightGerado(tipo: String, periodo: String, hojeStr: String) {
+        val chave = "last_insight_${tipo}_$periodo"
+        sharedPreferences.edit().putString(chave, hojeStr).apply()
+    }
+
     // --- Perfil do Usuário ---
     fun salvarNomeUsuario(nome: String) {
         sharedPreferences.edit().putString(KEY_NOME_USUARIO, nome).apply()

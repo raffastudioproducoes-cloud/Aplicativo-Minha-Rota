@@ -102,6 +102,31 @@ class HojeViewModel : ViewModel() {
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
+    private fun sincronizarPlanoDoServidor(context: Context) {
+        val uid = auth.currentUser?.uid ?: return
+
+        firestore.collection("usuarios").document(uid).get()
+            .addOnSuccessListener { doc ->
+                if (doc.exists()) {
+                    val isProDoc = doc.getBoolean("isPro") ?: false
+                    // Se for isPro e o nome estiver vazio, define como "Premium" por segurança
+                    val nomePlanoDoc =
+                        doc.getString("nomePlano") ?: if (isProDoc) "Premium" else "Free"
+                    val dataVencimentoDoc = doc.getString("dataVencimento") ?: ""
+
+                    // Salva nas preferências locais para o app inteiro reconhecer instantaneamente
+                    val prefs = SharedPreferencesManager(context)
+                    prefs.salvarIsPro(isProDoc)
+                    prefs.salvarNomePlano(nomePlanoDoc)
+                    if (dataVencimentoDoc.isNotBlank()) {
+                        prefs.salvarDataVencimento(dataVencimentoDoc)
+                    }
+
+                    // Revalida o vencimento do plano na tela
+                    verificarVencimentoPlano(context)
+                }
+            }
+    }
     fun carregarDadosMei(context: Context) {
         val prefs = SharedPreferencesManager(context)
         _faturamentoBrutoAcumulado.value = prefs.obterFaturamentoBrutoAcumulado()
@@ -110,6 +135,7 @@ class HojeViewModel : ViewModel() {
         if (metaSalva > 0) _metaDiaria.value = metaSalva
         verificarAlertaMei()
         verificarVencimentoPlano(context)
+        sincronizarPlanoDoServidor(context)
     }
 
     /** Verifica a data de vencimento do plano e atualiza os estados de alerta. */

@@ -1,10 +1,21 @@
 package com.raffastudioproducoes.minharota.ui.screens.caixas
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -12,9 +23,33 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.Savings
+import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,7 +62,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.Caixinha
-import com.raffastudioproducoes.minharota.ui.components.PaywallModal
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
@@ -35,12 +69,13 @@ import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 @Composable
 fun CaixasScreen(
     viewModel: CaixasViewModel = viewModel(),
-    hojeViewModel: HojeViewModel = viewModel()
+    hojeViewModel: HojeViewModel = viewModel(),
+    onNavigateToPlans: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val caixinhas by viewModel.caixinhas.collectAsState()
     val isPro by viewModel.isPro.collectAsState()
-    val showPaywallModal by viewModel.showPaywallModal.collectAsState()
+    val navigateToPlans by viewModel.navigateToPlans.collectAsState()
     val filtroPeriodo by viewModel.filtroPeriodo.collectAsState()
     val diasFolga by viewModel.diasFolga.collectAsState()
     val erroPercentual by viewModel.erroPercentual.collectAsState()
@@ -61,10 +96,19 @@ fun CaixasScreen(
         }
     }
 
+    LaunchedEffect(navigateToPlans) {
+        if (navigateToPlans) {
+            onNavigateToPlans()
+            viewModel.onNavigatedToPlans()
+        }
+    }
+
     val caixinhaSelecionada = caixinhas.find { it.id == caixinhaSelecionadaId }
     val saldoTotalGuardado = caixinhas.sumOf { it.saldoAtual }
 
-    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background)) {
         // 1. BARRA DE FILTROS DE PERÍODO
         PeriodoSelector(selected = filtroPeriodo, onSelect = { viewModel.setFiltroPeriodo(it) })
 
@@ -72,7 +116,7 @@ fun CaixasScreen(
             modifier = Modifier.weight(1f),
             contentPadding = PaddingValues(bottom = 100.dp)
         ) {
-            // NOVO CARD: SALDO TOTAL GUARDADO
+            // SALDO TOTAL GUARDADO
             item {
                 PremiumGlassCard(
                     modifier = Modifier
@@ -107,7 +151,9 @@ fun CaixasScreen(
             erroPercentual?.let { erro ->
                 item {
                     Card(
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
                         colors = CardDefaults.cardColors(containerColor = Color(0xFF991B1B).copy(alpha = 0.2f)),
                         border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF991B1B))
                     ) {
@@ -132,9 +178,9 @@ fun CaixasScreen(
                             val percCalculado = (caixinha.percentual / 100.0) * ganhoLiquidoHoje
                             Text("R$ ${String.format("%.2f", percCalculado)} - ${caixinha.percentual.toInt()}% do dia", color = textColor.copy(alpha = 0.5f), fontSize = 12.sp)
                         }
-                        
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         OutlinedTextField(
                             value = valorDepositoManual,
                             onValueChange = { valorDepositoManual = it },
@@ -150,9 +196,9 @@ fun CaixasScreen(
                                 focusedTextColor = textColor
                             )
                         )
-                        
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         Button(
                             onClick = {
                                 val valor = valorDepositoManual.toDoubleOrNull() ?: 0.0
@@ -161,7 +207,9 @@ fun CaixasScreen(
                                     valorDepositoManual = ""
                                 }
                             },
-                            modifier = Modifier.fillMaxWidth().height(56.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(56.dp),
                             shape = RoundedCornerShape(50.dp),
                             colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon, contentColor = Color.Black)
                         ) {
@@ -218,7 +266,7 @@ fun CaixasScreen(
                     fontSize = 12.sp,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                 )
-                
+
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -279,10 +327,6 @@ fun CaixasScreen(
             }
         }
     }
-
-    if (showPaywallModal) {
-        PaywallModal(onDismiss = { viewModel.dismissPaywallModal() }, onUpgrade = { viewModel.upgradeToPro(context) })
-    }
 }
 
 @Composable
@@ -291,7 +335,9 @@ fun PeriodoSelector(selected: String, onSelect: (String) -> Unit) {
     val textColor = if (isDark) Color.White else Color.Black
     val periodos = listOf("Hoje", "Semana", "Mês", "Ano")
     Row(
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         periodos.forEach { periodo ->
@@ -301,7 +347,11 @@ fun PeriodoSelector(selected: String, onSelect: (String) -> Unit) {
                     .weight(1f)
                     .height(40.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .background(if (isSelected) VerdeNeon else (if (isDark) Color.White.copy(alpha = 0.05f) else Color.Black.copy(alpha = 0.03f)))
+                    .background(
+                        if (isSelected) VerdeNeon else (if (isDark) Color.White.copy(alpha = 0.05f) else Color.Black.copy(
+                            alpha = 0.03f
+                        ))
+                    )
                     .clickable { onSelect(periodo) },
                 contentAlignment = Alignment.Center
             ) {
@@ -326,7 +376,7 @@ fun MiniCardProgresso(caixinha: Caixinha, periodo: String, onClick: () -> Unit) 
     val isDark = isSystemInDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     val progresso = if (caixinha.metaValor > 0) (caixinha.saldoAtual / caixinha.metaValor).toFloat().coerceIn(0f, 1f) else 0f
-    
+
     PremiumGlassCard(
         modifier = Modifier
             .width(160.dp)
@@ -336,11 +386,14 @@ fun MiniCardProgresso(caixinha: Caixinha, periodo: String, onClick: () -> Unit) 
         Spacer(modifier = Modifier.height(8.dp))
         Text(caixinha.nome, color = textColor, fontWeight = FontWeight.Bold, fontSize = 14.sp, maxLines = 1)
         Text("R$ ${String.format("%.2f", caixinha.saldoAtual)}", color = VerdeNeon, fontWeight = FontWeight.ExtraBold, fontSize = 16.sp)
-        
+
         Spacer(modifier = Modifier.height(12.dp))
         LinearProgressIndicator(
             progress = progresso,
-            modifier = Modifier.fillMaxWidth().height(4.dp).clip(CircleShape),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(4.dp)
+                .clip(CircleShape),
             color = VerdeNeon,
             trackColor = textColor.copy(alpha = 0.1f)
         )

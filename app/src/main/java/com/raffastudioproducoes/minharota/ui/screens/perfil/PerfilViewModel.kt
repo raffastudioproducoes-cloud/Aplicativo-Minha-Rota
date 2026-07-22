@@ -43,6 +43,10 @@ class PerfilViewModel : ViewModel() {
             .addOnSuccessListener { doc ->
                 if (doc.exists()) {
                     val isProDoc = doc.getBoolean("isPro") ?: false
+                    val nomePlanoDoc = doc.getString("nomePlano")
+                        ?: if (isProDoc) "Premium" else "Free" // <--- Adicione isso
+                    val dataVencimentoDoc =
+                        doc.getString("dataVencimento") ?: "" // <--- Se houver no Firestore
                     val nome = doc.getString("name") ?: ""
                     val emailDoc = doc.getString("email") ?: ""
                     val aniversario = doc.getString("dataAniversario") ?: ""
@@ -55,6 +59,10 @@ class PerfilViewModel : ViewModel() {
 
                     val prefs = SharedPreferencesManager(context)
                     prefs.salvarIsPro(isProDoc)
+                    prefs.salvarNomePlano(nomePlanoDoc)
+                    if (dataVencimentoDoc.isNotBlank()) {
+                        prefs.salvarDataVencimento(dataVencimentoDoc)
+                    }
                     if (nome.isNotBlank()) prefs.salvarNomeUsuario(nome)
                     if (emailDoc.isNotBlank()) prefs.salvarEmail(emailDoc)
                     if (aniversario.isNotBlank()) prefs.salvarDataAniversario(aniversario)
