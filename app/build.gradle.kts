@@ -62,9 +62,10 @@ android {
 
 dependencies {
     // Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation(platform("com.google.firebase:firebase-bom:34.16.0"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-analytics")
     
     // Google Sign-In & Credential Manager (Login Social v1.1.0)
     implementation("com.google.android.gms:play-services-auth:21.0.0")
