@@ -23,13 +23,16 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.PhotoCamera
 import androidx.compose.material.icons.rounded.Image
 import androidx.compose.material.icons.rounded.PhotoCamera
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
@@ -59,6 +62,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -79,11 +83,13 @@ fun PerfilScreen(
     viewModel: PerfilViewModel = viewModel(),
     geminiViewModel: GeminiAiViewModel = viewModel(),
     onNavigatePlans: () -> Unit = {},
-    onLogout: () -> Unit = {}
+    onLogout: () -> Unit = {},
+    onNavigateBack: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val nomeUsuario by viewModel.nomeUsuario.collectAsState()
     val email by viewModel.email.collectAsState()
+    val cpf by viewModel.cpf.collectAsState()
     val dataAniversario by viewModel.dataAniversario.collectAsState()
     val fotoPerfilUrl by viewModel.fotoPerfilUrl.collectAsState()
     val isDark = isSystemInDarkTheme()
@@ -96,7 +102,9 @@ fun PerfilScreen(
 
     var nomeEditavel by remember { mutableStateOf(false) }
     var emailEditavel by remember { mutableStateOf(false) }
+    var cpfEditavel by remember { mutableStateOf(false) }
     var mostrarMenuFoto by remember { mutableStateOf(false) }
+    var mostrarDialogExcluir by remember { mutableStateOf(false) }
 
     // DatePickerDialog nativo para aniversário
     var showDatePicker by remember { mutableStateOf(false) }
@@ -144,13 +152,28 @@ fun PerfilScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "Meu Perfil",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-            color = textColor,
-            modifier = Modifier.align(Alignment.Start)
-        )
+        // Linha do Título com o Botão X de Fechar na mesma altura
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Meu Perfil",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = textColor
+            )
+            IconButton(onClick = onNavigateBack) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Fechar",
+                    tint = textColor
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -168,7 +191,6 @@ fun PerfilScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     if (fotoPerfilUrl.isNotEmpty()) {
-                        // Exibir foto real persistida via Coil AsyncImage
                         AsyncImage(
                             model = ImageRequest.Builder(context)
                                 .data(Uri.parse(fotoPerfilUrl))
@@ -258,7 +280,7 @@ fun PerfilScreen(
         // Seção de Dados Detalhados
         PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
             Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
-                // Nome — pré-populado do ViewModel
+                // Nome
                 PerfilInputField(
                     label = "Nome Completo",
                     value = nomeUsuario,
@@ -276,7 +298,22 @@ fun PerfilScreen(
                     onValueChange = { viewModel.atualizarEmail(it, context) }
                 )
 
-                // Data de Nascimento — abre DatePickerDialog nativo ao clicar em editar
+                // CPF
+                PerfilInputField(
+                    label = "CPF (Para Pagamentos)",
+                    value = cpf,
+                    isEditing = cpfEditavel,
+                    onEditClick = { cpfEditavel = !cpfEditavel },
+                    keyboardType = KeyboardType.Number,
+                    placeholder = "000.000.000-00",
+                    onValueChange = { novoValor ->
+                        val apenasDigitos = novoValor.filter { it.isDigit() }.take(11)
+                        val cpfFormatado = formatarCpf(apenasDigitos)
+                        viewModel.atualizarCpf(cpfFormatado, context)
+                    }
+                )
+
+                // Data de Nascimento
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -340,10 +377,50 @@ fun PerfilScreen(
             Text("Sair da Conta", color = Color(0xFFF87171), fontWeight = FontWeight.Medium)
         }
 
+        // Botão Excluir Conta
+        TextButton(
+            onClick = { mostrarDialogExcluir = true },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                "Excluir Conta Permanentemente",
+                color = Color(0xFFEF4444),
+                fontWeight = FontWeight.Bold
+            )
+        }
+
         Spacer(modifier = Modifier.height(100.dp))
     }
 
-    // DatePickerDialog nativo do Material 3 para aniversário
+    // Diálogo de Confirmação para Excluir Conta
+    if (mostrarDialogExcluir) {
+        AlertDialog(
+            onDismissRequest = { mostrarDialogExcluir = false },
+            title = { Text("Excluir Conta", fontWeight = FontWeight.Bold) },
+            text = { Text("Tem certeza absoluta que deseja excluir sua conta? Todos os seus dados salvos na nuvem serão perdidos permanentemente.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        mostrarDialogExcluir = false
+                        viewModel.excluirConta(context) {
+                            onLogout()
+                        }
+                    }
+                ) {
+                    Text("Excluir", color = Color(0xFFEF4444), fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { mostrarDialogExcluir = false }) {
+                    Text("Cancelar", color = textColor)
+                }
+            },
+            containerColor = if (isDark) Color(0xFF1E293B) else Color.White,
+            shape = RoundedCornerShape(24.dp)
+        )
+    }
+
+    // DatePickerDialog nativo corrigido para o fuso UTC (evita o bug de voltar 1 dia)
     if (showDatePicker) {
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
@@ -351,7 +428,7 @@ fun PerfilScreen(
                 TextButton(onClick = {
                     datePickerState.selectedDateMillis?.let { millis ->
                         val date = Instant.ofEpochMilli(millis)
-                            .atZone(ZoneId.systemDefault())
+                            .atZone(ZoneId.of("UTC")) // <--- Correção do fuso horário
                             .toLocalDate()
                         val formatted = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                         viewModel.atualizarDataAniversario(formatted, context)
@@ -383,7 +460,8 @@ fun PerfilInputField(
     isEditing: Boolean,
     onEditClick: () -> Unit,
     onValueChange: (String) -> Unit,
-    placeholder: String = ""
+    placeholder: String = "",
+    keyboardType: KeyboardType = KeyboardType.Text
 ) {
     val isDark = isSystemInDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
@@ -418,6 +496,7 @@ fun PerfilInputField(
                     .padding(vertical = 4.dp),
                 placeholder = { Text(placeholder) },
                 singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = VerdeNeon,
@@ -438,4 +517,15 @@ fun PerfilInputField(
         }
         HorizontalDivider(color = textColor.copy(alpha = 0.05f))
     }
+}
+
+// Função auxiliar para mascarar o CPF no formato 000.000.000-00
+private fun formatarCpf(digitos: String): String {
+    val sb = StringBuilder()
+    for (i in digitos.indices) {
+        if (i == 3 || i == 6) sb.append('.')
+        else if (i == 9) sb.append('-')
+        sb.append(digitos[i])
+    }
+    return sb.toString()
 }

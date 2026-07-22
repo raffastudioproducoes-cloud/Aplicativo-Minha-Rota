@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "511340037072-ubeeuc830kmm2tf1sbbbkhioop2p0a32.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raffastudioproducoes.minharota",
+            "certificate_hash": "7a15cb5240e4daa3fdedf31751611f4e0353814c"
+          }
+        },
+        {
           "client_id": "511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com",
           "client_type": 3
         }

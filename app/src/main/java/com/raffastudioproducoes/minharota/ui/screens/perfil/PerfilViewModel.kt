@@ -16,6 +16,9 @@ class PerfilViewModel : ViewModel() {
     private val _email = MutableStateFlow("")
     val email: StateFlow<String> = _email
 
+    private val _cpf = MutableStateFlow("")
+    val cpf: StateFlow<String> = _cpf
+
     private val _dataAniversario = MutableStateFlow("")
     val dataAniversario: StateFlow<String> = _dataAniversario
 
@@ -43,17 +46,18 @@ class PerfilViewModel : ViewModel() {
             .addOnSuccessListener { doc ->
                 if (doc.exists()) {
                     val isProDoc = doc.getBoolean("isPro") ?: false
-                    val nomePlanoDoc = doc.getString("nomePlano")
-                        ?: if (isProDoc) "Premium" else "Free" // <--- Adicione isso
-                    val dataVencimentoDoc =
-                        doc.getString("dataVencimento") ?: "" // <--- Se houver no Firestore
+                    val nomePlanoDoc =
+                        doc.getString("nomePlano") ?: if (isProDoc) "Premium" else "Free"
+                    val dataVencimentoDoc = doc.getString("dataVencimento") ?: ""
                     val nome = doc.getString("name") ?: ""
                     val emailDoc = doc.getString("email") ?: ""
+                    val cpfDoc = doc.getString("cpf") ?: ""
                     val aniversario = doc.getString("dataAniversario") ?: ""
                     val foto = doc.getString("photoUrl") ?: ""
 
                     if (nome.isNotBlank()) _nomeUsuario.value = nome
                     if (emailDoc.isNotBlank()) _email.value = emailDoc
+                    if (cpfDoc.isNotBlank()) _cpf.value = cpfDoc
                     if (aniversario.isNotBlank()) _dataAniversario.value = aniversario
                     if (foto.isNotBlank()) _fotoPerfilUrl.value = foto
 
@@ -99,6 +103,14 @@ class PerfilViewModel : ViewModel() {
         }
     }
 
+    fun atualizarCpf(novoCpf: String, context: Context) {
+        _cpf.value = novoCpf
+
+        auth.currentUser?.uid?.let { uid ->
+            repository.updateUserField(uid, mapOf("cpf" to novoCpf)) { _ -> }
+        }
+    }
+
     fun atualizarDataAniversario(data: String, context: Context) {
         _dataAniversario.value = data
         SharedPreferencesManager(context).salvarDataAniversario(data)
@@ -114,6 +126,25 @@ class PerfilViewModel : ViewModel() {
 
         auth.currentUser?.uid?.let { uid ->
             repository.updateUserField(uid, mapOf("photoUrl" to url)) { _ -> }
+        }
+    }
+
+    fun excluirConta(context: Context, onComplete: () -> Unit) {
+        val currentUser = auth.currentUser
+        val uid = currentUser?.uid
+
+        if (uid != null) {
+            // Remove do Firestore
+            firestore.collection("usuarios").document(uid).delete().addOnCompleteListener {
+                // Remove do Auth e desloga
+                currentUser.delete().addOnCompleteListener {
+                    auth.signOut()
+                    onComplete()
+                }
+            }
+        } else {
+            auth.signOut()
+            onComplete()
         }
     }
 }

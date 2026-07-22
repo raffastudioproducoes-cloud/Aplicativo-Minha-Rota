@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.raffastudioproducoes.minharota.data.local.DataMigrationManager
 import com.raffastudioproducoes.minharota.ui.components.ScaffoldPrincipalPush
 import com.raffastudioproducoes.minharota.ui.navigation.Rota
 import com.raffastudioproducoes.minharota.ui.screens.auth.AuthScreen
@@ -64,23 +66,28 @@ fun MainAppContent() {
 
             composable("login_main") {
                 val userViewModel: UserViewModel = viewModel()
+                val context = LocalContext.current
+
                 AuthScreen(
                     onAuthSuccess = {
-                        val permissions = mutableListOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
-                        )
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                            permissions.add(Manifest.permission.POST_NOTIFICATIONS)
-                            permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
-                        } else {
-                            permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        }
-                        permissionLauncher.launch(permissions.toTypedArray())
+                        // Executa a migração do perfil (e dados Pro/Premium, se houver) para o Firestore
+                        DataMigrationManager.migrarDadosDoConvidadoParaNuvem(context) {
+                            val permissions = mutableListOf(
+                                Manifest.permission.CAMERA,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            )
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+                                permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
+                            } else {
+                                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            }
+                            permissionLauncher.launch(permissions.toTypedArray())
 
-                        navController.navigate(Rota.Hoje.route) {
-                            popUpTo("login_main") { inclusive = true }
+                            navController.navigate(Rota.Hoje.route) {
+                                popUpTo("login_main") { inclusive = true }
+                            }
                         }
                     },
                     onNavigateToRegister = {
@@ -94,22 +101,28 @@ fun MainAppContent() {
             }
 
             composable("login_email") {
+                val context = LocalContext.current
                 LoginScreen(
                     onNavigateBack = { navController.popBackStack() },
                     onLoginSuccess = {
-                        navController.navigate(Rota.Hoje.route) {
-                            popUpTo("login_main") { inclusive = true }
+                        DataMigrationManager.migrarDadosDoConvidadoParaNuvem(context) {
+                            navController.navigate(Rota.Hoje.route) {
+                                popUpTo("login_main") { inclusive = true }
+                            }
                         }
                     }
                 )
             }
 
             composable("register") {
+                val context = LocalContext.current
                 RegisterScreen(
                     onNavigateBack = { navController.popBackStack() },
                     onRegisterSuccess = {
-                        navController.navigate(Rota.Hoje.route) {
-                            popUpTo("login_main") { inclusive = true }
+                        DataMigrationManager.migrarDadosDoConvidadoParaNuvem(context) {
+                            navController.navigate(Rota.Hoje.route) {
+                                popUpTo("login_main") { inclusive = true }
+                            }
                         }
                     }
                 )
@@ -151,6 +164,9 @@ fun MainAppContent() {
             }
             composable(Rota.Perfil.route) {
                 PerfilScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
                     onNavigatePlans = {
                         navController.navigate("plans")
                     },
