@@ -1,7 +1,6 @@
 package com.raffastudioproducoes.minharota.ui.screens.auth
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -44,6 +43,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -70,6 +70,7 @@ fun AuthScreen(
     userViewModel: UserViewModel
 ) {
     val context = LocalContext.current
+    val safeGoogleErrorMessage = stringResource(R.string.auth_error_google_sign_in)
     val scope = rememberCoroutineScope()
     val auth = FirebaseAuth.getInstance()
     val isDark = isSystemInDarkTheme()
@@ -141,13 +142,9 @@ fun AuthScreen(
                                         }
                                     } else {
                                         isSigningIn = false
-                                        Log.e(
-                                            "AuthScreen",
-                                            "Erro ao vincular conta: ${task.exception?.message}"
-                                        )
                                         Toast.makeText(
                                             context,
-                                            "Erro ao vincular conta: ${task.exception?.message}",
+                                            safeGoogleErrorMessage,
                                             Toast.LENGTH_LONG
                                         ).show()
                                     }
@@ -174,13 +171,9 @@ fun AuthScreen(
                                         }
                                     } else {
                                         isSigningIn = false
-                                        Log.e(
-                                            "AuthScreen",
-                                            "Erro Firebase: ${task.exception?.message}"
-                                        )
                                         Toast.makeText(
                                             context,
-                                            "Erro: ${task.exception?.message}",
+                                            safeGoogleErrorMessage,
                                             Toast.LENGTH_LONG
                                         ).show()
                                     }
@@ -192,17 +185,11 @@ fun AuthScreen(
                 } catch (e: Exception) {
                     // Garante que o loading para caso ocorra qualquer exceção ou cancelamento
                     isSigningIn = false
-
-                    Log.e("AuthScreen", "--- ERRO DE LOGIN ---", e)
-                    Log.e("AuthScreen", "Mensagem: ${e.message}")
-                    Log.e("AuthScreen", "Causa: ${e.cause}")
-
-                    val mensagemErro = when {
-                        e.message?.contains("10") == true -> "Erro de configuração (Google API Code 10)"
-                        e.message?.contains("Canceled") == true -> "Login cancelado"
-                        else -> "Erro: ${e.localizedMessage}"
-                    }
-                    Toast.makeText(context, mensagemErro, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        context,
+                        safeGoogleErrorMessage,
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
@@ -302,28 +289,6 @@ fun AuthScreen(
                         Spacer(modifier = Modifier.width(12.dp))
                         Text("Continuar com Apple", fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     }
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Button(
-                    onClick = onAuthSuccess,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp)
-                        .background(
-                            brush = Brush.horizontalGradient(
-                                colors = listOf(
-                                    cianoNeon,
-                                    verdeEsmeralda
-                                )
-                            ),
-                            shape = RoundedCornerShape(50.dp)
-                        ),
-                    shape = RoundedCornerShape(50.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, contentColor = Color.Black)
-                ) {
-                    Text("Entrar como Visitante", fontSize = 16.sp, fontWeight = FontWeight.ExtraBold)
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))

@@ -191,6 +191,40 @@ segura das credenciais.
 - Dados operacionais não são migrados para a nuvem sem autorização validada por backend.
 - Logs, documentação, issues e chats não devem conter credenciais ou dados pessoais sensíveis.
 
+### Proteção contra enumeração de contas
+
+A equivalência de mensagens e estados públicos no aplicativo é uma proteção da
+camada cliente. Ela reduz diferenças observáveis entre, por exemplo, usuário
+inexistente, senha incorreta e e-mail já cadastrado, mas não substitui a
+proteção configurada no serviço Firebase.
+
+Antes de uma publicação, confirme no **Firebase Console → Authentication →
+Settings → User account management → User actions** que a opção **Email
+enumeration protection** permanece habilitada. Mesmo com essa proteção ativa,
+o endpoint de cadastro pode continuar retornando `EMAIL_EXISTS`; por isso, o
+aplicativo também deve manter respostas públicas genéricas para falhas de
+cadastro.
+
+App Check e reCAPTCHA serão tratados em uma rodada posterior. Nunca inclua
+access tokens, comandos preenchidos, identificadores reais do projeto ou
+credenciais nesta documentação.
+
+Com **Email enumeration protection**, a alteração autenticada de endereço não
+deve usar `updateEmail`. O aplicativo solicita a mudança com
+`verifyBeforeUpdateEmail`, e o endereço somente é atualizado depois que o
+usuário confirma a mensagem recebida. As mensagens do cliente permanecem
+genéricas, inclusive quando o endereço solicitado já estiver associado a outra
+conta. A configuração remota ainda precisa ser confirmada operacionalmente no
+Firebase Console antes da publicação.
+
+Depois da confirmação, a tela de perfil usa uma ação explícita de verificação:
+o usuário do Firebase é recarregado, o UID é validado novamente e somente o
+endereço retornado por `FirebaseUser.email` é exibido e reconciliado com as
+cópias de perfil. O endereço anteriormente digitado não é usado como evidência
+da alteração. Quando o Firebase exigir autenticação recente, o fluxo atual
+oferece logout e novo login; ele não solicita nem armazena senha e não tenta
+inferir pelo `providerData` qual credencial iniciou a sessão.
+
 O aplicativo deverá evoluir de acordo com os princípios da **LGPD**, incluindo
 minimização de dados, finalidade explícita, controle de acesso, exclusão de conta
 e transparência sobre tratamento e retenção.

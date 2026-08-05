@@ -75,25 +75,6 @@ class PerfilViewModel : ViewModel() {
         }
     }
 
-    fun atualizarEmail(novoEmail: String, context: Context) {
-        if (novoEmail.isBlank()) return
-        _email.value = novoEmail
-        SharedPreferencesManager(context).salvarEmail(novoEmail)
-
-        val currentUser = auth.currentUser
-        val uid = currentUser?.uid
-
-        if (uid != null) {
-            repository.updateUserField(uid, mapOf("email" to novoEmail)) { _ -> }
-        }
-
-        currentUser?.updateEmail(novoEmail)?.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                // Tratar erro de login recente se necessário
-            }
-        }
-    }
-
     fun atualizarCpf(novoCpf: String, context: Context) {
         _cpf.value = novoCpf
 

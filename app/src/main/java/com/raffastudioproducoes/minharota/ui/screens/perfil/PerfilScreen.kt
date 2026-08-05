@@ -35,6 +35,7 @@ import androidx.compose.material.icons.rounded.PhotoCamera
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
@@ -61,6 +62,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -69,6 +71,7 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.raffastudioproducoes.minharota.R
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
@@ -81,6 +84,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun PerfilScreen(
     viewModel: PerfilViewModel = viewModel(),
+    emailChangeViewModel: EmailChangeViewModel = viewModel(),
     geminiViewModel: GeminiAiViewModel = viewModel(),
     onNavigatePlans: () -> Unit = {},
     onLogout: () -> Unit = {},
@@ -92,6 +96,14 @@ fun PerfilScreen(
     val cpf by viewModel.cpf.collectAsState()
     val dataAniversario by viewModel.dataAniversario.collectAsState()
     val fotoPerfilUrl by viewModel.fotoPerfilUrl.collectAsState()
+    val emailChangeState by emailChangeViewModel.state.collectAsState()
+    val emailOperationLoading = emailChangeState is EmailChangeState.Loading ||
+        emailChangeState is EmailChangeState.CheckingConfirmation
+    val confirmedFirebaseEmail = when (val state = emailChangeState) {
+        is EmailChangeState.CurrentEmailLoaded -> state.confirmedEmail
+        is EmailChangeState.ReconciliationError -> state.confirmedEmail
+        else -> null
+    }
     val isDark = isSystemInDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
@@ -102,6 +114,7 @@ fun PerfilScreen(
 
     var nomeEditavel by remember { mutableStateOf(false) }
     var emailEditavel by remember { mutableStateOf(false) }
+    var pendingEmail by remember { mutableStateOf("") }
     var cpfEditavel by remember { mutableStateOf(false) }
     var mostrarMenuFoto by remember { mutableStateOf(false) }
     var mostrarDialogExcluir by remember { mutableStateOf(false) }
@@ -109,6 +122,17 @@ fun PerfilScreen(
     // DatePickerDialog nativo para aniversário
     var showDatePicker by remember { mutableStateOf(false) }
     val datePickerState = rememberDatePickerState()
+
+    LaunchedEffect(emailChangeState) {
+        if (emailChangeState !is EmailChangeState.Loading &&
+            emailChangeState !is EmailChangeState.Idle
+        ) {
+            pendingEmail = ""
+        }
+        if (emailChangeState is EmailChangeState.VerificationEmailSent) {
+            emailEditavel = false
+        }
+    }
 
     // URI temporária para a foto da câmera
     val tempPhotoFile = remember { File(context.cacheDir, "temp_photo_${System.currentTimeMillis()}.jpg") }
@@ -164,7 +188,11 @@ fun PerfilScreen(
                 fontWeight = FontWeight.Bold,
                 color = textColor
             )
-            IconButton(onClick = onNavigateBack) {
+            IconButton(onClick = {
+                emailChangeViewModel.cancelOperation()
+                pendingEmail = ""
+                onNavigateBack()
+            }) {
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Fechar",
@@ -290,13 +318,135 @@ fun PerfilScreen(
                 )
 
                 // E-mail
-                PerfilInputField(
-                    label = "E-mail de Acesso",
-                    value = email,
-                    isEditing = emailEditavel,
-                    onEditClick = { emailEditavel = !emailEditavel },
-                    onValueChange = { viewModel.atualizarEmail(it, context) }
-                )
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.profile_email_label),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = textColor.copy(alpha = 0.5f),
+                            fontWeight = FontWeight.Bold
+                        )
+                        IconButton(
+                            onClick = {
+                                emailChangeViewModel.cancelOperation()
+                                pendingEmail = ""
+                                emailEditavel = !emailEditavel
+                            },
+                            enabled = !emailOperationLoading,
+                            modifier = Modifier.size(24.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Edit,
+                                contentDescription = stringResource(R.string.profile_email_edit),
+                                modifier = Modifier.size(18.dp),
+                                tint = VerdeNeon
+                            )
+                        }
+                    }
+                    if (emailEditavel) {
+                        OutlinedTextField(
+                            value = pendingEmail,
+                            onValueChange = { pendingEmail = it },
+                            enabled = !emailOperationLoading,
+                            label = { Text(stringResource(R.string.profile_email_new_label)) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = VerdeNeon,
+                                unfocusedTextColor = textColor,
+                                focusedTextColor = textColor
+                            )
+                        )
+                        Button(
+                            onClick = { emailChangeViewModel.requestChange(pendingEmail) },
+                            enabled = !emailOperationLoading &&
+                                pendingEmail.isNotBlank(),
+                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = VerdeNeon,
+                                contentColor = Color.Black
+                            )
+                        ) {
+                            if (emailChangeState is EmailChangeState.Loading) {
+                                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+                            } else {
+                                Text(stringResource(R.string.profile_email_request_action))
+                            }
+                        }
+                    } else {
+                        Text(
+                            text = confirmedFirebaseEmail ?: email,
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = textColor.copy(alpha = 0.9f),
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                    val emailStatus = when (emailChangeState) {
+                        EmailChangeState.VerificationEmailSent -> R.string.profile_email_verification_sent
+                        EmailChangeState.ReauthenticationRequired -> R.string.profile_email_reauthentication_required
+                        is EmailChangeState.CurrentEmailLoaded -> R.string.profile_email_refresh_complete
+                        is EmailChangeState.ReconciliationError -> R.string.profile_email_reconciliation_error
+                        EmailChangeState.NetworkError -> R.string.profile_email_network_error
+                        EmailChangeState.InvalidEmail -> R.string.profile_email_invalid
+                        EmailChangeState.Error -> R.string.profile_email_generic_error
+                        else -> null
+                    }
+                    emailStatus?.let {
+                        Text(
+                            text = stringResource(it),
+                            color = if (emailChangeState is EmailChangeState.VerificationEmailSent) {
+                                VerdeNeon
+                            } else {
+                                MaterialTheme.colorScheme.error
+                            },
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+                    if (emailChangeState is EmailChangeState.VerificationEmailSent ||
+                        emailChangeState is EmailChangeState.CurrentEmailLoaded ||
+                        emailChangeState is EmailChangeState.ReconciliationError
+                    ) {
+                        TextButton(
+                            onClick = { emailChangeViewModel.checkForConfirmedEmail() },
+                            enabled = !emailOperationLoading,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(stringResource(R.string.profile_email_check_update))
+                        }
+                    }
+                    if (emailChangeState is EmailChangeState.CheckingConfirmation) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            CircularProgressIndicator(modifier = Modifier.size(20.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(stringResource(R.string.profile_email_checking_update))
+                        }
+                    }
+                    if (emailChangeState is EmailChangeState.ReauthenticationRequired) {
+                        TextButton(
+                            onClick = {
+                                emailChangeViewModel.onLogout()
+                                pendingEmail = ""
+                                onLogout()
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(stringResource(R.string.profile_email_reauthentication_action))
+                        }
+                    }
+                    HorizontalDivider(color = textColor.copy(alpha = 0.05f))
+                }
 
                 // CPF
                 PerfilInputField(
@@ -369,6 +519,8 @@ fun PerfilScreen(
         // Botão Sair
         TextButton(
             onClick = {
+                emailChangeViewModel.onLogout()
+                pendingEmail = ""
                 geminiViewModel.limparInsights()
                 onLogout()
             },
