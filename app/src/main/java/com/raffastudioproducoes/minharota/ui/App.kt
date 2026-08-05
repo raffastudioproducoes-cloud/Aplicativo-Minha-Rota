@@ -21,6 +21,9 @@ import com.raffastudioproducoes.minharota.ui.navigation.Rota
 import com.raffastudioproducoes.minharota.ui.screens.auth.AuthScreen
 import com.raffastudioproducoes.minharota.ui.screens.auth.LoginScreen
 import com.raffastudioproducoes.minharota.ui.screens.auth.RegisterScreen
+import com.raffastudioproducoes.minharota.ui.screens.auth.EmailVerificationScreen
+import com.raffastudioproducoes.minharota.repository.auth.SessionDestination
+import com.raffastudioproducoes.minharota.repository.auth.restoreSessionDestination
 import com.raffastudioproducoes.minharota.ui.screens.caixas.CaixasScreen
 import com.raffastudioproducoes.minharota.ui.screens.config.ConfigScreen
 import com.raffastudioproducoes.minharota.ui.screens.contadiaria.ContaDiariaScreen
@@ -51,7 +54,19 @@ fun MainAppContent() {
 
     // Rota inicial inteligente: se já estiver logado, pula o login e vai pro Hoje!
     val currentUser = FirebaseAuth.getInstance().currentUser
-    val startRoute = if (currentUser != null) Rota.Hoje.route else "login_main"
+    val startRoute = when (
+        restoreSessionDestination(
+            uid = currentUser?.uid,
+            displayName = currentUser?.displayName,
+            isEmailVerified = currentUser?.isEmailVerified ?: false,
+            providerIds = currentUser?.providerData?.mapTo(mutableSetOf()) { it.providerId }.orEmpty()
+        )
+    ) {
+        SessionDestination.LOGIN -> "login_main"
+        SessionDestination.VERIFY_EMAIL -> "verify_email"
+        SessionDestination.COMPLETE_PROFILE -> "complete_profile"
+        SessionDestination.MAIN -> Rota.Hoje.route
+    }
 
     ScaffoldPrincipalPush(
         navController = navController,
@@ -110,6 +125,16 @@ fun MainAppContent() {
                                 popUpTo("login_main") { inclusive = true }
                             }
                         }
+                    },
+                    onProfileCompletionRequired = {
+                        navController.navigate("complete_profile") {
+                            popUpTo("login_email") { inclusive = true }
+                        }
+                    },
+                    onEmailVerificationRequired = {
+                        navController.navigate("verify_email") {
+                            popUpTo("login_email") { inclusive = true }
+                        }
                     }
                 )
             }
@@ -123,6 +148,54 @@ fun MainAppContent() {
                             navController.navigate(Rota.Hoje.route) {
                                 popUpTo("login_main") { inclusive = true }
                             }
+                        }
+                    },
+                    onEmailVerificationRequired = {
+                        navController.navigate("verify_email") {
+                            popUpTo("register") { inclusive = true }
+                        }
+                    }
+                )
+            }
+
+            composable("complete_profile") {
+                val context = LocalContext.current
+                RegisterScreen(
+                    onNavigateBack = {},
+                    onRegisterSuccess = {
+                        DataMigrationManager.migrarDadosDoConvidadoParaNuvem(context) {
+                            navController.navigate(Rota.Hoje.route) {
+                                popUpTo("complete_profile") { inclusive = true }
+                            }
+                        }
+                    },
+                    onEmailVerificationRequired = {
+                        navController.navigate("verify_email") {
+                            popUpTo("complete_profile") { inclusive = true }
+                        }
+                    },
+                    profileCompletionOnly = true
+                )
+            }
+
+            composable("verify_email") {
+                val context = LocalContext.current
+                EmailVerificationScreen(
+                    onMainAuthorized = {
+                        DataMigrationManager.migrarDadosDoConvidadoParaNuvem(context) {
+                            navController.navigate(Rota.Hoje.route) {
+                                popUpTo("verify_email") { inclusive = true }
+                            }
+                        }
+                    },
+                    onProfileCompletionRequired = {
+                        navController.navigate("complete_profile") {
+                            popUpTo("verify_email") { inclusive = true }
+                        }
+                    },
+                    onLogout = {
+                        navController.navigate("login_main") {
+                            popUpTo("verify_email") { inclusive = true }
                         }
                     }
                 )
@@ -171,6 +244,7 @@ fun MainAppContent() {
                         navController.navigate("plans")
                     },
                     onLogout = {
+                        FirebaseAuth.getInstance().signOut()
                         navController.navigate("login_main") {
                             popUpTo(Rota.Hoje.route) { inclusive = true }
                         }
