@@ -45,10 +45,6 @@ class PerfilViewModel : ViewModel() {
         firestore.collection("usuarios").document(uid).get()
             .addOnSuccessListener { doc ->
                 if (doc.exists()) {
-                    val isProDoc = doc.getBoolean("isPro") ?: false
-                    val nomePlanoDoc =
-                        doc.getString("nomePlano") ?: if (isProDoc) "Premium" else "Free"
-                    val dataVencimentoDoc = doc.getString("dataVencimento") ?: ""
                     val nome = doc.getString("name") ?: ""
                     val emailDoc = doc.getString("email") ?: ""
                     val cpfDoc = doc.getString("cpf") ?: ""
@@ -62,11 +58,6 @@ class PerfilViewModel : ViewModel() {
                     if (foto.isNotBlank()) _fotoPerfilUrl.value = foto
 
                     val prefs = SharedPreferencesManager(context)
-                    prefs.salvarIsPro(isProDoc)
-                    prefs.salvarNomePlano(nomePlanoDoc)
-                    if (dataVencimentoDoc.isNotBlank()) {
-                        prefs.salvarDataVencimento(dataVencimentoDoc)
-                    }
                     if (nome.isNotBlank()) prefs.salvarNomeUsuario(nome)
                     if (emailDoc.isNotBlank()) prefs.salvarEmail(emailDoc)
                     if (aniversario.isNotBlank()) prefs.salvarDataAniversario(aniversario)

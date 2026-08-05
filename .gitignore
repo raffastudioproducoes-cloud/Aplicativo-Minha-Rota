@@ -21,10 +21,16 @@
 *.keystore
 *.jks
 *.keystore.b64
+*.jks.b64
+*.p12
+*.pem
+*.key
 
 # Firebase Configuration
 google-services.json
 app/google-services.json
+google-services.json.b64
+app/google-services.json.b64
 
 # Chaves temporarias de CI
 CHAVE_BASE64_FIREBASE.txt

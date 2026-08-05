@@ -10,6 +10,7 @@ import com.raffastudioproducoes.minharota.domain.model.Divida
 import com.raffastudioproducoes.minharota.domain.model.Movimentacao
 import com.raffastudioproducoes.minharota.domain.model.Turno
 import com.raffastudioproducoes.minharota.domain.model.Veiculo
+import com.raffastudioproducoes.minharota.domain.subscription.SubscriptionPurchasePolicy
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.UUID
@@ -17,6 +18,15 @@ import java.util.UUID
 class SharedPreferencesManager(context: Context) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("minha_rota_prefs", Context.MODE_PRIVATE)
+
+    init {
+        // Remove concessões criadas pelo checkout simulado de versões de desenvolvimento.
+        sharedPreferences.edit()
+            .remove("is_pro")
+            .remove(KEY_NOME_PLANO)
+            .remove(KEY_DATA_VENCIMENTO)
+            .apply()
+    }
 
     private val json = Json {
         ignoreUnknownKeys = true
@@ -190,31 +200,34 @@ class SharedPreferencesManager(context: Context) {
         return sharedPreferences.getString(KEY_FOTO_PERFIL, "") ?: ""
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun salvarIsPro(isPro: Boolean) {
-        sharedPreferences.edit().putBoolean("is_pro", isPro).apply()
+        sharedPreferences.edit().remove("is_pro").apply()
     }
 
     fun obterIsPro(): Boolean {
-        return sharedPreferences.getBoolean("is_pro", false)
+        return SubscriptionPurchasePolicy.hasVerifiedPaidEntitlement()
     }
 
     // --- Plano e Vencimento ---
+    @Suppress("UNUSED_PARAMETER")
     fun salvarNomePlano(nome: String) {
-        sharedPreferences.edit().putString(KEY_NOME_PLANO, nome).apply()
+        sharedPreferences.edit().remove(KEY_NOME_PLANO).apply()
     }
 
     fun obterNomePlano(): String {
-        return sharedPreferences.getString(KEY_NOME_PLANO, "Free") ?: "Free"
+        return "Free"
     }
 
     /** Salva a data de vencimento do plano no formato ISO (yyyy-MM-dd). */
+    @Suppress("UNUSED_PARAMETER")
     fun salvarDataVencimento(dataIso: String) {
-        sharedPreferences.edit().putString(KEY_DATA_VENCIMENTO, dataIso).apply()
+        sharedPreferences.edit().remove(KEY_DATA_VENCIMENTO).apply()
     }
 
     /** Retorna a data de vencimento do plano no formato ISO (yyyy-MM-dd), ou string vazia se não definida. */
     fun obterDataVencimento(): String {
-        return sharedPreferences.getString(KEY_DATA_VENCIMENTO, "") ?: ""
+        return ""
     }
 
     // --- Dias de Folga ---

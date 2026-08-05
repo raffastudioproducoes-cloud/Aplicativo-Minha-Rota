@@ -5,6 +5,5 @@ data class User(
     val displayName: String = "",
     val email: String = "",
     val photoUrl: String? = null,
-    val isPro: Boolean = false, // Essencial para liberar funções do menu
     val createdAt: Long = System.currentTimeMillis()
 )

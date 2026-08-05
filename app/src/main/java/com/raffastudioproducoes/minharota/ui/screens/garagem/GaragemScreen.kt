@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
+import com.raffastudioproducoes.minharota.domain.subscription.SubscriptionPurchasePolicy
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 import com.raffastudioproducoes.minharota.ui.viewmodel.GeminiAiViewModel
@@ -78,7 +79,7 @@ fun GaragemScreen(
             // AI INSIGHT CARD (PRO) — topo absoluto da tela
             item {
                 AiInsightCard(
-                    isPro = true, // controle real feito dentro do GeminiAiViewModel via SharedPreferences
+                    isPro = SubscriptionPurchasePolicy.hasVerifiedPaidEntitlement(),
                     isLoading = garagemIsLoading,
                     insight = garagemInsight,
                     modifier = Modifier.padding(bottom = 16.dp)

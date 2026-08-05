@@ -1,6 +1,5 @@
 package com.raffastudioproducoes.minharota.ui.screens.plans
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -32,20 +31,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
-import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
+import com.raffastudioproducoes.minharota.domain.subscription.SubscriptionPurchasePolicy
 import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -53,46 +47,11 @@ import kotlinx.coroutines.flow.asStateFlow
 
 // ViewModel local para gerenciar status de assinatura de forma reativa
 class PlansViewModel : ViewModel() {
-    private val _planoAtual = MutableStateFlow("free") // "free", "premium", "pro"
+    private val _planoAtual = MutableStateFlow(SubscriptionPurchasePolicy.FREE_PLAN)
     val planoAtual: StateFlow<String> = _planoAtual.asStateFlow()
 
-    fun carregarPlano(context: Context) {
-        val prefs = SharedPreferencesManager(context)
-        _planoAtual.value = if (prefs.obterIsPro()) "premium" else "free"
-    }
-
-    // Mock de retorno positivo do Google Play Billing
-    fun escolherPlano(plano: String, context: Context) {
-        val prefs = SharedPreferencesManager(context)
-        _planoAtual.value = plano
-
-        val isPro = plano != "free"
-        val nomePlanoFormatado =
-            if (plano == "pro") "Pro" else if (plano == "premium") "Premium" else "Free"
-
-        // Persiste localmente de forma completa
-        prefs.salvarIsPro(isPro)
-        prefs.salvarNomePlano(nomePlanoFormatado)
-
-        // Sincroniza com o Firestore
-        val uid = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
-        if (uid != null) {
-            com.google.firebase.firestore.FirebaseFirestore.getInstance()
-                .collection("usuarios")
-                .document(uid)
-                .update(
-                    mapOf(
-                        "isPro" to isPro,
-                        "nomePlano" to nomePlanoFormatado
-                    )
-                )
-        }
-    }
-
-    fun cancelarPlano(context: Context) {
-        val prefs = SharedPreferencesManager(context)
-        _planoAtual.value = "free"
-        prefs.salvarIsPro(false)
+    fun carregarPlano() {
+        _planoAtual.value = SubscriptionPurchasePolicy.FREE_PLAN
     }
 }
 
@@ -101,16 +60,12 @@ fun PlansScreen(
     plansViewModel: PlansViewModel = viewModel(),
     onBack: () -> Unit = {}
 ) {
-    val context = LocalContext.current
     val planoAtual by plansViewModel.planoAtual.collectAsState()
     val isDark = isSystemInDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
-    // Estado do modal de checkout
-    var checkoutPlano by remember { mutableStateOf<String?>(null) }
-
     LaunchedEffect(Unit) {
-        plansViewModel.carregarPlano(context)
+        plansViewModel.carregarPlano()
     }
 
     Column(
@@ -159,7 +114,7 @@ fun PlansScreen(
             ),
             ehAtual = planoAtual == "free",
             destaque = false,
-            onEscolher = { plansViewModel.escolherPlano("free", context) }
+            purchaseEnabled = false
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -179,7 +134,8 @@ fun PlansScreen(
             ),
             ehAtual = planoAtual == "premium",
             destaque = true,
-            onEscolher = { checkoutPlano = "Premium" }
+            purchaseEnabled = SubscriptionPurchasePolicy.currentOffer.purchaseEnabled,
+            actionLabel = SubscriptionPurchasePolicy.currentOffer.actionLabel
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -187,36 +143,25 @@ fun PlansScreen(
         // Plano Pro
         PlanCard(
             titulo = "Pro",
-            preco = "R$ 19,99/mês",
+            preco = "R$ 19,90/mês",
             descricao = "Para empresas",
             recursos = listOf(
                 "Tudo do Premium +",
                 "Gestão de Múltiplos Motoristas",
                 "Relatórios Personalizados",
                 "API de Integração",
-                "Suporte 24/7",
+                "Consultores de Inteligência Artificial",
                 "Backup Automático"
             ),
             ehAtual = planoAtual == "pro",
             destaque = false,
-            onEscolher = { checkoutPlano = "Pro" }
+            purchaseEnabled = SubscriptionPurchasePolicy.currentOffer.purchaseEnabled,
+            actionLabel = SubscriptionPurchasePolicy.currentOffer.actionLabel
         )
 
         Spacer(modifier = Modifier.height(40.dp))
     }
 
-    // Modal de Checkout Glassmorphic
-    checkoutPlano?.let { plano ->
-        CheckoutModal(
-            nomePlano = plano,
-            onDismiss = { checkoutPlano = null },
-            onSuccess = {
-                plansViewModel.escolherPlano(plano.lowercase(), context)
-                checkoutPlano = null
-                onBack()
-            }
-        )
-    }
 }
 
 @Composable
@@ -227,6 +172,8 @@ fun PlanCard(
     recursos: List<String>,
     ehAtual: Boolean = false,
     destaque: Boolean = false,
+    purchaseEnabled: Boolean = false,
+    actionLabel: String = "Escolher Plano",
     onEscolher: () -> Unit = {}
 ) {
     val isDark = isSystemInDarkTheme()
@@ -334,15 +281,15 @@ fun PlanCard(
                     .fillMaxWidth()
                     .height(48.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (ehAtual) Color.Gray else VerdeEntrada
+                    containerColor = if (ehAtual || !purchaseEnabled) Color.Gray else VerdeEntrada
                 ),
                 shape = RoundedCornerShape(50.dp),
-                enabled = !ehAtual
+                enabled = !ehAtual && purchaseEnabled
             ) {
                 Text(
-                    text = if (ehAtual) "Plano Atual" else "Escolher Plano",
+                    text = if (ehAtual) "Plano Atual" else actionLabel,
                     fontWeight = FontWeight.Bold,
-                    color = if (ehAtual) Color.White else Color.Black
+                    color = if (ehAtual || !purchaseEnabled) Color.White else Color.Black
                 )
             }
         }

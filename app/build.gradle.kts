@@ -10,12 +10,25 @@ android {
     namespace = "com.raffastudioproducoes.minharota"
     compileSdk = 37
 
+    val releaseKeystorePath = System.getenv("ANDROID_KEYSTORE_PATH")
+    val releaseKeystorePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
+    val releaseKeyAlias = System.getenv("ANDROID_KEY_ALIAS")
+    val releaseKeyPassword = System.getenv("ANDROID_KEY_PASSWORD")
+    val hasReleaseSigningCredentials = listOf(
+        releaseKeystorePath,
+        releaseKeystorePassword,
+        releaseKeyAlias,
+        releaseKeyPassword
+    ).all { !it.isNullOrBlank() }
+
     signingConfigs {
-        create("release") {
-            storeFile = file(System.getenv("ANDROID_KEYSTORE_PATH") ?: "release.jks")
-            storePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: "Leafar2787@"
-            keyAlias = System.getenv("ANDROID_KEY_ALIAS") ?: "minharota_key"
-            keyPassword = System.getenv("ANDROID_KEY_PASSWORD") ?: "Leafar2787@"
+        if (hasReleaseSigningCredentials) {
+            create("release") {
+                storeFile = file(requireNotNull(releaseKeystorePath))
+                storePassword = requireNotNull(releaseKeystorePassword)
+                keyAlias = requireNotNull(releaseKeyAlias)
+                keyPassword = requireNotNull(releaseKeyPassword)
+            }
         }
     }
 
@@ -31,9 +44,6 @@ android {
             useSupportLibrary = true
         }
 
-        // Ler GEMINI_API_KEY do arquivo local.properties (seguro)
-        val geminiApiKey = project.findProperty("GEMINI_API_KEY")?.toString() ?: ""
-        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
     }
 
     buildTypes {
@@ -43,7 +53,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+            signingConfigs.findByName("release")?.let {
+                signingConfig = it
+            }
         }
     }
     compileOptions {
@@ -75,9 +87,6 @@ dependencies {
     implementation("androidx.credentials:credentials-play-services-auth:1.6.0")
     implementation("com.google.android.libraries.identity.googleid:googleid:1.2.0")
 
-    // Google Generative AI (Gemini) — artifact ID correto
-    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
-
     implementation("androidx.core:core-ktx:1.19.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.11.0")
     implementation("androidx.activity:activity-compose:1.13.0")
@@ -96,4 +105,6 @@ dependencies {
 
     // Coil — carregamento de imagens (foto de perfil)
     implementation("io.coil-kt:coil-compose:2.7.0")
+
+    testImplementation("junit:junit:4.13.2")
 }

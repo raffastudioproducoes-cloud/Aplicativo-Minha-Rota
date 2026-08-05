@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.raffastudioproducoes.minharota.domain.model.User
+import com.raffastudioproducoes.minharota.domain.profile.ProfileFieldPolicy
 
 
 class UserRepository {
@@ -23,9 +24,16 @@ class UserRepository {
     }
 
     fun updateUserField(uid: String, data: Map<String, Any>, onResult: (Boolean) -> Unit) {
+        val safeProfileData = ProfileFieldPolicy.sanitize(data)
+        if (safeProfileData.isEmpty()) {
+            Log.w("UserRepository", "Atualização rejeitada: nenhum campo de perfil permitido")
+            onResult(false)
+            return
+        }
+
         db.collection("usuarios").document(uid)
             .set(
-                data,
+                safeProfileData,
                 SetOptions.merge()
             ) // Usar set com merge evita o erro de documento inexistente
             .addOnSuccessListener {
@@ -54,4 +62,3 @@ class UserRepository {
             }
     }
 }
-

@@ -77,6 +77,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
 import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
+import com.raffastudioproducoes.minharota.domain.subscription.SubscriptionPurchasePolicy
 import com.raffastudioproducoes.minharota.ui.components.HojeSectionCard
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.components.RenovacaoAlertCard
@@ -165,8 +166,7 @@ fun HojeScreen(
     if (mostrarCheckoutRenovacao) {
         CheckoutModal(
             nomePlano = nomePlanoAtivo.ifBlank { "Premium" },
-            onDismiss = { mostrarCheckoutRenovacao = false },
-            onSuccess = { mostrarCheckoutRenovacao = false; viewModel.verificarVencimentoPlano(context) }
+            onDismiss = { mostrarCheckoutRenovacao = false }
         )
     }
 
@@ -186,7 +186,13 @@ fun HojeScreen(
                 item { RenovacaoAlertCard(nomePlano = nomePlanoAtivo, diasRestantes = diasParaVencer, onRenovar = { mostrarCheckoutRenovacao = true }) }
             }
 
-            item { AiInsightCard(isPro = true, isLoading = hojeIsLoading, insight = hojeInsight) }
+            item {
+                AiInsightCard(
+                    isPro = SubscriptionPurchasePolicy.hasVerifiedPaidEntitlement(),
+                    isLoading = hojeIsLoading,
+                    insight = hojeInsight
+                )
+            }
 
             if (exibirAlertaMei) {
                 item {

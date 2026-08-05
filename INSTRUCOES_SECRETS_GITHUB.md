@@ -13,19 +13,40 @@ Para que o GitHub Actions consiga compilar a versão **Release** assinada do apl
 
 | Nome do Secret | Descrição | Valor |
 |---|---|---|
-| `ANDROID_KEYSTORE_BASE64` | O conteúdo codificado em Base64 do arquivo `.keystore`. | *(Cole o conteúdo do arquivo `app/release.keystore.b64` gerado)* |
-| `ANDROID_KEYSTORE_PASSWORD` | Senha do keystore de produção. | `MinhaRota@2025Prod!` |
-| `ANDROID_KEY_ALIAS` | O "Alias" da chave dentro do keystore. | `minharota_alias` |
-| `ANDROID_KEY_PASSWORD` | Senha da chave específica. | `MinhaRota@2025Prod!` |
+| `GOOGLE_SERVICES_JSON` | Conteúdo Base64 do `google-services.json` baixado do Firebase. | Gerar localmente; nunca versionar o arquivo. |
+| `ANDROID_KEYSTORE_BASE64` | Conteúdo Base64 do novo keystore de upload. | Gerar fora do repositório e guardar backup seguro. |
+| `ANDROID_KEYSTORE_PASSWORD` | Senha nova e exclusiva do keystore de produção. | Nunca documentar ou reutilizar. |
+| `ANDROID_KEY_ALIAS` | Alias da nova chave dentro do keystore. | Guardar somente como secret. |
+| `ANDROID_KEY_PASSWORD` | Senha nova e exclusiva da chave. | Nunca documentar ou reutilizar. |
 
-## Como obter o Base64 do Keystore
-Se precisar gerar o Base64 novamente em ambiente Linux/Mac, utilize o comando:
+## Criar a nova chave de upload
+
+Como o aplicativo ainda não foi publicado, crie uma chave inédita e não reutilize senhas já expostas:
+
 ```bash
-base64 -w 0 release.keystore > release.keystore.b64
-```
-No Windows (PowerShell):
-```powershell
-[convert]::ToBase64String((Get-Content -path "release.keystore" -Encoding byte)) > release.keystore.b64
+keytool -genkeypair -v -keystore minha-rota-upload.jks -alias minha-rota-upload -keyalg RSA -keysize 4096 -validity 10000
 ```
 
-> **Aviso de Segurança:** O arquivo físico `release.keystore` gerado localmente **não** deve ser commitado no repositório (ele deve ser incluído no `.gitignore`). Apenas a esteira de CI/CD utilizará o secret `ANDROID_KEYSTORE_BASE64` para decodificar e assinar o APK durante a compilação.
+O comando solicitará as senhas sem gravá-las no terminal. Guarde o arquivo e as senhas em dois backups seguros. Não crie o keystore dentro da pasta do projeto.
+
+## Como obter os valores Base64
+
+Prefira copiar o Base64 diretamente para a área de transferência, sem criar
+arquivos intermediários. No Windows (PowerShell):
+
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("C:\caminho-seguro\minha-rota-upload.jks")) | Set-Clipboard
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("C:\caminho-seguro\google-services.json")) | Set-Clipboard
+```
+
+Cadastre um secret por vez e limpe a área de transferência após cada operação:
+
+```powershell
+Set-Clipboard -Value ""
+```
+
+No Linux, use uma ferramenta de área de transferência disponível no ambiente e
+evite imprimir o Base64 no terminal, gravá-lo no histórico ou criar um arquivo
+`.b64`.
+
+> **Aviso de Segurança:** keystore, senhas, arquivos Base64 e `google-services.json` nunca devem ser enviados ao repositório, anexados em issues ou compartilhados por chat. Apenas a esteira de CI/CD utiliza os secrets para preparar o build temporariamente.

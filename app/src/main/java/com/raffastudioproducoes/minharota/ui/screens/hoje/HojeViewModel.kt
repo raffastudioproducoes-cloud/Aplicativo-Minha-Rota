@@ -103,29 +103,9 @@ class HojeViewModel : ViewModel() {
     private val auth = FirebaseAuth.getInstance()
 
     private fun sincronizarPlanoDoServidor(context: Context) {
-        val uid = auth.currentUser?.uid ?: return
-
-        firestore.collection("usuarios").document(uid).get()
-            .addOnSuccessListener { doc ->
-                if (doc.exists()) {
-                    val isProDoc = doc.getBoolean("isPro") ?: false
-                    // Se for isPro e o nome estiver vazio, define como "Premium" por segurança
-                    val nomePlanoDoc =
-                        doc.getString("nomePlano") ?: if (isProDoc) "Premium" else "Free"
-                    val dataVencimentoDoc = doc.getString("dataVencimento") ?: ""
-
-                    // Salva nas preferências locais para o app inteiro reconhecer instantaneamente
-                    val prefs = SharedPreferencesManager(context)
-                    prefs.salvarIsPro(isProDoc)
-                    prefs.salvarNomePlano(nomePlanoDoc)
-                    if (dataVencimentoDoc.isNotBlank()) {
-                        prefs.salvarDataVencimento(dataVencimentoDoc)
-                    }
-
-                    // Revalida o vencimento do plano na tela
-                    verificarVencimentoPlano(context)
-                }
-            }
+        // Assinaturas ainda não são aceitas pelo cliente nem por documentos de perfil.
+        // A sincronização voltará quando existir um endpoint de entitlement verificado.
+        verificarVencimentoPlano(context)
     }
     fun carregarDadosMei(context: Context) {
         val prefs = SharedPreferencesManager(context)
