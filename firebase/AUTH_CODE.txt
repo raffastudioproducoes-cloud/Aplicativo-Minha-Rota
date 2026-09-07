@@ -1,0 +1,21 @@
+Firebase CLI Authentication Code
+==================================
+
+Data: 07/09/2026
+Timestamp: 22:42 GMT-3
+
+Auth Code:
+4/0ATsMZqD4fWe6yr18yugSHnGopwZmkU3zk4iH3TgZ4_c9VMLAacPh6DDCSfH15tzkMJBCjw
+
+Project: minha-rota-pro
+
+Como usar:
+1. Abra terminal no diretório do projeto
+2. Execute: firebase login --no-localhost [passe o código]
+3. Ou no Windows PowerShell:
+   firebase login --no-localhost --auth-code "4/0ATsMZqD4fWe6yr18yugSHnGopwZmkU3zk4iH3TgZ4_c9VMLAacPh6DDCSfH15tzkMJBCjw"
+
+Após autenticar, deploy rules com:
+firebase deploy --only firestore:rules
+
+Status: Rules já foram publicadas manualmente via Firebase Console em 07/09/2026 22:42
