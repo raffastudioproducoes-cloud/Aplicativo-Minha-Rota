@@ -31,16 +31,16 @@ class MinhaRotaApp : Application() {
 
                 // Conectar Firestore ao emulador (10.0.2.2 = host do emulator Android)
                 val firestoreSettings = FirebaseFirestoreSettings.Builder()
-                    .setHost("10.0.2.2:8180")
+                    .setHost("10.0.2.2:18080")
                     .setSslEnabled(false)
                     .setPersistenceEnabled(false)
                     .build()
                 FirebaseFirestore.getInstance().firestoreSettings = firestoreSettings
-                Log.d("MinhaRotaApp", "✅ Firestore connected to emulator at 10.0.2.2:8180")
+                Log.d("MinhaRotaApp", "✅ Firestore connected to emulator at 10.0.2.2:18080")
 
                 // Conectar Auth ao emulador
-                FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9199)
-                Log.d("MinhaRotaApp", "✅ Auth connected to emulator at 10.0.2.2:9199")
+                FirebaseAuth.getInstance().useEmulator("10.0.2.2", 19099)
+                Log.d("MinhaRotaApp", "✅ Auth connected to emulator at 10.0.2.2:19099")
 
             } catch (e: Exception) {
                 Log.e("MinhaRotaApp", "❌ Emulator connection error: ${e.message}", e)
