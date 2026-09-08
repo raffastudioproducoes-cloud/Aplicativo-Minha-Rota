@@ -31,10 +31,24 @@ class PerfilViewModel : ViewModel() {
 
     fun carregarDadosPerfil(context: Context) {
         val prefs = SharedPreferencesManager(context)
+        val firebaseUser = auth.currentUser
+
         _nomeUsuario.value = prefs.obterNomeUsuario()
         _email.value = prefs.obterEmail()
         _dataAniversario.value = prefs.obterDataAniversario()
         _fotoPerfilUrl.value = prefs.obterFotoPerfilUrl()
+
+        // Se não houver email salvo mas usuário autenticado tiver, usar Firebase
+        if (_email.value.isEmpty() && firebaseUser?.email != null) {
+            _email.value = firebaseUser.email ?: ""
+            prefs.salvarEmail(firebaseUser.email ?: "")
+        }
+
+        // Se não houver nome salvo mas usuário autenticado tiver, usar Firebase
+        if (_nomeUsuario.value.isEmpty() && firebaseUser?.displayName != null) {
+            _nomeUsuario.value = firebaseUser.displayName ?: ""
+            prefs.salvarNomeUsuario(firebaseUser.displayName ?: "")
+        }
 
         carregarDadosDoServidor(context)
     }
