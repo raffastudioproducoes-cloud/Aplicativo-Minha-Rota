@@ -217,7 +217,7 @@ fun GaragemScreen(
                             nome = nome, intervaloKm = intervalo, ultimoServicoKm = ultimo, icone = icone
                         ))
                     } else {
-                        viewModel.adicionarManutencao(context, nome, intervalo, ultimo, icone)
+                        viewModel.adicionarManutencao(context, nome, intervalo, icone)
                     }
                     showBottomSheet = false
                 },
@@ -309,7 +309,6 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var nome by remember { mutableStateOf(manutencaoExistente?.nome ?: "") }
     var intervalo by remember { mutableStateOf(manutencaoExistente?.intervaloKm?.toString() ?: "") }
-    var ultimo by remember { mutableStateOf(manutencaoExistente?.ultimoServicoKm?.toString() ?: "") }
     var iconeSelecionado by remember { mutableStateOf(manutencaoExistente?.icone ?: "build") }
 
     Column(modifier = Modifier.padding(24.dp).fillMaxWidth()) {
@@ -337,19 +336,6 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
                 onValueChange = { if (it.all { c -> c.isDigit() }) intervalo = it },
                 modifier = Modifier.weight(1f),
                 label = { Text("Intervalo (km)") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                shape = RoundedCornerShape(12.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = VerdeNeon,
-                    unfocusedTextColor = textColor,
-                    focusedTextColor = textColor
-                )
-            )
-            OutlinedTextField(
-                value = ultimo,
-                onValueChange = { if (it.all { c -> c.isDigit() }) ultimo = it },
-                modifier = Modifier.weight(1f),
-                label = { Text("Último serviço (km)") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(

@@ -60,21 +60,11 @@ class GaragemViewModel : ViewModel() {
     fun atualizarKmAtual(context: Context, novoKm: Int) {
         if (novoKm <= 0) return
         val prefs = SharedPreferencesManager(context)
-        val kmAnterior = _kmAtual.value
 
-        if (kmAnterior == 0) {
-            // Primeira atualização: hodômetro inicial vira o total acumulado
-            _kmTotalAcumulado.value = novoKm
-            prefs.salvarKmTotal(novoKm)
-        } else if (novoKm > kmAnterior) {
-            // Atualização posterior: soma a diferença ao total
-            val diferenca = novoKm - kmAnterior
-            val novoTotal = _kmTotalAcumulado.value + diferenca
-            _kmTotalAcumulado.value = novoTotal
-            prefs.salvarKmTotal(novoTotal)
-        }
-
+        // KM TOTAL = valor atual do hodômetro (não é soma)
+        _kmTotalAcumulado.value = novoKm
         _kmAtual.value = novoKm
+        prefs.salvarKmTotal(novoKm)
         prefs.salvarKmAtual(novoKm)
     }
 
@@ -95,13 +85,13 @@ class GaragemViewModel : ViewModel() {
         prefs.salvarKmAtual(novoKmAtual)
     }
 
-    fun adicionarManutencao(context: Context, nome: String, intervalo: Int, ultimo: Int, icone: String) {
+    fun adicionarManutencao(context: Context, nome: String, intervalo: Int, icone: String) {
         val prefs = SharedPreferencesManager(context)
         val nova = Manutencao(
-            id = UUID.randomUUID().toString(), 
-            nome = nome, 
-            intervaloKm = intervalo, 
-            ultimoServicoKm = ultimo, 
+            id = UUID.randomUUID().toString(),
+            nome = nome,
+            intervaloKm = intervalo,
+            ultimoServicoKm = _kmAtual.value,  // Sempre usa KM ATUAL como base
             icone = icone
         )
         val lista = _manutencoes.value + nova
