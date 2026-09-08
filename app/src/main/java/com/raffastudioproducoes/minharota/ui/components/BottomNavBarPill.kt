@@ -5,12 +5,10 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -25,8 +23,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,9 +34,9 @@ import com.raffastudioproducoes.minharota.ui.navigation.itensNavegacao
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 /**
- * Bottom nav estilo "pill" (referência: Pinterest app) — avatar circular à esquerda
- * conectado por uma curva orgânica ao item ativo, que mostra ícone + label empilhados.
- * Demais itens mostram apenas ícone. Cores do app mantidas (verde neon em vez de vermelho).
+ * Bottom nav com "entalhe" dinâmico: a barra ganha uma concavidade que acompanha
+ * o item selecionado, cujo ícone fica dentro de um círculo elevado acima da barra.
+ * Cores do app mantidas (verde neon + preto).
  */
 @Composable
 fun BottomNavBarPill(
@@ -49,86 +46,81 @@ fun BottomNavBarPill(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    // Índice do item selecionado dentro da barra (itens de navegação + botão "Criar" no fim)
-    val totalItens = itensNavegacao.size + 1
+    val totalItens = itensNavegacao.size + 1 // + botão "Criar"
     val selectedIndex = itensNavegacao.indexOfFirst { it.route == currentRoute }.let {
-        if (it == -1) 0 else it
+        if (it == -1) totalItens - 1 else it // fallback: nenhum selecionado -> notch no "Criar"
     }
 
-    Row(
+    val barColor = Color(0xFF141416)
+    val density = LocalDensity.current
+
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = Arrangement.spacedBy(0.dp)
+            .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-        // AVATAR CIRCULAR DESTACADO (logo do app — placeholder "M")
-        Box(
-            modifier = Modifier
-                .padding(bottom = 6.dp)
-                .size(52.dp)
-                .shadow(elevation = 8.dp, shape = CircleShape)
-                .clip(CircleShape)
-                .background(Color(0xFF141416))
-                .border(width = 2.dp, color = VerdeNeon, shape = CircleShape),
-            contentAlignment = Alignment.Center
-        ) {
-            Text("M", color = VerdeNeon, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold)
-        }
+        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+            val barWidthPx = with(density) { maxWidth.toPx() }
+            val itemWidthPx = barWidthPx / totalItens
+            val notchRadiusPx = with(density) { 30.dp.toPx() }
 
-        Spacer(modifier = Modifier.width(4.dp))
-
-        // PILL PRINCIPAL COM OS ITENS DE NAVEGAÇÃO + CURVA CONECTORA
-        BoxWithConstraints(
-            modifier = Modifier
-                .weight(1f)
-                .height(72.dp)
-        ) {
-            val itemWidthPx = with(androidx.compose.ui.platform.LocalDensity.current) { (maxWidth / totalItens).toPx() }
             val targetCenterX by animateFloatAsState(
                 targetValue = itemWidthPx * selectedIndex + itemWidthPx / 2f,
-                animationSpec = tween(280),
-                label = "navCurveX"
+                animationSpec = tween(300),
+                label = "notchX"
             )
 
-            // Curva orgânica ligando o avatar ao item selecionado
+            val barHeight = 66.dp
+            val notchDip = with(density) { 34.dp.toPx() }
+
             Canvas(
                 modifier = Modifier
-                    .matchParentSize()
-                    .padding(bottom = 6.dp)
+                    .fillMaxWidth()
+                    .height(barHeight)
+                    .shadow(elevation = 10.dp)
             ) {
-                val startX = -28f
-                val startY = size.height * 0.15f
-                val endX = targetCenterX
-                val endY = size.height * 0.15f
+                val w = size.width
+                val h = size.height
+                val cornerRadius = h / 2f
+                val curveSpread = notchRadiusPx * 1.6f
 
                 val path = Path().apply {
-                    moveTo(startX, startY)
+                    moveTo(cornerRadius, 0f)
+                    lineTo(targetCenterX - curveSpread, 0f)
+
                     cubicTo(
-                        startX + (endX - startX) * 0.35f, startY + size.height * 0.55f,
-                        endX - (endX - startX) * 0.35f, startY + size.height * 0.55f,
-                        endX, endY
+                        targetCenterX - curveSpread * 0.55f, 0f,
+                        targetCenterX - notchRadiusPx, notchDip,
+                        targetCenterX, notchDip
                     )
+                    cubicTo(
+                        targetCenterX + notchRadiusPx, notchDip,
+                        targetCenterX + curveSpread * 0.55f, 0f,
+                        targetCenterX + curveSpread, 0f
+                    )
+
+                    lineTo(w - cornerRadius, 0f)
+                    quadraticTo(w, 0f, w, cornerRadius)
+                    lineTo(w, h)
+                    lineTo(0f, h)
+                    lineTo(0f, cornerRadius)
+                    quadraticTo(0f, 0f, cornerRadius, 0f)
+                    close()
                 }
-                drawPath(
-                    path = path,
-                    color = VerdeNeon,
-                    style = Stroke(width = 5f, cap = StrokeCap.Round)
-                )
+
+                drawPath(path = path, color = barColor)
             }
 
             Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .shadow(elevation = 10.dp, shape = RoundedCornerShape(50))
-                    .clip(RoundedCornerShape(50))
-                    .background(Color(0xFF141416)),
-                verticalAlignment = Alignment.CenterVertically,
+                    .fillMaxWidth()
+                    .height(barHeight),
+                verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 itensNavegacao.forEach { item ->
                     val isSelected = currentRoute == item.route
-                    NavPillItem(
+                    NavNotchItem(
                         icon = item.icon,
                         label = item.title,
                         isSelected = isSelected,
@@ -144,9 +136,7 @@ fun BottomNavBarPill(
                         }
                     )
                 }
-
-                // BOTÃO CRIAR (equivalente ao "Create" do Pinterest)
-                NavPillItem(
+                NavNotchItem(
                     icon = Icons.Filled.Add,
                     label = "Criar",
                     isSelected = false,
@@ -154,12 +144,34 @@ fun BottomNavBarPill(
                     onClick = onFabClick
                 )
             }
+
+            // CÍRCULO ELEVADO na posição do item selecionado
+            val circleSizeDp = 56.dp
+            val circleOffsetX = with(density) { (targetCenterX - with(density) { circleSizeDp.toPx() } / 2f).toDp() }
+
+            Box(
+                modifier = Modifier
+                    .offset(x = circleOffsetX, y = (-14).dp)
+                    .size(circleSizeDp)
+                    .shadow(elevation = 8.dp, shape = CircleShape)
+                    .clip(CircleShape)
+                    .background(VerdeNeon),
+                contentAlignment = Alignment.Center
+            ) {
+                val icon = itensNavegacao.getOrNull(selectedIndex)?.icon ?: Icons.Filled.Add
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = Color.Black,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun NavPillItem(
+private fun NavNotchItem(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     isSelected: Boolean,
@@ -167,34 +179,43 @@ private fun NavPillItem(
     onClick: () -> Unit
 ) {
     val contentColor by animateColorAsState(
-        targetValue = if (isSelected) VerdeNeon else Color(0xFF9A9A9E),
-        animationSpec = tween(220),
-        label = "navItemColor"
+        targetValue = if (isSelected) Color.Transparent else Color(0xFF9A9A9E),
+        animationSpec = tween(200),
+        label = "navNotchColor"
     )
 
     Column(
         modifier = modifier
-            .fillMaxHeight()
+            .padding(bottom = 10.dp)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 onClick = onClick
             ),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = label,
-            tint = contentColor,
-            modifier = Modifier.size(22.dp)
-        )
-        if (isSelected) {
+        if (!isSelected) {
+            Icon(
+                imageVector = icon,
+                contentDescription = label,
+                tint = contentColor,
+                modifier = Modifier.size(20.dp)
+            )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = label,
                 color = contentColor,
-                fontSize = 11.sp,
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Medium
+            )
+        } else {
+            // Espaço reservado: o ícone real aparece no círculo elevado por cima
+            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(
+                text = label,
+                color = VerdeNeon,
+                fontSize = 10.sp,
                 fontWeight = FontWeight.Bold
             )
         }
