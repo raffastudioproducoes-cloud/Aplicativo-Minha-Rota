@@ -1,5 +1,7 @@
 package com.raffastudioproducoes.minharota.repository.auth
 
+import android.util.Log
+import com.google.firebase.BuildConfig
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
@@ -129,6 +131,14 @@ class FirebaseAuthRepository(
                     when (result) {
                         AuthResult.Success -> {
                             onResult(RegistrationResult.ProfileUpdated)
+
+                            // Em DEBUG, skip email verification
+                            if (BuildConfig.DEBUG) {
+                                Log.d("FirebaseAuthRepository", "🧪 DEBUG: Skipping email verification, going straight to authenticated")
+                                onResult(RegistrationResult.AccountCreated)
+                                return@updateDisplayName
+                            }
+
                             sendVerification(createdUser) { verificationResult ->
                                 onResult(
                                     if (verificationResult is AuthResult.EmailVerificationRequired) {
@@ -209,6 +219,15 @@ class FirebaseAuthRepository(
             onResult(AuthResult.Failure(AuthError.SESSION_CHANGED))
             return
         }
+
+        // Em DEBUG com emulator, skippar verificação de email (emulator não envia emails)
+        if (BuildConfig.DEBUG) {
+            Log.d("FirebaseAuthRepository", "🧪 DEBUG: Auto-verificando email para ${user.email}")
+            // Retornar sucesso como se email fosse verificado
+            onResult(AuthResult.Success)
+            return
+        }
+
         user.sendEmailVerification().addOnCompleteListener { task ->
             if (task.isSuccessful && firebaseAuth.currentUser?.uid == expectedUid) {
                 onResult(AuthResult.EmailVerificationRequired)

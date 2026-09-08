@@ -1,7 +1,6 @@
 package com.raffastudioproducoes.minharota.ui.screens.hoje
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
@@ -147,13 +146,14 @@ class HojeViewModel : ViewModel() {
     }
 
     fun updateGanhoBruto(valor: Double) {
+        if (!valor.isFinite() || valor < 0.0) return
         _ganhoBruto.value = valor
         calcularLiquido()
         calcularHorasTrabalhadas()
     }
 
     fun adicionarCusto(descricao: String, valor: Double) {
-        if (valor <= 0 || descricao.isBlank()) return
+        if (!valor.isFinite() || valor <= 0 || descricao.isBlank()) return
         val novoCusto = CustoItem(UUID.randomUUID().toString(), descricao, valor)
         _listaCustos.value = _listaCustos.value + novoCusto
         _custoRua.value = _listaCustos.value.sumOf { it.valor }
@@ -167,6 +167,7 @@ class HojeViewModel : ViewModel() {
     }
 
     fun updateMetaDiaria(valor: Double, context: Context? = null) {
+        if (!valor.isFinite() || valor < 0.0) return
         _metaDiaria.value = valor
         context?.let { SharedPreferencesManager(it).salvarMetaDiaria(valor) }
     }
@@ -224,15 +225,6 @@ class HojeViewModel : ViewModel() {
         prefs.salvarFaturamentoBrutoAcumulado(novoAcumulado)
         verificarAlertaMei()
 
-        if (_ganhoLiquido.value > 0) {
-            val caixinhas = prefs.obterCaixinhas().toMutableList()
-            val novasCaixinhas = caixinhas.map { caixinha ->
-                val valorAdicional = (_ganhoLiquido.value * caixinha.percentual) / 100.0
-                caixinha.copy(saldoAtual = caixinha.saldoAtual + valorAdicional)
-            }
-            prefs.salvarCaixinhas(novasCaixinhas)
-        }
-
         // 2. Sincronização Firebase (Firestore)
         val isPro = prefs.obterIsPro()
         val user = auth.currentUser
@@ -243,11 +235,9 @@ class HojeViewModel : ViewModel() {
                     .collection("turnos")
                     .document(novoTurno.id)
                     .set(novoTurno)
-                    .addOnSuccessListener { Log.d("Firebase", "Turno sincronizado!") }
-                    .addOnFailureListener { e -> Log.e("Firebase", "Erro ao sincronizar", e) }
+                    .addOnSuccessListener { }
+                    .addOnFailureListener { }
             }
-        } else {
-            Log.d("Firebase", "Usuário Free ou não logado - Sincronização na nuvem ignorada.")
         }
         
         limparCampos()

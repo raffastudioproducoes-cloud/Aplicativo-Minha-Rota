@@ -94,9 +94,6 @@ fun MainAppContent() {
                             )
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                                 permissions.add(Manifest.permission.POST_NOTIFICATIONS)
-                                permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
-                            } else {
-                                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
                             }
                             permissionLauncher.launch(permissions.toTypedArray())
 

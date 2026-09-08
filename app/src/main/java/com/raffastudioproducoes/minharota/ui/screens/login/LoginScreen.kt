@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.firebase.auth.FirebaseAuth
 import com.raffastudioproducoes.minharota.ui.theme.FundoDark
 import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
 
@@ -54,7 +55,7 @@ fun LoginScreen(onNavigateToDashboard: () -> Unit) {
 
         // Botão Google
         Button(
-            onClick = { /* TODO: Implementar OAuth Google */ onNavigateToDashboard() },
+            onClick = { if (FirebaseAuth.getInstance().currentUser != null) onNavigateToDashboard() },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -75,7 +76,7 @@ fun LoginScreen(onNavigateToDashboard: () -> Unit) {
 
         // Botão Apple
         Button(
-            onClick = { /* TODO: Implementar OAuth Apple */ onNavigateToDashboard() },
+            onClick = { if (FirebaseAuth.getInstance().currentUser != null) onNavigateToDashboard() },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),

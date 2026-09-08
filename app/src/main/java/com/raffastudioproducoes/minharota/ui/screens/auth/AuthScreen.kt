@@ -1,6 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.auth
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -59,6 +61,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.raffastudioproducoes.minharota.R
 import com.raffastudioproducoes.minharota.domain.model.User
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
+import com.raffastudioproducoes.minharota.data.local.SecurePreferences
 import com.raffastudioproducoes.minharota.ui.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
@@ -76,7 +79,7 @@ fun AuthScreen(
     val isDark = isSystemInDarkTheme()
 
     // Gerenciador da primeira visita
-    val prefs = remember { context.getSharedPreferences("minha_rota_prefs", Context.MODE_PRIVATE) }
+    val prefs = remember { SecurePreferences.get(context) }
     var showOnboardingCard by remember { mutableStateOf(prefs.getBoolean("isFirstRun", true)) }
 
     var showAppleDialog by remember { mutableStateOf(false) }
@@ -306,7 +309,16 @@ fun AuthScreen(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Não tem uma conta? ", color = textColor.copy(alpha = 0.4f), fontSize = 14.sp)
-                    Text("Cadastrar", color = VerdeNeon, fontSize = 14.sp, fontWeight = FontWeight.Bold, modifier = Modifier.clickable { onNavigateToRegister() })
+                    Button(
+                        onClick = {
+                            Log.d("AuthScreen", "Cadastrar clicked")
+                            onNavigateToRegister()
+                        },
+                        contentPadding = PaddingValues(2.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+                    ) {
+                        Text("Cadastrar", color = VerdeNeon, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                    }
                 }
             }
         }
@@ -432,7 +444,7 @@ fun AuthScreen(
                         Text("O login com a Apple estará disponível nas próximas atualizações.", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF8E8E93), textAlign = TextAlign.Center)
                         Spacer(modifier = Modifier.height(24.dp))
                         Button(
-                            onClick = { showAppleDialog = false },
+                            onClick = { showOnboardingCard = false },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(48.dp),

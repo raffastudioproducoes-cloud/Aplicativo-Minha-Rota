@@ -16,8 +16,9 @@ import kotlinx.serialization.json.Json
 import java.util.UUID
 
 class SharedPreferencesManager(context: Context) {
+    private val appContext = context.applicationContext
     private val sharedPreferences: SharedPreferences =
-        context.getSharedPreferences("minha_rota_prefs", Context.MODE_PRIVATE)
+        SecurePreferences.get(appContext)
 
     init {
         // Remove concessões criadas pelo checkout simulado de versões de desenvolvimento.
@@ -27,6 +28,7 @@ class SharedPreferencesManager(context: Context) {
             .remove(KEY_DATA_VENCIMENTO)
             .apply()
     }
+
 
     private val json = Json {
         ignoreUnknownKeys = true
