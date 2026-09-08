@@ -38,19 +38,29 @@ class PerfilViewModel : ViewModel() {
         _dataAniversario.value = prefs.obterDataAniversario()
         _fotoPerfilUrl.value = prefs.obterFotoPerfilUrl()
 
-        // Se não houver email salvo mas usuário autenticado tiver, usar Firebase
-        if (_email.value.isEmpty() && firebaseUser?.email != null) {
-            _email.value = firebaseUser.email ?: ""
-            prefs.salvarEmail(firebaseUser.email ?: "")
-        }
+        aplicarFallbackFirebase(firebaseUser, prefs)
 
-        // Se não houver nome salvo mas usuário autenticado tiver, usar Firebase
-        if (_nomeUsuario.value.isEmpty() && firebaseUser?.displayName != null) {
-            _nomeUsuario.value = firebaseUser.displayName ?: ""
-            prefs.salvarNomeUsuario(firebaseUser.displayName ?: "")
+        // Força atualização do perfil do Firebase (displayName pode ter sido setado após o login em cache)
+        firebaseUser?.reload()?.addOnCompleteListener {
+            aplicarFallbackFirebase(auth.currentUser, prefs)
         }
 
         carregarDadosDoServidor(context)
+    }
+
+    private fun aplicarFallbackFirebase(
+        firebaseUser: com.google.firebase.auth.FirebaseUser?,
+        prefs: SharedPreferencesManager
+    ) {
+        if (_email.value.isEmpty() && !firebaseUser?.email.isNullOrBlank()) {
+            _email.value = firebaseUser?.email ?: ""
+            prefs.salvarEmail(firebaseUser?.email ?: "")
+        }
+
+        if (_nomeUsuario.value.isEmpty() && !firebaseUser?.displayName.isNullOrBlank()) {
+            _nomeUsuario.value = firebaseUser?.displayName ?: ""
+            prefs.salvarNomeUsuario(firebaseUser?.displayName ?: "")
+        }
     }
 
     private fun carregarDadosDoServidor(context: Context) {
