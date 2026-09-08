@@ -191,6 +191,15 @@ segura das credenciais.
 - Dados operacionais não são migrados para a nuvem sem autorização validada por backend.
 - Logs, documentação, issues e chats não devem conter credenciais ou dados pessoais sensíveis.
 
+### Autenticação e entrada de dados
+
+- **Firebase Authentication** com email/senha e Google Sign-In via Android Credential Manager
+- Senhas **não são salvas localmente** — apenas tokens de sessão
+- **EncryptedSharedPreferences** para dados sensíveis de usuário (nome, email, data aniversário)
+- **Sanitização de entrada**: campo de nome aceita acentos (ã, õ, á, é, etc) mas rejeita XSS e scripts
+- Validação de input no cliente + Firestore Security Rules no servidor
+- Dados de turnos salvam em `users/{uid}/turnos/{id}` com validação de tipo
+
 ### Proteção contra enumeração de contas
 
 A equivalência de mensagens e estados públicos no aplicativo é uma proteção da

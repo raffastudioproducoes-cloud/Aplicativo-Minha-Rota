@@ -60,6 +60,11 @@ fun RegisterScreen(
     authViewModel: EmailAuthViewModel = viewModel(),
     profileCompletionOnly: Boolean = false
 ) {
+    fun sanitizeName(input: String): String {
+        // Permite Unicode (acentos, tils, etc), rejeita HTML/script tags
+        return input.replace(Regex("<[^>]*>|<script.*?</script>|on\\w+\\s*="), "")
+    }
+
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -135,7 +140,7 @@ fun RegisterScreen(
 
             AuthTextField(
                 value = name,
-                onValueChange = { name = it },
+                onValueChange = { name = sanitizeName(it) },
                 label = stringResource(R.string.auth_full_name),
                 enabled = !isLoading,
                 leadingIcon = { Icon(Icons.Rounded.Person, contentDescription = null) },

@@ -24,6 +24,7 @@ class DividasViewModel : ViewModel() {
     }
 
     fun pagarParcela(context: Context, dividaId: String, valor: Double) {
+        if (!valor.isFinite() || valor <= 0.0) return
         viewModelScope.launch {
             val prefs = SharedPreferencesManager(context)
             val dividasAtuais = prefs.obterDividas().toMutableList()
@@ -73,6 +74,7 @@ class DividasViewModel : ViewModel() {
         totalParcelas: Int = 1, 
         recorrencia: String = "Mês"
     ) {
+        if (credor.isBlank() || !valorTotal.isFinite() || valorTotal <= 0.0 || totalParcelas <= 0) return
         viewModelScope.launch {
             val prefs = SharedPreferencesManager(context)
             val dividasAtuais = prefs.obterDividas().toMutableList()
@@ -92,6 +94,7 @@ class DividasViewModel : ViewModel() {
     }
 
     fun editarDivida(context: Context, dividaEditada: Divida) {
+        if (dividaEditada.credor.isBlank() || !dividaEditada.valorTotal.isFinite() || dividaEditada.valorTotal <= 0.0 || dividaEditada.totalParcelas <= 0) return
         viewModelScope.launch {
             val prefs = SharedPreferencesManager(context)
             val dividasAtuais = prefs.obterDividas().toMutableList()

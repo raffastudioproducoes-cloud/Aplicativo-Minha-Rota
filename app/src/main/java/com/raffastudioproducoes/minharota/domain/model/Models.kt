@@ -26,7 +26,9 @@ data class Turno(
     val ganhoBruto: Double,
     val custoRua: Double,
     val ganhoLiquido: Double,
-    val corridas: List<Corrida> = emptyList()
+    val corridas: List<Corrida> = emptyList(),
+    val createdAt: Long = System.currentTimeMillis(),
+    val updatedAt: Long = System.currentTimeMillis()
 )
 
 @Serializable

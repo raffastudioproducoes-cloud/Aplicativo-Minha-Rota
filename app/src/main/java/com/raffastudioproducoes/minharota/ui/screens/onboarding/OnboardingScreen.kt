@@ -141,7 +141,7 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
 
                 Button(
                     onClick = {
-                        val prefs = context.getSharedPreferences("minha_rota_prefs", android.content.Context.MODE_PRIVATE)
+                        val prefs = com.raffastudioproducoes.minharota.data.local.SecurePreferences.get(context)
                         // v2.0: Usando KEY_IS_FIRST_RUN conforme diretriz de loop
                         prefs.edit().putBoolean("isFirstRun", false).apply()
                         onNavigateToLogin()

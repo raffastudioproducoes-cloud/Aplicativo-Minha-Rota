@@ -1,6 +1,7 @@
 package com.raffastudioproducoes.minharota.services
 
 import android.accessibilityservice.AccessibilityService
+import android.os.SystemClock
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
@@ -12,6 +13,11 @@ class RideAssistantService : AccessibilityService() {
 
     private var currentPendingRide: TemporaryRide? = null
     private lateinit var prefs: SharedPreferencesManager
+    private val lastProcessedAtByPackage = mutableMapOf<String, Long>()
+
+    private companion object {
+        const val MIN_EVENT_INTERVAL_MILLIS = 250L
+    }
 
     override fun onServiceConnected() {
         super.onServiceConnected()
@@ -20,6 +26,11 @@ class RideAssistantService : AccessibilityService() {
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         val packageName = event?.packageName?.toString() ?: return
+        val now = SystemClock.elapsedRealtime()
+        val lastProcessedAt = lastProcessedAtByPackage[packageName] ?: 0L
+        if (now - lastProcessedAt < MIN_EVENT_INTERVAL_MILLIS) return
+        lastProcessedAtByPackage[packageName] = now
+
         val rootNode = rootInActiveWindow ?: return
 
         when (packageName) {

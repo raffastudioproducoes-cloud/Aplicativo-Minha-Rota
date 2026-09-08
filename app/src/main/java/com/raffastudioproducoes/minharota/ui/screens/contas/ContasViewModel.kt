@@ -90,6 +90,11 @@ class ContasViewModel : ViewModel() {
                 }
                 
                 // 5. Aplicar Regra Regressiva Estrita
+                if (diasRestantes == 0L && dataVencimento.isAfter(hoje)) {
+                    // NÃ£o hÃ¡ dias de trabalho disponÃ­veis antes do vencimento.
+                    // A meta automÃ¡tica nÃ£o deve cobrar o valor integral em um dia de folga.
+                    return@forEach
+                }
                 if (diasRestantes <= 0) {
                     // Vence HOJE ou já está VENCIDA: soma integralmente
                     metaTotal += conta.valor
@@ -108,6 +113,7 @@ class ContasViewModel : ViewModel() {
     }
 
     fun adicionarConta(context: Context, nome: String, valor: Double, vencimento: String) {
+        if (nome.isBlank() || !valor.isFinite() || valor <= 0.0 || vencimento.isBlank()) return
         val prefs = SharedPreferencesManager(context)
         val novaConta = ContaFixa(UUID.randomUUID().toString(), nome, valor, vencimento)
         val listaAtual = _contas.value.toMutableList()
@@ -118,6 +124,7 @@ class ContasViewModel : ViewModel() {
     }
 
     fun atualizarConta(context: Context, id: String, nome: String, valor: Double, vencimento: String) {
+        if (nome.isBlank() || !valor.isFinite() || valor <= 0.0 || vencimento.isBlank()) return
         val prefs = SharedPreferencesManager(context)
         val listaAtual = _contas.value.toMutableList()
         val index = listaAtual.indexOfFirst { it.id == id }

@@ -23,13 +23,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
+import com.raffastudioproducoes.minharota.data.local.SecurePreferences
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
 fun ConfigScreen() {
     val context = LocalContext.current
-    val prefs = context.getSharedPreferences("minha_rota_prefs", Context.MODE_PRIVATE)
+    val prefs = SecurePreferences.get(context)
     val isDark = isSystemInDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     
@@ -37,6 +39,7 @@ fun ConfigScreen() {
     var temaEscuro by remember { mutableStateOf(prefs.getBoolean("tema_escuro", true)) }
     var backupAutomatico by remember { mutableStateOf(prefs.getBoolean("backup_automatico", true)) }
     var notificacoesGanhos by remember { mutableStateOf(prefs.getBoolean("notificacoes_ganhos", true)) }
+    var diasFolga by remember { mutableStateOf(SharedPreferencesManager(context).obterDiasFolga()) }
     
     val versaoApp = remember {
         try {
@@ -121,6 +124,50 @@ fun ConfigScreen() {
                     prefs.edit().putBoolean("notificacoes_ganhos", it).apply()
                 }
             )
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        ConfigSectionTitle("Dias de folga fixos")
+        PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                val diasSemana = listOf("Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb")
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    diasSemana.forEachIndexed { index, dia ->
+                        val numeroDia = index + 1
+                        val selecionado = numeroDia in diasFolga
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clip(CircleShape)
+                                .background(if (selecionado) VerdeNeon else textColor.copy(alpha = 0.05f))
+                                .clickable {
+                                    diasFolga = diasFolga.toMutableSet().also { dias ->
+                                        if (selecionado) dias.remove(numeroDia) else dias.add(numeroDia)
+                                        SharedPreferencesManager(context).salvarDiasFolga(dias)
+                                    }
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = dia,
+                                color = if (selecionado) Color.Black else textColor,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+                Text(
+                    text = "Dias marcados ficam disponíveis para os avisos de folga e não devem gerar meta automática.",
+                    color = textColor.copy(alpha = 0.5f),
+                    fontSize = 11.sp
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))

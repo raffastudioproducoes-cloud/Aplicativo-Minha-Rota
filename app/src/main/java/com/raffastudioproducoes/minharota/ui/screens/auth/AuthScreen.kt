@@ -1,6 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.auth
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,6 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -59,6 +61,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.raffastudioproducoes.minharota.R
 import com.raffastudioproducoes.minharota.domain.model.User
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
+import com.raffastudioproducoes.minharota.data.local.SecurePreferences
 import com.raffastudioproducoes.minharota.ui.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
@@ -76,7 +79,7 @@ fun AuthScreen(
     val isDark = isSystemInDarkTheme()
 
     // Gerenciador da primeira visita
-    val prefs = remember { context.getSharedPreferences("minha_rota_prefs", Context.MODE_PRIVATE) }
+    val prefs = remember { SecurePreferences.get(context) }
     var showOnboardingCard by remember { mutableStateOf(prefs.getBoolean("isFirstRun", true)) }
 
     var showAppleDialog by remember { mutableStateOf(false) }
@@ -103,7 +106,7 @@ fun AuthScreen(
 
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
-                .setServerClientId("511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com")
+                .setServerClientId("511340037072-fcplhfmgou9svh2fm6fn7u95ce9lsopb.apps.googleusercontent.com")
                 .build()
 
             val request = GetCredentialRequest.Builder()
@@ -112,21 +115,27 @@ fun AuthScreen(
 
             scope.launch {
                 try {
+                    Log.d("AuthScreen", "🔵 Google login iniciado")
                     val result = credentialManager.getCredential(context, request)
+                    Log.d("AuthScreen", "🟢 Credencial obtida do CredentialManager")
                     val credential = result.credential
 
                     if (credential is GoogleIdTokenCredential) {
+                        Log.d("AuthScreen", "🟢 GoogleIdTokenCredential validado")
                         val firebaseCredential =
                             GoogleAuthProvider.getCredential(credential.idToken, null)
                         val currentUser = auth.currentUser
 
                         // VERIFICAÇÃO DE VISITANTE: Se já era anônimo, vinculamos em vez de sobrescrever
                         if (currentUser != null && currentUser.isAnonymous) {
+                            Log.d("AuthScreen", "🔵 Usuário anônimo detectado - vinculando credencial")
                             currentUser.linkWithCredential(firebaseCredential)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
+                                        Log.d("AuthScreen", "✅ Credencial vinculada com sucesso")
                                         val firebaseUser = auth.currentUser
                                         if (firebaseUser != null) {
+                                            Log.d("AuthScreen", "✅ Usuário Google logado: ${firebaseUser.email}")
                                             val user = User(
                                                 uid = firebaseUser.uid,
                                                 displayName = firebaseUser.displayName ?: "Usuário",
@@ -134,13 +143,16 @@ fun AuthScreen(
                                                 photoUrl = firebaseUser.photoUrl?.toString()
                                             )
                                             userViewModel.registerOrUpdateUser(user) {
+                                                Log.d("AuthScreen", "✅ Usuário registrado, navegando...")
                                                 isSigningIn = false
                                                 onAuthSuccess()
                                             }
                                         } else {
+                                            Log.e("AuthScreen", "❌ FirebaseUser nulo após link")
                                             isSigningIn = false
                                         }
                                     } else {
+                                        Log.e("AuthScreen", "❌ Erro ao vincular: ${task.exception?.message}")
                                         isSigningIn = false
                                         Toast.makeText(
                                             context,
@@ -151,11 +163,14 @@ fun AuthScreen(
                                 }
                         } else {
                             // FLUXO NORMAL DE LOGIN (Caso não seja visitante)
+                            Log.d("AuthScreen", "🔵 Fluxo normal de Google login")
                             auth.signInWithCredential(firebaseCredential)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
+                                        Log.d("AuthScreen", "✅ SignIn com sucesso")
                                         val firebaseUser = task.result?.user
                                         if (firebaseUser != null) {
+                                            Log.d("AuthScreen", "✅ Usuário Google logado: ${firebaseUser.email}")
                                             val user = User(
                                                 uid = firebaseUser.uid,
                                                 displayName = firebaseUser.displayName ?: "Usuário",
@@ -163,13 +178,16 @@ fun AuthScreen(
                                                 photoUrl = firebaseUser.photoUrl?.toString()
                                             )
                                             userViewModel.registerOrUpdateUser(user) {
+                                                Log.d("AuthScreen", "✅ Usuário registrado, navegando...")
                                                 isSigningIn = false
                                                 onAuthSuccess()
                                             }
                                         } else {
+                                            Log.e("AuthScreen", "❌ FirebaseUser nulo após signIn")
                                             isSigningIn = false
                                         }
                                     } else {
+                                        Log.e("AuthScreen", "❌ Erro SignIn: ${task.exception?.message}")
                                         isSigningIn = false
                                         Toast.makeText(
                                             context,
@@ -306,7 +324,16 @@ fun AuthScreen(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Não tem uma conta? ", color = textColor.copy(alpha = 0.4f), fontSize = 14.sp)
-                    Text("Cadastrar", color = VerdeNeon, fontSize = 14.sp, fontWeight = FontWeight.Bold, modifier = Modifier.clickable { onNavigateToRegister() })
+                    Button(
+                        onClick = {
+                            Log.d("AuthScreen", "Cadastrar clicked")
+                            onNavigateToRegister()
+                        },
+                        contentPadding = PaddingValues(2.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent)
+                    ) {
+                        Text("Cadastrar", color = VerdeNeon, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                    }
                 }
             }
         }
@@ -432,7 +459,7 @@ fun AuthScreen(
                         Text("O login com a Apple estará disponível nas próximas atualizações.", style = MaterialTheme.typography.bodyMedium, color = Color(0xFF8E8E93), textAlign = TextAlign.Center)
                         Spacer(modifier = Modifier.height(24.dp))
                         Button(
-                            onClick = { showAppleDialog = false },
+                            onClick = { showOnboardingCard = false },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(48.dp),

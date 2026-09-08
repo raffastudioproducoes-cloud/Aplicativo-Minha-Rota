@@ -22,9 +22,6 @@ class CaixasViewModel : ViewModel() {
     private val _filtroPeriodo = MutableStateFlow("Hoje")
     val filtroPeriodo: StateFlow<String> = _filtroPeriodo.asStateFlow()
 
-    private val _diasFolga = MutableStateFlow<Set<Int>>(emptySet())
-    val diasFolga: StateFlow<Set<Int>> = _diasFolga.asStateFlow()
-
     private val _erroPercentual = MutableStateFlow<String?>(null)
     val erroPercentual: StateFlow<String?> = _erroPercentual.asStateFlow()
 
@@ -36,7 +33,6 @@ class CaixasViewModel : ViewModel() {
         val prefs = SharedPreferencesManager(context)
         _isPro.value = prefs.obterIsPro()
         _caixinhas.value = prefs.obterCaixinhas()
-        _diasFolga.value = prefs.obterDiasFolga()
         validarPercentuais()
     }
 
@@ -53,15 +49,8 @@ class CaixasViewModel : ViewModel() {
         _filtroPeriodo.value = periodo
     }
 
-    fun toggleDiaFolga(context: Context, dia: Int) {
-        val prefs = SharedPreferencesManager(context)
-        val novosDias = _diasFolga.value.toMutableSet()
-        if (novosDias.contains(dia)) novosDias.remove(dia) else novosDias.add(dia)
-        _diasFolga.value = novosDias
-        prefs.salvarDiasFolga(novosDias)
-    }
-
     fun confirmarDeposito(context: Context, caixinhaId: String, valor: Double) {
+        if (!valor.isFinite() || valor <= 0.0) return
         val prefs = SharedPreferencesManager(context)
         val listaAtual = _caixinhas.value.toMutableList()
         val index = listaAtual.indexOfFirst { it.id == caixinhaId }
@@ -103,6 +92,7 @@ class CaixasViewModel : ViewModel() {
     }
 
     fun atualizarCaixinha(context: Context, caixinha: Caixinha) {
+        if (!caixinha.percentual.isFinite() || caixinha.percentual < 0.0 || caixinha.percentual > 100.0) return
         val prefs = SharedPreferencesManager(context)
         val listaAtual = _caixinhas.value.map { if (it.id == caixinha.id) caixinha else it }
         _caixinhas.value = listaAtual
