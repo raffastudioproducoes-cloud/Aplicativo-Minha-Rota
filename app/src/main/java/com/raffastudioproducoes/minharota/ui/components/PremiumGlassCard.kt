@@ -22,18 +22,40 @@ fun PremiumGlassCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val isDark = isAppDarkTheme()
-    
-    // v2.0: Cores adaptativas para Glassmorphism
-    val backgroundColor = if (isDark) Color.White.copy(alpha = 0.05f) else Color.Black.copy(alpha = 0.03f)
-    val borderColor = if (isDark) Color.White.copy(alpha = 0.15f) else Color.Black.copy(alpha = 0.08f)
+
+    // Vidro fosco: gradiente diagonal sutil + borda brilhante simulando frosted glass
+    val glassGradient = if (isDark) {
+        Brush.linearGradient(
+            colors = listOf(
+                Color.White.copy(alpha = 0.10f),
+                Color.White.copy(alpha = 0.03f)
+            )
+        )
+    } else {
+        Brush.linearGradient(
+            colors = listOf(
+                Color.White.copy(alpha = 0.55f),
+                Color.White.copy(alpha = 0.20f)
+            )
+        )
+    }
+    val borderGradient = if (isDark) {
+        Brush.linearGradient(
+            colors = listOf(Color.White.copy(alpha = 0.28f), Color.White.copy(alpha = 0.06f))
+        )
+    } else {
+        Brush.linearGradient(
+            colors = listOf(Color.White.copy(alpha = 0.9f), Color.White.copy(alpha = 0.3f))
+        )
+    }
 
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(24.dp))
-            .background(backgroundColor)
+            .background(glassGradient)
             .border(
                 width = 1.dp,
-                color = borderColor,
+                brush = borderGradient,
                 shape = RoundedCornerShape(24.dp)
             )
     ) {

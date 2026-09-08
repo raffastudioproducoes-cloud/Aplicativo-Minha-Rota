@@ -76,6 +76,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
+import com.raffastudioproducoes.minharota.ui.components.AnalyticsSummaryCard
 import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
 import com.raffastudioproducoes.minharota.domain.subscription.SubscriptionPurchasePolicy
 import com.raffastudioproducoes.minharota.ui.components.HojeSectionCard
@@ -182,6 +183,13 @@ fun HojeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
         ) {
+            item {
+                AnalyticsSummaryCard(
+                    titulo = "Faturamento acumulado",
+                    valorFormatado = "R$ %.2f".format(faturamentoAcumulado)
+                )
+            }
+
             if (exibirAlertaRenovacao && diasParaVencer >= 0) {
                 item { RenovacaoAlertCard(nomePlano = nomePlanoAtivo, diasRestantes = diasParaVencer, onRenovar = { mostrarCheckoutRenovacao = true }) }
             }
