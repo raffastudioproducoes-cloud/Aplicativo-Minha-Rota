@@ -2,7 +2,7 @@ package com.raffastudioproducoes.minharota.ui.screens.caixas
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -78,7 +78,7 @@ fun CaixasScreen(
     val filtroPeriodo by viewModel.filtroPeriodo.collectAsState()
     val erroPercentual by viewModel.erroPercentual.collectAsState()
     val ganhoLiquidoHoje by hojeViewModel.ganhoLiquido.collectAsState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     var caixinhaSelecionadaId by remember { mutableStateOf<String?>(null) }
@@ -296,7 +296,7 @@ fun CaixasScreen(
 
 @Composable
 fun PeriodoSelector(selected: String, onSelect: (String) -> Unit) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color.Black
     val periodos = listOf("Hoje", "Semana", "Mês", "Ano")
     Row(
@@ -328,7 +328,7 @@ fun PeriodoSelector(selected: String, onSelect: (String) -> Unit) {
 
 @Composable
 fun SectionCard(title: String, content: @Composable ColumnScope.() -> Unit) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Column(modifier = Modifier.padding(16.dp)) {
         Text(title, style = MaterialTheme.typography.labelMedium, color = textColor.copy(alpha = 0.5f), modifier = Modifier.padding(bottom = 8.dp))
@@ -338,7 +338,7 @@ fun SectionCard(title: String, content: @Composable ColumnScope.() -> Unit) {
 
 @Composable
 fun MiniCardProgresso(caixinha: Caixinha, periodo: String, onClick: () -> Unit) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     val progresso = if (caixinha.metaValor > 0) (caixinha.saldoAtual / caixinha.metaValor).toFloat().coerceIn(0f, 1f) else 0f
 
@@ -371,7 +371,7 @@ fun GerenciarCaixinhaItem(
     onUpdate: (Caixinha) -> Unit,
     onDelete: () -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var showEditDialog by remember { mutableStateOf(false) }
     var editNome by remember { mutableStateOf(caixinha.nome) }

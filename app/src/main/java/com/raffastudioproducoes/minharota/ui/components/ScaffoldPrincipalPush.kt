@@ -108,7 +108,7 @@ fun ScaffoldPrincipalPush(
                 },
                 bottomBar = {
                     if (!isRidingMode && showBars) {
-                        BottomNavBarNotch(
+                        BottomNavBarPill(
                             navController = navController,
                             onFabClick = { mostrarModalRapido = true }
                         )

@@ -4,7 +4,7 @@ import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -72,7 +72,7 @@ fun DrawerConteudoGradientRainbowV2(
     val nomeUsuario = sharedPreferencesManager.obterNomeUsuario()
     val fotoPerfilUrl = sharedPreferencesManager.obterFotoPerfilUrl()
     val scrollState = rememberScrollState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     // Obter versão dinamicamente do PackageInfo
@@ -337,7 +337,7 @@ fun DrawerConteudoGradientRainbowV2(
 
 @Composable
 fun CategoryHeader(title: String) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Text(
         text = title,
@@ -356,7 +356,7 @@ fun DrawerItemPill(
     gradientColors: List<Color>,
     onClick: () -> Unit,
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     val backgroundBrush = if (isSelected) {
         Brush.horizontalGradient(colors = gradientColors)

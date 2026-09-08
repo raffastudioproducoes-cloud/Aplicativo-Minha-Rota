@@ -7,7 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -76,7 +76,7 @@ fun AuthScreen(
     val safeGoogleErrorMessage = stringResource(R.string.auth_error_google_sign_in)
     val scope = rememberCoroutineScope()
     val auth = FirebaseAuth.getInstance()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
 
     // Gerenciador da primeira visita
     val prefs = remember { SecurePreferences.get(context) }

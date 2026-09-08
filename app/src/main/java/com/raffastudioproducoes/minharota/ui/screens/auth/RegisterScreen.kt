@@ -1,6 +1,6 @@
 package com.raffastudioproducoes.minharota.ui.screens.auth
 
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -72,7 +72,7 @@ fun RegisterScreen(
     var passwordVisible by remember { mutableStateOf(false) }
     val authState by authViewModel.authState.collectAsState()
     val isLoading = authState is AuthState.Loading
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     LaunchedEffect(profileCompletionOnly) {

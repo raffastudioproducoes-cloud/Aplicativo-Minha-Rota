@@ -1,7 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.dividas
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -29,7 +29,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 fun DividasScreen(viewModel: DividasViewModel = viewModel()) {
     val context = LocalContext.current
     val dividas by viewModel.dividas.collectAsState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     
     var mostrarDialogoPagamento by remember { mutableStateOf(false) }
@@ -206,7 +206,7 @@ fun CardDivida(
     onExcluir: (String) -> Unit,
     onEditar: () -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     val progresso = if (divida.valorTotal > 0) (divida.valorPago / divida.valorTotal).toFloat().coerceIn(0f, 1f) else 0f
     val corTotalPago = Color(0xFF34D399)
@@ -274,7 +274,7 @@ fun FormDividaDialog(
     onDismiss: () -> Unit,
     onSave: (String, Double, Int, String) -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var credor by remember { mutableStateOf(dividaExistente?.credor ?: "") }
     var valorTotal by remember { mutableStateOf(dividaExistente?.valorTotal?.toString() ?: "") }

@@ -2,7 +2,7 @@ package com.raffastudioproducoes.minharota.ui.screens.garagem
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -41,7 +41,7 @@ fun GaragemScreen(
     val kmRodadoHoje by viewModel.kmRodadoHoje.collectAsState()
     val manutencoes by viewModel.manutencoes.collectAsState()
     val mediaKmL by viewModel.mediaResult.collectAsState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -244,7 +244,7 @@ fun ManutencaoCard(
     onEdit: () -> Unit,
     onConcluir: () -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
@@ -313,7 +313,7 @@ fun ManutencaoCard(
 
 @Composable
 fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, String) -> Unit, onCancel: () -> Unit) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var nome by remember { mutableStateOf(manutencaoExistente?.nome ?: "") }
     var intervalo by remember { mutableStateOf(manutencaoExistente?.intervaloKm?.toString() ?: "") }

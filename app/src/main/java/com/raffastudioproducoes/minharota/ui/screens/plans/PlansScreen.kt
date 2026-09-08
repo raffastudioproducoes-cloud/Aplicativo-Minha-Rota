@@ -2,7 +2,7 @@ package com.raffastudioproducoes.minharota.ui.screens.plans
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -61,7 +61,7 @@ fun PlansScreen(
     onBack: () -> Unit = {}
 ) {
     val planoAtual by plansViewModel.planoAtual.collectAsState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     LaunchedEffect(Unit) {
@@ -176,7 +176,7 @@ fun PlanCard(
     actionLabel: String = "Escolher Plano",
     onEscolher: () -> Unit = {}
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     val cardColor = if (isDark) Color(0xFF1C1C1E) else Color.White
 

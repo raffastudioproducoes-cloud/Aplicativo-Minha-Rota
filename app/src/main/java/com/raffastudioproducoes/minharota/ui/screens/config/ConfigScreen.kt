@@ -4,7 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -37,7 +37,7 @@ import androidx.compose.ui.draw.alpha
 fun ConfigScreen() {
     val context = LocalContext.current
     val prefs = SecurePreferences.get(context)
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     val themeViewModel: AppThemeViewModel = viewModel()
@@ -252,7 +252,7 @@ fun ConfigSwitchItem(
     onCheckedChange: (Boolean) -> Unit,
     enabled: Boolean = true
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Row(
         modifier = Modifier
@@ -291,7 +291,7 @@ fun ConfigClickItem(
     subtitle: String,
     onClick: () -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Row(
         modifier = Modifier
@@ -315,7 +315,7 @@ fun ConfigInfoItem(
     title: String,
     value: String
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Row(
         modifier = Modifier
@@ -333,7 +333,7 @@ fun ConfigInfoItem(
 
 @Composable
 fun IconContainer(icon: ImageVector) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Box(
         modifier = Modifier

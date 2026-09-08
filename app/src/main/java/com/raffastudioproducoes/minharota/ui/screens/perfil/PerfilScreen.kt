@@ -8,7 +8,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -104,7 +104,7 @@ fun PerfilScreen(
         is EmailChangeState.ReconciliationError -> state.confirmedEmail
         else -> null
     }
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     // Carregar dados persistidos ao abrir a tela
@@ -615,7 +615,7 @@ fun PerfilInputField(
     placeholder: String = "",
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
