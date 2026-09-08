@@ -182,7 +182,7 @@ fun GaragemScreen(
                 }
             } else {
                 items(manutencoes) { manutencao ->
-                    val kmRestante = (manutencao.ultimoServicoKm + manutencao.intervaloKm) - kmAtual
+                    val kmRestante = (manutencao.ultimoServicoKm + manutencao.intervaloKm) - kmTotal
                     val isCritico = kmRestante <= 0 && !manutencao.concluida
                     
                     ManutencaoCard(
