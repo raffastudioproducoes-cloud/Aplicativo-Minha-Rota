@@ -19,7 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -96,7 +96,6 @@ fun ScaffoldPrincipalPush(
             modifier = Modifier
                 .fillMaxSize()
                 .offset(x = drawerOffsetPx)
-                .clip(RoundedCornerShape(topStart = cornerRadius, bottomStart = cornerRadius))
         ) {
             Scaffold(
                 topBar = {

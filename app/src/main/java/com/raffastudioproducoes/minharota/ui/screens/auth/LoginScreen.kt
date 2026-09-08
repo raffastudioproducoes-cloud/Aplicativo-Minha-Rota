@@ -29,6 +29,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -69,9 +70,19 @@ fun LoginScreen(
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     LaunchedEffect(authState) {
-        if (authState.allowsNavigation()) onLoginSuccess()
-        if (authState is AuthState.ProfileCompletionRequired) onProfileCompletionRequired()
-        if (authState is AuthState.EmailVerificationRequired) onEmailVerificationRequired()
+        Log.d("LoginScreen", "🔵 authState changed: $authState")
+        if (authState.allowsNavigation()) {
+            Log.d("LoginScreen", "✅ Login sucesso, navegando...")
+            onLoginSuccess()
+        }
+        if (authState is AuthState.ProfileCompletionRequired) {
+            Log.d("LoginScreen", "🔵 Profile completion required")
+            onProfileCompletionRequired()
+        }
+        if (authState is AuthState.EmailVerificationRequired) {
+            Log.d("LoginScreen", "🔵 Email verification required")
+            onEmailVerificationRequired()
+        }
     }
 
     Scaffold(
@@ -166,7 +177,10 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = { authViewModel.login(email, password) },
+                onClick = {
+                    Log.d("LoginScreen", "🔵 Login button clicked: email=$email, password=${password.take(3)}...")
+                    authViewModel.login(email, password)
+                },
                 enabled = authViewModel.isSubmitEnabled &&
                     email.isNotBlank() && password.isNotBlank(),
                 modifier = Modifier.fillMaxWidth().height(56.dp),

@@ -97,12 +97,16 @@ class FirebaseAuthRepository(
     override fun login(email: String, password: String, onResult: (AuthResult) -> Unit) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    onResult(AuthResult.Failure(mapException(task.exception)))
+                    return@addOnCompleteListener
+                }
                 val signedInUser = task.result?.user
                 val currentUser = firebaseAuth.currentUser
-                if (task.isSuccessful && signedInUser != null && currentUser?.uid == signedInUser.uid) {
+                if (signedInUser != null && currentUser?.uid == signedInUser.uid) {
                     onResult(signedInUser.toSession().toAuthResult())
                 } else {
-                    onResult(AuthResult.Failure(mapException(task.exception)))
+                    onResult(AuthResult.Failure(AuthError.UNKNOWN))
                 }
             }
     }

@@ -80,8 +80,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
-    implementation("com.google.firebase:firebase-appcheck-playintegrity")
-    debugImplementation("com.google.firebase:firebase-appcheck-debug")
 
     // Google Sign-In & Credential Manager (Login Social v1.1.0)
     implementation("com.google.android.gms:play-services-auth:21.6.0")

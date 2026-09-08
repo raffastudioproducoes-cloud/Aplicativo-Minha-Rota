@@ -106,7 +106,7 @@ fun AuthScreen(
 
             val googleIdOption = GetGoogleIdOption.Builder()
                 .setFilterByAuthorizedAccounts(false)
-                .setServerClientId("511340037072-84g8p17t2mi8idosurripn1vi9o2221f.apps.googleusercontent.com")
+                .setServerClientId("511340037072-fcplhfmgou9svh2fm6fn7u95ce9lsopb.apps.googleusercontent.com")
                 .build()
 
             val request = GetCredentialRequest.Builder()
@@ -115,21 +115,27 @@ fun AuthScreen(
 
             scope.launch {
                 try {
+                    Log.d("AuthScreen", "🔵 Google login iniciado")
                     val result = credentialManager.getCredential(context, request)
+                    Log.d("AuthScreen", "🟢 Credencial obtida do CredentialManager")
                     val credential = result.credential
 
                     if (credential is GoogleIdTokenCredential) {
+                        Log.d("AuthScreen", "🟢 GoogleIdTokenCredential validado")
                         val firebaseCredential =
                             GoogleAuthProvider.getCredential(credential.idToken, null)
                         val currentUser = auth.currentUser
 
                         // VERIFICAÇÃO DE VISITANTE: Se já era anônimo, vinculamos em vez de sobrescrever
                         if (currentUser != null && currentUser.isAnonymous) {
+                            Log.d("AuthScreen", "🔵 Usuário anônimo detectado - vinculando credencial")
                             currentUser.linkWithCredential(firebaseCredential)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
+                                        Log.d("AuthScreen", "✅ Credencial vinculada com sucesso")
                                         val firebaseUser = auth.currentUser
                                         if (firebaseUser != null) {
+                                            Log.d("AuthScreen", "✅ Usuário Google logado: ${firebaseUser.email}")
                                             val user = User(
                                                 uid = firebaseUser.uid,
                                                 displayName = firebaseUser.displayName ?: "Usuário",
@@ -137,13 +143,16 @@ fun AuthScreen(
                                                 photoUrl = firebaseUser.photoUrl?.toString()
                                             )
                                             userViewModel.registerOrUpdateUser(user) {
+                                                Log.d("AuthScreen", "✅ Usuário registrado, navegando...")
                                                 isSigningIn = false
                                                 onAuthSuccess()
                                             }
                                         } else {
+                                            Log.e("AuthScreen", "❌ FirebaseUser nulo após link")
                                             isSigningIn = false
                                         }
                                     } else {
+                                        Log.e("AuthScreen", "❌ Erro ao vincular: ${task.exception?.message}")
                                         isSigningIn = false
                                         Toast.makeText(
                                             context,
@@ -154,11 +163,14 @@ fun AuthScreen(
                                 }
                         } else {
                             // FLUXO NORMAL DE LOGIN (Caso não seja visitante)
+                            Log.d("AuthScreen", "🔵 Fluxo normal de Google login")
                             auth.signInWithCredential(firebaseCredential)
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
+                                        Log.d("AuthScreen", "✅ SignIn com sucesso")
                                         val firebaseUser = task.result?.user
                                         if (firebaseUser != null) {
+                                            Log.d("AuthScreen", "✅ Usuário Google logado: ${firebaseUser.email}")
                                             val user = User(
                                                 uid = firebaseUser.uid,
                                                 displayName = firebaseUser.displayName ?: "Usuário",
@@ -166,13 +178,16 @@ fun AuthScreen(
                                                 photoUrl = firebaseUser.photoUrl?.toString()
                                             )
                                             userViewModel.registerOrUpdateUser(user) {
+                                                Log.d("AuthScreen", "✅ Usuário registrado, navegando...")
                                                 isSigningIn = false
                                                 onAuthSuccess()
                                             }
                                         } else {
+                                            Log.e("AuthScreen", "❌ FirebaseUser nulo após signIn")
                                             isSigningIn = false
                                         }
                                     } else {
+                                        Log.e("AuthScreen", "❌ Erro SignIn: ${task.exception?.message}")
                                         isSigningIn = false
                                         Toast.makeText(
                                             context,
