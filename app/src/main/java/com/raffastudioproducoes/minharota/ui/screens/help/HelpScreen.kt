@@ -51,6 +51,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 @Composable
@@ -402,17 +403,13 @@ fun TutorialTabContent() {
             val item = tutorials[index]
             var expanded by remember { mutableStateOf(false) }
 
-            Card(
-                shape = RoundedCornerShape(14.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF1E1E22)),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(1.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(14.dp))
+            PremiumGlassCard(
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier
                         .clickable { expanded = !expanded }
-                        .padding(16.dp)
+                        .fillMaxWidth()
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -600,17 +597,13 @@ fun FaqTabContent() {
             val faq = faqs[index]
             var expanded by remember { mutableStateOf(false) }
 
-            Card(
-                shape = RoundedCornerShape(14.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF1E1E22)),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(1.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(14.dp))
+            PremiumGlassCard(
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
                     modifier = Modifier
                         .clickable { expanded = !expanded }
-                        .padding(16.dp)
+                        .fillMaxWidth()
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -667,17 +660,13 @@ fun ContactTabContent() {
             .fillMaxSize()
             .padding(bottom = 24.dp)
     ) {
-        Card(
-            shape = RoundedCornerShape(14.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF1E1E22)),
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(1.dp, Color.White.copy(alpha = 0.05f), RoundedCornerShape(14.dp))
+        PremiumGlassCard(
+            modifier = Modifier.fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
                     .clickable { expanded = !expanded }
-                    .padding(16.dp)
+                    .fillMaxWidth()
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
