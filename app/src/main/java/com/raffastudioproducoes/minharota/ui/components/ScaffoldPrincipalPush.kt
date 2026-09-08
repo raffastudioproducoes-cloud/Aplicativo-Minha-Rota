@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -91,11 +92,13 @@ fun ScaffoldPrincipalPush(
             )
         }
 
-        // 2. CAMADA DE FRENTE: O Conteúdo
+        // 2. CAMADA DE FRENTE: O Conteúdo (vira "cartão" com bordas arredondadas ao empurrar)
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .offset(x = drawerOffsetPx)
+                .clip(RoundedCornerShape(cornerRadius))
+                .background(MaterialTheme.colorScheme.background)
         ) {
             Scaffold(
                 topBar = {
