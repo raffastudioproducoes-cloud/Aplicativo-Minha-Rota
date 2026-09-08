@@ -309,6 +309,7 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var nome by remember { mutableStateOf(manutencaoExistente?.nome ?: "") }
     var intervalo by remember { mutableStateOf(manutencaoExistente?.intervaloKm?.toString() ?: "") }
+    var ultimoServico by remember { mutableStateOf(manutencaoExistente?.ultimoServicoKm?.toString() ?: "") }
     var iconeSelecionado by remember { mutableStateOf(manutencaoExistente?.icone ?: "build") }
 
     Column(modifier = Modifier.padding(24.dp).fillMaxWidth()) {
@@ -345,9 +346,25 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
                 )
             )
         }
-        
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = ultimoServico,
+            onValueChange = { if (it.all { c -> c.isDigit() }) ultimoServico = it },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text("Última Manutenção (km)") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = VerdeNeon,
+                unfocusedTextColor = textColor,
+                focusedTextColor = textColor
+            )
+        )
+
         Spacer(modifier = Modifier.height(24.dp))
-        
+
         Text("Ícone", fontSize = 12.sp, color = textColor.copy(alpha = 0.5f))
         Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             listOf("build", "oil", "settings").forEach { icon ->
@@ -381,8 +398,9 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
             Button(
                 onClick = {
                     val inter = intervalo.toIntOrNull() ?: 0
-                    if (nome.isNotBlank() && inter > 0) {
-                        onSave(nome, inter, manutencaoExistente?.ultimoServicoKm ?: 0, iconeSelecionado)
+                    val ult = ultimoServico.toIntOrNull() ?: 0
+                    if (nome.isNotBlank() && inter > 0 && ult >= 0) {
+                        onSave(nome, inter, ult, iconeSelecionado)
                     }
                 },
                 modifier = Modifier.weight(1f),
