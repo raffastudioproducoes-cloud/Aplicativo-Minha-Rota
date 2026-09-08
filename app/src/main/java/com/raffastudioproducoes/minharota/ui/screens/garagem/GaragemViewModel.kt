@@ -101,7 +101,7 @@ class GaragemViewModel : ViewModel() {
             id = UUID.randomUUID().toString(),
             nome = nome,
             intervaloKm = intervalo,
-            ultimoServicoKm = _kmAtual.value,  // Sempre usa KM ATUAL como base
+            ultimoServicoKm = _kmTotalAcumulado.value,
             icone = icone
         )
         val lista = _manutencoes.value + nova
@@ -121,15 +121,15 @@ class GaragemViewModel : ViewModel() {
     fun concluirManutencao(context: Context, id: String) {
         val prefs = SharedPreferencesManager(context)
         val dataHoje = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
-        val kmNoMomento = _kmAtual.value
-        
+        val kmNoMomento = _kmTotalAcumulado.value
+
         val lista = _manutencoes.value.map {
             if (it.id == id) {
                 it.copy(
-                    concluida = true, 
-                    dataConclusao = dataHoje, 
+                    concluida = true,
+                    dataConclusao = dataHoje,
                     kmConclusao = kmNoMomento,
-                    ultimoServicoKm = kmNoMomento // Reseta o ciclo para o próximo intervalo
+                    ultimoServicoKm = kmNoMomento
                 )
             } else it
         }
