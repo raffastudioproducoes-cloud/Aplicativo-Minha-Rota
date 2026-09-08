@@ -1,8 +1,9 @@
 package com.raffastudioproducoes.minharota.ui.components
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,7 +22,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,8 +37,9 @@ import com.raffastudioproducoes.minharota.ui.navigation.itensNavegacao
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
 
 /**
- * Bottom nav estilo "pill" inspirado no app Pinterest: barra escura arredondada,
- * avatar circular destacado à esquerda, item ativo com fundo pill verde neon.
+ * Bottom nav estilo "pill" (referência: Pinterest app) — avatar circular à esquerda
+ * conectado por uma curva orgânica ao item ativo, que mostra ícone + label empilhados.
+ * Demais itens mostram apenas ícone. Cores do app mantidas (verde neon em vez de vermelho).
  */
 @Composable
 fun BottomNavBarPill(
@@ -44,16 +49,23 @@ fun BottomNavBarPill(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    // Índice do item selecionado dentro da barra (itens de navegação + botão "Criar" no fim)
+    val totalItens = itensNavegacao.size + 1
+    val selectedIndex = itensNavegacao.indexOfFirst { it.route == currentRoute }.let {
+        if (it == -1) 0 else it
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = Arrangement.spacedBy(0.dp)
     ) {
-        // AVATAR CIRCULAR DESTACADO (logo do app)
+        // AVATAR CIRCULAR DESTACADO (logo do app — placeholder "M")
         Box(
             modifier = Modifier
+                .padding(bottom = 6.dp)
                 .size(52.dp)
                 .shadow(elevation = 8.dp, shape = CircleShape)
                 .clip(CircleShape)
@@ -64,43 +76,84 @@ fun BottomNavBarPill(
             Text("M", color = VerdeNeon, fontSize = 20.sp, fontWeight = FontWeight.ExtraBold)
         }
 
-        // PILL PRINCIPAL COM OS ITENS DE NAVEGAÇÃO
-        Row(
+        Spacer(modifier = Modifier.width(4.dp))
+
+        // PILL PRINCIPAL COM OS ITENS DE NAVEGAÇÃO + CURVA CONECTORA
+        BoxWithConstraints(
             modifier = Modifier
                 .weight(1f)
-                .height(64.dp)
-                .shadow(elevation = 10.dp, shape = RoundedCornerShape(50))
-                .clip(RoundedCornerShape(50))
-                .background(Color(0xFF141416))
-                .padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly
+                .height(72.dp)
         ) {
-            itensNavegacao.forEach { item ->
-                val isSelected = currentRoute == item.route
-                NavPillItem(
-                    icon = item.icon,
-                    label = item.title,
-                    isSelected = isSelected,
-                    onClick = {
-                        if (!isSelected) {
-                            navController.navigate(item.route) {
-                                popUpTo(Rota.Hoje.route) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        }
-                    }
+            val itemWidthPx = with(androidx.compose.ui.platform.LocalDensity.current) { (maxWidth / totalItens).toPx() }
+            val targetCenterX by animateFloatAsState(
+                targetValue = itemWidthPx * selectedIndex + itemWidthPx / 2f,
+                animationSpec = tween(280),
+                label = "navCurveX"
+            )
+
+            // Curva orgânica ligando o avatar ao item selecionado
+            Canvas(
+                modifier = Modifier
+                    .matchParentSize()
+                    .padding(bottom = 6.dp)
+            ) {
+                val startX = -28f
+                val startY = size.height * 0.15f
+                val endX = targetCenterX
+                val endY = size.height * 0.15f
+
+                val path = Path().apply {
+                    moveTo(startX, startY)
+                    cubicTo(
+                        startX + (endX - startX) * 0.35f, startY + size.height * 0.55f,
+                        endX - (endX - startX) * 0.35f, startY + size.height * 0.55f,
+                        endX, endY
+                    )
+                }
+                drawPath(
+                    path = path,
+                    color = VerdeNeon,
+                    style = Stroke(width = 5f, cap = StrokeCap.Round)
                 )
             }
 
-            // BOTÃO CRIAR (equivalente ao "Create" do Pinterest)
-            NavPillItem(
-                icon = Icons.Filled.Add,
-                label = "Criar",
-                isSelected = false,
-                onClick = onFabClick
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .shadow(elevation = 10.dp, shape = RoundedCornerShape(50))
+                    .clip(RoundedCornerShape(50))
+                    .background(Color(0xFF141416)),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                itensNavegacao.forEach { item ->
+                    val isSelected = currentRoute == item.route
+                    NavPillItem(
+                        icon = item.icon,
+                        label = item.title,
+                        isSelected = isSelected,
+                        modifier = Modifier.weight(1f),
+                        onClick = {
+                            if (!isSelected) {
+                                navController.navigate(item.route) {
+                                    popUpTo(Rota.Hoje.route) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+                        }
+                    )
+                }
+
+                // BOTÃO CRIAR (equivalente ao "Create" do Pinterest)
+                NavPillItem(
+                    icon = Icons.Filled.Add,
+                    label = "Criar",
+                    isSelected = false,
+                    modifier = Modifier.weight(1f),
+                    onClick = onFabClick
+                )
+            }
         }
     }
 }
@@ -110,44 +163,38 @@ private fun NavPillItem(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     isSelected: Boolean,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    val bgColor by animateColorAsState(
-        targetValue = if (isSelected) VerdeNeon else Color.Transparent,
+    val contentColor by animateColorAsState(
+        targetValue = if (isSelected) VerdeNeon else Color(0xFF9A9A9E),
         animationSpec = tween(220),
-        label = "navPillBg"
-    )
-    val contentColor = if (isSelected) Color.Black else Color(0xFF9A9A9E)
-    val horizontalPad by animateDpAsState(
-        targetValue = if (isSelected) 14.dp else 10.dp,
-        animationSpec = tween(220),
-        label = "navPillPad"
+        label = "navItemColor"
     )
 
-    Row(
-        modifier = Modifier
-            .clip(RoundedCornerShape(50))
-            .background(bgColor)
+    Column(
+        modifier = modifier
+            .fillMaxHeight()
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 onClick = onClick
-            )
-            .padding(horizontal = horizontalPad, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Icon(
             imageVector = icon,
             contentDescription = label,
             tint = contentColor,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(22.dp)
         )
         if (isSelected) {
+            Spacer(modifier = Modifier.height(2.dp))
             Text(
                 text = label,
                 color = contentColor,
-                fontSize = 12.sp,
+                fontSize = 11.sp,
                 fontWeight = FontWeight.Bold
             )
         }
