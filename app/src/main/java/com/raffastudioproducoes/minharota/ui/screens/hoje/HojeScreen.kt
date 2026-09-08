@@ -7,7 +7,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -76,6 +76,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.ui.components.AiInsightCard
+import com.raffastudioproducoes.minharota.ui.components.AnalyticsSummaryCard
 import com.raffastudioproducoes.minharota.ui.components.CheckoutModal
 import com.raffastudioproducoes.minharota.domain.subscription.SubscriptionPurchasePolicy
 import com.raffastudioproducoes.minharota.ui.components.HojeSectionCard
@@ -96,7 +97,7 @@ fun HojeScreen(
     geminiViewModel: GeminiAiViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     
     val dataRegistro by viewModel.dataRegistro.collectAsState()
     val ganhoBruto by viewModel.ganhoBruto.collectAsState()
@@ -182,6 +183,13 @@ fun HojeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(top = 16.dp, bottom = 120.dp)
         ) {
+            item {
+                AnalyticsSummaryCard(
+                    titulo = "Faturamento acumulado",
+                    valorFormatado = "R$ %.2f".format(faturamentoAcumulado)
+                )
+            }
+
             if (exibirAlertaRenovacao && diasParaVencer >= 0) {
                 item { RenovacaoAlertCard(nomePlano = nomePlanoAtivo, diasRestantes = diasParaVencer, onRenovar = { mostrarCheckoutRenovacao = true }) }
             }

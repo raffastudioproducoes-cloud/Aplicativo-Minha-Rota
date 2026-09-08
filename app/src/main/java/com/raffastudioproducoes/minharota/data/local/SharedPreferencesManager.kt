@@ -175,7 +175,7 @@ class SharedPreferencesManager(context: Context) {
     }
 
     fun obterNomeUsuario(): String {
-        return sharedPreferences.getString(KEY_NOME_USUARIO, "Motorista") ?: "Motorista"
+        return sharedPreferences.getString(KEY_NOME_USUARIO, "") ?: ""
     }
 
     fun salvarEmail(email: String) {

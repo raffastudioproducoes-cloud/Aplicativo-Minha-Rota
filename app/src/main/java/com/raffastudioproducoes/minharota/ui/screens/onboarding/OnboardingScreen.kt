@@ -2,7 +2,7 @@ package com.raffastudioproducoes.minharota.ui.screens.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -71,7 +71,7 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
     val pagerState = rememberPagerState(pageCount = { onboardingPages.size })
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     Box(
@@ -157,7 +157,7 @@ fun OnboardingScreen(onNavigateToLogin: () -> Unit) {
 
 @Composable
 fun OnboardingPageContent(page: OnboardingPage) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     
     Box(modifier = Modifier.fillMaxSize()) {
@@ -215,7 +215,7 @@ fun OnboardingPageContent(page: OnboardingPage) {
 
 @Composable
 fun HexagonIndicator(isSelected: Boolean) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val size = if (isSelected) 14.dp else 10.dp
     val color = if (isSelected) Color(0xFF10B981) else (if (isDark) Color.White.copy(alpha = 0.3f) else Color.Black.copy(alpha = 0.2f))
     Box(modifier = Modifier.size(size).drawBehind {

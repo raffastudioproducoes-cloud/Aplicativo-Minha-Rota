@@ -42,32 +42,43 @@ class GaragemViewModel : ViewModel() {
     private val _kmTotalAcumulado = MutableStateFlow(0)
     val kmTotalAcumulado: StateFlow<Int> = _kmTotalAcumulado.asStateFlow()
 
+    private val _kmRodadoHoje = MutableStateFlow(0)
+    val kmRodadoHoje: StateFlow<Int> = _kmRodadoHoje.asStateFlow()
+
     private val _manutencoes = MutableStateFlow<List<Manutencao>>(emptyList())
     val manutencoes: StateFlow<List<Manutencao>> = _manutencoes.asStateFlow()
 
     fun carregarDados(context: Context) {
         val prefs = SharedPreferencesManager(context)
-        _kmAtual.value = prefs.obterKmAtual()
-        _kmTotalAcumulado.value = prefs.obterKmTotal()
+        // Corrige dessincronização de versões antigas: kmTotal é sempre a fonte de verdade.
+        val total = maxOf(prefs.obterKmAtual(), prefs.obterKmTotal())
+        _kmAtual.value = total
+        _kmTotalAcumulado.value = total
+        prefs.salvarKmAtual(total)
+        prefs.salvarKmTotal(total)
         _manutencoes.value = prefs.obterManutencoes()
     }
 
     /**
-     * Atualiza o hodômetro e soma a diferença no KM Total Acumulado.
+     * KM Total é a única fonte de verdade (não existe hodômetro separado divergente).
+     * O novo valor digitado SUBSTITUI o total anterior; a diferença vira "rodado hoje".
      */
     fun atualizarKmAtual(context: Context, novoKm: Int) {
         if (novoKm <= 0) return
         val prefs = SharedPreferencesManager(context)
-        val kmAnterior = _kmAtual.value
-        
-        // Se o novo KM for maior que o anterior, somamos a diferença no total
-        if (novoKm > kmAnterior && kmAnterior > 0) {
-            val diferenca = novoKm - kmAnterior
-            val novoTotal = _kmTotalAcumulado.value + diferenca
-            _kmTotalAcumulado.value = novoTotal
-            prefs.salvarKmTotal(novoTotal)
+        val totalAnterior = _kmTotalAcumulado.value
+
+        if (totalAnterior == 0) {
+            _kmRodadoHoje.value = 0
+        } else if (novoKm >= totalAnterior) {
+            _kmRodadoHoje.value = novoKm - totalAnterior
+        } else {
+            return // KM não pode ser menor que o total já registrado
         }
-        
+
+        _kmTotalAcumulado.value = novoKm
+        prefs.salvarKmTotal(novoKm)
+
         _kmAtual.value = novoKm
         prefs.salvarKmAtual(novoKm)
     }
@@ -89,13 +100,13 @@ class GaragemViewModel : ViewModel() {
         prefs.salvarKmAtual(novoKmAtual)
     }
 
-    fun adicionarManutencao(context: Context, nome: String, intervalo: Int, ultimo: Int, icone: String) {
+    fun adicionarManutencao(context: Context, nome: String, intervalo: Int, icone: String) {
         val prefs = SharedPreferencesManager(context)
         val nova = Manutencao(
-            id = UUID.randomUUID().toString(), 
-            nome = nome, 
-            intervaloKm = intervalo, 
-            ultimoServicoKm = ultimo, 
+            id = UUID.randomUUID().toString(),
+            nome = nome,
+            intervaloKm = intervalo,
+            ultimoServicoKm = _kmTotalAcumulado.value,
             icone = icone
         )
         val lista = _manutencoes.value + nova
@@ -115,15 +126,15 @@ class GaragemViewModel : ViewModel() {
     fun concluirManutencao(context: Context, id: String) {
         val prefs = SharedPreferencesManager(context)
         val dataHoje = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
-        val kmNoMomento = _kmAtual.value
-        
+        val kmNoMomento = _kmTotalAcumulado.value
+
         val lista = _manutencoes.value.map {
             if (it.id == id) {
                 it.copy(
-                    concluida = true, 
-                    dataConclusao = dataHoje, 
+                    concluida = true,
+                    dataConclusao = dataHoje,
                     kmConclusao = kmNoMomento,
-                    ultimoServicoKm = kmNoMomento // Reseta o ciclo para o próximo intervalo
+                    ultimoServicoKm = kmNoMomento
                 )
             } else it
         }
@@ -153,4 +164,36 @@ class GaragemViewModel : ViewModel() {
         val l = _litrosAbastecidos.value.replace(",", ".").toDoubleOrNull() ?: 0.0
         _mediaResult.value = if (l > 0) k / l else 0.0
     }
+
+    fun calcularStatusManutencoes(): List<StatusManutencao> {
+        val kmTotalAtual = _kmTotalAcumulado.value
+        return _manutencoes.value.map { manutencao ->
+            val kmPercorridos = kmTotalAtual - manutencao.ultimoServicoKm
+            val kmRestantes = (manutencao.intervaloKm - kmPercorridos).coerceAtLeast(0)
+            val porcentagemBruta = (kmPercorridos.toDouble() / manutencao.intervaloKm.toDouble()) * 100
+            val porcentagem = porcentagemBruta.coerceIn(0.0, 100.0)
+
+            StatusManutencao(
+                id = manutencao.id,
+                nome = manutencao.nome,
+                icone = manutencao.icone,
+                kmPercorridos = kmPercorridos,
+                kmRestantes = kmRestantes,
+                porcentagem = "%.1f".format(porcentagem).toDouble(),
+                vencida = kmPercorridos >= manutencao.intervaloKm,
+                intervaloKm = manutencao.intervaloKm
+            )
+        }
+    }
 }
+
+data class StatusManutencao(
+    val id: String,
+    val nome: String,
+    val icone: String,
+    val kmPercorridos: Int,
+    val kmRestantes: Int,
+    val porcentagem: Double,
+    val vencida: Boolean,
+    val intervaloKm: Int
+)

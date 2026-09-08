@@ -1,7 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.extrato
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -35,7 +35,7 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
     val totalEntradas by viewModel.totalEntradas.collectAsState()
     val totalSaidas by viewModel.totalSaidas.collectAsState()
     val saldoTotal by viewModel.saldoTotal.collectAsState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     // Cores Fintech Premium v1.7.0
@@ -136,7 +136,7 @@ fun ExtratoScreen(viewModel: ExtratoViewModel = viewModel()) {
 
 @Composable
 fun ItemMovimentacao(mov: Movimentacao) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     PremiumGlassCard(
         modifier = Modifier

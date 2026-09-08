@@ -1,6 +1,6 @@
 package com.raffastudioproducoes.minharota.ui.components
 
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -27,7 +27,7 @@ fun HojeSectionCard(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     
     // Agora ele busca o GlassCard que você criou

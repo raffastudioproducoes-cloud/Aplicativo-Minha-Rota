@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.model.ContaDiaria
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 
 @Composable
 fun ContaDiariaScreen(viewModel: ContaDiariaViewModel = viewModel()) {
@@ -64,21 +65,16 @@ fun ContaDiariaScreen(viewModel: ContaDiariaViewModel = viewModel()) {
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // Card Glassmorphism - Meta Diária
-        Card(
+        // Card Vidro Fosco - Meta Diária
+        PremiumGlassCard(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 24.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = Color(0xFF1E1E22)
-            ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                .padding(bottom = 24.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(24.dp),
+                    .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -212,19 +208,14 @@ fun ContaDiariaScreen(viewModel: ContaDiariaViewModel = viewModel()) {
 
 @Composable
 fun ContaDiariaItem(conta: ContaDiaria, onDelete: () -> Unit) {
-    Card(
+    PremiumGlassCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 4.dp),
-        shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF1E1E22)
-        )
+            .padding(vertical = 4.dp)
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(12.dp),
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

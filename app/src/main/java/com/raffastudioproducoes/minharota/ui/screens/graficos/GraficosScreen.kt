@@ -5,7 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -46,7 +46,7 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
     val totalGanhos by viewModel.totalGanhosSemana.collectAsState()
     val totalDespesas by viewModel.totalDespesasSemana.collectAsState()
 
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     val subTextColor = textColor.copy(alpha = 0.5f)
 
@@ -215,7 +215,7 @@ fun GraficosScreen(viewModel: GraficosViewModel = viewModel()) {
 fun TrendLineChart(pontos: List<GraficosViewModel.PontoTendencia>) {
     if (pontos.isEmpty()) return
     
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val exibicaoPontos = if (pontos.size == 1) listOf(pontos[0], pontos[0]) else pontos
     val maxVal = exibicaoPontos.maxOf { it.valor }.coerceAtLeast(1.0)
 
@@ -286,7 +286,7 @@ fun TrendLineChart(pontos: List<GraficosViewModel.PontoTendencia>) {
 
 @Composable
 fun WeekSelector(offset: Int, onOffsetChange: (Int) -> Unit) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val label = when (offset) {
         0 -> "Esta Semana"
         1 -> "Semana Passada"
@@ -330,7 +330,7 @@ fun WeekSelector(offset: Int, onOffsetChange: (Int) -> Unit) {
 fun WeeklyBarChart(ganhos: List<Double>) {
     val labels = listOf("Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb")
     val maxGanho = ganhos.maxOrNull()?.coerceAtLeast(1.0) ?: 1.0
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
 
     Canvas(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp, vertical = 24.dp)) {
         val width = size.width
@@ -374,7 +374,7 @@ fun WeeklyBarChart(ganhos: List<Double>) {
 
 @Composable
 fun HighlightCard(title: String, value: String, modifier: Modifier, color: Color) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(24.dp))
@@ -401,7 +401,7 @@ fun HighlightCard(title: String, value: String, modifier: Modifier, color: Color
 fun HeatmapTable(data: Array<DoubleArray>) {
     val dias = listOf("D", "S", "T", "Q", "Q", "S", "S")
     val scrollState = rememberScrollState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
 
     val maxVal = data.flatMap { it.toList() }.maxOrNull() ?: 1.0
     val safeMaxVal = if (maxVal == 0.0) 1.0 else maxVal
@@ -467,7 +467,7 @@ fun HeatmapTable(data: Array<DoubleArray>) {
 
 @Composable
 fun HeatmapLegend() {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)).background(

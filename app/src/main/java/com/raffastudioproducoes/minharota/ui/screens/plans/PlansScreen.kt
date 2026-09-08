@@ -2,7 +2,7 @@ package com.raffastudioproducoes.minharota.ui.screens.plans
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.raffastudioproducoes.minharota.domain.subscription.SubscriptionPurchasePolicy
+import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeEntrada
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -61,7 +62,7 @@ fun PlansScreen(
     onBack: () -> Unit = {}
 ) {
     val planoAtual by plansViewModel.planoAtual.collectAsState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     LaunchedEffect(Unit) {
@@ -176,11 +177,10 @@ fun PlanCard(
     actionLabel: String = "Escolher Plano",
     onEscolher: () -> Unit = {}
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
-    val cardColor = if (isDark) Color(0xFF1C1C1E) else Color.White
 
-    Card(
+    PremiumGlassCard(
         modifier = Modifier
             .fillMaxWidth()
             .then(
@@ -188,20 +188,15 @@ fun PlanCard(
                     Modifier.border(
                         width = 2.dp,
                         color = VerdeEntrada,
-                        shape = RoundedCornerShape(16.dp)
+                        shape = RoundedCornerShape(24.dp)
                     )
                 } else {
                     Modifier
                 }
-            ),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = if (destaque) cardColor.copy(alpha = 0.8f) else cardColor
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = if (isDark) 0.dp else 4.dp)
+            )
     ) {
         Column(
-            modifier = Modifier.padding(24.dp)
+            modifier = Modifier.padding(8.dp)
         ) {
             Row(
                 modifier = Modifier

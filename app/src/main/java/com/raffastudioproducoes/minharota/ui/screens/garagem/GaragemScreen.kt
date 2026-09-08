@@ -2,7 +2,7 @@ package com.raffastudioproducoes.minharota.ui.screens.garagem
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -38,9 +38,10 @@ fun GaragemScreen(
     val context = LocalContext.current
     val kmAtual by viewModel.kmAtual.collectAsState()
     val kmTotal by viewModel.kmTotalAcumulado.collectAsState()
+    val kmRodadoHoje by viewModel.kmRodadoHoje.collectAsState()
     val manutencoes by viewModel.manutencoes.collectAsState()
     val mediaKmL by viewModel.mediaResult.collectAsState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -55,6 +56,10 @@ fun GaragemScreen(
 
     LaunchedEffect(Unit) {
         viewModel.carregarDados(context)
+    }
+
+    LaunchedEffect(kmAtual) {
+        if (kmInput.isNotEmpty()) kmInput = ""
     }
 
     // Disparar insight ao carregar (somente PRO — o ViewModel verifica internamente)
@@ -100,8 +105,15 @@ fun GaragemScreen(
                         Text("${String.format("%.1f", mediaKmL)} km/L", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = textColor)
                     }
                 }
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // KM RODADO HOJE
+                PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+                    Text("KM RODADO HOJE", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = textColor.copy(alpha = 0.5f))
+                    Text("${kmRodadoHoje} km", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = VerdeNeon)
+                }
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // ATUALIZAÇÃO DO HODÔMETRO
                 PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
                     Text(
@@ -178,7 +190,7 @@ fun GaragemScreen(
                 }
             } else {
                 items(manutencoes) { manutencao ->
-                    val kmRestante = (manutencao.ultimoServicoKm + manutencao.intervaloKm) - kmAtual
+                    val kmRestante = (manutencao.ultimoServicoKm + manutencao.intervaloKm) - kmTotal
                     val isCritico = kmRestante <= 0 && !manutencao.concluida
                     
                     ManutencaoCard(
@@ -213,7 +225,7 @@ fun GaragemScreen(
                             nome = nome, intervaloKm = intervalo, ultimoServicoKm = ultimo, icone = icone
                         ))
                     } else {
-                        viewModel.adicionarManutencao(context, nome, intervalo, ultimo, icone)
+                        viewModel.adicionarManutencao(context, nome, intervalo, icone)
                     }
                     showBottomSheet = false
                 },
@@ -232,7 +244,7 @@ fun ManutencaoCard(
     onEdit: () -> Unit,
     onConcluir: () -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
@@ -301,11 +313,11 @@ fun ManutencaoCard(
 
 @Composable
 fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, String) -> Unit, onCancel: () -> Unit) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var nome by remember { mutableStateOf(manutencaoExistente?.nome ?: "") }
     var intervalo by remember { mutableStateOf(manutencaoExistente?.intervaloKm?.toString() ?: "") }
-    var ultimo by remember { mutableStateOf(manutencaoExistente?.ultimoServicoKm?.toString() ?: "") }
+    var ultimoServico by remember { mutableStateOf(manutencaoExistente?.ultimoServicoKm?.toString() ?: "") }
     var iconeSelecionado by remember { mutableStateOf(manutencaoExistente?.icone ?: "build") }
 
     Column(modifier = Modifier.padding(24.dp).fillMaxWidth()) {
@@ -341,23 +353,26 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
                     focusedTextColor = textColor
                 )
             )
-            OutlinedTextField(
-                value = ultimo,
-                onValueChange = { if (it.all { c -> c.isDigit() }) ultimo = it },
-                modifier = Modifier.weight(1f),
-                label = { Text("Último serviço (km)") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                shape = RoundedCornerShape(12.dp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = VerdeNeon,
-                    unfocusedTextColor = textColor,
-                    focusedTextColor = textColor
-                )
-            )
         }
-        
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = ultimoServico,
+            onValueChange = { if (it.all { c -> c.isDigit() }) ultimoServico = it },
+            modifier = Modifier.fillMaxWidth(),
+            label = { Text("Última Manutenção (km)") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            shape = RoundedCornerShape(12.dp),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = VerdeNeon,
+                unfocusedTextColor = textColor,
+                focusedTextColor = textColor
+            )
+        )
+
         Spacer(modifier = Modifier.height(24.dp))
-        
+
         Text("Ícone", fontSize = 12.sp, color = textColor.copy(alpha = 0.5f))
         Row(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             listOf("build", "oil", "settings").forEach { icon ->
@@ -389,10 +404,10 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
                 Text("Cancelar", color = textColor.copy(alpha = 0.5f))
             }
             Button(
-                onClick = { 
+                onClick = {
                     val inter = intervalo.toIntOrNull() ?: 0
-                    val ult = ultimo.toIntOrNull() ?: 0
-                    if (nome.isNotBlank() && inter > 0) {
+                    val ult = ultimoServico.toIntOrNull() ?: 0
+                    if (nome.isNotBlank() && inter > 0 && ult >= 0) {
                         onSave(nome, inter, ult, iconeSelecionado)
                     }
                 },

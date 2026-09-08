@@ -9,6 +9,7 @@ import androidx.compose.material3.Typography // CORREÇÃO: Import correto
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
@@ -66,3 +67,11 @@ fun MinhaRotaTema(
         content = content
     )
 }
+
+/**
+ * Reflete o tema REALMENTE aplicado pelo app (escolha do usuário),
+ * não o tema do sistema operacional. Usar em vez de isSystemInDarkTheme()
+ * para decidir cores de texto/ícones dentro das telas.
+ */
+@Composable
+fun isAppDarkTheme(): Boolean = MaterialTheme.colorScheme.background.luminance() < 0.5f

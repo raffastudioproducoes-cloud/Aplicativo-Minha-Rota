@@ -31,12 +31,36 @@ class PerfilViewModel : ViewModel() {
 
     fun carregarDadosPerfil(context: Context) {
         val prefs = SharedPreferencesManager(context)
+        val firebaseUser = auth.currentUser
+
         _nomeUsuario.value = prefs.obterNomeUsuario()
         _email.value = prefs.obterEmail()
         _dataAniversario.value = prefs.obterDataAniversario()
         _fotoPerfilUrl.value = prefs.obterFotoPerfilUrl()
 
+        aplicarFallbackFirebase(firebaseUser, prefs)
+
+        // Força atualização do perfil do Firebase (displayName pode ter sido setado após o login em cache)
+        firebaseUser?.reload()?.addOnCompleteListener {
+            aplicarFallbackFirebase(auth.currentUser, prefs)
+        }
+
         carregarDadosDoServidor(context)
+    }
+
+    private fun aplicarFallbackFirebase(
+        firebaseUser: com.google.firebase.auth.FirebaseUser?,
+        prefs: SharedPreferencesManager
+    ) {
+        if (_email.value.isEmpty() && !firebaseUser?.email.isNullOrBlank()) {
+            _email.value = firebaseUser?.email ?: ""
+            prefs.salvarEmail(firebaseUser?.email ?: "")
+        }
+
+        if (_nomeUsuario.value.isEmpty() && !firebaseUser?.displayName.isNullOrBlank()) {
+            _nomeUsuario.value = firebaseUser?.displayName ?: ""
+            prefs.salvarNomeUsuario(firebaseUser?.displayName ?: "")
+        }
     }
 
     private fun carregarDadosDoServidor(context: Context) {

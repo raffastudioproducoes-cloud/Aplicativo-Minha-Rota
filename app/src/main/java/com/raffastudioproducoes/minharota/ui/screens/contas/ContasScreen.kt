@@ -1,7 +1,7 @@
 package com.raffastudioproducoes.minharota.ui.screens.contas
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
+import com.raffastudioproducoes.minharota.ui.theme.isAppDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -69,7 +69,7 @@ fun ContasScreen(
     val isPro by viewModel.isPro.collectAsState()
     val faturamentoAnual by viewModel.faturamentoAnual.collectAsState()
     val limiteMei by viewModel.limiteMei.collectAsState()
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
 
     var showAddDialog by remember { mutableStateOf(false) }
@@ -342,7 +342,7 @@ fun ContaDialog(
     onDismiss: () -> Unit,
     onConfirm: (String, Double, String) -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
+    val isDark = isAppDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     var nome by remember { mutableStateOf(contaInicial?.nome ?: "") }
     var valor by remember { mutableStateOf(if (contaInicial != null) contaInicial.valor.toString() else "") }
