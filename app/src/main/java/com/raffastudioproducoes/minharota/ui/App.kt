@@ -38,11 +38,19 @@ import com.raffastudioproducoes.minharota.ui.screens.hoje.HojeViewModel
 import com.raffastudioproducoes.minharota.ui.screens.perfil.PerfilScreen
 import com.raffastudioproducoes.minharota.ui.screens.plans.PlansScreen
 import com.raffastudioproducoes.minharota.ui.viewmodel.UserViewModel
+import com.raffastudioproducoes.minharota.ui.viewmodel.AppThemeViewModel
+import androidx.compose.runtime.LaunchedEffect
 
 @Composable
 fun MainAppContent() {
     val navController = rememberNavController()
     val hojeViewModel: HojeViewModel = viewModel()
+    val themeViewModel: AppThemeViewModel = viewModel()
+    val context = LocalContext.current
+
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        themeViewModel.carregarTema(context)
+    }
 
     // Captura a rota atual para passar para o Scaffold
     val navBackStackEntry by navController.currentBackStackEntryAsState()

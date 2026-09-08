@@ -1,11 +1,13 @@
 package com.raffastudioproducoes.minharota.ui.screens.auth
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.raffastudioproducoes.minharota.repository.auth.AuthError
 import com.raffastudioproducoes.minharota.repository.auth.AuthRepository
 import com.raffastudioproducoes.minharota.repository.auth.AuthResult
 import com.raffastudioproducoes.minharota.repository.auth.FirebaseAuthRepository
 import com.raffastudioproducoes.minharota.repository.auth.RegistrationResult
+import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -41,6 +43,12 @@ class EmailAuthViewModel(
     private var operationGeneration = 0L
     private var verificationUid: String? = null
     private var resendAvailableAtMillis = 0L
+
+    fun salvarPerfilAposLogin(context: Context, name: String?, email: String?) {
+        val prefs = SharedPreferencesManager(context)
+        if (!name.isNullOrBlank()) prefs.salvarNomeUsuario(name)
+        if (!email.isNullOrBlank()) prefs.salvarEmail(email)
+    }
 
     fun login(email: String, password: String) {
         if (!isSubmitEnabled) return

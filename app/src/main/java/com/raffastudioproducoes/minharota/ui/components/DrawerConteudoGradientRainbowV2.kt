@@ -318,7 +318,7 @@ fun DrawerConteudoGradientRainbowV2(
                             drawerState.close()
                         }
                     }
-                    // Ação de feedback
+                    onNavigate(Rota.Ajuda.route)
                 }
             )
 
