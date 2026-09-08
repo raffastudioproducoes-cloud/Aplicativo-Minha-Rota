@@ -25,10 +25,15 @@ class AppThemeViewModel : ViewModel() {
         prefs.edit().putInt("theme_mode", modo).apply()
     }
 
-    @Composable
-    fun isDarkTheme(): Boolean = when (_themeMode.value) {
+    fun isDarkTheme(systemDarkTheme: Boolean): Boolean = when (_themeMode.value) {
         1 -> false // Light
         2 -> true  // Dark
-        else -> isSystemInDarkTheme() // Auto
+        else -> systemDarkTheme // Auto
+    }
+
+    @Composable
+    fun isDarkThemeComposable(): Boolean {
+        val systemDark = isSystemInDarkTheme()
+        return isDarkTheme(systemDark)
     }
 }

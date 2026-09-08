@@ -57,6 +57,10 @@ fun GaragemScreen(
         viewModel.carregarDados(context)
     }
 
+    LaunchedEffect(kmAtual) {
+        if (kmInput.isNotEmpty()) kmInput = ""
+    }
+
     // Disparar insight ao carregar (somente PRO — o ViewModel verifica internamente)
     LaunchedEffect(kmTotal, manutencoes) {
         val proximasManutencoes = manutencoes
