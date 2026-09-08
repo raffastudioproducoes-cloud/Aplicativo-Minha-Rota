@@ -60,11 +60,21 @@ class GaragemViewModel : ViewModel() {
     fun atualizarKmAtual(context: Context, novoKm: Int) {
         if (novoKm <= 0) return
         val prefs = SharedPreferencesManager(context)
+        val kmAnterior = _kmAtual.value
 
-        // KM TOTAL = valor atual do hodômetro (não é soma)
-        _kmTotalAcumulado.value = novoKm
+        if (kmAnterior == 0) {
+            // Primeira atualização: copia o hodômetro atual
+            _kmTotalAcumulado.value = novoKm
+            prefs.salvarKmTotal(novoKm)
+        } else if (novoKm > kmAnterior) {
+            // Atualização posterior: soma a diferença ao total acumulado
+            val diferenca = novoKm - kmAnterior
+            val novoTotal = _kmTotalAcumulado.value + diferenca
+            _kmTotalAcumulado.value = novoTotal
+            prefs.salvarKmTotal(novoTotal)
+        }
+
         _kmAtual.value = novoKm
-        prefs.salvarKmTotal(novoKm)
         prefs.salvarKmAtual(novoKm)
     }
 
