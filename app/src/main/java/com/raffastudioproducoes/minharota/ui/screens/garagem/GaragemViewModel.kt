@@ -42,37 +42,42 @@ class GaragemViewModel : ViewModel() {
     private val _kmTotalAcumulado = MutableStateFlow(0)
     val kmTotalAcumulado: StateFlow<Int> = _kmTotalAcumulado.asStateFlow()
 
+    private val _kmRodadoHoje = MutableStateFlow(0)
+    val kmRodadoHoje: StateFlow<Int> = _kmRodadoHoje.asStateFlow()
+
     private val _manutencoes = MutableStateFlow<List<Manutencao>>(emptyList())
     val manutencoes: StateFlow<List<Manutencao>> = _manutencoes.asStateFlow()
 
     fun carregarDados(context: Context) {
         val prefs = SharedPreferencesManager(context)
-        _kmAtual.value = prefs.obterKmAtual()
-        _kmTotalAcumulado.value = prefs.obterKmTotal()
+        // Corrige dessincronização de versões antigas: kmTotal é sempre a fonte de verdade.
+        val total = maxOf(prefs.obterKmAtual(), prefs.obterKmTotal())
+        _kmAtual.value = total
+        _kmTotalAcumulado.value = total
+        prefs.salvarKmAtual(total)
+        prefs.salvarKmTotal(total)
         _manutencoes.value = prefs.obterManutencoes()
     }
 
     /**
-     * Atualiza o hodômetro e soma a diferença no KM Total Acumulado.
-     * Primeira vez: copia o valor do hodômetro para o total acumulado.
-     * Próximas vezes: soma a diferença.
+     * KM Total é a única fonte de verdade (não existe hodômetro separado divergente).
+     * O novo valor digitado SUBSTITUI o total anterior; a diferença vira "rodado hoje".
      */
     fun atualizarKmAtual(context: Context, novoKm: Int) {
         if (novoKm <= 0) return
         val prefs = SharedPreferencesManager(context)
-        val kmAnterior = _kmAtual.value
+        val totalAnterior = _kmTotalAcumulado.value
 
-        if (kmAnterior == 0) {
-            // Primeira atualização: copia o hodômetro atual
-            _kmTotalAcumulado.value = novoKm
-            prefs.salvarKmTotal(novoKm)
-        } else if (novoKm > kmAnterior) {
-            // Atualização posterior: soma a diferença ao total acumulado
-            val diferenca = novoKm - kmAnterior
-            val novoTotal = _kmTotalAcumulado.value + diferenca
-            _kmTotalAcumulado.value = novoTotal
-            prefs.salvarKmTotal(novoTotal)
+        if (totalAnterior == 0) {
+            _kmRodadoHoje.value = 0
+        } else if (novoKm >= totalAnterior) {
+            _kmRodadoHoje.value = novoKm - totalAnterior
+        } else {
+            return // KM não pode ser menor que o total já registrado
         }
+
+        _kmTotalAcumulado.value = novoKm
+        prefs.salvarKmTotal(novoKm)
 
         _kmAtual.value = novoKm
         prefs.salvarKmAtual(novoKm)

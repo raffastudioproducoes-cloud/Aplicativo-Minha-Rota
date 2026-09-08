@@ -38,6 +38,7 @@ fun GaragemScreen(
     val context = LocalContext.current
     val kmAtual by viewModel.kmAtual.collectAsState()
     val kmTotal by viewModel.kmTotalAcumulado.collectAsState()
+    val kmRodadoHoje by viewModel.kmRodadoHoje.collectAsState()
     val manutencoes by viewModel.manutencoes.collectAsState()
     val mediaKmL by viewModel.mediaResult.collectAsState()
     val isDark = isSystemInDarkTheme()
@@ -104,8 +105,15 @@ fun GaragemScreen(
                         Text("${String.format("%.1f", mediaKmL)} km/L", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = textColor)
                     }
                 }
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // KM RODADO HOJE
+                PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
+                    Text("KM RODADO HOJE", fontSize = 10.sp, fontWeight = FontWeight.Bold, color = textColor.copy(alpha = 0.5f))
+                    Text("${kmRodadoHoje} km", fontSize = 20.sp, fontWeight = FontWeight.ExtraBold, color = VerdeNeon)
+                }
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // ATUALIZAÇÃO DO HODÔMETRO
                 PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
                     Text(
