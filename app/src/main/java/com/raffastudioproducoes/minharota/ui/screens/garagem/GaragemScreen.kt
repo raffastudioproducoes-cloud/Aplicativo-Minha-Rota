@@ -379,11 +379,10 @@ fun ManutencaoForm(manutencaoExistente: Manutencao?, onSave: (String, Int, Int, 
                 Text("Cancelar", color = textColor.copy(alpha = 0.5f))
             }
             Button(
-                onClick = { 
+                onClick = {
                     val inter = intervalo.toIntOrNull() ?: 0
-                    val ult = ultimo.toIntOrNull() ?: 0
                     if (nome.isNotBlank() && inter > 0) {
-                        onSave(nome, inter, ult, iconeSelecionado)
+                        onSave(nome, inter, manutencaoExistente?.ultimoServicoKm ?: 0, iconeSelecionado)
                     }
                 },
                 modifier = Modifier.weight(1f),
