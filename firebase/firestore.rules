@@ -1,0 +1,124 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner(userId) {
+      return request.auth != null && request.auth.uid == userId;
+    }
+
+    function validateTurno(data) {
+      return data.keys().hasAll(['id', 'data', 'horaInicio', 'horaFim', 'ganhoBruto', 'custoRua', 'ganhoLiquido'])
+        // Type validation
+        && data.id is string
+        && data.id.size() > 0
+        && data.data is string
+        && data.horaInicio is string
+        && data.horaFim is string
+        && data.ganhoBruto is number
+        && data.ganhoLiquido is number
+        && data.custoRua is number
+        && data.houvePausa is bool
+        && data.corridas is list
+        // Value validation - no negative values
+        && data.ganhoBruto >= 0
+        && data.ganhoLiquido >= 0
+        && data.custoRua >= 0
+        && data.ganhoLiquido <= data.ganhoBruto
+        // Array size limit to prevent DoS
+        && data.corridas.size() <= 100
+        // Timestamp validation
+        && data.createdAt is number
+        && data.updatedAt is number;
+    }
+
+    function validateUsuario(data) {
+      let allowedFields = ['nome', 'email', 'dataNascimento', 'cpf', 'telefone', 'dataAbertura', 'createdAt', 'updatedAt'];
+      let protectedFields = ['isPro', 'nomePlano', 'dataVencimento', 'entitlement', 'saldoOficial'];
+      return data.keys().hasOnly(allowedFields + protectedFields)
+        && data.email is string
+        && data.email.size() > 0
+        && data.nome is string
+        && data.nome.size() > 0
+        && data.nome.size() <= 255
+        && data.createdAt is number
+        && data.updatedAt is number;
+    }
+
+    // Profile document with full validation
+    match /usuarios/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && validateUsuario(request.resource.data);
+      allow update: if isOwner(userId)
+        && validateUsuario(request.resource.data)
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['isPro', 'nomePlano', 'dataVencimento', 'entitlement', 'saldoOficial']);
+      allow delete: if isOwner(userId);
+
+      // Turnos with full validation
+      match /turnos/{turnoId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && validateTurno(request.resource.data);
+        allow update: if isOwner(userId) && validateTurno(request.resource.data);
+        allow delete: if isOwner(userId);
+      }
+
+      // Contas (Accounts/Bills)
+      match /contas/{contaId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && request.resource.data.keys().hasAll(['id', 'nome', 'valor', 'dataVencimento'])
+          && request.resource.data.valor is number
+          && request.resource.data.valor > 0
+          && request.resource.data.id is string
+          && request.resource.data.nome is string
+          && request.resource.data.nome.size() <= 255;
+        allow update: if isOwner(userId)
+          && request.resource.data.valor is number
+          && request.resource.data.valor > 0;
+        allow delete: if isOwner(userId);
+      }
+
+      // Dívidas (Debts)
+      match /dividas/{dividaId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && request.resource.data.keys().hasAll(['id', 'credor', 'valorTotal', 'totalParcelas'])
+          && request.resource.data.valorTotal is number
+          && request.resource.data.valorTotal > 0
+          && request.resource.data.totalParcelas is number
+          && request.resource.data.totalParcelas > 0
+          && request.resource.data.id is string
+          && request.resource.data.credor is string;
+        allow update: if isOwner(userId)
+          && request.resource.data.parcelasPagas <= request.resource.data.totalParcelas
+          && request.resource.data.valorPago <= request.resource.data.valorTotal;
+        allow delete: if isOwner(userId);
+      }
+
+      // Caixinhas (Savings boxes)
+      match /caixas/{caixaId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && request.resource.data.keys().hasAll(['id', 'nome', 'percentual'])
+          && request.resource.data.percentual is number
+          && request.resource.data.percentual >= 0
+          && request.resource.data.percentual <= 100
+          && request.resource.data.id is string
+          && request.resource.data.nome is string;
+        allow update: if isOwner(userId)
+          && request.resource.data.percentual >= 0
+          && request.resource.data.percentual <= 100;
+        allow delete: if isOwner(userId);
+      }
+
+      // Deny unreviewed future subcollections
+      match /{unreviewedSubcollection=**} {
+        allow read, write: if false;
+      }
+    }
+
+    // Deny all top-level access by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
