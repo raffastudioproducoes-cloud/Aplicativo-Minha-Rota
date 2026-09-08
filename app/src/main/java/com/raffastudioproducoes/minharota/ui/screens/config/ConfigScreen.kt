@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,6 +28,10 @@ import com.raffastudioproducoes.minharota.data.local.SharedPreferencesManager
 import com.raffastudioproducoes.minharota.data.local.SecurePreferences
 import com.raffastudioproducoes.minharota.ui.components.PremiumGlassCard
 import com.raffastudioproducoes.minharota.ui.theme.VerdeNeon
+import com.raffastudioproducoes.minharota.ui.viewmodel.AppThemeViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.draw.alpha
 
 @Composable
 fun ConfigScreen() {
@@ -34,12 +39,20 @@ fun ConfigScreen() {
     val prefs = SecurePreferences.get(context)
     val isDark = isSystemInDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
-    
+
+    val themeViewModel: AppThemeViewModel = viewModel()
+    val themeModo by themeViewModel.themeMode.collectAsState()
+    val sharedPrefs = SharedPreferencesManager(context)
+
     // Estados de Configuração persistidos
-    var temaEscuro by remember { mutableStateOf(prefs.getBoolean("tema_escuro", true)) }
-    var backupAutomatico by remember { mutableStateOf(prefs.getBoolean("backup_automatico", true)) }
+    val temPlanoPago = remember { sharedPrefs.obterIsPro() }
+    var backupAutomatico by remember { mutableStateOf(prefs.getBoolean("backup_automatico", false)) }
     var notificacoesGanhos by remember { mutableStateOf(prefs.getBoolean("notificacoes_ganhos", true)) }
-    var diasFolga by remember { mutableStateOf(SharedPreferencesManager(context).obterDiasFolga()) }
+    var diasFolga by remember { mutableStateOf(sharedPrefs.obterDiasFolga()) }
+
+    LaunchedEffect(Unit) {
+        themeViewModel.carregarTema(context)
+    }
     
     val versaoApp = remember {
         try {
@@ -66,18 +79,37 @@ fun ConfigScreen() {
         // Seção: Aparência
         ConfigSectionTitle("Aparência")
         PremiumGlassCard(modifier = Modifier.fillMaxWidth()) {
-            Column {
-                ConfigSwitchItem(
-                    icon = Icons.Rounded.DarkMode,
-                    title = "Tema Escuro",
-                    subtitle = "Otimizado para visão noturna",
-                    checked = temaEscuro,
-                    onCheckedChange = { 
-                        temaEscuro = it
-                        prefs.edit().putBoolean("tema_escuro", it).apply()
-                        Toast.makeText(context, "Tema atualizado", Toast.LENGTH_SHORT).show()
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text("Tema", color = textColor, fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.padding(bottom = 12.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    listOf(
+                        Triple(0, "Automático", Icons.Rounded.Settings),
+                        Triple(1, "Claro", Icons.Rounded.LightMode),
+                        Triple(2, "Escuro", Icons.Rounded.DarkMode)
+                    ).forEach { (modo, label, icon) ->
+                        Column(
+                            modifier = Modifier
+                                .weight(1f)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(
+                                    if (themeModo == modo) VerdeNeon.copy(alpha = 0.2f)
+                                    else textColor.copy(alpha = 0.05f)
+                                )
+                                .clickable {
+                                    themeViewModel.mudarTema(context, modo)
+                                    Toast.makeText(context, "Tema atualizado", Toast.LENGTH_SHORT).show()
+                                }
+                                .padding(12.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(icon, contentDescription = null, tint = if (themeModo == modo) VerdeNeon else textColor, modifier = Modifier.size(24.dp))
+                            Text(label, color = if (themeModo == modo) VerdeNeon else textColor, fontSize = 11.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 4.dp))
+                        }
                     }
-                )
+                }
             }
         }
 
@@ -90,16 +122,21 @@ fun ConfigScreen() {
                 ConfigSwitchItem(
                     icon = Icons.Rounded.CloudUpload,
                     title = "Backup Automático",
-                    subtitle = "Sincronizar ganhos com a nuvem",
-                    checked = backupAutomatico,
-                    onCheckedChange = { 
-                        backupAutomatico = it
-                        prefs.edit().putBoolean("backup_automatico", it).apply()
+                    subtitle = if (temPlanoPago) "Sincronizar ganhos com a nuvem" else "Disponível em Premium/Pro",
+                    checked = backupAutomatico && temPlanoPago,
+                    enabled = temPlanoPago,
+                    onCheckedChange = {
+                        if (temPlanoPago) {
+                            backupAutomatico = it
+                            prefs.edit().putBoolean("backup_automatico", it).apply()
+                        } else {
+                            Toast.makeText(context, "Upgrade para Premium ou Pro", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 )
-                
+
                 HorizontalDivider(color = textColor.copy(alpha = 0.05f), modifier = Modifier.padding(horizontal = 16.dp))
-                
+
                 ConfigClickItem(
                     icon = Icons.Rounded.Sync,
                     title = "Sincronizar Agora",
@@ -212,14 +249,16 @@ fun ConfigSwitchItem(
     title: String,
     subtitle: String,
     checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
+    enabled: Boolean = true
 ) {
     val isDark = isSystemInDarkTheme()
     val textColor = if (isDark) Color.White else Color(0xFF1F2937)
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .alpha(if (enabled) 1f else 0.5f),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconContainer(icon)
@@ -230,11 +269,16 @@ fun ConfigSwitchItem(
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
+            enabled = enabled,
             colors = SwitchDefaults.colors(
                 checkedThumbColor = if (isDark) Color.Black else Color.White,
                 checkedTrackColor = VerdeNeon,
                 uncheckedThumbColor = textColor.copy(alpha = 0.5f),
-                uncheckedTrackColor = textColor.copy(alpha = 0.1f)
+                uncheckedTrackColor = textColor.copy(alpha = 0.1f),
+                disabledCheckedThumbColor = textColor.copy(alpha = 0.3f),
+                disabledCheckedTrackColor = textColor.copy(alpha = 0.1f),
+                disabledUncheckedThumbColor = textColor.copy(alpha = 0.2f),
+                disabledUncheckedTrackColor = textColor.copy(alpha = 0.05f)
             )
         )
     }

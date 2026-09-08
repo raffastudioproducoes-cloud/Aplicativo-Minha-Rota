@@ -27,6 +27,8 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -653,7 +655,12 @@ fun FaqTabContent() {
 @Composable
 fun ContactTabContent() {
     var expanded by remember { mutableStateOf(true) }
+    var showFeedbackDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current // Contexto necessário para abrir os links
+
+    if (showFeedbackDialog) {
+        FeedbackDialog(onDismiss = { showFeedbackDialog = false })
+    }
 
     Column(
         modifier = Modifier
@@ -744,6 +751,20 @@ fun ContactTabContent() {
                             } catch (e: Exception) {
                                 // Tratamento de erro caso falhe
                             }
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Botão de Feedback
+                        Button(
+                            onClick = { showFeedbackDialog = true },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(40.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = VerdeNeon),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text("📝 Enviar Feedback", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                         }
 
                         Spacer(modifier = Modifier.height(16.dp))
