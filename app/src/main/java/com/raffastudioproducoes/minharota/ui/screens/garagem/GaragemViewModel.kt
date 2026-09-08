@@ -159,4 +159,36 @@ class GaragemViewModel : ViewModel() {
         val l = _litrosAbastecidos.value.replace(",", ".").toDoubleOrNull() ?: 0.0
         _mediaResult.value = if (l > 0) k / l else 0.0
     }
+
+    fun calcularStatusManutencoes(): List<StatusManutencao> {
+        val kmTotalAtual = _kmTotalAcumulado.value
+        return _manutencoes.value.map { manutencao ->
+            val kmPercorridos = kmTotalAtual - manutencao.ultimoServicoKm
+            val kmRestantes = (manutencao.intervaloKm - kmPercorridos).coerceAtLeast(0)
+            val porcentagemBruta = (kmPercorridos.toDouble() / manutencao.intervaloKm.toDouble()) * 100
+            val porcentagem = porcentagemBruta.coerceIn(0.0, 100.0)
+
+            StatusManutencao(
+                id = manutencao.id,
+                nome = manutencao.nome,
+                icone = manutencao.icone,
+                kmPercorridos = kmPercorridos,
+                kmRestantes = kmRestantes,
+                porcentagem = "%.1f".format(porcentagem).toDouble(),
+                vencida = kmPercorridos >= manutencao.intervaloKm,
+                intervaloKm = manutencao.intervaloKm
+            )
+        }
+    }
 }
+
+data class StatusManutencao(
+    val id: String,
+    val nome: String,
+    val icone: String,
+    val kmPercorridos: Int,
+    val kmRestantes: Int,
+    val porcentagem: Double,
+    val vencida: Boolean,
+    val intervaloKm: Int
+)
