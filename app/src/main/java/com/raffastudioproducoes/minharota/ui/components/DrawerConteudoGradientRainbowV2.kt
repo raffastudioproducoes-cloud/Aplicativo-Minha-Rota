@@ -37,7 +37,6 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material.icons.outlined.TwoWheeler
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -150,9 +149,7 @@ fun DrawerConteudoGradientRainbowV2(
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
-        HorizontalDivider(color = textColor.copy(alpha = 0.06f), modifier = Modifier.padding(horizontal = 24.dp))
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(28.dp))
 
         Column(
             modifier = Modifier
@@ -215,10 +212,6 @@ fun DrawerConteudoGradientRainbowV2(
                 onClick = { scope.launch { drawerState?.close() }; onNavigate(Rota.Configuracoes.route) }
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-            HorizontalDivider(color = textColor.copy(alpha = 0.06f), modifier = Modifier.padding(horizontal = 24.dp))
-            Spacer(modifier = Modifier.height(8.dp))
-
             DrawerRowItem(
                 label = "Ajuda",
                 icon = Icons.Outlined.Help,
@@ -233,7 +226,6 @@ fun DrawerConteudoGradientRainbowV2(
             )
         }
 
-        HorizontalDivider(color = textColor.copy(alpha = 0.06f), modifier = Modifier.padding(horizontal = 24.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()

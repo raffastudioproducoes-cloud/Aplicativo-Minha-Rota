@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalDensity
@@ -62,16 +63,17 @@ fun BottomNavBarPill(
         BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
             val barWidthPx = with(density) { maxWidth.toPx() }
             val itemWidthPx = barWidthPx / totalItens
-            val notchRadiusPx = with(density) { 30.dp.toPx() }
 
             val targetCenterX by animateFloatAsState(
                 targetValue = itemWidthPx * selectedIndex + itemWidthPx / 2f,
-                animationSpec = tween(300),
+                animationSpec = tween(320),
                 label = "notchX"
             )
 
-            val barHeight = 66.dp
-            val notchDip = with(density) { 34.dp.toPx() }
+            val barHeight = 64.dp
+            val circleSizeDp = 58.dp
+            // Raio do "buraco" na barra: levemente maior que o círculo, cria o halo/gap visto na referência
+            val notchRadiusPx = with(density) { (circleSizeDp / 2 + 6.dp).toPx() }
 
             Canvas(
                 modifier = Modifier
@@ -82,23 +84,22 @@ fun BottomNavBarPill(
                 val w = size.width
                 val h = size.height
                 val cornerRadius = h / 2f
-                val curveSpread = notchRadiusPx * 1.6f
 
                 val path = Path().apply {
                     moveTo(cornerRadius, 0f)
-                    lineTo(targetCenterX - curveSpread, 0f)
-
-                    cubicTo(
-                        targetCenterX - curveSpread * 0.55f, 0f,
-                        targetCenterX - notchRadiusPx, notchDip,
-                        targetCenterX, notchDip
+                    lineTo(targetCenterX - notchRadiusPx, 0f)
+                    // Entalhe circular verdadeiro (metade inferior de um círculo), tipo "keyhole"
+                    arcTo(
+                        rect = Rect(
+                            left = targetCenterX - notchRadiusPx,
+                            top = -notchRadiusPx,
+                            right = targetCenterX + notchRadiusPx,
+                            bottom = notchRadiusPx
+                        ),
+                        startAngleDegrees = 180f,
+                        sweepAngleDegrees = 180f,
+                        forceMoveTo = false
                     )
-                    cubicTo(
-                        targetCenterX + notchRadiusPx, notchDip,
-                        targetCenterX + curveSpread * 0.55f, 0f,
-                        targetCenterX + curveSpread, 0f
-                    )
-
                     lineTo(w - cornerRadius, 0f)
                     quadraticTo(w, 0f, w, cornerRadius)
                     lineTo(w, h)
@@ -145,15 +146,16 @@ fun BottomNavBarPill(
                 )
             }
 
-            // CÍRCULO ELEVADO na posição do item selecionado
-            val circleSizeDp = 56.dp
+            // CÍRCULO ELEVADO na posição do item selecionado — encaixado no entalhe, saltando pra fora
             val circleOffsetX = with(density) { (targetCenterX - with(density) { circleSizeDp.toPx() } / 2f).toDp() }
 
             Box(
                 modifier = Modifier
-                    .offset(x = circleOffsetX, y = (-14).dp)
+                    .offset(x = circleOffsetX, y = (-22).dp)
                     .size(circleSizeDp)
                     .shadow(elevation = 8.dp, shape = CircleShape)
+                    .background(barColor, CircleShape)
+                    .padding(4.dp)
                     .clip(CircleShape)
                     .background(VerdeNeon),
                 contentAlignment = Alignment.Center
